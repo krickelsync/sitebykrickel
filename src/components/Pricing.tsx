@@ -9,39 +9,40 @@ interface PricingFeature {
 }
 
 const pricingData: PricingFeature[] = [
-  { category: "CORE SETUP", feature: "Theme Installation", standard: "Base Materia Theme", ultimate: "Materia + Krickel Mods" },
-  { feature: "Page Setup", standard: "5 Pages", ultimate: "Unlimited Pages" },
-  { feature: "Product Upload", standard: "Max 10 Products", ultimate: "Max 50 Products" },
+  { category: "TARGET BRAND", feature: "Target Brand", standard: "Newbie / Starter", ultimate: "High-End / Established" },
+  
+  { category: "CORE SETUP", feature: "Theme Installation", standard: "Basic Theme", ultimate: "Premium Theme" },
+  { feature: "Halaman Setup", standard: "5 Halaman (Home, Shop, etc)", ultimate: "Unlimited Pages Setup" },
+  { feature: "Upload Produk", standard: "Max 10 Produk", ultimate: "Max 50 Produk" },
   { feature: "Mobile Responsive", standard: "Standard Mobile", ultimate: "Compact Mobile UI (Fixed)" },
   
-  { category: "KRICKEL EXCLUSIVES", feature: "Cinematic Enter Page", standard: false, ultimate: "YES (Video/Img/3D)" },
-  { feature: "3D Interactive Logo (.glb)", standard: false, ultimate: "YES (Auto Rotate)" },
-  { feature: "Global Music Player", standard: false, ultimate: "YES (Popup + Equalizer)" },
-  { feature: "Glassmorphism Header", standard: false, ultimate: "YES (Blur Effect)" },
-  { feature: "Snow/Season Effect", standard: false, ultimate: "YES (Catalog Page)" },
+  { category: "KRICKEL EXCLUSIVES (USP)", feature: "Enter Page", standard: false, ultimate: "YES (Video/Img/3D)" },
+  { feature: "3D Interactive Logo (.glb)", standard: false, ultimate: "YES (Spinning Interactive)" },
+  { feature: "Global Music Player", standard: false, ultimate: "YES (Popup Equalizer)" },
+  { feature: "Glassmorphism Header", standard: false, ultimate: "YES (Glass Effect)" },
   
-  { category: "VISUAL & AESTHETICS", feature: "Background Type", standard: "Solid/Image", ultimate: "Video BG / Gradient" },
-  { feature: "Custom Cursor", standard: false, ultimate: "YES (SVG)" },
-  { feature: "Running Text (Marquee)", standard: false, ultimate: true },
-  { feature: "Text Glow Effect", standard: false, ultimate: true },
-  { feature: "Custom Font Upload", standard: "Google Fonts", ultimate: "Upload Custom Font" },
-  { feature: "Page Preloader", standard: "Standard", ultimate: "Custom Brand Logo" },
+  { category: "VISUAL & AESTHETICS", feature: "Background Type", standard: "Solid Color / Gradient", ultimate: "Custom Vid/Gif/Img Background" },
+  { feature: "Lookbook", standard: "Standart", ultimate: "YES (Layout Animation on Hover)" },
+  { feature: "Custom Cursor", standard: false, ultimate: "YES (Custom svg Logo)" },
+  { feature: "Running Text (Marquee)", standard: false, ultimate: "YES (Animation)" },
+  { feature: "Text Glow Effect", standard: false, ultimate: "YES (Neon Vibe)" },
+  { feature: "Custom Font Upload", standard: "Google Fonts Only", ultimate: "YES (Uploud Fonts)" },
+  { feature: "Page Preloader", standard: false, ultimate: "YES Custom Gif Logo" },
   
-  { category: "CONVERSION BOOSTERS", feature: "Sticky Add-to-Cart", standard: false, ultimate: "YES (Floating)" },
-  { feature: "Quick Add Button", standard: "Standard", ultimate: "Unique Style" },
+  { category: "CONVERSION BOOSTERS", feature: "Sticky Add-to-Cart", standard: false, ultimate: "YES (Floating Bar)" },
+  { feature: "Quick Add Button", standard: "Standard", ultimate: "Glassmorph Effect" },
   { feature: "Pre-Order System", standard: false, ultimate: "Badge & Status" },
   { feature: "Size Chart Popup", standard: false, ultimate: true },
   { feature: "Stock Status Indicator", standard: false, ultimate: "Low Stock Alert" },
-  { feature: 'Hide "Sold Out" Button', standard: false, ultimate: true },
   
-  { category: "MARKETING TOOLS", feature: "Newsletter Popup", standard: "Standard", ultimate: "Custom Collector" },
+  { category: "MARKETING TOOLS", feature: "Newsletter Popup", standard: "Standard", ultimate: "Waitlist Email Collector" },
   { feature: "Social Media Icons", standard: "Standard", ultimate: "More Icons + Hover FX" },
   { feature: "Shipping Status Bar", standard: false, ultimate: "On Password Page" },
-  { feature: "External Countdown", standard: false, ultimate: "Integrated Timer" },
+  { feature: "External Countdown", standard: false, ultimate: "Countdown Timer" },
   
-  { category: "SUPPORT", feature: "Revisions", standard: "1x Minor", ultimate: "3x Major Revisions" },
-  { feature: "Turnaround Time", standard: "24 Hours", ultimate: "2-3 Days" },
-  { feature: "Priority Support", standard: "Standard", ultimate: "VIP Priority (WhatsApp)" },
+  { category: "SUPPORT & REVISI", feature: "Revisi Desain", standard: "1x Minor", ultimate: "10x Major Revisions" },
+  { feature: "Waktu Pengerjaan", standard: "24 Jam", ultimate: "2-3 Hari (Detail Oriented)" },
+  { feature: "Prioritas Support", standard: "Standard", ultimate: "VIP Priority (WhatsApp)" },
 ];
 
 const renderValue = (value: string | boolean, isPremium: boolean = false) => {
@@ -111,7 +112,7 @@ const Pricing = () => {
               className="glass-card p-2 sm:p-4 text-center"
             >
               <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1">Standard</span>
-              <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold">$100</span>
+              <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold">$90</span>
             </motion.div>
             
             {/* Ultimate Package */}
@@ -128,8 +129,8 @@ const Pricing = () => {
                   Best
                 </span>
               </div>
-              <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1">Ultimate</span>
-              <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold text-primary glow-text">$200</span>
+              <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1">Ultimate Premium</span>
+              <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold text-primary glow-text">$199</span>
             </motion.div>
           </div>
 
