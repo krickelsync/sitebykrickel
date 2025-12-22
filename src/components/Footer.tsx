@@ -1,11 +1,9 @@
 import { motion } from "framer-motion";
-import { Instagram, Twitter, Disc } from "lucide-react";
+import { Instagram } from "lucide-react";
 
 const Footer = () => {
   const socialLinks = [
     { icon: Instagram, href: "https://www.instagram.com/krickel.sync/", label: "Instagram" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Disc, href: "#", label: "Discord" },
   ];
 
   return (
@@ -19,10 +17,10 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight mb-8">
-              KRICKEL
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight mb-8">
+              <span className="text-foreground">SITEBY</span>
               <br />
-              <span className="text-primary glow-text">STUDIO</span>
+              <span className="text-yellow-400 glow-text">KRICKEL</span>
             </h2>
           </motion.div>
 
@@ -50,15 +48,18 @@ const Footer = () => {
           </motion.div>
 
           {/* Copyright */}
-          <motion.p
+          <motion.a
+            href="https://www.instagram.com/krickel.sync/"
+            target="_blank"
+            rel="noopener noreferrer"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="font-mono text-xs text-muted-foreground"
+            className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors"
           >
-            © 2025 KRICKEL STUDIO. ALL RIGHTS RESERVED.
-          </motion.p>
+            © 2025 SITEBYKRICKEL. ALL RIGHTS RESERVED.
+          </motion.a>
         </div>
       </div>
     </footer>
