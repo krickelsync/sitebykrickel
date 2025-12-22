@@ -1,55 +1,54 @@
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, OrbitControls, Environment, Center } from '@react-three/drei';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { useGLTF, OrbitControls, Environment } from '@react-three/drei';
 import { Suspense, useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 
-interface ModelProps {
-  isHovered: boolean;
-}
-
 const GLB_URL = 'https://pgppgdlkoblmpqdyfxfc.supabase.co/storage/v1/object/public/logo//untitled1%20(1).glb';
 
-const Model = ({ isHovered }: ModelProps) => {
+const Model = () => {
   const { scene } = useGLTF(GLB_URL);
-  const modelRef = useRef<THREE.Group>(null);
+  const groupRef = useRef<THREE.Group>(null);
+  const { camera } = useThree();
 
-  // Center the model geometry on first load
   useEffect(() => {
-    if (scene) {
-      // Compute the bounding box
-      const box = new THREE.Box3().setFromObject(scene);
-      const center = box.getCenter(new THREE.Vector3());
+    if (scene && groupRef.current) {
+      // Clone the scene to avoid mutation issues
+      const clonedScene = scene.clone();
       
-      // Offset the scene so its center is at the origin
-      scene.position.sub(center);
+      // Compute bounding box to center the model
+      const box = new THREE.Box3().setFromObject(clonedScene);
+      const center = box.getCenter(new THREE.Vector3());
+      const size = box.getSize(new THREE.Vector3());
+      
+      // Move the model so its center is at the origin
+      clonedScene.position.x = -center.x;
+      clonedScene.position.y = -center.y;
+      clonedScene.position.z = -center.z;
+      
+      // Clear previous children and add the centered clone
+      while (groupRef.current.children.length > 0) {
+        groupRef.current.remove(groupRef.current.children[0]);
+      }
+      groupRef.current.add(clonedScene);
+      
+      // Adjust camera to fit the model
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const fov = (camera as THREE.PerspectiveCamera).fov * (Math.PI / 180);
+      let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+      cameraZ *= 1.5; // Add some padding
+      camera.position.set(0, 0, cameraZ);
+      camera.lookAt(0, 0, 0);
     }
-  }, [scene]);
+  }, [scene, camera]);
 
   useFrame((state) => {
-    if (modelRef.current) {
-      // Scale effect on hover
-      const targetScale = isHovered ? 1.8 : 1.5;
-      modelRef.current.scale.lerp(
-        new THREE.Vector3(targetScale, targetScale, targetScale),
-        0.1
-      );
-
+    if (groupRef.current) {
       // Subtle floating animation
-      modelRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.05;
+      groupRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.2) * 0.03;
     }
   });
 
-  return (
-    <group ref={modelRef}>
-      <Center>
-        <primitive
-          object={scene}
-          scale={1.5}
-          position={[0, 0, 0]}
-        />
-      </Center>
-    </group>
-  );
+  return <group ref={groupRef} />;
 };
 
 // Preload the model for better performance
@@ -60,20 +59,25 @@ const Logo3D = () => {
 
   return (
     <div
-      className="w-32 h-32 cursor-grab active:cursor-grabbing"
+      className="w-20 h-20 cursor-grab active:cursor-grabbing overflow-visible"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      style={{ overflow: 'visible' }}
     >
       <Canvas
-        camera={{ position: [0, 0, 5], fov: 45 }}
-        style={{ background: 'transparent' }}
+        camera={{ position: [0, 0, 3], fov: 50 }}
+        style={{ 
+          background: 'transparent',
+          overflow: 'visible'
+        }}
         gl={{ alpha: true, antialias: true }}
       >
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[5, 5, 5]} intensity={1.2} />
-        <pointLight position={[-5, -5, -5]} intensity={0.5} color="#CCFF00" />
+        <ambientLight intensity={0.8} />
+        <directionalLight position={[5, 5, 5]} intensity={1} />
+        <directionalLight position={[-5, -5, -5]} intensity={0.5} />
+        <pointLight position={[0, 5, 0]} intensity={0.5} color="#CCFF00" />
         <Suspense fallback={null}>
-          <Model isHovered={isHovered} />
+          <Model />
           <Environment preset="city" />
         </Suspense>
         <OrbitControls 
