@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import Logo3D from "./Logo3D";
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navLinks = [{
@@ -23,9 +25,9 @@ const Navbar = () => {
   }} className="fixed top-0 left-0 right-0 z-50 glass">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <a href="#" className="font-display text-xl md:text-2xl font-bold tracking-tight">
-            ​SITEBYKRICKEL
+          {/* 3D Logo */}
+          <a href="#" className="flex items-center">
+            <Logo3D />
           </a>
 
           {/* Desktop Navigation */}
