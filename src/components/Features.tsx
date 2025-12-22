@@ -12,7 +12,7 @@ const features = [
   {
     icon: Music,
     title: "GLOBAL MUSIC PLAYER",
-    description: "Continuous audio playback with glass UI. Set the vibe from landing to checkout.",
+    description: "Music player with glass UI. Set the vibe from landing to checkout.",
     accent: false,
     large: false,
   },
