@@ -1,28 +1,28 @@
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { useRef, useState } from 'react';
+import { useGLTF, OrbitControls, Environment } from '@react-three/drei';
+import { Suspense, useRef, useState } from 'react';
 import * as THREE from 'three';
 
-interface MeshProps {
+interface ModelProps {
   isHovered: boolean;
 }
 
-const ProceduralLogo = ({ isHovered }: MeshProps) => {
-  const meshRef = useRef<THREE.Mesh>(null);
+const Model = ({ isHovered }: ModelProps) => {
+  const { scene } = useGLTF('/models/logo.glb');
+  const modelRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
-    if (meshRef.current) {
+    if (modelRef.current) {
       // Auto-rotate
       const rotationSpeed = isHovered ? 0.03 : 0.01;
-      meshRef.current.rotation.y += rotationSpeed;
-      meshRef.current.rotation.x += rotationSpeed * 0.5;
+      modelRef.current.rotation.y += rotationSpeed;
 
       // Floating animation (up and down)
-      meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.1;
+      modelRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.05;
 
       // Scale effect on hover
-      const targetScale = isHovered ? 1.2 : 1;
-      meshRef.current.scale.lerp(
+      const targetScale = isHovered ? 1.15 : 1;
+      modelRef.current.scale.lerp(
         new THREE.Vector3(targetScale, targetScale, targetScale),
         0.1
       );
@@ -30,19 +30,17 @@ const ProceduralLogo = ({ isHovered }: MeshProps) => {
   });
 
   return (
-    <mesh ref={meshRef}>
-      <torusKnotGeometry args={[0.6, 0.2, 128, 32]} />
-      <meshStandardMaterial
-        color="#CCFF00"
-        wireframe={true}
-        roughness={0.2}
-        metalness={1.0}
-        emissive="#CCFF00"
-        emissiveIntensity={0.3}
-      />
-    </mesh>
+    <primitive
+      ref={modelRef}
+      object={scene}
+      scale={1}
+      position={[0, 0, 0]}
+    />
   );
 };
+
+// Preload the model for better performance
+useGLTF.preload('/models/logo.glb');
 
 const Logo3D = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -61,7 +59,10 @@ const Logo3D = () => {
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
         <pointLight position={[-5, -5, -5]} intensity={0.5} color="#CCFF00" />
-        <ProceduralLogo isHovered={isHovered} />
+        <Suspense fallback={null}>
+          <Model isHovered={isHovered} />
+          <Environment preset="city" />
+        </Suspense>
         <OrbitControls 
           enableZoom={false} 
           enablePan={false}
