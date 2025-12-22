@@ -46,13 +46,13 @@ const pricingData: PricingFeature[] = [
 
 const renderValue = (value: string | boolean, isPremium: boolean = false) => {
   if (value === false) {
-    return <X size={18} className="text-muted-foreground/50 mx-auto" />;
+    return <X size={14} className="text-muted-foreground/50 mx-auto sm:w-[18px] sm:h-[18px]" />;
   }
   if (value === true) {
-    return <Check size={18} className={isPremium ? "text-primary mx-auto" : "text-foreground mx-auto"} />;
+    return <Check size={14} className={`mx-auto sm:w-[18px] sm:h-[18px] ${isPremium ? "text-primary" : "text-foreground"}`} />;
   }
   return (
-    <span className={`font-mono text-xs md:text-sm ${isPremium ? "text-foreground" : "text-muted-foreground"}`}>
+    <span className={`font-mono text-[9px] sm:text-xs md:text-sm leading-tight text-center ${isPremium ? "text-foreground" : "text-muted-foreground"}`}>
       {value}
     </span>
   );
@@ -94,83 +94,81 @@ const Pricing = () => {
         </motion.div>
 
         {/* Pricing Table */}
-        <div className="max-w-5xl mx-auto overflow-x-auto overflow-y-visible pt-6">
-          <div className="min-w-[700px] overflow-visible">
-            {/* Header */}
-            <div className="grid grid-cols-[1fr,140px,160px] md:grid-cols-[1fr,180px,200px] gap-2 mb-4">
-              <div className="p-4">
-                <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
-                  Feature & Service
+        <div className="max-w-4xl mx-auto pt-8">
+          {/* Header */}
+          <div className="grid grid-cols-[1fr,90px,100px] sm:grid-cols-[1fr,120px,140px] md:grid-cols-[1fr,160px,180px] gap-1 sm:gap-2 mb-4">
+            <div className="p-2 sm:p-4">
+              <span className="font-mono text-[10px] sm:text-xs text-muted-foreground uppercase tracking-widest">
+                Feature
+              </span>
+            </div>
+            
+            {/* Standard Package */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="glass-card p-2 sm:p-4 text-center"
+            >
+              <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1">Standard</span>
+              <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold">$100</span>
+            </motion.div>
+            
+            {/* Ultimate Package */}
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1.02 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="relative premium-card rounded-xl p-2 sm:p-4 text-center glow-border animate-pulse-glow overflow-visible"
+            >
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 sm:px-3 sm:py-1 bg-primary text-primary-foreground font-mono text-[8px] sm:text-[10px] uppercase tracking-wider rounded-full whitespace-nowrap">
+                  <Star size={8} fill="currentColor" />
+                  Best
                 </span>
               </div>
-              
-              {/* Standard Package */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="glass-card p-4 text-center"
-              >
-                <span className="font-display text-sm uppercase tracking-tight block mb-1">Standard Drop</span>
-                <span className="font-display text-2xl md:text-3xl font-bold">$100</span>
-              </motion.div>
-              
-              {/* Ultimate Package */}
-              <motion.div
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1.02 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="relative premium-card rounded-xl p-4 text-center glow-border animate-pulse-glow"
-              >
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-primary text-primary-foreground font-mono text-[10px] uppercase tracking-wider rounded-full">
-                    <Star size={10} fill="currentColor" />
-                    Best Value
-                  </span>
-                </div>
-                <span className="font-display text-sm uppercase tracking-tight block mb-1">Ultimate Hype</span>
-                <span className="font-display text-2xl md:text-3xl font-bold text-primary glow-text">$200</span>
-              </motion.div>
-            </div>
+              <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1">Ultimate</span>
+              <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold text-primary glow-text">$200</span>
+            </motion.div>
+          </div>
 
-            {/* Table Body */}
-            <div className="space-y-1">
-              {pricingData.map((row, index) => (
-                <motion.div
-                  key={index}
-                  custom={index}
-                  variants={rowVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                >
-                  {row.category && (
-                    <div className="pt-6 pb-2 first:pt-0">
-                      <span className="font-display text-xs text-primary uppercase tracking-widest">
-                        {row.category}
-                      </span>
-                    </div>
-                  )}
-                  <div className="grid grid-cols-[1fr,140px,160px] md:grid-cols-[1fr,180px,200px] gap-2 group">
-                    <div className="p-3 md:p-4 glass-card group-hover:border-muted transition-colors">
-                      <span className="font-mono text-xs md:text-sm">{row.feature}</span>
-                    </div>
-                    <div className="p-3 md:p-4 glass-card group-hover:border-muted transition-colors flex items-center justify-center">
-                      {renderValue(row.standard)}
-                    </div>
-                    <div className="p-3 md:p-4 premium-card rounded-xl group-hover:border-primary/30 transition-colors flex items-center justify-center">
-                      <div className="flex items-center gap-1.5">
-                        {row.ultimate !== false && row.ultimate !== true && typeof row.ultimate === 'string' && (
-                          <Sparkles size={12} className="text-primary shrink-0" />
-                        )}
-                        {renderValue(row.ultimate, true)}
-                      </div>
+          {/* Table Body */}
+          <div className="space-y-0.5 sm:space-y-1">
+            {pricingData.map((row, index) => (
+              <motion.div
+                key={index}
+                custom={index}
+                variants={rowVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                {row.category && (
+                  <div className="pt-4 sm:pt-6 pb-1 sm:pb-2 first:pt-0">
+                    <span className="font-display text-[10px] sm:text-xs text-primary uppercase tracking-widest">
+                      {row.category}
+                    </span>
+                  </div>
+                )}
+                <div className="grid grid-cols-[1fr,90px,100px] sm:grid-cols-[1fr,120px,140px] md:grid-cols-[1fr,160px,180px] gap-1 sm:gap-2 group">
+                  <div className="p-2 sm:p-3 md:p-4 glass-card group-hover:border-muted transition-colors">
+                    <span className="font-mono text-[10px] sm:text-xs md:text-sm leading-tight">{row.feature}</span>
+                  </div>
+                  <div className="p-2 sm:p-3 md:p-4 glass-card group-hover:border-muted transition-colors flex items-center justify-center">
+                    {renderValue(row.standard)}
+                  </div>
+                  <div className="p-2 sm:p-3 md:p-4 premium-card rounded-xl group-hover:border-primary/30 transition-colors flex items-center justify-center">
+                    <div className="flex items-center gap-1">
+                      {row.ultimate !== false && row.ultimate !== true && typeof row.ultimate === 'string' && (
+                        <Sparkles size={10} className="text-primary shrink-0 hidden sm:block" />
+                      )}
+                      {renderValue(row.ultimate, true)}
                     </div>
                   </div>
-                </motion.div>
-              ))}
-            </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
 
