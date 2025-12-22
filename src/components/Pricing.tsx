@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Check, X, Sparkles, AlertTriangle } from "lucide-react";
+import { Check, X, Sparkles } from "lucide-react";
 
 interface PricingFeature {
   category?: string;
@@ -16,7 +16,7 @@ const pricingData: PricingFeature[] = [
   { feature: "Upload Produk", standard: "Max 10 Produk", ultimate: "Max 50 Produk" },
   { feature: "Mobile Responsive", standard: "Standard Mobile", ultimate: "Compact Mobile UI (Fixed)" },
   
-  { category: "KRICKEL EXCLUSIVES (USP)", feature: "Enter Page", standard: false, ultimate: "YES (Video/Img/3D)" },
+  { category: "$2,000+ WORTH OF PREMIUM FEATURES", feature: "Enter Page", standard: false, ultimate: "YES (Video/Img/3D)" },
   { feature: "3D Interactive Logo (.glb)", standard: false, ultimate: "YES (Spinning Interactive)" },
   { feature: "Global Music Player", standard: false, ultimate: "YES (Popup Equalizer)" },
   { feature: "Glassmorphism Header", standard: false, ultimate: "YES (Glass Effect)" },
@@ -124,8 +124,7 @@ const Pricing = () => {
             >
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 sm:px-3 sm:py-1 bg-primary text-primary-foreground font-mono text-[8px] sm:text-[10px] uppercase tracking-wider rounded-full whitespace-nowrap">
-                  <AlertTriangle size={8} />
-                  Prices can change any time!
+                  PROMO!
                 </span>
               </div>
               <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1">Ultimate Premium</span>
@@ -180,7 +179,9 @@ const Pricing = () => {
           className="text-center mt-12"
         >
           <a
-            href="#"
+            href="https://www.instagram.com/krickel.sync/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group relative inline-flex items-center gap-3 bg-primary text-primary-foreground px-10 py-5 font-mono text-sm font-bold uppercase tracking-wider overflow-hidden transition-all duration-300 hover:glow-box"
           >
             <span className="relative z-10">Get Started Now</span>
