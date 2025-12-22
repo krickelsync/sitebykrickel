@@ -74,8 +74,9 @@ const Hero = () => {
             </a>
 
             <a
-              href="#demo"
-              id="demo"
+              href="https://kcklsite.myshopify.com/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group inline-flex items-center gap-3 px-8 py-4 font-mono text-sm uppercase tracking-wider border border-muted hover:border-foreground transition-all duration-300"
             >
               <Play size={18} className="group-hover:scale-110 transition-transform" />
