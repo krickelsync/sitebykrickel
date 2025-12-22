@@ -22,13 +22,17 @@ const Navbar = () => {
   }} transition={{
     duration: 0.6,
     ease: "easeOut"
-  }} className="fixed top-0 left-0 right-0 z-50 glass">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          {/* 3D Logo */}
-          <a href="#" className="flex items-center">
-            <Logo3D />
-          </a>
+  }} className="fixed top-0 left-0 right-0 z-50 glass overflow-visible">
+      <div className="container mx-auto px-4 overflow-visible">
+        <div className="flex items-center justify-between h-20 overflow-visible">
+          {/* 3D Logo - Absolutely positioned to break out of navbar */}
+          <div className="relative">
+            <a href="#" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60]">
+              <Logo3D />
+            </a>
+            {/* Invisible spacer to maintain layout */}
+            <div className="w-40 h-20 invisible" />
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
