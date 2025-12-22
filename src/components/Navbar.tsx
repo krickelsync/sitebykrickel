@@ -11,7 +11,7 @@ const Navbar = () => {
     href: "#pricing"
   }, {
     name: "Demo",
-    href: "#demo"
+    href: "https://kcklsite.myshopify.com/"
   }];
   return <motion.nav initial={{
     y: -100
