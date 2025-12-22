@@ -1,27 +1,28 @@
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, OrbitControls } from '@react-three/drei';
-import { Suspense, useRef, useState } from 'react';
+import { OrbitControls } from '@react-three/drei';
+import { useRef, useState } from 'react';
 import * as THREE from 'three';
 
-const MODEL_URL = 'https://cdn.shopify.com/3d/models/90eca49db58032ed/untitled1.glb';
-
-interface ModelProps {
+interface MeshProps {
   isHovered: boolean;
 }
 
-const Model = ({ isHovered }: ModelProps) => {
-  const { scene } = useGLTF(MODEL_URL);
-  const modelRef = useRef<THREE.Group>(null);
+const ProceduralLogo = ({ isHovered }: MeshProps) => {
+  const meshRef = useRef<THREE.Mesh>(null);
 
-  useFrame((state, delta) => {
-    if (modelRef.current) {
-      // Auto-rotate, faster on hover
-      const rotationSpeed = isHovered ? 3 : 0.5;
-      modelRef.current.rotation.y += delta * rotationSpeed;
+  useFrame((state) => {
+    if (meshRef.current) {
+      // Auto-rotate
+      const rotationSpeed = isHovered ? 0.03 : 0.01;
+      meshRef.current.rotation.y += rotationSpeed;
+      meshRef.current.rotation.x += rotationSpeed * 0.5;
+
+      // Floating animation (up and down)
+      meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.1;
 
       // Scale effect on hover
-      const targetScale = isHovered ? 1.15 : 1;
-      modelRef.current.scale.lerp(
+      const targetScale = isHovered ? 1.2 : 1;
+      meshRef.current.scale.lerp(
         new THREE.Vector3(targetScale, targetScale, targetScale),
         0.1
       );
@@ -29,17 +30,19 @@ const Model = ({ isHovered }: ModelProps) => {
   });
 
   return (
-    <primitive
-      ref={modelRef}
-      object={scene}
-      scale={1}
-      position={[0, 0, 0]}
-    />
+    <mesh ref={meshRef}>
+      <torusKnotGeometry args={[0.6, 0.2, 128, 32]} />
+      <meshStandardMaterial
+        color="#CCFF00"
+        wireframe={true}
+        roughness={0.2}
+        metalness={1.0}
+        emissive="#CCFF00"
+        emissiveIntensity={0.3}
+      />
+    </mesh>
   );
 };
-
-// Preload the model for better performance
-useGLTF.preload(MODEL_URL);
 
 const Logo3D = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -51,16 +54,19 @@ const Logo3D = () => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <Canvas
-        camera={{ position: [0, 0, 5], fov: 50 }}
+        camera={{ position: [0, 0, 3], fov: 50 }}
         style={{ background: 'transparent' }}
         gl={{ alpha: true, antialias: true }}
       >
-        <ambientLight intensity={0.6} />
+        <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
-        <directionalLight position={[-5, -5, -5]} intensity={0.3} />
-        <Suspense fallback={null}>
-          <Model isHovered={isHovered} />
-        </Suspense>
+        <pointLight position={[-5, -5, -5]} intensity={0.5} color="#CCFF00" />
+        <ProceduralLogo isHovered={isHovered} />
+        <OrbitControls 
+          enableZoom={false} 
+          enablePan={false}
+          autoRotate={false}
+        />
       </Canvas>
     </div>
   );
