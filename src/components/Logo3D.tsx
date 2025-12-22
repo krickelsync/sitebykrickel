@@ -15,19 +15,15 @@ const Model = ({ isHovered }: ModelProps) => {
 
   useFrame((state) => {
     if (modelRef.current) {
-      // Auto-rotate
-      const rotationSpeed = isHovered ? 0.03 : 0.01;
-      modelRef.current.rotation.y += rotationSpeed;
-
-      // Floating animation (up and down)
-      modelRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.05;
-
       // Scale effect on hover
-      const targetScale = isHovered ? 1.15 : 1;
+      const targetScale = isHovered ? 2.8 : 2.5;
       modelRef.current.scale.lerp(
         new THREE.Vector3(targetScale, targetScale, targetScale),
         0.1
       );
+
+      // Floating animation (up and down)
+      modelRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.08;
     }
   });
 
@@ -35,7 +31,7 @@ const Model = ({ isHovered }: ModelProps) => {
     <primitive
       ref={modelRef}
       object={scene}
-      scale={1}
+      scale={2.5}
       position={[0, 0, 0]}
     />
   );
@@ -49,17 +45,17 @@ const Logo3D = () => {
 
   return (
     <div
-      className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] cursor-pointer"
+      className="w-40 h-40 cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <Canvas
-        camera={{ position: [0, 0, 3], fov: 50 }}
+        camera={{ position: [0, 0, 4], fov: 50 }}
         style={{ background: 'transparent' }}
         gl={{ alpha: true, antialias: true }}
       >
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
+        <ambientLight intensity={0.6} />
+        <directionalLight position={[5, 5, 5]} intensity={1.2} />
         <pointLight position={[-5, -5, -5]} intensity={0.5} color="#CCFF00" />
         <Suspense fallback={null}>
           <Model isHovered={isHovered} />
@@ -68,7 +64,9 @@ const Logo3D = () => {
         <OrbitControls 
           enableZoom={false} 
           enablePan={false}
-          autoRotate={false}
+          enableRotate={true}
+          autoRotate={true}
+          autoRotateSpeed={2}
         />
       </Canvas>
     </div>
