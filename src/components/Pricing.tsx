@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Check, X, Sparkles, Star } from "lucide-react";
+import { Check, X, Sparkles, AlertTriangle } from "lucide-react";
 
 interface PricingFeature {
   category?: string;
@@ -88,9 +88,7 @@ const Pricing = () => {
             PRICING
           </span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight">
-            CHOOSE YOUR
-            <br />
-            <span className="text-primary glow-text">DROP LEVEL</span>
+            <span className="text-primary glow-text">AND MORE FEATURES!</span>
           </h2>
         </motion.div>
 
@@ -112,7 +110,7 @@ const Pricing = () => {
               className="glass-card p-2 sm:p-4 text-center"
             >
               <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1">Standard</span>
-              <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold">$90</span>
+              <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold">$99</span>
             </motion.div>
             
             {/* Ultimate Package */}
@@ -125,8 +123,8 @@ const Pricing = () => {
             >
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 sm:px-3 sm:py-1 bg-primary text-primary-foreground font-mono text-[8px] sm:text-[10px] uppercase tracking-wider rounded-full whitespace-nowrap">
-                  <Star size={8} fill="currentColor" />
-                  Best
+                  <AlertTriangle size={8} />
+                  Prices can change any time!
                 </span>
               </div>
               <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1">Ultimate Premium</span>
