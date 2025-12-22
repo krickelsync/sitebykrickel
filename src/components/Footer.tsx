@@ -3,7 +3,7 @@ import { Instagram, Twitter, Disc } from "lucide-react";
 
 const Footer = () => {
   const socialLinks = [
-    { icon: Instagram, href: "#", label: "Instagram" },
+    { icon: Instagram, href: "https://www.instagram.com/krickel.sync/", label: "Instagram" },
     { icon: Twitter, href: "#", label: "Twitter" },
     { icon: Disc, href: "#", label: "Discord" },
   ];
