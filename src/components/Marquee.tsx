@@ -1,12 +1,5 @@
 const Marquee = () => {
-  const items = [
-    "NO MORE BORING THEMES",
-    "NO CODING NEEDED",
-    "READY TO SELL",
-    "HIGH CONVERSION",
-    "PREMIUM DESIGN",
-    "CLEAN EYECATCHING",
-  ];
+  const items = ["NO MORE BORING THEMES", "READY TO SELL", "HIGH CONVERSION", "PREMIUM DESIGN", "CLEAN EYECATCHING"];
 
   return (
     <section className="py-8 border-y border-muted overflow-hidden">
