@@ -5,7 +5,7 @@ const features = [
   {
     icon: Film,
     title: "INTERACTIVE ENTER PAGE",
-    description: "Hollywood-level intro with 3D Logo support. Make visitors feel like they're entering an exclusive experience.",
+    description: "Intro with 3D Logo support. Make customer feel like they're entering an exclusive experience store.",
     accent: true,
     large: true,
   },
