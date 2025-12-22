@@ -4,7 +4,7 @@ import { Film, Music, Box, Smartphone } from "lucide-react";
 const features = [
   {
     icon: Film,
-    title: "CINEMATIC ENTER PAGE",
+    title: "INTERACTIVE ENTER PAGE",
     description: "Hollywood-level intro with 3D Logo support. Make visitors feel like they're entering an exclusive experience.",
     accent: true,
     large: true,
