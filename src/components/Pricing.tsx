@@ -94,8 +94,8 @@ const Pricing = () => {
         </motion.div>
 
         {/* Pricing Table */}
-        <div className="max-w-5xl mx-auto overflow-x-auto">
-          <div className="min-w-[700px]">
+        <div className="max-w-5xl mx-auto overflow-x-auto overflow-y-visible pt-6">
+          <div className="min-w-[700px] overflow-visible">
             {/* Header */}
             <div className="grid grid-cols-[1fr,140px,160px] md:grid-cols-[1fr,180px,200px] gap-2 mb-4">
               <div className="p-4">
