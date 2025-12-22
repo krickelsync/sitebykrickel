@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Play, ArrowRight } from "lucide-react";
+import { Play, ArrowRight, Check } from "lucide-react";
 const Hero = () => {
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Video Background Placeholder */}
@@ -26,7 +26,13 @@ const Hero = () => {
           duration: 0.6,
           delay: 0.2
         }} className="mb-8">
-            <span className="inline-block px-4 py-2 glass-card font-mono text-xs text-primary tracking-widest">​SHOPIFY PARTNER </span>
+            <span className="inline-flex items-center gap-2 px-4 py-2 glass-card font-mono text-xs text-primary tracking-widest">
+              <svg viewBox="0 0 109 124" className="w-4 h-4 fill-current">
+                <path d="M95.02 24.56c-.06-.46-.45-.76-.85-.79-.4-.03-8.47-.16-8.47-.16s-5.6-5.44-6.22-6.03c-.62-.59-1.82-.42-2.29-.28-.01 0-.92.28-2.46.76-1.47-4.24-4.06-8.14-8.63-8.14-.13 0-.25 0-.38.01-.13-.17-.27-.33-.41-.49C63.37 7.21 60.74 6 58.53 6c-16.37.52-24.16 20.48-26.6 30.9-6.35 1.97-10.86 3.37-11.43 3.55-3.57 1.12-3.68 1.23-4.15 4.59C15.98 47.38 0 166.06 0 166.06l74.34 12.83 40.21-10s.01 0 .01-.01c.01 0 .01-.01.01-.01l-19.55-143.31zM67.72 19.74l-4.17 1.29c0-.11.01-.21.01-.32 0-3.28-.45-5.94-1.2-8.05 2.97.37 4.95 3.77 5.36 7.08zM57.2 11.31c.84 2.03 1.38 4.93 1.38 8.91 0 .23 0 .44-.01.66-4.04 1.25-8.45 2.62-12.87 3.99 2.48-9.47 7.13-14.04 11.5-13.56zm-3.81-3.4c.75 0 1.49.25 2.21.75-5.49 2.59-11.38 9.11-13.87 22.13-3.52 1.09-6.97 2.16-10.14 3.14 2.81-9.51 9.51-25.67 21.8-26.02z"/>
+              </svg>
+              SHOPIFY PARTNER
+              <Check size={14} className="text-green-500" />
+            </span>
           </motion.div>
 
           {/* Main Headline */}
