@@ -5,7 +5,7 @@ const Marquee = () => {
     "READY TO SELL",
     "HIGH CONVERSION",
     "PREMIUM DESIGN",
-    "48HR DELIVERY",
+    "CLEAN EYECATCHING",
   ];
 
   return (
