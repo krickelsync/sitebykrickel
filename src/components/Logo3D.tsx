@@ -7,8 +7,10 @@ interface ModelProps {
   isHovered: boolean;
 }
 
+const GLB_URL = 'https://pgppgdlkoblmpqdyfxfc.supabase.co/storage/v1/object/public/logo//untitled1%20(1).glb';
+
 const Model = ({ isHovered }: ModelProps) => {
-  const { scene } = useGLTF('/models/logo.glb');
+  const { scene } = useGLTF(GLB_URL);
   const modelRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
@@ -40,7 +42,7 @@ const Model = ({ isHovered }: ModelProps) => {
 };
 
 // Preload the model for better performance
-useGLTF.preload('/models/logo.glb');
+useGLTF.preload(GLB_URL);
 
 const Logo3D = () => {
   const [isHovered, setIsHovered] = useState(false);
