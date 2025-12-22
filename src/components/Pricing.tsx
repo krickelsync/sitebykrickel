@@ -9,7 +9,7 @@ interface PricingFeature {
 }
 
 const pricingData: PricingFeature[] = [
-  { category: "CORE SETUP", feature: "Theme Installation", standard: "Base Materia Theme", ultimate: "Materia + Krickel Mods" },
+  { category: "CORE SETUP", feature: "Theme Installation", standard: "Base Theme", ultimate: "Materia + Krickel Mods" },
   { feature: "Page Setup", standard: "5 Pages", ultimate: "Unlimited Pages" },
   { feature: "Product Upload", standard: "Max 10 Products", ultimate: "Max 50 Products" },
   { feature: "Mobile Responsive", standard: "Standard Mobile", ultimate: "Compact Mobile UI (Fixed)" },
