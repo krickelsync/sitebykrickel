@@ -31,7 +31,7 @@ const Navbar = () => {
               <Logo3D />
             </a>
             {/* Invisible spacer to maintain layout */}
-            <div className="w-40 h-20 invisible" />
+            <div className="w-32 h-20 invisible" />
           </div>
 
           {/* Desktop Navigation */}
