@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Check, X, Sparkles } from "lucide-react";
+import { Check, X, Sparkles, AlertTriangle } from "lucide-react";
 
 interface PricingFeature {
   category?: string;
@@ -12,21 +12,21 @@ const pricingData: PricingFeature[] = [
   { category: "TARGET BRAND", feature: "Target Brand", standard: "Newbie / Starter", ultimate: "High-End / Established" },
   
   { category: "CORE SETUP", feature: "Theme Installation", standard: "Basic Theme", ultimate: "Premium Theme" },
-  { feature: "Halaman Setup", standard: "5 Halaman (Home, Shop, etc)", ultimate: "Unlimited Pages Setup" },
-  { feature: "Upload Produk", standard: "Max 10 Produk", ultimate: "Max 50 Produk" },
+  { feature: "Pages Setup", standard: "5 Pages (Home, Shop, etc)", ultimate: "Unlimited Pages Setup" },
+  { feature: "Product Upload", standard: "Max 10 Products", ultimate: "Max 50 Products" },
   { feature: "Mobile Responsive", standard: "Standard Mobile", ultimate: "Compact Mobile UI (Fixed)" },
   
-  { category: "$2,000+ WORTH OF PREMIUM FEATURES", feature: "Enter Page", standard: false, ultimate: "YES (Video/Img/3D)" },
+  { category: "KRICKEL EXCLUSIVES (USP)", feature: "Enter Page", standard: false, ultimate: "YES (Video/Img/3D)" },
   { feature: "3D Interactive Logo (.glb)", standard: false, ultimate: "YES (Spinning Interactive)" },
   { feature: "Global Music Player", standard: false, ultimate: "YES (Popup Equalizer)" },
   { feature: "Glassmorphism Header", standard: false, ultimate: "YES (Glass Effect)" },
   
   { category: "VISUAL & AESTHETICS", feature: "Background Type", standard: "Solid Color / Gradient", ultimate: "Custom Vid/Gif/Img Background" },
-  { feature: "Lookbook", standard: "Standart", ultimate: "YES (Layout Animation on Hover)" },
-  { feature: "Custom Cursor", standard: false, ultimate: "YES (Custom svg Logo)" },
+  { feature: "Lookbook", standard: "Standard", ultimate: "YES (Layout Animation on Hover)" },
+  { feature: "Custom Cursor", standard: false, ultimate: "YES (Custom SVG Logo)" },
   { feature: "Running Text (Marquee)", standard: false, ultimate: "YES (Animation)" },
   { feature: "Text Glow Effect", standard: false, ultimate: "YES (Neon Vibe)" },
-  { feature: "Custom Font Upload", standard: "Google Fonts Only", ultimate: "YES (Uploud Fonts)" },
+  { feature: "Custom Font Upload", standard: "Google Fonts Only", ultimate: "YES (Upload Fonts)" },
   { feature: "Page Preloader", standard: false, ultimate: "YES Custom Gif Logo" },
   
   { category: "CONVERSION BOOSTERS", feature: "Sticky Add-to-Cart", standard: false, ultimate: "YES (Floating Bar)" },
@@ -40,9 +40,9 @@ const pricingData: PricingFeature[] = [
   { feature: "Shipping Status Bar", standard: false, ultimate: "On Password Page" },
   { feature: "External Countdown", standard: false, ultimate: "Countdown Timer" },
   
-  { category: "SUPPORT & REVISI", feature: "Revisi Desain", standard: "1x Minor", ultimate: "10x Major Revisions" },
-  { feature: "Waktu Pengerjaan", standard: "24 Jam", ultimate: "2-3 Hari (Detail Oriented)" },
-  { feature: "Prioritas Support", standard: "Standard", ultimate: "VIP Priority (WhatsApp)" },
+  { category: "SUPPORT & REVISIONS", feature: "Design Revisions", standard: "1x Minor", ultimate: "10x Major Revisions" },
+  { feature: "Turnaround Time", standard: "24 Hours", ultimate: "2-3 Days (Detail Oriented)" },
+  { feature: "Support Priority", standard: "Standard", ultimate: "VIP Priority (WhatsApp)" },
 ];
 
 const renderValue = (value: string | boolean, isPremium: boolean = false) => {
@@ -124,6 +124,7 @@ const Pricing = () => {
             >
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 sm:px-3 sm:py-1 bg-primary text-primary-foreground font-mono text-[8px] sm:text-[10px] uppercase tracking-wider rounded-full whitespace-nowrap">
+                  <AlertTriangle size={10} className="sm:w-3 sm:h-3" />
                   PROMO!
                 </span>
               </div>
