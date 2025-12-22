@@ -66,8 +66,8 @@ const Features = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 glass-card font-mono text-xs text-primary tracking-widest mb-6">
-            KRICKEL EXCLUSIVES
+          <span className="inline-block px-4 py-2 glass-card font-mono text-[10px] md:text-xs text-primary tracking-widest mb-6">
+            $2,088+ WORTH OF PREMIUM FEATURES
           </span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight">
             FEATURES THAT
