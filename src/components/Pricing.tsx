@@ -88,7 +88,8 @@ const Pricing = () => {
             PRICING
           </span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight">
-            <span className="text-foreground">AND MORE </span>
+            <span className="text-foreground">AND MORE</span>
+            <br />
             <span className="text-yellow-400 glow-text">FEATURES!</span>
           </h2>
         </motion.div>
