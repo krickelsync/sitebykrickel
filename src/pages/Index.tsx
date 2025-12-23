@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import ScrollVelocity from "@/components/ScrollVelocity";
 import CurvedLoop from "@/components/CurvedLoop";
 import MusicPlayer from "@/components/MusicPlayer";
+import VelocityText from "@/components/VelocityText";
 
 const Index = () => {
   return (
@@ -19,6 +20,7 @@ const Index = () => {
       <ScrollVelocity />
       <Pricing />
       <CurvedLoop />
+      <VelocityText />
       <FAQ />
       <Footer />
       <MusicPlayer />
