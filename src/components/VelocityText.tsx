@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import {
   motion,
   useScroll,
@@ -17,6 +17,7 @@ interface VelocityRowProps {
 }
 
 const VelocityRow = ({ children, baseVelocity, className }: VelocityRowProps) => {
+  const [isMobile, setIsMobile] = useState(false);
   const baseX = useMotionValue(0);
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
@@ -32,16 +33,28 @@ const VelocityRow = ({ children, baseVelocity, className }: VelocityRowProps) =>
 
   const directionFactor = useRef<number>(1);
 
+  // Detect mobile on mount
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   useAnimationFrame((t, delta) => {
+    // Base movement
     let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
 
-    if (velocityFactor.get() < 0) {
-      directionFactor.current = -1;
-    } else if (velocityFactor.get() > 0) {
-      directionFactor.current = 1;
+    // On mobile: use constant speed only (no scroll velocity)
+    // On desktop: add scroll velocity effect
+    if (!isMobile) {
+      if (velocityFactor.get() < 0) {
+        directionFactor.current = -1;
+      } else if (velocityFactor.get() > 0) {
+        directionFactor.current = 1;
+      }
+      moveBy += directionFactor.current * moveBy * velocityFactor.get();
     }
-
-    moveBy += directionFactor.current * moveBy * velocityFactor.get();
 
     baseX.set(baseX.get() + moveBy);
   });
@@ -53,7 +66,11 @@ const VelocityRow = ({ children, baseVelocity, className }: VelocityRowProps) =>
     <div className="overflow-hidden whitespace-nowrap flex">
       <motion.div
         className={`flex whitespace-nowrap font-syne font-bold uppercase text-2xl md:text-4xl tracking-wide ${className}`}
-        style={{ x, willChange: "transform" }}
+        style={{ 
+          x, 
+          willChange: "transform",
+          transform: "translateZ(0)",
+        }}
       >
         <span className="block mr-8">{repeatedContent}</span>
       </motion.div>
