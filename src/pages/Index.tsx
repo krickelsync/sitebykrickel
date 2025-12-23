@@ -5,10 +5,8 @@ import Features from "@/components/Features";
 import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
-import ScrollVelocity from "@/components/ScrollVelocity";
 import CurvedLoop from "@/components/CurvedLoop";
 import MusicPlayer from "@/components/MusicPlayer";
-import VelocityText from "@/components/VelocityText";
 
 const Index = () => {
   return (
@@ -17,10 +15,8 @@ const Index = () => {
       <Hero />
       <Marquee />
       <Features />
-      <ScrollVelocity />
       <Pricing />
       <CurvedLoop />
-      <VelocityText />
       <FAQ />
       <Footer />
       <MusicPlayer />
