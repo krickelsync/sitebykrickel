@@ -5,38 +5,37 @@ interface CurvedLoopProps {
 }
 
 const CurvedLoop = ({ 
-  text = "PREMIUM SHOPIFY THEMES ✦ HIGH CONVERSION ✦ READY TO SELL ✦ " 
+  text = "NO ✦ MORE ✦ BORED ✦ THEMES ✦ " 
 }: CurvedLoopProps) => {
-  const repeatedText = text.repeat(3);
-  const radius = 200;
-  const fontSize = 14;
+  const repeatedText = text.repeat(8);
 
   return (
-    <div className="relative w-full py-16 md:py-24 overflow-hidden bg-background flex items-center justify-center">
+    <div className="relative w-full py-6 md:py-10 overflow-hidden bg-background">
       <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-        className="relative"
-        style={{ width: radius * 2 + 40, height: radius * 2 + 40 }}
+        animate={{ x: [0, -1000] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        className="whitespace-nowrap"
       >
         <svg
-          viewBox={`0 0 ${(radius + 20) * 2} ${(radius + 20) * 2}`}
-          className="w-full h-full"
+          viewBox="0 0 2000 200"
+          className="w-[4000px] h-[100px] md:h-[150px]"
+          preserveAspectRatio="xMidYMid meet"
         >
           <defs>
             <path
-              id="circlePath"
-              d={`M ${radius + 20}, ${radius + 20} m -${radius}, 0 a ${radius},${radius} 0 1,1 ${radius * 2},0 a ${radius},${radius} 0 1,1 -${radius * 2},0`}
+              id="curvePath"
+              d="M 0,150 Q 250,50 500,150 T 1000,150 T 1500,150 T 2000,150"
+              fill="none"
             />
           </defs>
           <text
-            fill="hsl(var(--foreground) / 0.3)"
-            fontSize={fontSize}
+            fill="hsl(var(--foreground))"
+            fontSize="48"
             fontFamily="Space Mono, monospace"
-            letterSpacing="0.2em"
-            className="uppercase font-bold"
+            letterSpacing="0.1em"
+            className="uppercase font-black"
           >
-            <textPath href="#circlePath" startOffset="0%">
+            <textPath href="#curvePath" startOffset="0%">
               {repeatedText}
             </textPath>
           </text>
