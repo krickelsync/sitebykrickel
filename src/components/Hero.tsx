@@ -5,18 +5,22 @@ import Prism from "./Prism";
 const Hero = () => {
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Prism Background Effect - z-index 0 */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      <div className="absolute inset-0 z-0 pointer-events-none bg-black">
         <Prism 
-          height={3.5}
-          baseWidth={5.5}
           animationType="rotate"
-          glow={1}
-          noise={0.5}
-          scale={3.6}
-          bloom={1}
           timeScale={0.5}
+          height={4}
+          baseWidth={5}
+          scale={3}
+          hueShift={0}
+          colorFrequency={1}
+          noise={0.05}
+          glow={0.8}
+          offset={{ x: 0, y: 0 }}
           suspendWhenOffscreen={true}
         />
+        {/* Fade overlay at the bottom */}
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-[1]" />
       </div>
 
       {/* Dark Overlay for text readability - z-index 1 */}
