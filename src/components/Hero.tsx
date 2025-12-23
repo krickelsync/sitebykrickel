@@ -1,44 +1,30 @@
 import { motion } from "framer-motion";
 import { Play, ArrowRight, Check } from "lucide-react";
-import { useState, useEffect } from "react";
 import Prism from "./Prism";
 
 const Hero = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Prism Background Effect - z-index 0 with yellow/gold color filter */}
+      {/* Prism Background Effect - z-index 0 */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-black">
-        <div className="absolute inset-0 sepia hue-rotate-[15deg] saturate-[180%]">
-          <Prism 
-            animationType="rotate"
-            timeScale={0.5}
-            height={4}
-            baseWidth={5}
-            scale={isMobile ? 1.3 : 3}
-            hueShift={3.5}
-            colorFrequency={1}
-            noise={0.05}
-            glow={1}
-            offset={{ x: 0, y: isMobile ? 20 : 0 }}
-            suspendWhenOffscreen={true}
-          />
-        </div>
-        {/* Yellow tint overlay for brand color */}
-        <div className="absolute inset-0 bg-primary/5 mix-blend-overlay pointer-events-none" />
+        <Prism 
+          animationType="rotate"
+          timeScale={0.5}
+          height={4}
+          baseWidth={5}
+          scale={3}
+          hueShift={0}
+          colorFrequency={1}
+          noise={0.05}
+          glow={0.8}
+          offset={{ x: 0, y: 0 }}
+          suspendWhenOffscreen={true}
+        />
         {/* Fade overlay at the bottom */}
-        <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black via-black/80 to-transparent z-[1]" />
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-[1]" />
       </div>
 
       {/* Dark Overlay for text readability - z-index 1 */}
-      <div className="absolute inset-0 z-[1] bg-black/40 pointer-events-none" />
+      <div className="absolute inset-0 z-[1] bg-black/50 pointer-events-none" />
 
       <div className="container relative z-10 px-4">
         <div className="max-w-5xl mx-auto text-center">
