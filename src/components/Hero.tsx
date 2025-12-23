@@ -1,9 +1,26 @@
 import { motion } from "framer-motion";
 import { Play, ArrowRight, Check } from "lucide-react";
+import LaserFlow from "./LaserFlow";
+
 const Hero = () => {
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Video Background Placeholder */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background">
+      {/* Laser Flow Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <LaserFlow 
+          color="#DFFF00"
+          verticalBeamOffset={-0.15}
+          horizontalBeamOffset={0}
+          fogIntensity={0.35}
+          wispIntensity={3.0}
+          verticalSizing={2.5}
+        />
+      </div>
+      
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 z-[1] bg-background/25 pointer-events-none" />
+      
+      {/* Background gradients */}
+      <div className="absolute inset-0 z-[2] bg-gradient-to-b from-background/80 via-transparent to-background pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
         {/* Grid Pattern */}
         <div className="absolute inset-0 opacity-[0.02]" style={{
@@ -13,7 +30,7 @@ const Hero = () => {
       }} />
       </div>
 
-      <div className="container relative z-10 px-4">
+      <div className="container relative z-10 px-4 pointer-events-auto">
         <div className="max-w-5xl mx-auto text-center">
           {/* Eyebrow */}
           <motion.div initial={{
