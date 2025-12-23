@@ -7,8 +7,8 @@ interface ScrollVelocityProps {
 }
 
 const ScrollVelocity = ({ 
-  text1 = "TRUSTED BY 1000+ STORES ✦ TRUSTED BY 1000+ STORES ✦ ", 
-  text2 = "PRICE CAN CHANGE ANYTIME! ✦ PRICE CAN CHANGE ANYTIME! ✦ " 
+  text1 = "TRUSTED BY 1000+ STORES ✦ ", 
+  text2 = "PRICE CAN CHANGE ANYTIME! ✦ " 
 }: ScrollVelocityProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -23,20 +23,20 @@ const ScrollVelocity = ({
   const springX1 = useSpring(x1, { stiffness: 100, damping: 30 });
   const springX2 = useSpring(x2, { stiffness: 100, damping: 30 });
 
-  const repeatedText1 = text1.repeat(6);
-  const repeatedText2 = text2.repeat(6);
+  const repeatedText1 = text1.repeat(12);
+  const repeatedText2 = text2.repeat(12);
 
   return (
-    <div ref={containerRef} className="py-8 md:py-12 overflow-hidden bg-background">
+    <div ref={containerRef} className="py-2 md:py-4 overflow-hidden bg-background">
       <motion.div 
         style={{ x: springX1 }}
-        className="whitespace-nowrap text-4xl md:text-6xl lg:text-7xl font-display font-bold text-foreground/20 uppercase tracking-tight mb-4"
+        className="whitespace-nowrap text-lg md:text-2xl lg:text-3xl font-display font-bold text-foreground/50 uppercase tracking-tight mb-1"
       >
         {repeatedText1}
       </motion.div>
       <motion.div 
         style={{ x: springX2 }}
-        className="whitespace-nowrap text-4xl md:text-6xl lg:text-7xl font-display font-bold text-foreground/20 uppercase tracking-tight"
+        className="whitespace-nowrap text-lg md:text-2xl lg:text-3xl font-display font-bold uppercase tracking-tight text-[#DFFF00] glow-text"
       >
         {repeatedText2}
       </motion.div>
