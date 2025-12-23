@@ -18,9 +18,9 @@ const Footer = () => {
             transition={{ duration: 0.6 }}
           >
           <h2 className="font-syne text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight mb-8" style={{ letterSpacing: '0.02em' }}>
-              <span className="text-foreground" style={{ filter: 'drop-shadow(0 0 8px hsl(var(--foreground) / 0.5)) drop-shadow(0 0 20px hsl(var(--foreground) / 0.3))' }}>SITE BY</span>
+              <span className="text-foreground">SITE BY</span>
               <br />
-              <span className="text-foreground" style={{ filter: 'drop-shadow(0 0 8px hsl(var(--foreground) / 0.5)) drop-shadow(0 0 20px hsl(var(--foreground) / 0.3))' }}>KRICKEL</span>
+              <span className="text-yellow-400" style={{ filter: 'drop-shadow(0 0 8px rgba(250, 204, 21, 0.6)) drop-shadow(0 0 20px rgba(250, 204, 21, 0.4))' }}>KRICKEL</span>
             </h2>
           </motion.div>
 
