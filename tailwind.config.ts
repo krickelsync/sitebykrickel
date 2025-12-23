@@ -15,6 +15,7 @@ export default {
     extend: {
       fontFamily: {
         display: ["Syne", "sans-serif"],
+        syne: ["Syne", "sans-serif"],
         mono: ["Space Mono", "monospace"],
       },
       colors: {

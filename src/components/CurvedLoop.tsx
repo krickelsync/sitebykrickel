@@ -62,16 +62,16 @@ const CurvedLoop = ({
   useEffect(() => {
     if (!spacing || !ready) return;
     let frame = 0;
+    let currentOffset = -spacing;
     const step = () => {
       if (!dragRef.current && textPathRef.current) {
         const delta = dirRef.current === 'right' ? speed : -speed;
-        const currentOffset = parseFloat(textPathRef.current.getAttribute('startOffset') || '0');
-        let newOffset = currentOffset + delta;
-        const wrapPoint = spacing;
-        if (newOffset <= -wrapPoint) newOffset += wrapPoint;
-        if (newOffset > 0) newOffset -= wrapPoint;
-        textPathRef.current.setAttribute('startOffset', newOffset + 'px');
-        setOffset(newOffset);
+        currentOffset += delta;
+        // Seamless wrap - when we've moved one full text length, reset
+        if (currentOffset <= -spacing * 2) currentOffset += spacing;
+        if (currentOffset > 0) currentOffset -= spacing;
+        textPathRef.current.setAttribute('startOffset', currentOffset + 'px');
+        setOffset(currentOffset);
       }
       frame = requestAnimationFrame(step);
     };

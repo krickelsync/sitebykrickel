@@ -17,7 +17,7 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight mb-8">
+          <h2 className="font-syne text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight mb-8">
               <span className="text-foreground">SITEBY</span>
               <br />
               <span className="text-yellow-400 glow-text">KRICKEL</span>
