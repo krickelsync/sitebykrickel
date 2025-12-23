@@ -78,7 +78,7 @@ const Pricing = () => {
     <section id="pricing" className="py-24 md:py-32">
       <div className="container px-4">
         {/* Velocity Text - Above Pricing Badge */}
-        <div className="mb-8 opacity-60">
+        <div className="mb-8">
           <VelocityText />
         </div>
 
