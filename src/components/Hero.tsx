@@ -1,17 +1,26 @@
 import { motion } from "framer-motion";
 import { Play, ArrowRight, Check } from "lucide-react";
+import Prism from "./Prism";
+
 const Hero = () => {
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Video Background Placeholder */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
-        {/* Grid Pattern */}
-        <div className="absolute inset-0 opacity-[0.02]" style={{
-        backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
-                            linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
-        backgroundSize: '60px 60px'
-      }} />
+      {/* Prism Background Effect - z-index 0 */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Prism 
+          height={3.5}
+          baseWidth={5.5}
+          animationType="rotate"
+          glow={1}
+          noise={0.5}
+          scale={3.6}
+          bloom={1}
+          timeScale={0.5}
+          suspendWhenOffscreen={true}
+        />
       </div>
+
+      {/* Dark Overlay for text readability - z-index 1 */}
+      <div className="absolute inset-0 z-[1] bg-black/50 pointer-events-none" />
 
       <div className="container relative z-10 px-4">
         <div className="max-w-5xl mx-auto text-center">
@@ -100,7 +109,7 @@ const Hero = () => {
       opacity: 1
     }} transition={{
       delay: 1.2
-    }} className="absolute bottom-8 left-1/2 -translate-x-1/2">
+    }} className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20">
         <div className="flex flex-col items-center gap-2">
           <span className="font-mono text-xs text-muted-foreground tracking-widest">SCROLL</span>
           <div className="w-px h-12 bg-gradient-to-b from-muted-foreground to-transparent" />
