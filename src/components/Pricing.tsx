@@ -78,7 +78,9 @@ const Pricing = () => {
     <section id="pricing" className="py-24 md:py-32">
       <div className="container px-4">
         {/* Velocity Text - Above Pricing Badge */}
-        <VelocityText />
+        <div className="mb-8">
+          <VelocityText />
+        </div>
 
         {/* Section Header */}
         <motion.div
