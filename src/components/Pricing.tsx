@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Check, X, Sparkles, AlertTriangle } from "lucide-react";
+import VelocityText from "./VelocityText";
 
 interface PricingFeature {
   category?: string;
@@ -76,6 +77,11 @@ const Pricing = () => {
   return (
     <section id="pricing" className="py-24 md:py-32">
       <div className="container px-4">
+        {/* Velocity Text - Above Pricing Badge */}
+        <div className="mb-8 opacity-60">
+          <VelocityText />
+        </div>
+
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
