@@ -57,18 +57,32 @@ useGLTF.preload(GLB_URL);
 const Logo3D = () => {
   const [isHovered, setIsHovered] = useState(false);
 
+  // Prevent default drag behavior on touch/pointer events
+  const handlePointerDown = (e: React.PointerEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDragStart = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <div
-      className="w-20 h-20 cursor-grab active:cursor-grabbing overflow-visible"
+      className="w-20 h-20 cursor-grab active:cursor-grabbing overflow-visible select-none"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ overflow: 'visible' }}
+      onPointerDown={handlePointerDown}
+      onDragStart={handleDragStart}
+      draggable={false}
+      style={{ overflow: 'visible', touchAction: 'none' }}
     >
       <Canvas
         camera={{ position: [0, 0, 3], fov: 50 }}
         style={{ 
           background: 'transparent',
-          overflow: 'visible'
+          overflow: 'visible',
+          touchAction: 'none'
         }}
         gl={{ alpha: true, antialias: true }}
       >
