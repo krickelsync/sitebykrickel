@@ -4,6 +4,7 @@ import './CurvedLoop.css';
 interface CurvedLoopProps {
   marqueeText?: string;
   speed?: number;
+  mobileSpeed?: number;
   className?: string;
   curveAmount?: number;
   direction?: 'left' | 'right';
@@ -13,11 +14,22 @@ interface CurvedLoopProps {
 const CurvedLoop = ({
   marqueeText = 'NO ✦ MORE ✦ BORED ✦ THEMES ✦',
   speed = 2,
+  mobileSpeed = 4,
   className,
   curveAmount = 400,
   direction = 'left',
   interactive = true
 }: CurvedLoopProps) => {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
+  const currentSpeed = isMobile ? mobileSpeed : speed;
   const text = useMemo(() => {
     const hasTrailing = /\s|\u00A0$/.test(marqueeText);
     return (hasTrailing ? marqueeText.replace(/\s+$/, '') : marqueeText) + '\u00A0';
@@ -62,22 +74,26 @@ const CurvedLoop = ({
   useEffect(() => {
     if (!spacing || !ready) return;
     let frame = 0;
-    let currentOffset = -spacing;
+    let animationOffset = -spacing;
+    
     const step = () => {
       if (!dragRef.current && textPathRef.current) {
-        const delta = dirRef.current === 'right' ? speed : -speed;
-        currentOffset += delta;
-        // Seamless wrap - when we've moved one full text length, reset
-        if (currentOffset <= -spacing * 2) currentOffset += spacing;
-        if (currentOffset > 0) currentOffset -= spacing;
-        textPathRef.current.setAttribute('startOffset', currentOffset + 'px');
-        setOffset(currentOffset);
+        const delta = dirRef.current === 'right' ? currentSpeed : -currentSpeed;
+        animationOffset += delta;
+        
+        // Seamless wrap - ensure continuous loop without restart
+        while (animationOffset <= -spacing * 2) animationOffset += spacing;
+        while (animationOffset > 0) animationOffset -= spacing;
+        
+        textPathRef.current.setAttribute('startOffset', animationOffset + 'px');
+        setOffset(animationOffset);
       }
       frame = requestAnimationFrame(step);
     };
+    
     frame = requestAnimationFrame(step);
     return () => cancelAnimationFrame(frame);
-  }, [spacing, speed, ready]);
+  }, [spacing, currentSpeed, ready]);
 
   const onPointerDown = (e: React.PointerEvent) => {
     if (!interactive) return;

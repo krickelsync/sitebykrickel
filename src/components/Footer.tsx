@@ -17,10 +17,10 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-          <h2 className="font-syne text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase tracking-tight mb-8">
-              <span className="text-foreground">SITEBY</span>
+          <h2 className="font-syne text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight mb-8" style={{ letterSpacing: '0.02em' }}>
+              <span className="text-foreground" style={{ filter: 'drop-shadow(0 0 8px hsl(var(--foreground) / 0.5)) drop-shadow(0 0 20px hsl(var(--foreground) / 0.3))' }}>SITE BY</span>
               <br />
-              <span className="text-yellow-400 glow-text">KRICKEL</span>
+              <span className="text-foreground" style={{ filter: 'drop-shadow(0 0 8px hsl(var(--foreground) / 0.5)) drop-shadow(0 0 20px hsl(var(--foreground) / 0.3))' }}>KRICKEL</span>
             </h2>
           </motion.div>
 
