@@ -7,13 +7,20 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navLinks = [{
     name: "Features",
-    href: "#features"
+    href: "#features",
+    external: false
   }, {
     name: "Pricing",
-    href: "#pricing"
+    href: "#pricing",
+    external: false
   }, {
     name: "Demo",
-    href: "https://kcklsite.myshopify.com/"
+    href: "https://kcklsite.myshopify.com/",
+    external: true
+  }, {
+    name: "About Me",
+    href: "https://krickel.carrd.co/",
+    external: true
   }];
   return <motion.nav initial={{
     y: -100
@@ -32,7 +39,7 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map(link => <a key={link.name} href={link.href} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors duration-300">
+            {navLinks.map(link => <a key={link.name} href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors duration-300">
                 {link.name}
               </a>)}
           </div>
@@ -62,7 +69,7 @@ const Navbar = () => {
         height: 0
       }} className="md:hidden pb-6">
             <div className="flex flex-col gap-4">
-              {navLinks.map(link => <a key={link.name} href={link.href} onClick={() => setIsOpen(false)} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors">
+              {navLinks.map(link => <a key={link.name} href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} onClick={() => setIsOpen(false)} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors">
                   {link.name}
                 </a>)}
               <a href="#pricing" onClick={() => setIsOpen(false)} className="glass-card px-6 py-2.5 font-mono text-sm text-center mt-2">
