@@ -17,7 +17,7 @@ const MusicPlayer = () => {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex items-center gap-3 p-2 pr-4 rounded-full bg-background/40 backdrop-blur-md border border-foreground/10 shadow-xl">
+    <div className="fixed bottom-4 right-4 z-50 flex items-center gap-3 p-2 pr-4 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 shadow-2xl">
       <div 
         className={`w-10 h-10 rounded-full overflow-hidden border-2 border-foreground/20 ${playing ? 'animate-spin' : ''}`}
         style={{ animationDuration: '3s' }}
