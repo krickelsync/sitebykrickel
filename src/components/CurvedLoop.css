@@ -13,7 +13,8 @@
 
 .curved-loop-svg text {
   fill: hsl(var(--foreground));
-  font-size: 64px;
+  font-family: var(--font-display), sans-serif;
+  font-size: 100px;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -21,6 +22,6 @@
 
 @media (max-width: 768px) {
   .curved-loop-svg text {
-    font-size: 42px;
+    font-size: 60px;
   }
 }
