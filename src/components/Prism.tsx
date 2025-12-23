@@ -43,7 +43,7 @@ const Prism = ({
     if (!container) return;
 
     const isMobile = window.innerWidth < 768;
-    const dpr = isMobile ? 1 : Math.min(2, window.devicePixelRatio || 1);
+    const dpr = isMobile ? 1 : window.devicePixelRatio || 1;
     const shaderSteps = isMobile ? 50 : 100;
 
     const H = Math.max(0.001, height);
