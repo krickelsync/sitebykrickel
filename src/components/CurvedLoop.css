@@ -13,11 +13,12 @@
 
 .curved-loop-svg text {
   fill: hsl(var(--foreground));
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Syne', sans-serif;
   font-size: 100px;
-  font-weight: 900;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.02em;
+  filter: drop-shadow(0 0 8px hsl(var(--foreground) / 0.5)) drop-shadow(0 0 20px hsl(var(--foreground) / 0.3));
 }
 
 @media (max-width: 768px) {
