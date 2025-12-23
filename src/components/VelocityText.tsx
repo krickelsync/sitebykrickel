@@ -21,13 +21,11 @@ const VelocityRow = ({ children, direction, className }: VelocityRowProps) => {
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
   
-  // Smooth the velocity so it decelerates naturally
   const smoothVelocity = useSpring(scrollVelocity, {
     damping: 50,
     stiffness: 300,
   });
   
-  // Transform velocity to movement factor
   const velocityFactor = useTransform(smoothVelocity, [-1000, 0, 1000], [-15, 0, 15], {
     clamp: false,
   });
@@ -37,46 +35,41 @@ const VelocityRow = ({ children, direction, className }: VelocityRowProps) => {
   const directionFactor = useRef<number>(direction);
 
   useAnimationFrame((t, delta) => {
-    // ONLY move based on scroll velocity - no base movement
     const velocity = velocityFactor.get();
     
-    // Update direction based on scroll direction
     if (velocity < 0) {
       directionFactor.current = -1;
     } else if (velocity > 0) {
       directionFactor.current = 1;
     }
     
-    // Movement is purely from scroll velocity
     const moveBy = direction * velocity * (delta / 1000);
-    
     baseX.set(baseX.get() + moveBy);
   });
 
   return (
-    <div className="overflow-hidden whitespace-nowrap flex">
+    <div className="w-full overflow-hidden whitespace-nowrap">
       <motion.div
-        className={`flex whitespace-nowrap font-syne font-bold uppercase text-2xl md:text-4xl tracking-wide ${className}`}
+        className={`inline-block whitespace-nowrap font-syne font-bold uppercase text-lg md:text-xl tracking-wide ${className}`}
         style={{ 
           x, 
           willChange: "transform",
           transform: "translateZ(0)",
         }}
       >
-        <span className="block mr-8">{children}</span>
+        {children}
       </motion.div>
     </div>
   );
 };
 
 const VelocityText = () => {
-  // Text content with dimmed stars for contrast
   const row1Content = (
     <>
-      {Array(4).fill(null).map((_, i) => (
+      {Array(6).fill(null).map((_, i) => (
         <span key={i}>
           <span className="text-white">TRUSTED BY 1000+ STORES</span>
-          <span className="text-gray-500 mx-4">✦</span>
+          <span className="text-gray-500 mx-3">✦</span>
         </span>
       ))}
     </>
@@ -84,24 +77,24 @@ const VelocityText = () => {
 
   const row2Content = (
     <>
-      {Array(4).fill(null).map((_, i) => (
+      {Array(6).fill(null).map((_, i) => (
         <span key={i}>
-          <span className="text-[#CCFF00]">PRICE CAN CHANGE ANYTIME!</span>
-          <span className="text-gray-500 mx-4">✦</span>
+          <span className="text-[#CCFF00] drop-shadow-[0_0_10px_rgba(204,255,0,0.7)]">PRICE CAN CHANGE ANYTIME!</span>
+          <span className="text-gray-500 mx-3">✦</span>
         </span>
       ))}
     </>
   );
 
   return (
-    <div className="py-6 md:py-10 bg-background overflow-hidden">
+    <div className="w-full overflow-hidden mb-6">
       {/* Row 1 - Pure white text */}
-      <VelocityRow direction={1} className="mb-4">
+      <VelocityRow direction={1} className="leading-tight">
         {row1Content}
       </VelocityRow>
       
-      {/* Row 2 - Bright acid green text */}
-      <VelocityRow direction={-1}>
+      {/* Row 2 - Bright acid green text with glow */}
+      <VelocityRow direction={-1} className="leading-tight">
         {row2Content}
       </VelocityRow>
     </div>
