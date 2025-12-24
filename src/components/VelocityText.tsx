@@ -87,7 +87,7 @@ const VelocityText = () => {
   );
 
   return (
-    <div className="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden mb-6 px-0 mx-0">
+    <div className="w-[100vw] relative left-[50%] translate-x-[-50%] max-w-none overflow-hidden mb-6 px-0 mx-0">
       {/* Row 1 - Pure white text */}
       <VelocityRow direction={1} className="leading-tight">
         {row1Content}

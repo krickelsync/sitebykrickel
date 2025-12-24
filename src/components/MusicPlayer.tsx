@@ -17,9 +17,9 @@ const MusicPlayer = () => {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex items-center gap-3 p-2 pr-4 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 shadow-2xl">
+    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-4 h-14 px-4 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50">
       <div 
-        className={`w-10 h-10 rounded-full overflow-hidden border-2 border-foreground/20 ${playing ? 'animate-spin' : ''}`}
+        className={`w-10 h-10 rounded-full overflow-hidden border border-white/20 ${playing ? 'animate-spin' : ''}`}
         style={{ animationDuration: '3s' }}
       >
         <img 
@@ -30,7 +30,9 @@ const MusicPlayer = () => {
       </div>
       <button 
         onClick={toggle} 
-        className="flex items-center gap-2 text-foreground text-sm font-bold tracking-wider hover:text-primary transition"
+        className={`flex items-center gap-2 text-xs font-bold tracking-widest uppercase transition-colors ${
+          playing ? 'text-[#DFFF00]' : 'text-white/80 hover:text-white'
+        }`}
       >
         {playing ? (
           <>
