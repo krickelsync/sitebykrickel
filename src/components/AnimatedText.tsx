@@ -76,7 +76,15 @@ const AnimatedText = ({
   return <motion.span className={`inline-flex ${className} ${glowOnHover && isHovered ? "glow-text" : ""}`} variants={containerVariants} initial="initial" whileHover="hover" onHoverStart={() => setIsHovered(true)} onHoverEnd={() => setIsHovered(false)} style={{
     cursor: "default"
   }}>
-      {letters.map((letter, index) => {})}
+      {letters.map((letter, index) => (
+        <motion.span
+          key={index}
+          variants={getVariant()}
+          style={{ display: "inline-block" }}
+        >
+          {letter === " " ? "\u00A0" : letter}
+        </motion.span>
+      ))}
     </motion.span>;
 };
 export default AnimatedText;
