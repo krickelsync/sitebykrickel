@@ -203,13 +203,13 @@ const Showcase = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-20 pb-8 px-4">
+      <section className="pt-16 pb-4 px-4">
         <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-8"
+            className="text-center mb-4"
           >
             <a 
               href="/" 
@@ -232,7 +232,7 @@ const Showcase = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap justify-center gap-3 mb-6"
+            className="flex flex-wrap justify-center gap-3 mb-2"
           >
             {categories.map((category) => (
               <button
@@ -254,7 +254,7 @@ const Showcase = () => {
       {/* Templates Grid */}
       <section className="pb-24 px-4">
         <div className="container mx-auto">
-          <div className="grid md:grid-cols-2 gap-4 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-2 max-w-6xl mx-auto">
             {filteredTemplates.map((template, index) => (
               <TiltCard key={template.name} template={template} index={index} />
             ))}
