@@ -104,7 +104,7 @@ const Features = () => {
                 </div>
 
                 {/* Content */}
-                <h3 className="font-display text-xl md:text-2xl font-bold uppercase tracking-tight mb-3 group-hover:text-primary transition-colors duration-300">
+                <h3 className="font-display text-xl md:text-2xl font-bold uppercase tracking-tight mb-3 group-hover:text-primary transition-all duration-300 hover-tracking-expand hover-scale-premium cursor-default">
                   {feature.title}
                 </h3>
                 <p className="font-mono text-sm text-muted-foreground leading-relaxed">
