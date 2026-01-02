@@ -65,20 +65,23 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-black text-foreground overflow-x-hidden">
       {/* Spline Full-Page Fixed Background */}
-      <iframe
-        src="https://my.spline.design/Zkl1fjrHtunP9HZZ/"
-        className="fixed inset-0 w-screen h-screen z-0 border-none"
-        title="Spline 3D Background"
-        allow="autoplay"
-      />
+      <div className="fixed inset-0 w-full h-full z-0 bg-black overflow-hidden">
+        <iframe
+          src="https://my.spline.design/Zkl1fjrHtunP9HZZ/"
+          className="w-full h-full border-none"
+          title="Spline 3D Background"
+          allow="autoplay"
+          loading="lazy"
+        />
+      </div>
 
       {/* Gradient Overlay for readability */}
-      <div className="fixed inset-0 z-[1] pointer-events-none bg-gradient-to-b from-background/30 via-background/50 to-background/80" />
+      <div className="fixed inset-0 z-[5] pointer-events-none bg-gradient-to-b from-black/20 via-black/40 to-black/70" />
 
       {/* All Page Content */}
-      <div className="relative z-10">
+      <div className="relative z-[10]">
         <Navbar />
 
         {/* Hero Section */}
@@ -90,7 +93,7 @@ const About = () => {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="max-w-5xl"
             >
-              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-6">
+              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-6 text-white drop-shadow-2xl">
                 <AnimatedText text="I'm Elfan Tinar." variant="wave" glowOnHover />
               </h1>
               <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground font-mono max-w-3xl">
