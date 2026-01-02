@@ -69,9 +69,9 @@ const About = () => {
 
       {/* Hero Section with Spline */}
       <section className="relative min-h-screen flex flex-col">
-        {/* Spline 3D Interactive Area - Separate from content */}
-        <div className="relative w-full h-[60vh] md:h-[70vh]">
-          <iframe src="https://my.spline.design/hellodistortingintro-UsGKO20dRWLBJGjUEMlwLUuf/" frameBorder="0" width="100%" height="100%" className="absolute inset-0" style={{
+        {/* Spline 3D Interactive Area - Smaller and positioned down */}
+        <div className="relative w-full h-[45vh] md:h-[55vh] mt-20">
+          <iframe src="https://my.spline.design/hellodistortingintro-UsGKO20dRWLBJGjUEMlwLUuf/" frameBorder="0" width="100%" height="100%" className="absolute inset-0 scale-75 md:scale-[0.8] origin-center" style={{
           border: 'none'
         }} />
         </div>
