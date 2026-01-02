@@ -70,25 +70,25 @@ const About = () => {
 
       {/* Hero Section with Spline */}
       <section className="relative min-h-screen flex flex-col">
-        {/* Spline 3D Background */}
-        <div className="absolute inset-0 w-full h-full z-0 pointer-events-auto">
+        {/* Spline 3D Interactive Area - Separate from content */}
+        <div className="relative w-full h-[60vh] md:h-[70vh]">
           <iframe
             src="https://my.spline.design/hellodistortingintro-UsGKO20dRWLBJGjUEMlwLUuf/"
             frameBorder="0"
             width="100%"
             height="100%"
-            className="pointer-events-auto"
+            className="absolute inset-0"
+            style={{ border: 'none' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none" />
         </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 container mx-auto px-4 pt-32 pb-20 flex-1 flex flex-col justify-end">
+        {/* Hero Content - Below Spline with overlap */}
+        <div className="relative z-10 container mx-auto px-4 py-12 -mt-32 md:-mt-40">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="max-w-4xl"
+            className="max-w-4xl bg-background/80 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-glass-border"
           >
             <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
               <AnimatedText text="I'm Elfan Tinar." variant="wave" glowOnHover />
@@ -100,6 +100,9 @@ const About = () => {
             </p>
           </motion.div>
         </div>
+        
+        {/* Gradient transition to next section */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
       </section>
 
       {/* Bio Section */}
