@@ -113,10 +113,10 @@ const Pricing = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="glass-card p-2 sm:p-4 text-center"
+              className="glass-card p-2 sm:p-4 text-center group cursor-default"
             >
-              <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1">Standard</span>
-              <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold">$99</span>
+              <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1 group-hover:tracking-widest transition-all duration-300">Standard</span>
+              <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold hover-float hover-scale-premium inline-block">$99</span>
             </motion.div>
             
             {/* Ultimate Package */}
@@ -125,7 +125,7 @@ const Pricing = () => {
               whileInView={{ opacity: 1, y: 0, scale: 1.02 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="relative premium-card rounded-xl p-2 sm:p-4 text-center glow-border animate-pulse-glow overflow-visible"
+              className="relative premium-card rounded-xl p-2 sm:p-4 text-center glow-border animate-pulse-glow overflow-visible group cursor-default"
             >
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 sm:px-3 sm:py-1 bg-primary text-primary-foreground font-mono text-[8px] sm:text-[10px] uppercase tracking-wider rounded-full whitespace-nowrap">
@@ -133,8 +133,8 @@ const Pricing = () => {
                   PROMO!
                 </span>
               </div>
-              <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1">Ultimate Premium</span>
-              <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold text-primary glow-text">$199</span>
+              <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1 group-hover:tracking-widest transition-all duration-300 hover-glow-intense">Ultimate Premium</span>
+              <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold text-primary glow-text hover-float hover-scale-premium inline-block">$199</span>
             </motion.div>
           </div>
 

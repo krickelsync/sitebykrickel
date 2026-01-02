@@ -43,14 +43,14 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map(link => <a key={link.name} href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors duration-300">
+            {navLinks.map(link => <a key={link.name} href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 hover-underline-reveal hover-lift">
                 {link.name}
               </a>)}
           </div>
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <a href="#pricing" className="glass-card px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border">
+            <a href="#pricing" className="glass-card px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium">
               Get Started
             </a>
           </div>

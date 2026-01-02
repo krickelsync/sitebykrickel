@@ -197,3 +197,86 @@
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
+
+/* Premium Luxury Hover Animations */
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+.hover-underline-reveal {
+  position: relative;
+  display: inline-block;
+}
+
+.hover-underline-reveal::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: hsl(var(--primary));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-underline-reveal:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  text-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hover-glow-intense {
+  transition: text-shadow 0.3s ease;
+}
+
+.hover-glow-intense:hover {
+  text-shadow: 
+    0 0 10px hsl(var(--primary)),
+    0 0 20px hsl(var(--primary)),
+    0 0 40px hsl(var(--primary)),
+    0 0 80px hsl(var(--primary) / 0.5);
+}
+
+.hover-tracking-expand {
+  transition: letter-spacing 0.3s ease, color 0.3s ease;
+}
+
+.hover-tracking-expand:hover {
+  letter-spacing: 0.1em;
+  color: hsl(var(--primary));
+}
+
+.hover-glitch:hover {
+  animation: glitch 0.3s ease-in-out;
+}
+
+.hover-scale-premium {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), text-shadow 0.3s ease;
+}
+
+.hover-scale-premium:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 20px hsl(var(--primary) / 0.5);
+}
+
+.hover-float {
+  transition: transform 0.3s ease;
+}
+
+.hover-float:hover {
+  transform: translateY(-5px);
+}
