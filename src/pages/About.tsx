@@ -68,16 +68,16 @@ const About = () => {
       <Navbar />
 
       {/* Hero Section with Spline */}
-      <section className="relative min-h-screen flex flex-col">
-        {/* Spline 3D Interactive Area - Smaller and positioned down */}
-        <div className="relative w-full h-[45vh] md:h-[55vh] mt-20">
+      <section className="relative flex flex-col">
+        {/* Spline 3D Interactive Area */}
+        <div className="relative w-full h-[50vh] md:h-[60vh] pt-16">
           <iframe src="https://my.spline.design/hellodistortingintro-UsGKO20dRWLBJGjUEMlwLUuf/" frameBorder="0" width="100%" height="100%" className="absolute inset-0 scale-75 md:scale-[0.8] origin-center" style={{
           border: 'none'
         }} />
         </div>
 
         {/* Hero Content - Below Spline with overlap */}
-        <div className="relative z-10 container mx-auto px-4 py-12 -mt-32 md:-mt-40">
+        <div className="relative z-10 container mx-auto px-4 py-8 -mt-24 md:-mt-28">
           <motion.div initial={{
           opacity: 0,
           y: 40
@@ -96,9 +96,6 @@ const About = () => {
             </p>
           </motion.div>
         </div>
-        
-        {/* Gradient transition to next section */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
       </section>
 
       {/* Bio Section */}
