@@ -7,11 +7,11 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navLinks = [{
     name: "Features",
-    href: "#features",
+    href: "/#features",
     external: false
   }, {
     name: "Pricing",
-    href: "#pricing",
+    href: "/#pricing",
     external: false
   }, {
     name: "Showcase",
@@ -37,20 +37,20 @@ const Navbar = () => {
       <div className="container mx-auto px-4 overflow-visible">
         <div className="flex items-center justify-between h-20 overflow-visible">
           {/* 3D Logo */}
-          <a href="#" className="flex items-center justify-center overflow-visible" style={{ overflow: 'visible' }}>
+          <a href="/" className="flex items-center justify-center overflow-visible" style={{ overflow: 'visible' }}>
             <Logo3D />
           </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map(link => <a key={link.name} href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 hover-underline-reveal hover-lift">
+            {navLinks.map(link => <a key={link.name} href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-all duration-400 ease-out hover-underline-reveal hover-lift">
                 {link.name}
               </a>)}
           </div>
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <a href="#pricing" className="glass-card px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium">
+            <a href="/#pricing" className="glass-card px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium">
               Get Started
             </a>
           </div>
@@ -76,7 +76,7 @@ const Navbar = () => {
               {navLinks.map(link => <a key={link.name} href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} onClick={() => setIsOpen(false)} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors">
                   {link.name}
                 </a>)}
-              <a href="#pricing" onClick={() => setIsOpen(false)} className="glass-card px-6 py-2.5 font-mono text-sm text-center mt-2">
+              <a href="/#pricing" onClick={() => setIsOpen(false)} className="glass-card px-6 py-2.5 font-mono text-sm text-center mt-2">
                 Get Started
               </a>
             </div>
