@@ -14,6 +14,10 @@ const Navbar = () => {
     href: "#pricing",
     external: false
   }, {
+    name: "Templates",
+    href: "/showcase",
+    external: false
+  }, {
     name: "Demo",
     href: "https://kcklsite.myshopify.com/",
     external: true
