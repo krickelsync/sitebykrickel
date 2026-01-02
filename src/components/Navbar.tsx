@@ -23,8 +23,8 @@ const Navbar = () => {
     external: true
   }, {
     name: "About Me",
-    href: "https://krickel.carrd.co/",
-    external: true
+    href: "/about",
+    external: false
   }];
   return <motion.nav initial={{
     y: -100
