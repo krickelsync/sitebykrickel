@@ -30,6 +30,7 @@ interface TiltCardProps {
 const TiltCard = ({ template, index }: TiltCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -125,11 +126,23 @@ const TiltCard = ({ template, index }: TiltCardProps) => {
 
             {/* Preview Area */}
             <div className="relative aspect-[16/10] bg-muted/20 overflow-hidden">
+              {/* Loading Skeleton */}
+              {isLoading && (
+                <div className="absolute inset-0 z-10 bg-muted/30 animate-pulse">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skeleton-shimmer" />
+                  <div className="flex flex-col items-center justify-center h-full gap-3">
+                    <div className="w-12 h-12 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
+                    <span className="font-mono text-xs text-muted-foreground">Loading preview...</span>
+                  </div>
+                </div>
+              )}
+              
               <iframe
                 src={template.url}
-                className="w-full h-full scale-100 origin-top-left pointer-events-none"
+                className={`w-full h-full scale-100 origin-top-left pointer-events-none transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
                 title={`${template.name} preview`}
                 loading="lazy"
+                onLoad={() => setIsLoading(false)}
               />
               
               {/* Hover Overlay */}
