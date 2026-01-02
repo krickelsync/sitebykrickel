@@ -69,7 +69,7 @@ const About = () => {
       {/* Spline Full-Page Fixed Background */}
       <div className="fixed inset-0 w-full h-full z-0 bg-black overflow-hidden">
         <iframe
-          src="https://my.spline.design/Zkl1fjrHtunP9HZZ/"
+          src="https://my.spline.design/hellodistortingintro-UsGKO20dRWLBJGjUEMlwLUuf/"
           className="w-full h-full border-none"
           title="Spline 3D Background"
           allow="autoplay"
