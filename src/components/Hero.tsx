@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
-import { Play, ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Eye } from "lucide-react";
 import Prism from "./Prism";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -109,10 +110,10 @@ const Hero = () => {
               <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             </a>
 
-            <a href="https://kcklsite.myshopify.com/" target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-3 px-8 py-4 font-mono text-sm uppercase tracking-wider border border-muted hover:border-foreground transition-all duration-300">
-              <Play size={18} className="group-hover:scale-110 transition-transform" />
-              <span>Live Demo</span>
-            </a>
+            <Link to="/showcase" className="group inline-flex items-center gap-3 px-8 py-4 font-mono text-sm uppercase tracking-wider border border-muted hover:border-foreground transition-all duration-300">
+              <Eye size={18} className="group-hover:scale-110 transition-transform" />
+              <span>SHOWCASE</span>
+            </Link>
           </motion.div>
         </div>
       </div>

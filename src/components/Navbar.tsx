@@ -14,7 +14,7 @@ const Navbar = () => {
     href: "#pricing",
     external: false
   }, {
-    name: "Templates",
+    name: "Showcase",
     href: "/showcase",
     external: false
   }, {
