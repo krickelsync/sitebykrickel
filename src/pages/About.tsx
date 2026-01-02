@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Palette, Code, Brain, TrendingUp, Lightbulb, RefreshCw, Target } from "lucide-react";
-import Spline from "@splinetool/react-spline";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SkillBar from "@/components/SkillBar";
@@ -68,12 +67,12 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* Spline Full-Page Fixed Background */}
-      <div className="fixed inset-0 w-screen h-screen z-0">
-        <Spline
-          scene="https://prod.spline.design/Zkl1fjrHtunP9HZZ/scene.splinecode"
-          style={{ width: '100%', height: '100%' }}
-        />
-      </div>
+      <iframe
+        src="https://my.spline.design/Zkl1fjrHtunP9HZZ/"
+        className="fixed inset-0 w-screen h-screen z-0 border-none"
+        title="Spline 3D Background"
+        allow="autoplay"
+      />
 
       {/* Gradient Overlay for readability */}
       <div className="fixed inset-0 z-[1] pointer-events-none bg-gradient-to-b from-background/30 via-background/50 to-background/80" />
