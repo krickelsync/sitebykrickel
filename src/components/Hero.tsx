@@ -4,6 +4,7 @@ import Prism from "./Prism";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AnimatedText from "./AnimatedText";
+import MagneticText from "./MagneticText";
 
 const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -72,18 +73,18 @@ const Hero = () => {
           duration: 0.8,
           delay: 0.3
         }} className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold uppercase leading-[0.9] tracking-tight mb-8">
-            <span className="block hover-lift">
+            <MagneticText as="span" className="block hover-lift" strength={0.3}>
               <AnimatedText text="DON'T JUST" variant="stagger" />
-            </span>
-            <span className="block hover-lift">
+            </MagneticText>
+            <MagneticText as="span" className="block hover-lift" strength={0.3}>
               <AnimatedText text="SELL PRODUCT." variant="stagger" />
-            </span>
-            <span className="block text-primary glow-text hover-glow-intense">
+            </MagneticText>
+            <MagneticText as="span" className="block text-primary glow-text hover-glow-intense" strength={0.5}>
               <AnimatedText text="SELL AN" variant="glitch" glowOnHover />
-            </span>
-            <span className="block text-primary glow-text hover-glow-intense">
+            </MagneticText>
+            <MagneticText as="span" className="block text-primary glow-text hover-glow-intense" strength={0.5}>
               <AnimatedText text="EXPERIENCE." variant="glitch" glowOnHover />
-            </span>
+            </MagneticText>
           </motion.h1>
 
           {/* Sub-headline */}
