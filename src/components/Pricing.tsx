@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Check, X, Sparkles, AlertTriangle } from "lucide-react";
 import VelocityText from "./VelocityText";
-import MagneticText from "./MagneticText";
 
 interface PricingFeature {
   category?: string;
@@ -93,9 +92,9 @@ const Pricing = () => {
             PRICING
           </span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight">
-            <MagneticText as="span" className="text-foreground" strength={0.25}>AND MORE</MagneticText>
+            <span className="text-foreground">AND MORE</span>
             <br />
-            <MagneticText as="span" className="text-yellow-400 glow-text" strength={0.4}>FEATURES!</MagneticText>
+            <span className="text-yellow-400 glow-text">FEATURES!</span>
           </h2>
         </motion.div>
 
@@ -117,7 +116,7 @@ const Pricing = () => {
               className="glass-card p-2 sm:p-4 text-center group cursor-default"
             >
               <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1 group-hover:tracking-widest transition-all duration-300">Standard</span>
-              <MagneticText as="span" className="font-display text-lg sm:text-2xl md:text-3xl font-bold hover-float hover-scale-premium" strength={0.5}>$99</MagneticText>
+              <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold hover-float hover-scale-premium inline-block">$99</span>
             </motion.div>
             
             {/* Ultimate Package */}
@@ -135,7 +134,7 @@ const Pricing = () => {
                 </span>
               </div>
               <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1 group-hover:tracking-widest transition-all duration-300 hover-glow-intense">Ultimate Premium</span>
-              <MagneticText as="span" className="font-display text-lg sm:text-2xl md:text-3xl font-bold text-primary glow-text hover-float hover-scale-premium" strength={0.5}>$199</MagneticText>
+              <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold text-primary glow-text hover-float hover-scale-premium inline-block">$199</span>
             </motion.div>
           </div>
 

@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Film, Music, Box, Smartphone } from "lucide-react";
-import MagneticText from "./MagneticText";
 
 const features = [
   {
@@ -71,9 +70,9 @@ const Features = () => {
             $2,088+ WORTH OF PREMIUM FEATURES
           </span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight">
-            <MagneticText as="span" strength={0.25}>FEATURES THAT</MagneticText>
+            FEATURES THAT
             <br />
-            <MagneticText as="span" className="text-primary glow-text" strength={0.4}>SET YOU APART</MagneticText>
+            <span className="text-primary glow-text">SET YOU APART</span>
           </h2>
         </motion.div>
 
@@ -105,9 +104,9 @@ const Features = () => {
                 </div>
 
                 {/* Content */}
-                <MagneticText as="h3" className="font-display text-xl md:text-2xl font-bold uppercase tracking-tight mb-3 group-hover:text-primary transition-all duration-300 hover-tracking-expand hover-scale-premium" strength={0.4}>
+                <h3 className="font-display text-xl md:text-2xl font-bold uppercase tracking-tight mb-3 group-hover:text-primary transition-all duration-300 hover-tracking-expand hover-scale-premium cursor-default">
                   {feature.title}
-                </MagneticText>
+                </h3>
                 <p className="font-mono text-sm text-muted-foreground leading-relaxed">
                   {feature.description}
                 </p>
