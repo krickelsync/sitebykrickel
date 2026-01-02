@@ -26,8 +26,13 @@ const About = () => {
   const expertise = [
     {
       icon: Palette,
-      title: "Design",
-      items: ["Branding & Identity", "Clothing & Packaging Design", "Campaign Strategy"],
+      title: "Graphic Designer",
+      items: ["Logo Design", "Clothing Design", "Packaging Design", "Technical Measurable", "UX/UI Basics", "Campaign Design"],
+    },
+    {
+      icon: Code,
+      title: "Web Designer/Dev",
+      items: ["E-commerce", "Portfolio", "Company Profile"],
     },
     {
       icon: Brain,
@@ -66,15 +71,15 @@ const About = () => {
       {/* Hero Section with Spline */}
       <section className="relative min-h-screen flex flex-col">
         {/* Spline 3D Background */}
-        <div className="absolute inset-0 w-full h-full z-0">
+        <div className="absolute inset-0 w-full h-full z-0 pointer-events-auto">
           <iframe
             src="https://my.spline.design/hellodistortingintro-UsGKO20dRWLBJGjUEMlwLUuf/"
             frameBorder="0"
             width="100%"
             height="100%"
-            className="pointer-events-none"
+            className="pointer-events-auto"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none" />
         </div>
 
         {/* Hero Content */}
@@ -85,7 +90,7 @@ const About = () => {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="max-w-4xl"
           >
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
+            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
               <AnimatedText text="I'm Elfan Tinar." variant="wave" glowOnHover />
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground font-mono max-w-2xl">
@@ -140,7 +145,7 @@ const About = () => {
               viewport={{ once: true }}
               className="space-y-6"
             >
-              <h2 className="text-3xl md:text-4xl font-bold">
+              <h2 className="font-display text-3xl md:text-4xl font-bold">
                 A Unique Perspective
               </h2>
               <div className="space-y-4 font-mono text-sm text-muted-foreground leading-relaxed">
@@ -186,7 +191,7 @@ const About = () => {
             <span className="font-mono text-xs text-primary tracking-widest uppercase">
               // Skills & Expertise
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold mt-4">
+            <h2 className="font-display text-3xl md:text-4xl font-bold mt-4">
               What I Bring to the Table
             </h2>
           </motion.div>
@@ -249,12 +254,12 @@ const About = () => {
             <span className="font-mono text-xs text-primary tracking-widest uppercase">
               // Specialized Expertise
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold mt-4">
+            <h2 className="font-display text-3xl md:text-4xl font-bold mt-4">
               Areas of Focus
             </h2>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {expertise.map((item, index) => (
               <ExpertiseCard
                 key={item.title}
@@ -281,7 +286,7 @@ const About = () => {
             <span className="font-mono text-xs text-primary tracking-widest uppercase">
               // Soft Skills
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold mt-4">
+            <h2 className="font-display text-3xl md:text-4xl font-bold mt-4">
               Why Choose Me
             </h2>
           </motion.div>
