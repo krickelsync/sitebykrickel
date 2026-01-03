@@ -65,18 +65,15 @@ const ContactForm = () => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className="relative max-w-xl mx-auto"
+      className="max-w-xl mx-auto"
     >
-      {/* Animated border effect */}
-      <div className="absolute -inset-[1px] bg-gradient-to-r from-primary via-primary/50 to-primary rounded-2xl opacity-75 blur-sm animate-pulse" />
-      
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="relative glass-card p-8 rounded-2xl space-y-6"
+        className="bg-card border border-white/10 p-8 rounded-2xl space-y-6"
       >
         {/* Name Field */}
         <div className="space-y-2">
-          <label htmlFor="name" className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+          <label htmlFor="name" className="font-mono text-xs uppercase tracking-wider text-foreground/70">
             Name
           </label>
           <input
@@ -84,7 +81,7 @@ const ContactForm = () => {
             id="name"
             type="text"
             placeholder="Your name"
-            className="w-full bg-background/50 border border-white/10 rounded-lg px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all"
+            className="w-full bg-muted/30 border border-white/5 rounded-lg px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-white/20 focus:bg-muted/40 transition-all"
           />
           {errors.name && (
             <p className="text-xs text-red-400 font-mono">{errors.name.message}</p>
@@ -93,7 +90,7 @@ const ContactForm = () => {
 
         {/* Email Field */}
         <div className="space-y-2">
-          <label htmlFor="email" className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+          <label htmlFor="email" className="font-mono text-xs uppercase tracking-wider text-foreground/70">
             Email
           </label>
           <input
@@ -101,7 +98,7 @@ const ContactForm = () => {
             id="email"
             type="email"
             placeholder="your@email.com"
-            className="w-full bg-background/50 border border-white/10 rounded-lg px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all"
+            className="w-full bg-muted/30 border border-white/5 rounded-lg px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-white/20 focus:bg-muted/40 transition-all"
           />
           {errors.email && (
             <p className="text-xs text-red-400 font-mono">{errors.email.message}</p>
@@ -110,7 +107,7 @@ const ContactForm = () => {
 
         {/* Message Field */}
         <div className="space-y-2">
-          <label htmlFor="message" className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+          <label htmlFor="message" className="font-mono text-xs uppercase tracking-wider text-foreground/70">
             Message
           </label>
           <textarea
@@ -118,7 +115,7 @@ const ContactForm = () => {
             id="message"
             rows={5}
             placeholder="Tell me about your project..."
-            className="w-full bg-background/50 border border-white/10 rounded-lg px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all resize-none"
+            className="w-full bg-muted/30 border border-white/5 rounded-lg px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-white/20 focus:bg-muted/40 transition-all resize-none"
           />
           {errors.message && (
             <p className="text-xs text-red-400 font-mono">{errors.message.message}</p>
@@ -131,7 +128,7 @@ const ContactForm = () => {
           disabled={isSubmitting || isSuccess}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="w-full cta-shiny glass-card px-6 py-4 font-mono text-sm uppercase tracking-wider flex items-center justify-center gap-3 hover:bg-primary/10 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+          className="w-full bg-primary text-primary-foreground px-6 py-4 rounded-lg font-mono text-sm uppercase tracking-wider flex items-center justify-center gap-3 hover:bg-primary/90 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {isSubmitting ? (
             <>
@@ -140,7 +137,7 @@ const ContactForm = () => {
             </>
           ) : isSuccess ? (
             <>
-              <CheckCircle className="w-4 h-4 text-primary" />
+              <CheckCircle className="w-4 h-4" />
               <span>Sent!</span>
             </>
           ) : (
