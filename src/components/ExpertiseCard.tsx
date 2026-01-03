@@ -15,7 +15,7 @@ const ExpertiseCard = ({ icon: Icon, title, items, delay = 0 }: ExpertiseCardPro
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: delay * 0.15, ease: [0.22, 1, 0.36, 1] }}
       viewport={{ once: true }}
-      className="glass-card p-6 group hover:border-primary/30 transition-all duration-500"
+      className="glass-card card-shiny-border p-6 group hover:border-primary/30 transition-all duration-500"
     >
       <div className="flex items-center gap-3 mb-4">
         <div className="p-2.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300">
