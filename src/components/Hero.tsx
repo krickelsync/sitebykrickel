@@ -82,10 +82,10 @@ const Hero = () => {
             <span className="block hover-lift">
               SELL PRODUCT.
             </span>
-            <span className="block text-primary glow-text-mobile md:glow-text hover-glow-intense">
+            <span className="block glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense">
               SELL AN
             </span>
-            <span className="block text-primary glow-text-mobile md:glow-text hover-glow-intense">
+            <span className="block glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense">
               EXPERIENCE.
             </span>
           </motion.h1>
