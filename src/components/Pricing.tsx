@@ -38,6 +38,8 @@ const ultimateFeatures = [
     { feature: "Global Music Player", value: "Popup Equalizer" },
     { feature: "Glassmorphism Header", value: "Glass Effect" },
     { feature: "Custom Cursor", value: "SVG Logo" },
+    { feature: "Free Domain Include", value: "Included" },
+    { feature: "Free Email Domain", value: "Up to 10 Custom Emails @yourbrand.com" },
   ]},
   { category: "VISUAL & AESTHETICS", items: [
     { feature: "Background Type", value: "Vid/Gif/Img" },
