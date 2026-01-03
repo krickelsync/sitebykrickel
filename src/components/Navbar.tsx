@@ -41,6 +41,10 @@ const Navbar = () => {
     href: "/",
     external: false
   }, {
+    name: "About",
+    href: "/about",
+    external: false
+  }, {
     name: "Portofolio",
     href: "/showcase",
     external: false

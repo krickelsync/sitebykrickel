@@ -53,6 +53,7 @@ const AnimatedBrandText = ({ text, className, delay = 0 }: { text: string; class
 const Footer = () => {
   const quickLinks = [
     { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
     { name: "Portofolio", href: "/showcase" },
     { name: "Pricing", href: "/#pricing" },
     { name: "Contact", href: "/about#contact" },
@@ -70,9 +71,9 @@ const Footer = () => {
             transition={{ duration: 0.6 }}
             className="space-y-4"
           >
-            <h2 className="font-syne text-2xl md:text-3xl font-extrabold uppercase tracking-tight">
+            <h2 className="font-syne text-2xl md:text-3xl font-extrabold uppercase tracking-tight flex flex-col">
               <AnimatedBrandText 
-                text="SITE BY " 
+                text="SITE BY" 
                 className="text-foreground"
               />
               <AnimatedBrandText 
