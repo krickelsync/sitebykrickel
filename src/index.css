@@ -62,84 +62,19 @@
     --input: 0 0% 15%;
     --ring: 74 100% 50%;
   }
-  /* Light Mode - Custom Palette */
-  .light {
-    /* Background: Light Gray #E8E8E8 */
-    --background: 0 0% 91%;
-    /* Foreground: Navy #1C2A3A */
-    --foreground: 210 34% 17%;
-    
-    /* Card: Pure White */
-    --card: 0 0% 100%;
-    --card-foreground: 210 34% 17%;
-    
-    --popover: 0 0% 100%;
-    --popover-foreground: 210 34% 17%;
-    
-    /* Primary: Orange #F9A825 */
-    --primary: 43 95% 56%;
-    --primary-foreground: 0 0% 0%;
-    
-    /* Secondary: Soft gray */
-    --secondary: 0 0% 95%;
-    --secondary-foreground: 210 34% 25%;
-    
-    /* Muted: Medium gray */
-    --muted: 0 0% 85%;
-    --muted-foreground: 210 20% 35%;
-    
-    /* Accent: Orange */
-    --accent: 43 95% 56%;
-    --accent-foreground: 0 0% 0%;
-    
-    /* Destructive */
-    --destructive: 0 65% 50%;
-    --destructive-foreground: 0 0% 100%;
-    
-    /* Border: Subtle gray */
-    --border: 210 15% 80%;
-    --input: 210 15% 80%;
-    --ring: 43 95% 56%;
-    
-    /* Glass effect for light mode */
-    --glass-bg: 210 34% 17% / 0.05;
-    --glass-border: 210 34% 17% / 0.1;
-  }
 }
 
-/* Smooth fade transition for theme switching */
-html,
-body,
-.glass,
-.glass-card {
-  transition: background-color 0.4s ease, 
-              border-color 0.4s ease, 
-              color 0.4s ease;
+/* Light mode with CSS invert filter */
+.light {
+  filter: invert(1) hue-rotate(180deg);
 }
 
-/* Transition for common elements */
-*:not(video):not(canvas):not(img):not(.no-transition) {
-  transition: background-color 0.3s ease, 
-              border-color 0.3s ease, 
-              color 0.3s ease,
-              box-shadow 0.3s ease;
-}
-
-/* Light mode glass adjustments */
-.light .glass,
-.light .glass-card {
-  background: hsl(0 0% 100% / 0.7);
-  border-color: hsl(210 34% 17% / 0.08);
-}
-
-.light .glow-text {
-  text-shadow: 0 0 20px hsl(43 95% 56% / 0.4),
-               0 0 40px hsl(43 95% 56% / 0.2);
-}
-
-.light .glow-border {
-  box-shadow: 0 0 20px hsl(43 95% 56% / 0.2),
-              0 0 40px hsl(43 95% 56% / 0.1);
+/* Keep images/videos normal (double invert = original) */
+.light img,
+.light video,
+.light canvas,
+.light [data-no-invert] {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 @layer base {
