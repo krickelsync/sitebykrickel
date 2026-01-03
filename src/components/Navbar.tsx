@@ -49,10 +49,6 @@ const Navbar = () => {
     href: "/showcase",
     external: false
   }, {
-    name: "Demo",
-    href: "https://kcklsite.myshopify.com/",
-    external: true
-  }, {
     name: "About Me",
     href: "/about",
     external: false
