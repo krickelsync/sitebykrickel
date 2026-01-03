@@ -17,6 +17,13 @@ const templates = [
     description: "Modern E-commerce Experience",
     tagline: "Bold streetwear vibes for fashion brands",
     category: "E-commerce"
+  },
+  {
+    name: "Glassy",
+    url: "https://kcklsite.myshopify.com/",
+    description: "Shopify Template for Clothing Brand",
+    tagline: "Pure Front End And Backend Shopify",
+    category: "E-commerce"
   }
 ];
 
