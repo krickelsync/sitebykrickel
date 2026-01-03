@@ -113,7 +113,7 @@ const Pricing = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="glass-card card-shiny-border p-2 sm:p-4 text-center group cursor-default"
+              className="glass-card p-2 sm:p-4 text-center group cursor-default"
             >
               <span className="font-display text-[10px] sm:text-sm uppercase tracking-tight block mb-1 group-hover:tracking-widest transition-all duration-300">Standard</span>
               <span className="font-display text-lg sm:text-2xl md:text-3xl font-bold hover-float hover-scale-premium inline-block">$99</span>
@@ -125,7 +125,7 @@ const Pricing = () => {
               whileInView={{ opacity: 1, y: 0, scale: 1.02 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="relative premium-card card-shiny-border rounded-xl p-2 sm:p-4 text-center glow-border animate-pulse-glow overflow-visible group cursor-default"
+              className="relative premium-card rounded-xl p-2 sm:p-4 text-center glow-border animate-pulse-glow overflow-visible group cursor-default"
             >
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 sm:px-3 sm:py-1 bg-primary text-primary-foreground font-mono text-[8px] sm:text-[10px] uppercase tracking-wider rounded-full whitespace-nowrap">
@@ -157,10 +157,10 @@ const Pricing = () => {
                   </div>
                 )}
                 <div className="grid grid-cols-[1fr,90px,100px] sm:grid-cols-[1fr,120px,140px] md:grid-cols-[1fr,160px,180px] gap-1 sm:gap-2 group">
-                  <div className="p-2 sm:p-3 md:p-4 glass-card card-shiny-border group-hover:border-muted transition-colors">
+                  <div className="p-2 sm:p-3 md:p-4 glass-card group-hover:border-muted transition-colors">
                     <span className="font-mono text-[10px] sm:text-xs md:text-sm leading-tight">{row.feature}</span>
                   </div>
-                  <div className="p-2 sm:p-3 md:p-4 glass-card card-shiny-border group-hover:border-muted transition-colors flex items-center justify-center">
+                  <div className="p-2 sm:p-3 md:p-4 glass-card group-hover:border-muted transition-colors flex items-center justify-center">
                     {renderValue(row.standard)}
                   </div>
                   <div className="p-2 sm:p-3 md:p-4 premium-card rounded-xl group-hover:border-primary/30 transition-colors flex items-center justify-center">
@@ -188,7 +188,7 @@ const Pricing = () => {
             href="https://www.instagram.com/krickel.sync/"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-shiny group relative inline-flex items-center gap-3 bg-primary text-primary-foreground px-10 py-5 font-mono text-sm font-bold uppercase tracking-wider overflow-hidden transition-all duration-300 hover:glow-box"
+            className="group relative inline-flex items-center gap-3 bg-primary text-primary-foreground px-10 py-5 font-mono text-sm font-bold uppercase tracking-wider overflow-hidden transition-all duration-300 hover:glow-box"
           >
             <span className="relative z-10">Get Started Now</span>
             <Sparkles size={18} className="relative z-10" />

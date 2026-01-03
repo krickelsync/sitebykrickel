@@ -16,7 +16,7 @@ const WhyChooseCard = ({ icon: Icon, title, description, delay = 0 }: WhyChooseC
       transition={{ duration: 0.5, delay: delay * 0.1, ease: [0.22, 1, 0.36, 1] }}
       viewport={{ once: true }}
       whileHover={{ y: -5 }}
-      className="glass-card card-shiny-border p-6 text-center group hover:border-primary/30 transition-all duration-500"
+      className="glass-card p-6 text-center group hover:border-primary/30 transition-all duration-500"
     >
       <div className="inline-flex p-4 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 mb-4">
         <Icon className="w-6 h-6 text-primary" />

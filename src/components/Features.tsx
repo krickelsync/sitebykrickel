@@ -90,7 +90,7 @@ const Features = () => {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className={`group relative glass-card card-shiny-border p-6 md:p-8 hover:border-primary/30 transition-all duration-500 ${
+                className={`group relative glass-card p-6 md:p-8 hover:border-primary/30 transition-all duration-500 ${
                   feature.large ? "md:col-span-1" : ""
                 } ${feature.accent ? "premium-card" : ""}`}
               >

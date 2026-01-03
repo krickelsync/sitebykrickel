@@ -64,7 +64,7 @@ const FAQ = () => {
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="glass-card card-shiny-border px-6 border-none"
+                className="glass-card px-6 border-none"
               >
                 <AccordionTrigger className="font-display text-left text-base md:text-lg uppercase tracking-tight hover:text-primary transition-colors py-6 hover:no-underline">
                   {faq.question}
