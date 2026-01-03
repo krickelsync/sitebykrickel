@@ -89,9 +89,9 @@ const Navbar = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-          <a
+            <a
               href="/about#contact"
-              className="cta-shiny glass-card px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium"
+              className="cta-shiny rounded-xl bg-background/5 border border-white/10 px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium"
             >
               <span className="relative z-10">Get Started</span>
             </a>
@@ -164,7 +164,7 @@ const Navbar = () => {
                   exit={{ opacity: 0, x: -10 }}
                   href="/about#contact"
                   onClick={() => setIsOpen(false)}
-                  className="cta-shiny glass-card px-6 py-2.5 font-mono text-sm text-center mt-2"
+                  className="cta-shiny rounded-xl bg-background/5 border border-white/10 px-6 py-2.5 font-mono text-sm text-center mt-2"
                 >
                   <span className="relative z-10">Get Started</span>
                 </motion.a>
