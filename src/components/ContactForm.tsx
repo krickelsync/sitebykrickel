@@ -65,11 +65,11 @@ const ContactForm = () => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className="max-w-xl mx-auto"
+      className="max-w-xl mx-auto shiny-card"
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-card border border-white/10 p-8 rounded-2xl space-y-6"
+        className="bg-card border border-white/10 p-8 rounded-2xl space-y-6 shadow-[0_0_40px_-15px_hsl(var(--primary)/0.2)]"
       >
         {/* Name Field */}
         <div className="space-y-2">
@@ -128,7 +128,7 @@ const ContactForm = () => {
           disabled={isSubmitting || isSuccess}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="w-full bg-primary text-primary-foreground px-6 py-4 rounded-lg font-mono text-sm uppercase tracking-wider flex items-center justify-center gap-3 hover:bg-primary/90 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+          className="w-full cta-shiny glass-card px-6 py-4 rounded-xl font-mono text-sm uppercase tracking-wider flex items-center justify-center gap-3 hover:bg-primary/10 transition-all duration-300 animate-pulse-glow hover-scale-premium disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {isSubmitting ? (
             <>
@@ -137,7 +137,7 @@ const ContactForm = () => {
             </>
           ) : isSuccess ? (
             <>
-              <CheckCircle className="w-4 h-4" />
+              <CheckCircle className="w-4 h-4 text-primary" />
               <span>Sent!</span>
             </>
           ) : (
