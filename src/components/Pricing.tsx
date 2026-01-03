@@ -120,7 +120,7 @@ const Pricing = () => {
             <div className="text-center mb-4 md:mb-6 pb-4 md:pb-6 border-b border-border/50">
               <span className="font-display text-[10px] md:text-sm uppercase tracking-widest text-muted-foreground">Standard</span>
               <div className="mt-1 md:mt-2">
-                <span className="font-display text-2xl md:text-5xl font-bold">$99</span>
+                <span className="font-display text-2xl md:text-5xl font-bold">$150</span>
               </div>
               <p className="font-mono text-[8px] md:text-xs text-muted-foreground mt-1 md:mt-2">Perfect for starters</p>
             </div>
@@ -159,9 +159,7 @@ const Pricing = () => {
 
             {/* CTA */}
             <a
-              href="https://www.instagram.com/krickel.sync/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/about#contact"
               className="mt-4 md:mt-6 block w-full text-center py-2 md:py-4 border border-border font-mono text-[10px] md:text-sm uppercase tracking-wider hover:bg-foreground hover:text-background transition-all duration-300"
             >
               Get Started
@@ -193,7 +191,7 @@ const Pricing = () => {
             <div className="text-center mb-4 md:mb-6 pb-4 md:pb-6 border-b border-primary/20">
               <span className="font-display text-[10px] md:text-sm uppercase tracking-widest text-primary">Ultimate Premium</span>
               <div className="mt-1 md:mt-2">
-                <span className="font-display text-2xl md:text-5xl font-bold text-primary glow-text">$199</span>
+                <span className="font-display text-2xl md:text-5xl font-bold text-primary glow-text">$299</span>
               </div>
               <p className="font-mono text-[8px] md:text-xs text-muted-foreground mt-1 md:mt-2">For high-end brands</p>
             </div>
@@ -225,9 +223,7 @@ const Pricing = () => {
 
             {/* CTA */}
             <a
-              href="https://www.instagram.com/krickel.sync/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/about#contact"
               className="group mt-4 md:mt-6 relative block w-full text-center bg-primary text-primary-foreground py-2 md:py-4 font-mono text-[10px] md:text-sm uppercase tracking-wider overflow-hidden transition-all duration-300 hover:glow-box"
             >
               <span className="relative z-10 flex items-center justify-center gap-1 md:gap-2">
