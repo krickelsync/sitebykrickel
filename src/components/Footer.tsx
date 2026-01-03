@@ -25,7 +25,7 @@ const Footer = () => {
             <h2 className="font-syne text-2xl md:text-3xl font-extrabold uppercase tracking-tight">
               <span className="text-foreground">SITE BY</span>{" "}
               <span
-                className="text-yellow-400"
+                className="text-yellow-400 animate-[pulse-glow_2s_ease-in-out_infinite]"
                 style={{
                   filter:
                     "drop-shadow(0 0 8px rgba(250, 204, 21, 0.6)) drop-shadow(0 0 20px rgba(250, 204, 21, 0.4))",
