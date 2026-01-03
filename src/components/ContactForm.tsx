@@ -128,24 +128,26 @@ const ContactForm = () => {
           disabled={isSubmitting || isSuccess}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="w-full cta-shiny glass-card px-6 py-4 rounded-xl font-mono text-sm uppercase tracking-wider flex items-center justify-center gap-3 hover:bg-primary/10 transition-all duration-300 animate-pulse-glow hover-scale-premium disabled:opacity-70 disabled:cursor-not-allowed"
+          className="w-full cta-shiny rounded-xl bg-background/5 border border-white/10 px-6 py-4 font-mono text-sm uppercase tracking-wider flex items-center justify-center gap-3 hover:bg-primary/10 transition-all duration-300 animate-pulse-glow disabled:opacity-70 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              <span>Sending...</span>
-            </>
-          ) : isSuccess ? (
-            <>
-              <CheckCircle className="w-4 h-4 text-primary" />
-              <span>Sent!</span>
-            </>
-          ) : (
-            <>
-              <Send className="w-4 h-4" />
-              <span>Send Message</span>
-            </>
-          )}
+          <span className="relative z-10 flex items-center justify-center gap-3">
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Sending...</span>
+              </>
+            ) : isSuccess ? (
+              <>
+                <CheckCircle className="w-4 h-4 text-primary" />
+                <span>Sent!</span>
+              </>
+            ) : (
+              <>
+                <Send className="w-4 h-4" />
+                <span>Send Message</span>
+              </>
+            )}
+          </span>
         </motion.button>
       </form>
     </motion.div>
