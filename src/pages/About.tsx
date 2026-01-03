@@ -1,6 +1,5 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Palette, Code, Brain, TrendingUp, Lightbulb, RefreshCw, Target } from "lucide-react";
-import { useRef } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SkillBar from "@/components/SkillBar";
@@ -9,18 +8,7 @@ import WhyChooseCard from "@/components/WhyChooseCard";
 import AnimatedText from "@/components/AnimatedText";
 import profileImage from "@/assets/elfan-profile.jpg";
 import workingImage from "@/assets/elfan-working.jpg";
-
 const About = () => {
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"]
-  });
-  
-  // Foto tetap di tempat (tidak ikut scroll)
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  // Headline bergerak ke bawah
-  const headlineY = useTransform(scrollYProgress, [0, 1], [0, 300]);
   const creativeSkills = [{
     name: "Photoshop",
     percentage: 100
@@ -79,41 +67,35 @@ const About = () => {
   return <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
 
-      {/* Hero Section with Spline - Parallax */}
-      <section ref={heroRef} className="relative flex flex-col min-h-[120vh]">
-        {/* Spline 3D Interactive Area - Fixed position effect */}
-        <motion.div 
-          style={{ y: imageY }} 
-          className="sticky top-0 w-full h-[50vh] md:h-[60vh] pt-16"
-        >
-          <iframe 
-            src="https://my.spline.design/hellodistortingintro-UsGKO20dRWLBJGjUEMlwLUuf/" 
-            frameBorder="0" 
-            width="100%" 
-            height="100%" 
-            className="absolute inset-0 scale-75 md:scale-[0.8] origin-center" 
-            style={{ border: 'none' }} 
-          />
-        </motion.div>
+      {/* Hero Section with Spline */}
+      <section className="relative flex flex-col">
+        {/* Spline 3D Interactive Area */}
+        <div className="relative w-full h-[50vh] md:h-[60vh] pt-16">
+          <iframe src="https://my.spline.design/hellodistortingintro-UsGKO20dRWLBJGjUEMlwLUuf/" frameBorder="0" width="100%" height="100%" className="absolute inset-0 scale-75 md:scale-[0.8] origin-center" style={{
+          border: 'none'
+        }} />
+        </div>
 
-        {/* Hero Content - Moves down on scroll to cover about section */}
-        <motion.div 
-          style={{ y: headlineY }}
-          className="relative z-10 container mx-auto px-4 py-8 -mt-24 md:-mt-28"
-        >
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.8, delay: 0.5 }} 
-            className="max-w-4xl bg-background/95 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-glass-border shadow-2xl"
-          >
+        {/* Hero Content - Below Spline with overlap */}
+        <div className="relative z-10 container mx-auto px-4 py-8 -mt-24 md:-mt-28">
+          <motion.div initial={{
+          opacity: 0,
+          y: 40
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} transition={{
+          duration: 0.8,
+          delay: 0.5
+        }} className="max-w-4xl bg-background/80 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-glass-border">
+            
             <p className="text-lg md:text-xl text-muted-foreground font-mono max-w-2xl">
               <span className="text-primary">18 Years Old.</span>{" "}
               <span className="text-primary">5 Years Experience</span> in Graphic Designer, 
               creative bridging the gap between design, technology, and artificial intelligence.
             </p>
           </motion.div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Bio Section */}
