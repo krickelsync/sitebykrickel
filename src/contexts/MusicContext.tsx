@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useRef, useState, useEffect, ReactNode, useCallback } from 'react';
 
 interface MusicContextType {
   isPlaying: boolean;
@@ -6,6 +6,9 @@ interface MusicContextType {
 }
 
 const MusicContext = createContext<MusicContextType | null>(null);
+
+// Keep audio reference outside component to persist across re-renders
+let globalAudio: HTMLAudioElement | null = null;
 
 export const useMusicPlayer = () => {
   const context = useContext(MusicContext);
@@ -20,28 +23,40 @@ export const MusicProvider = ({ children }: { children: ReactNode }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Create audio element once at app level
-    audioRef.current = new Audio('https://pgppgdlkoblmpqdyfxfc.supabase.co/storage/v1/object/public/logo//audio_6848604906-2.mp3');
-    audioRef.current.loop = true;
+    // Create audio only once globally
+    if (!globalAudio) {
+      globalAudio = new Audio('https://pgppgdlkoblmpqdyfxfc.supabase.co/storage/v1/object/public/logo//audio_6848604906-2.mp3');
+      globalAudio.loop = true;
+    }
+    
+    audioRef.current = globalAudio;
+    
+    // Sync state with actual audio state
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+    
+    globalAudio.addEventListener('play', handlePlay);
+    globalAudio.addEventListener('pause', handlePause);
+    
+    // Sync initial state
+    setIsPlaying(!globalAudio.paused);
 
     return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
+      // Don't destroy audio on unmount - keep playing
+      globalAudio?.removeEventListener('play', handlePlay);
+      globalAudio?.removeEventListener('pause', handlePause);
     };
   }, []);
 
-  const togglePlay = () => {
+  const togglePlay = useCallback(() => {
     if (!audioRef.current) return;
     
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
+    if (audioRef.current.paused) {
       audioRef.current.play();
+    } else {
+      audioRef.current.pause();
     }
-    setIsPlaying(!isPlaying);
-  };
+  }, []);
 
   return (
     <MusicContext.Provider value={{ isPlaying, togglePlay }}>

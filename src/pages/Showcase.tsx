@@ -138,6 +138,7 @@ const TiltCard = ({ template, index }: TiltCardProps) => {
                 className="w-full h-full scale-100 origin-top-left pointer-events-none"
                 title={`${template.name} preview`}
                 loading="lazy"
+                data-no-invert
               />
               
               {/* Hover Overlay */}
@@ -228,7 +229,7 @@ const Showcase = () => {
             </a>
             
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight mb-3 md:mb-4">
-              <span className="text-primary glow-text">WEBSITES</span>
+              <span className="glow-text-luxury">WEBSITES</span>
             </h1>
             <p className="font-mono text-xs sm:text-sm md:text-base text-muted-foreground max-w-xl mx-auto px-2">
               Explore our premium Shopify themes. Click any template to see it live.
