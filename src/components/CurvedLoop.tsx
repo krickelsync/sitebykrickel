@@ -75,25 +75,34 @@ const CurvedLoop = ({
     if (!spacing || !ready) return;
     let frame = 0;
     let animationOffset = -spacing;
+    let lastTime = 0;
+    const targetFPS = isMobile ? 30 : 60; // Lower FPS on mobile
+    const frameInterval = 1000 / targetFPS;
     
-    const step = () => {
-      if (!dragRef.current && textPathRef.current) {
-        const delta = dirRef.current === 'right' ? currentSpeed : -currentSpeed;
-        animationOffset += delta;
+    const step = (currentTime: number) => {
+      const elapsed = currentTime - lastTime;
+      
+      if (elapsed >= frameInterval) {
+        lastTime = currentTime - (elapsed % frameInterval);
         
-        // Seamless wrap - ensure continuous loop without restart
-        while (animationOffset <= -spacing * 2) animationOffset += spacing;
-        while (animationOffset > 0) animationOffset -= spacing;
-        
-        textPathRef.current.setAttribute('startOffset', animationOffset + 'px');
-        setOffset(animationOffset);
+        if (!dragRef.current && textPathRef.current) {
+          const delta = dirRef.current === 'right' ? currentSpeed : -currentSpeed;
+          animationOffset += delta;
+          
+          // Seamless wrap - ensure continuous loop without restart
+          while (animationOffset <= -spacing * 2) animationOffset += spacing;
+          while (animationOffset > 0) animationOffset -= spacing;
+          
+          textPathRef.current.setAttribute('startOffset', animationOffset + 'px');
+          setOffset(animationOffset);
+        }
       }
       frame = requestAnimationFrame(step);
     };
     
     frame = requestAnimationFrame(step);
     return () => cancelAnimationFrame(frame);
-  }, [spacing, currentSpeed, ready]);
+  }, [spacing, currentSpeed, ready, isMobile]);
 
   const onPointerDown = (e: React.PointerEvent) => {
     if (!interactive) return;
