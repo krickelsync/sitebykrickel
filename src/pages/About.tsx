@@ -83,7 +83,7 @@ const About = () => {
       {/* Hero Section with Spline */}
       <section className="relative flex flex-col">
         {/* Spline 3D Interactive Area */}
-        <div className="relative w-full h-[70vh] md:h-[80vh] pt-40 md:pt-52">
+        <div className="relative w-full h-[60vh] md:h-[70vh] pt-48 md:pt-60">
           <iframe src="https://my.spline.design/hellodistortingintro-UsGKO20dRWLBJGjUEMlwLUuf/" frameBorder="0" width="100%" height="100%" className="absolute inset-0" style={{
           border: 'none'
         }} />
