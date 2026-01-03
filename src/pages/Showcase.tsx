@@ -124,7 +124,7 @@ const TiltCard = ({ template, index }: TiltCardProps) => {
             </div>
 
             {/* Preview Area */}
-            <div className="relative aspect-[16/10] bg-muted/20 overflow-hidden">
+            <div className="relative aspect-[4/3] bg-muted/20 overflow-hidden">
               <iframe
                 src={template.url}
                 className="w-full h-full scale-100 origin-top-left pointer-events-none"
@@ -252,9 +252,9 @@ const Showcase = () => {
       </section>
 
       {/* Templates Grid */}
-      <section className="pb-24 px-6 sm:px-4">
+      <section className="pb-24 px-4">
         <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-sm md:max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-[320px] md:max-w-6xl mx-auto">
             {filteredTemplates.map((template, index) => (
               <TiltCard key={template.name} template={template} index={index} />
             ))}
