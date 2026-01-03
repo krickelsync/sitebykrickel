@@ -77,7 +77,7 @@ const About = () => {
         </div>
 
         {/* Hero Content - Below Spline with overlap */}
-        <div className="relative z-10 container mx-auto px-4 py-8 -mt-24 md:-mt-28">
+        <div className="relative z-10 container mx-auto px-4 py-8 -mt-40 md:-mt-52">
           <motion.div initial={{
           opacity: 0,
           y: 40
@@ -101,42 +101,44 @@ const About = () => {
       {/* Bio Section */}
       <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            {/* Photo */}
-            <motion.div initial={{
-            opacity: 0,
-            x: -50
-          }} whileInView={{
-            opacity: 1,
-            x: 0
-          }} transition={{
-            duration: 0.8
-          }} viewport={{
-            once: true
-          }} className="relative lg:sticky lg:top-24">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
-                <img src={profileImage} alt="Elfan Tinar" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-              </div>
-              
-              {/* Floating card */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+            {/* Photo Container - tinggi lebih besar untuk scroll space */}
+            <div className="relative lg:min-h-[150vh]">
               <motion.div initial={{
               opacity: 0,
-              y: 20
+              x: -50
             }} whileInView={{
               opacity: 1,
-              y: 0
+              x: 0
             }} transition={{
-              duration: 0.6,
-              delay: 0.4
+              duration: 0.8
             }} viewport={{
               once: true
-            }} className="absolute -bottom-6 -right-6 glass-card p-4 max-w-[200px]">
-                <p className="font-mono text-xs text-muted-foreground">
-                  <span className="text-primary">5+ years</span> of hands-on experience in design & development
-                </p>
+            }} className="lg:sticky lg:top-24">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+                  <img src={profileImage} alt="Elfan Tinar" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+                </div>
+                
+                {/* Floating card */}
+                <motion.div initial={{
+                opacity: 0,
+                y: 20
+              }} whileInView={{
+                opacity: 1,
+                y: 0
+              }} transition={{
+                duration: 0.6,
+                delay: 0.4
+              }} viewport={{
+                once: true
+              }} className="absolute -bottom-6 -right-6 glass-card p-4 max-w-[200px]">
+                  <p className="font-mono text-xs text-muted-foreground">
+                    <span className="text-primary">5+ years</span> of hands-on experience in design & development
+                  </p>
+                </motion.div>
               </motion.div>
-            </motion.div>
+            </div>
 
             {/* Bio Text */}
             <motion.div initial={{
@@ -175,7 +177,7 @@ const About = () => {
               delay: 0.2
             }} viewport={{
               once: true
-            }} className="relative aspect-video overflow-hidden rounded-xl mt-8 sticky top-24">
+            }} className="relative aspect-video overflow-hidden rounded-xl mt-8">
                 <img src={workingImage} alt="Elfan working" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-primary/10" />
               </motion.div>
