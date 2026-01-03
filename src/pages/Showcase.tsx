@@ -253,8 +253,8 @@ const Showcase = () => {
 
       {/* Templates Grid */}
       <section className="pb-24 px-4">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-[320px] md:max-w-6xl mx-auto">
+        <div className="max-w-[calc(100%-2rem)] md:max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {filteredTemplates.map((template, index) => (
               <TiltCard key={template.name} template={template} index={index} />
             ))}
