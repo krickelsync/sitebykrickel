@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useTheme } from "next-themes";
+import { Sun, Moon } from "lucide-react";
 import Logo3D from "./Logo3D";
 import { cn } from "@/lib/utils";
 
@@ -39,6 +41,11 @@ const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => {
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { theme, setTheme } = useTheme();
+
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
 
   const isActive = (href: string) => {
     // Exact match untuk Home "/"
@@ -129,8 +136,19 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Button + Theme Toggle */}
+          <div className="hidden md:flex items-center gap-3">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg glass border border-white/10 hover:border-white/20 transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-4 h-4 text-muted-foreground hover:text-foreground transition-colors" />
+              ) : (
+                <Moon className="w-4 h-4 text-muted-foreground hover:text-foreground transition-colors" />
+              )}
+            </button>
             <a
               href="/about#contact"
               className="cta-shiny rounded-xl bg-background/5 border border-white/10 px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium"
@@ -139,14 +157,27 @@ const Navbar = () => {
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2"
-            aria-label="Toggle menu"
-          >
-            <HamburgerIcon isOpen={isOpen} />
-          </button>
+          {/* Mobile Menu Button + Theme Toggle */}
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg glass border border-white/10 hover:border-white/20 transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-4 h-4 text-muted-foreground" />
+              ) : (
+                <Moon className="w-4 h-4 text-muted-foreground" />
+              )}
+            </button>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2"
+              aria-label="Toggle menu"
+            >
+              <HamburgerIcon isOpen={isOpen} />
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation with AnimatePresence */}
