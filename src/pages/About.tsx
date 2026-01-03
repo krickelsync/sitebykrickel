@@ -70,8 +70,8 @@ const About = () => {
       {/* Hero Section with Spline */}
       <section className="relative flex flex-col">
         {/* Spline 3D Interactive Area */}
-        <div className="relative w-full h-[50vh] md:h-[60vh] pt-16">
-          <iframe src="https://my.spline.design/hellodistortingintro-UsGKO20dRWLBJGjUEMlwLUuf/" frameBorder="0" width="100%" height="100%" className="absolute inset-0 scale-75 md:scale-[0.8] origin-center" style={{
+        <div className="relative w-full h-[70vh] md:h-[80vh] pt-24">
+          <iframe src="https://my.spline.design/hellodistortingintro-UsGKO20dRWLBJGjUEMlwLUuf/" frameBorder="0" width="100%" height="100%" className="absolute inset-0" style={{
           border: 'none'
         }} />
         </div>
@@ -113,7 +113,7 @@ const About = () => {
             duration: 0.8
           }} viewport={{
             once: true
-          }} className="relative">
+          }} className="relative lg:sticky lg:top-24">
               <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
                 <img src={profileImage} alt="Elfan Tinar" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
@@ -175,7 +175,7 @@ const About = () => {
               delay: 0.2
             }} viewport={{
               once: true
-            }} className="relative aspect-video overflow-hidden rounded-xl mt-8">
+            }} className="relative aspect-video overflow-hidden rounded-xl mt-8 sticky top-24">
                 <img src={workingImage} alt="Elfan working" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-primary/10" />
               </motion.div>
