@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import Logo3D from "./Logo3D";
+import { cn } from "@/lib/utils";
 
 // Custom Hamburger Icon with morphing animation
 const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => {
@@ -36,6 +38,33 @@ const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => {
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (href: string) => {
+    if (href === '/') return location.pathname === '/';
+    if (href.includes('#')) {
+      const [path] = href.split('#');
+      if (path === '' || path === '/') return location.pathname === '/';
+      return location.pathname === path || location.pathname.startsWith(path);
+    }
+    return location.pathname === href || location.pathname.startsWith(href);
+  };
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.includes('#')) {
+      const [path, hash] = href.split('#');
+      const isCurrentPage = path === '' || path === '/' ? location.pathname === '/' : location.pathname === path;
+      
+      if (isCurrentPage && hash) {
+        e.preventDefault();
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
+  };
+
   const navLinks = [{
     name: "Home",
     href: "/",
@@ -80,7 +109,13 @@ const Navbar = () => {
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
-                className="font-mono text-sm text-muted-foreground hover:text-foreground transition-all duration-400 ease-out hover-underline-reveal hover-lift"
+                onClick={(e) => handleNavClick(e, link.href)}
+                className={cn(
+                  "font-mono text-sm transition-all duration-400 ease-out hover-lift relative",
+                  isActive(link.href) 
+                    ? "text-primary font-semibold after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-0.5 after:bg-primary" 
+                    : "text-muted-foreground hover:text-foreground hover-underline-reveal"
+                )}
               >
                 {link.name}
               </a>
@@ -148,8 +183,16 @@ const Navbar = () => {
                     href={link.href}
                     target={link.external ? "_blank" : undefined}
                     rel={link.external ? "noopener noreferrer" : undefined}
-                    onClick={() => setIsOpen(false)}
-                    className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    onClick={(e) => {
+                      handleNavClick(e, link.href);
+                      setIsOpen(false);
+                    }}
+                    className={cn(
+                      "font-mono text-sm transition-colors",
+                      isActive(link.href) 
+                        ? "text-primary font-semibold" 
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
                   >
                     {link.name}
                   </motion.a>
