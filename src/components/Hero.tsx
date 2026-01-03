@@ -1,38 +1,31 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Eye } from "lucide-react";
-import { useState, useEffect, lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 // Lazy load heavy Prism component
 const Prism = lazy(() => import("./Prism"));
 
 const Hero = () => {
-  const isMobile = useIsMobile();
-
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Prism Background Effect - z-index 0 - Disabled on mobile for performance */}
+      {/* Prism Background Effect - z-index 0 */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-background">
-        {!isMobile ? (
-          <Suspense fallback={<div className="w-full h-full bg-gradient-to-br from-primary/10 via-background to-background" />}>
-            <Prism 
-              animationType="rotate"
-              timeScale={0.5}
-              height={4}
-              baseWidth={5}
-              scale={3}
-              hueShift={0}
-              colorFrequency={1}
-              noise={0}
-              glow={1}
-              bloom={1}
-              offset={{ x: 0, y: 0 }}
-              suspendWhenOffscreen={true}
-            />
-          </Suspense>
-        ) : (
-          <div className="w-full h-full bg-gradient-to-br from-primary/20 via-background to-background" />
-        )}
+        <Suspense fallback={<div className="w-full h-full bg-gradient-to-br from-primary/10 via-background to-background" />}>
+          <Prism 
+            animationType="rotate"
+            timeScale={0.5}
+            height={4}
+            baseWidth={5}
+            scale={3}
+            hueShift={0}
+            colorFrequency={1}
+            noise={0}
+            glow={1}
+            bloom={1}
+            offset={{ x: 0, y: 0 }}
+            suspendWhenOffscreen={true}
+          />
+        </Suspense>
         {/* Fade overlay at the bottom */}
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent z-[1]" />
       </div>
