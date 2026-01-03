@@ -226,7 +226,13 @@ const About = () => {
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
             {/* Creative Skills */}
-            <div className="glass-card p-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="glass-card shiny-card rounded-2xl p-8 hover:border-primary/30 transition-all duration-500"
+            >
               <div className="flex items-center gap-3 mb-8">
                 <Palette className="w-5 h-5 text-primary" />
                 <h3 className="font-mono text-sm font-semibold tracking-widest uppercase text-muted-foreground">
@@ -236,10 +242,16 @@ const About = () => {
               <div className="space-y-6">
                 {creativeSkills.map((skill, index) => <SkillBar key={skill.name} name={skill.name} percentage={skill.percentage} delay={index} />)}
               </div>
-            </div>
+            </motion.div>
 
             {/* Dev Stack */}
-            <div className="glass-card p-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="glass-card shiny-card rounded-2xl p-8 hover:border-primary/30 transition-all duration-500"
+            >
               <div className="flex items-center gap-3 mb-8">
                 <Code className="w-5 h-5 text-primary" />
                 <h3 className="font-mono text-sm font-semibold tracking-widest uppercase text-muted-foreground">
@@ -249,7 +261,7 @@ const About = () => {
               <div className="space-y-6">
                 {devSkills.map((skill, index) => <SkillBar key={skill.name} name={skill.name} percentage={skill.percentage} description={skill.description} delay={index} />)}
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
