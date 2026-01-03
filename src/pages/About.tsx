@@ -77,41 +77,46 @@ const About = () => {
     title: "Precision Focused",
     description: "Whether it's pixel-perfect CSS or analyzing market charts."
   }];
-  return <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Navbar />
+  return <div className="min-h-screen text-foreground overflow-x-hidden">
+      {/* Spline Fixed Fullscreen Background */}
+      <div className="fixed inset-0 z-0">
+        <spline-viewer 
+          hint 
+          url="https://prod.spline.design/Zkl1fjrHtunP9HZZ/scene.splinecode"
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+        />
+      </div>
 
-      {/* Hero Section with Spline */}
-      <section className="relative flex flex-col">
-        {/* Spline 3D Interactive Area */}
-        <div className="relative w-full h-[45vh] md:h-[55vh] pt-32 md:pt-40">
-          <spline-viewer 
-            hint 
-            url="https://prod.spline.design/Zkl1fjrHtunP9HZZ/scene.splinecode"
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
-          />
-        </div>
+      {/* All content above Spline */}
+      <div className="relative z-10">
+        <Navbar />
 
-        {/* Hero Content - Below Spline with overlap */}
-        <div className="relative z-10 container mx-auto px-4 py-8 -mt-32 md:-mt-40">
-          <motion.div initial={{
-          opacity: 0,
-          y: 40
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.8,
-          delay: 0.5
-        }} className="max-w-4xl bg-background/80 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-glass-border">
-            
-            <p className="text-lg md:text-xl text-muted-foreground font-mono max-w-2xl">
-              <span className="text-primary">18 Years Old.</span>{" "}
-              <span className="text-primary">5 Years Experience</span> in Graphic Designer, 
-              creative bridging the gap between design, technology, and artificial intelligence.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+        {/* Hero Section */}
+        <section className="relative flex flex-col pt-32 md:pt-40">
+          {/* Spacer for Spline visibility */}
+          <div className="h-[45vh] md:h-[55vh]" />
+
+          {/* Hero Content */}
+          <div className="container mx-auto px-4 py-8 -mt-32 md:-mt-40">
+            <motion.div initial={{
+            opacity: 0,
+            y: 40
+          }} animate={{
+            opacity: 1,
+            y: 0
+          }} transition={{
+            duration: 0.8,
+            delay: 0.5
+          }} className="max-w-4xl p-6 md:p-8 rounded-2xl border border-glass-border/30">
+              
+              <p className="text-lg md:text-xl text-muted-foreground font-mono max-w-2xl">
+                <span className="text-primary">18 Years Old.</span>{" "}
+                <span className="text-primary">5 Years Experience</span> in Graphic Designer, 
+                creative bridging the gap between design, technology, and artificial intelligence.
+              </p>
+            </motion.div>
+          </div>
+        </section>
 
       {/* Bio Section */}
       <section ref={bioSectionRef} className="py-20 md:py-32">
@@ -137,7 +142,7 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }} 
                 transition={{ duration: 0.6, delay: 0.4 }} 
                 viewport={{ once: true }} 
-                className="absolute -bottom-6 -right-6 glass-card p-4 max-w-[200px]"
+                className="absolute -bottom-6 -right-6 p-4 max-w-[200px] border border-glass-border/30 rounded-xl"
               >
                 <p className="font-mono text-xs text-muted-foreground">
                   <span className="text-primary">5+ years</span> of hands-on experience in design & development
@@ -188,7 +193,7 @@ const About = () => {
       </section>
 
       {/* Skills Section */}
-      <section className="py-20 md:py-32 bg-muted/5">
+      <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
           <motion.div initial={{
           opacity: 0,
@@ -211,7 +216,7 @@ const About = () => {
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
             {/* Creative Skills */}
-            <div className="glass-card p-8">
+            <div className="p-8 border border-glass-border/30 rounded-xl">
               <div className="flex items-center gap-3 mb-8">
                 <Palette className="w-5 h-5 text-primary" />
                 <h3 className="font-mono text-sm font-semibold tracking-widest uppercase text-muted-foreground">
@@ -224,7 +229,7 @@ const About = () => {
             </div>
 
             {/* Dev Stack */}
-            <div className="glass-card p-8">
+            <div className="p-8 border border-glass-border/30 rounded-xl">
               <div className="flex items-center gap-3 mb-8">
                 <Code className="w-5 h-5 text-primary" />
                 <h3 className="font-mono text-sm font-semibold tracking-widest uppercase text-muted-foreground">
@@ -268,7 +273,7 @@ const About = () => {
       </section>
 
       {/* Why Choose Me */}
-      <section className="py-20 md:py-32 bg-muted/5">
+      <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
           <motion.div initial={{
           opacity: 0,
@@ -295,7 +300,8 @@ const About = () => {
         </div>
       </section>
 
-      <Footer />
+        <Footer />
+      </div>
     </div>;
 };
 export default About;
