@@ -65,11 +65,11 @@ const ContactForm = () => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className="max-w-xl mx-auto shiny-card"
+      className="max-w-xl mx-auto glass-card shiny-card rounded-2xl p-8 hover:border-primary/30 transition-all duration-500"
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-card border border-white/10 p-8 rounded-2xl space-y-6 shadow-[0_0_40px_-15px_hsl(var(--primary)/0.2)]"
+        className="space-y-6"
       >
         {/* Name Field */}
         <div className="space-y-2">
