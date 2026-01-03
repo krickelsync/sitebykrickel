@@ -1,7 +1,38 @@
-import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Logo3D from "./Logo3D";
+
+// Custom Hamburger Icon with morphing animation
+const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => {
+  return (
+    <div className="w-6 h-6 flex flex-col justify-center items-center relative">
+      <motion.span
+        className="block w-5 h-0.5 bg-foreground absolute"
+        animate={{
+          rotate: isOpen ? 45 : 0,
+          y: isOpen ? 0 : -6,
+        }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      />
+      <motion.span
+        className="block w-5 h-0.5 bg-foreground absolute"
+        animate={{
+          opacity: isOpen ? 0 : 1,
+          scaleX: isOpen ? 0 : 1,
+        }}
+        transition={{ duration: 0.2 }}
+      />
+      <motion.span
+        className="block w-5 h-0.5 bg-foreground absolute"
+        animate={{
+          rotate: isOpen ? -45 : 0,
+          y: isOpen ? 0 : 6,
+        }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      />
+    </div>
+  );
+};
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,14 +57,14 @@ const Navbar = () => {
     href: "/about",
     external: false
   }];
-  return <motion.nav initial={{
-    y: -100
-  }} animate={{
-    y: 0
-  }} transition={{
-    duration: 0.6,
-    ease: "easeOut"
-  }} className="fixed top-0 left-0 right-0 z-50 glass overflow-visible">
+
+  return (
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="fixed top-0 left-0 right-0 z-50 glass overflow-visible"
+    >
       <div className="container mx-auto px-4 overflow-visible">
         <div className="flex items-center justify-between h-20 overflow-visible">
           {/* 3D Logo */}
@@ -43,45 +74,107 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map(link => <a key={link.name} href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-all duration-400 ease-out hover-underline-reveal hover-lift">
+            {navLinks.map(link => (
+              <a
+                key={link.name}
+                href={link.href}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noopener noreferrer" : undefined}
+                className="font-mono text-sm text-muted-foreground hover:text-foreground transition-all duration-400 ease-out hover-underline-reveal hover-lift"
+              >
                 {link.name}
-              </a>)}
+              </a>
+            ))}
           </div>
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <a href="/#pricing" className="glass-card px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium">
+            <a
+              href="/#pricing"
+              className="cta-shiny glass-card px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium"
+            >
               Get Started
             </a>
           </div>
 
           {/* Mobile Menu Button */}
-          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden p-2" aria-label="Toggle menu">
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2"
+            aria-label="Toggle menu"
+          >
+            <HamburgerIcon isOpen={isOpen} />
           </button>
         </div>
 
-        {/* Mobile Navigation */}
-        {isOpen && <motion.div initial={{
-        opacity: 0,
-        height: 0
-      }} animate={{
-        opacity: 1,
-        height: "auto"
-      }} exit={{
-        opacity: 0,
-        height: 0
-      }} className="md:hidden pb-6">
-            <div className="flex flex-col gap-4">
-              {navLinks.map(link => <a key={link.name} href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener noreferrer" : undefined} onClick={() => setIsOpen(false)} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  {link.name}
-                </a>)}
-              <a href="/#pricing" onClick={() => setIsOpen(false)} className="glass-card px-6 py-2.5 font-mono text-sm text-center mt-2">
-                Get Started
-              </a>
-            </div>
-          </motion.div>}
+        {/* Mobile Navigation with AnimatePresence */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, y: -20 }}
+              animate={{
+                opacity: 1,
+                height: "auto",
+                y: 0,
+                transition: {
+                  height: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+                  opacity: { duration: 0.3, delay: 0.1 },
+                  y: { duration: 0.3, ease: "easeOut" }
+                }
+              }}
+              exit={{
+                opacity: 0,
+                height: 0,
+                y: -10,
+                transition: {
+                  height: { duration: 0.3 },
+                  opacity: { duration: 0.2 },
+                  y: { duration: 0.2 }
+                }
+              }}
+              className="md:hidden pb-6 overflow-hidden"
+            >
+              <div className="flex flex-col gap-4">
+                {navLinks.map((link, index) => (
+                  <motion.a
+                    key={link.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                      transition: { delay: 0.1 + index * 0.05 }
+                    }}
+                    exit={{ opacity: 0, x: -10 }}
+                    href={link.href}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
+                    onClick={() => setIsOpen(false)}
+                    className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.name}
+                  </motion.a>
+                ))}
+                <motion.a
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                    transition: { delay: 0.1 + navLinks.length * 0.05 }
+                  }}
+                  exit={{ opacity: 0, x: -10 }}
+                  href="/#pricing"
+                  onClick={() => setIsOpen(false)}
+                  className="cta-shiny glass-card px-6 py-2.5 font-mono text-sm text-center mt-2"
+                >
+                  Get Started
+                </motion.a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </motion.nav>;
+    </motion.nav>
+  );
 };
+
 export default Navbar;
