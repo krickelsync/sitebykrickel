@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 import Logo3D from "./Logo3D";
@@ -130,6 +130,7 @@ const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => {
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (href: string) => {
     // Exact match untuk Home "/"
@@ -150,15 +151,24 @@ const Navbar = () => {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.includes('#')) {
+      e.preventDefault();
       const [path, hash] = href.split('#');
-      const isCurrentPage = path === '' || path === '/' ? location.pathname === '/' : location.pathname === path;
+      const targetPath = path === '' ? '/' : path;
+      const isCurrentPage = location.pathname === targetPath;
       
       if (isCurrentPage && hash) {
-        e.preventDefault();
         const element = document.getElementById(hash);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+      } else {
+        navigate(targetPath);
+        setTimeout(() => {
+          const element = document.getElementById(hash);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
       }
     }
   };
@@ -195,29 +205,42 @@ const Navbar = () => {
       <div className="container mx-auto px-4 overflow-visible">
         <div className="flex items-center justify-between h-20 overflow-visible">
           {/* 3D Logo */}
-          <a href="/" className="flex items-center justify-center overflow-visible" style={{ overflow: 'visible' }}>
+          <Link to="/" className="flex items-center justify-center overflow-visible" style={{ overflow: 'visible' }}>
             <Logo3D />
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map(link => (
-              <a
-                key={link.name}
-                href={link.href}
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className={cn(
-                  "font-mono text-sm transition-all duration-400 ease-out hover-lift relative",
-                  isActive(link.href) 
-                    ? "text-primary font-semibold after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-px after:bg-primary" 
-                    : "text-muted-foreground hover:text-foreground hover-underline-reveal"
-                )}
-              >
-                {link.name}
-              </a>
-            ))}
+            {navLinks.map(link => 
+              link.href.includes('#') ? (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={cn(
+                    "font-mono text-sm transition-all duration-400 ease-out hover-lift relative cursor-pointer",
+                    isActive(link.href) 
+                      ? "text-primary font-semibold after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-px after:bg-primary" 
+                      : "text-muted-foreground hover:text-foreground hover-underline-reveal"
+                  )}
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className={cn(
+                    "font-mono text-sm transition-all duration-400 ease-out hover-lift relative",
+                    isActive(link.href) 
+                      ? "text-primary font-semibold after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-px after:bg-primary" 
+                      : "text-muted-foreground hover:text-foreground hover-underline-reveal"
+                  )}
+                >
+                  {link.name}
+                </Link>
+              )
+            )}
           </div>
 
           {/* CTA Button + Theme Toggle */}
@@ -225,7 +248,8 @@ const Navbar = () => {
             <ThemeToggle />
             <a
               href="/about#contact"
-              className="cta-shiny rounded-xl bg-background/5 border border-foreground/10 px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium"
+              onClick={(e) => handleNavClick(e, "/about#contact")}
+              className="cta-shiny rounded-xl bg-background/5 border border-foreground/10 px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium cursor-pointer"
             >
               <span className="relative z-10">Get Started</span>
             </a>
@@ -272,33 +296,57 @@ const Navbar = () => {
               className="md:hidden pb-6 overflow-hidden"
             >
               <div className="flex flex-col gap-4">
-                {navLinks.map((link, index) => (
-                  <motion.a
-                    key={link.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                      transition: { delay: 0.1 + index * 0.05 }
-                    }}
-                    exit={{ opacity: 0, x: -10 }}
-                    href={link.href}
-                    target={link.external ? "_blank" : undefined}
-                    rel={link.external ? "noopener noreferrer" : undefined}
-                    onClick={(e) => {
-                      handleNavClick(e, link.href);
-                      setIsOpen(false);
-                    }}
-                    className={cn(
-                      "font-mono text-sm transition-colors",
-                      isActive(link.href) 
-                        ? "text-primary font-semibold" 
-                        : "text-muted-foreground hover:text-foreground"
-                    )}
-                  >
-                    {link.name}
-                  </motion.a>
-                ))}
+                {navLinks.map((link, index) => 
+                  link.href.includes('#') ? (
+                    <motion.a
+                      key={link.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{
+                        opacity: 1,
+                        x: 0,
+                        transition: { delay: 0.1 + index * 0.05 }
+                      }}
+                      exit={{ opacity: 0, x: -10 }}
+                      href={link.href}
+                      onClick={(e) => {
+                        handleNavClick(e, link.href);
+                        setIsOpen(false);
+                      }}
+                      className={cn(
+                        "font-mono text-sm transition-colors cursor-pointer",
+                        isActive(link.href) 
+                          ? "text-primary font-semibold" 
+                          : "text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      {link.name}
+                    </motion.a>
+                  ) : (
+                    <motion.div
+                      key={link.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{
+                        opacity: 1,
+                        x: 0,
+                        transition: { delay: 0.1 + index * 0.05 }
+                      }}
+                      exit={{ opacity: 0, x: -10 }}
+                    >
+                      <Link
+                        to={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className={cn(
+                          "font-mono text-sm transition-colors block",
+                          isActive(link.href) 
+                            ? "text-primary font-semibold" 
+                            : "text-muted-foreground hover:text-foreground"
+                        )}
+                      >
+                        {link.name}
+                      </Link>
+                    </motion.div>
+                  )
+                )}
                 <motion.a
                   initial={{ opacity: 0, x: -20 }}
                   animate={{
@@ -308,8 +356,11 @@ const Navbar = () => {
                   }}
                   exit={{ opacity: 0, x: -10 }}
                   href="/about#contact"
-                  onClick={() => setIsOpen(false)}
-                  className="cta-shiny rounded-xl bg-background/5 border border-white/10 px-6 py-2.5 font-mono text-sm text-center mt-2"
+                  onClick={(e) => {
+                    handleNavClick(e, "/about#contact");
+                    setIsOpen(false);
+                  }}
+                  className="cta-shiny rounded-xl bg-background/5 border border-white/10 px-6 py-2.5 font-mono text-sm text-center mt-2 cursor-pointer"
                 >
                   <span className="relative z-10">Get Started</span>
                 </motion.a>
