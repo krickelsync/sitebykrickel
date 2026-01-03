@@ -1,10 +1,44 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 import Logo3D from "./Logo3D";
 import { cn } from "@/lib/utils";
+
+// Theme Toggle with smooth animation
+const ThemeToggle = () => {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return <div className="w-5 h-5" />;
+
+  return (
+    <button
+      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      className="p-2 transition-colors hover:text-primary"
+      aria-label="Toggle theme"
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={theme}
+          initial={{ scale: 0, rotate: -90, opacity: 0 }}
+          animate={{ scale: 1, rotate: 0, opacity: 1 }}
+          exit={{ scale: 0, rotate: 90, opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+          {theme === 'dark' ? (
+            <Sun className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
+          ) : (
+            <Moon className="w-5 h-5 text-muted-foreground hover:text-foreground transition-colors" />
+          )}
+        </motion.div>
+      </AnimatePresence>
+    </button>
+  );
+};
 
 // Custom Hamburger Icon with morphing animation
 const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => {
@@ -41,11 +75,6 @@ const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => {
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const { theme, setTheme } = useTheme();
-
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
 
   const isActive = (href: string) => {
     // Exact match untuk Home "/"
@@ -138,20 +167,10 @@ const Navbar = () => {
 
           {/* CTA Button + Theme Toggle */}
           <div className="hidden md:flex items-center gap-3">
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg glass border border-white/10 hover:border-white/20 transition-colors"
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? (
-                <Sun className="w-4 h-4 text-muted-foreground hover:text-foreground transition-colors" />
-              ) : (
-                <Moon className="w-4 h-4 text-muted-foreground hover:text-foreground transition-colors" />
-              )}
-            </button>
+            <ThemeToggle />
             <a
               href="/about#contact"
-              className="cta-shiny rounded-xl bg-background/5 border border-white/10 px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium"
+              className="cta-shiny rounded-xl bg-background/5 border border-foreground/10 px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium"
             >
               <span className="relative z-10">Get Started</span>
             </a>
@@ -159,17 +178,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button + Theme Toggle */}
           <div className="flex md:hidden items-center gap-2">
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg glass border border-white/10 hover:border-white/20 transition-colors"
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? (
-                <Sun className="w-4 h-4 text-muted-foreground" />
-              ) : (
-                <Moon className="w-4 h-4 text-muted-foreground" />
-              )}
-            </button>
+            <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2"
