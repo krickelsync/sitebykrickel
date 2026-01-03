@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import DesignBentoGrid from "@/components/DesignBentoGrid";
+import { useDesignPortfolio } from "@/hooks/useDesignPortfolio";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { useState, useRef, MouseEvent } from "react";
@@ -201,8 +203,13 @@ const TiltCard = ({ template, index }: TiltCardProps) => {
   );
 };
 
+const designCategories = ["All", "Logo", "Clothing", "Packaging"];
+
 const Showcase = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [activeDesignCategory, setActiveDesignCategory] = useState("All");
+  
+  const { data: designs = [], isLoading: designsLoading } = useDesignPortfolio(activeDesignCategory);
 
   const filteredTemplates = templates.filter(
     (t) => activeCategory === "All" || t.category === activeCategory
@@ -262,7 +269,7 @@ const Showcase = () => {
       </section>
 
       {/* Templates Grid */}
-      <section className="pb-24 px-4">
+      <section className="pb-16 px-4">
         <div className="max-w-[calc(100%-2rem)] md:max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {filteredTemplates.map((template, index) => (
@@ -282,6 +289,54 @@ const Showcase = () => {
               </p>
             </motion.div>
           )}
+        </div>
+      </section>
+
+      {/* Design Portfolio Section */}
+      <section className="py-16 px-4 border-t border-border">
+        <div className="container mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-8"
+          >
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight mb-3 md:mb-4">
+              <span className="glow-text-luxury">DESIGN</span>
+            </h2>
+            <p className="font-mono text-xs sm:text-sm md:text-base text-muted-foreground max-w-xl mx-auto px-2">
+              Creative design works across branding, packaging, and apparel.
+            </p>
+          </motion.div>
+
+          {/* Design Category Filters */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 px-2"
+          >
+            {designCategories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveDesignCategory(category)}
+                className={`px-3 md:px-5 py-1.5 md:py-2 font-mono text-[10px] md:text-xs uppercase tracking-wider rounded-full border transition-all duration-300 ${
+                  activeDesignCategory === category
+                    ? "bg-primary text-primary-foreground border-primary glow-box"
+                    : "glass-card border-white/10 text-muted-foreground hover:text-foreground hover:border-white/30"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </motion.div>
+
+          {/* Bento Grid */}
+          <div className="max-w-6xl mx-auto">
+            <DesignBentoGrid designs={designs} isLoading={designsLoading} />
+          </div>
         </div>
       </section>
 
