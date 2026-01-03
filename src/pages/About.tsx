@@ -98,7 +98,7 @@ const About = () => {
       {/* Hero Section with Spline */}
       <section className="relative flex flex-col">
         {/* Spline 3D Interactive Area */}
-        <div className="relative w-full h-[30vh] md:h-[55vh] pt-24 md:pt-40">
+        <div className="relative w-full h-[45vh] md:h-[55vh] pt-32 md:pt-40">
           <spline-viewer 
             hint 
             url="https://prod.spline.design/Zkl1fjrHtunP9HZZ/scene.splinecode"
@@ -107,7 +107,7 @@ const About = () => {
         </div>
 
         {/* Hero Content - Below Spline with overlap */}
-        <div className="relative z-10 container mx-auto px-4 py-8 -mt-16 md:-mt-40">
+        <div className="relative z-10 container mx-auto px-4 py-8 -mt-32 md:-mt-40">
           <motion.div initial={{
           opacity: 0,
           y: 40
