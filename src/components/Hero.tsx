@@ -117,7 +117,17 @@ const Hero = () => {
           duration: 0.6,
           delay: 0.7
         }} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="#pricing" className="group relative inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 font-mono text-sm font-bold uppercase tracking-wider overflow-hidden transition-all duration-300 hover:glow-box">
+            <a 
+              href="#pricing" 
+              onClick={(e) => {
+                e.preventDefault();
+                const element = document.getElementById('pricing');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
+              className="group relative inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 font-mono text-sm font-bold uppercase tracking-wider overflow-hidden transition-all duration-300 hover:glow-box cursor-pointer"
+            >
               <span className="relative z-10">View Packages</span>
               <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1 transition-transform" />
               <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-300" />

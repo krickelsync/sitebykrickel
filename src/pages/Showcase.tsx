@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { useState, useRef, MouseEvent } from "react";
+import { Link } from "react-router-dom";
 
 const templates = [
   {
@@ -220,13 +221,13 @@ const Showcase = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-4"
           >
-            <a 
-              href="/" 
+            <Link 
+              to="/" 
               className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-foreground transition-colors mb-6 md:mb-8"
             >
               <ArrowLeft size={14} />
               Back to Home
-            </a>
+            </Link>
             
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight mb-3 md:mb-4">
               <span className="glow-text-luxury">WEBSITES</span>

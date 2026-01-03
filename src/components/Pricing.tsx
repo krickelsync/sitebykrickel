@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Check, X, Sparkles, AlertTriangle } from "lucide-react";
 import VelocityText from "./VelocityText";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const standardFeatures = [
   { category: "CORE SETUP", items: [
@@ -85,6 +86,27 @@ const notIncludedStandard = [
 ];
 
 const Pricing = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (location.pathname === '/about') {
+      const element = document.getElementById('contact');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      navigate('/about');
+      setTimeout(() => {
+        const element = document.getElementById('contact');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  };
+
   return (
     <section id="pricing" className="py-24 md:py-32">
       <div className="container px-4">
@@ -164,7 +186,8 @@ const Pricing = () => {
             {/* CTA */}
             <a
               href="/about#contact"
-              className="mt-4 md:mt-6 block w-full text-center py-2 md:py-4 border border-border font-mono text-[10px] md:text-sm uppercase tracking-wider hover:bg-foreground hover:text-background transition-all duration-300"
+              onClick={handleContactClick}
+              className="mt-4 md:mt-6 block w-full text-center py-2 md:py-4 border border-border font-mono text-[10px] md:text-sm uppercase tracking-wider hover:bg-foreground hover:text-background transition-all duration-300 cursor-pointer"
             >
               Get Started
             </a>
@@ -228,7 +251,8 @@ const Pricing = () => {
             {/* CTA */}
             <a
               href="/about#contact"
-              className="group mt-4 md:mt-6 relative block w-full text-center bg-primary text-primary-foreground py-2 md:py-4 font-mono text-[10px] md:text-sm uppercase tracking-wider overflow-hidden transition-all duration-300 hover:glow-box"
+              onClick={handleContactClick}
+              className="group mt-4 md:mt-6 relative block w-full text-center bg-primary text-primary-foreground py-2 md:py-4 font-mono text-[10px] md:text-sm uppercase tracking-wider overflow-hidden transition-all duration-300 hover:glow-box cursor-pointer"
             >
               <span className="relative z-10 flex items-center justify-center gap-1 md:gap-2">
                 Get Premium
