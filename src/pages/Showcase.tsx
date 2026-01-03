@@ -157,21 +157,21 @@ const TiltCard = ({ template, index }: TiltCardProps) => {
 
             {/* Template Info */}
             <div 
-              className="p-6 relative"
+              className="p-4 md:p-6 relative"
               style={{ transform: "translateZ(20px)" }}
             >
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="font-display text-2xl font-bold uppercase tracking-wide">
+              <div className="flex items-center justify-between mb-2 gap-2">
+                <h3 className="font-display text-lg md:text-2xl font-bold uppercase tracking-wide">
                   {template.name}
                 </h3>
-                <span className="px-3 py-1 text-xs font-mono uppercase tracking-wider bg-primary/10 text-primary border border-primary/20 rounded-full">
+                <span className="px-2 md:px-3 py-1 text-[10px] md:text-xs font-mono uppercase tracking-wider bg-primary/10 text-primary border border-primary/20 rounded-full whitespace-nowrap">
                   {template.category}
                 </span>
               </div>
-              <p className="font-mono text-sm text-muted-foreground mb-1">
+              <p className="font-mono text-xs md:text-sm text-muted-foreground mb-1">
                 {template.description}
               </p>
-              <p className="font-mono text-xs text-muted-foreground/70 italic">
+              <p className="font-mono text-[10px] md:text-xs text-muted-foreground/70 italic">
                 "{template.tagline}"
               </p>
             </div>
@@ -199,7 +199,7 @@ const Showcase = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       <Navbar />
       
       {/* Hero Section */}
@@ -213,16 +213,16 @@ const Showcase = () => {
           >
             <a 
               href="/" 
-              className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-foreground transition-colors mb-8"
+              className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-foreground transition-colors mb-6 md:mb-8"
             >
               <ArrowLeft size={14} />
               Back to Home
             </a>
             
-            <h1 className="font-display text-5xl md:text-7xl font-bold uppercase tracking-tight mb-4">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight mb-3 md:mb-4">
               <span className="text-primary glow-text">SHOWCASE</span>
             </h1>
-            <p className="font-mono text-sm md:text-base text-muted-foreground max-w-xl mx-auto">
+            <p className="font-mono text-xs sm:text-sm md:text-base text-muted-foreground max-w-xl mx-auto px-2">
               Explore our premium Shopify themes. Click any template to see it live.
             </p>
           </motion.div>
@@ -232,13 +232,13 @@ const Showcase = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap justify-center gap-3 mb-2"
+            className="flex flex-wrap justify-center gap-2 md:gap-3 mb-2 px-2"
           >
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-5 py-2 font-mono text-xs uppercase tracking-wider rounded-full border transition-all duration-300 ${
+                className={`px-3 md:px-5 py-1.5 md:py-2 font-mono text-[10px] md:text-xs uppercase tracking-wider rounded-full border transition-all duration-300 ${
                   activeCategory === category
                     ? "bg-primary text-primary-foreground border-primary glow-box"
                     : "glass-card border-white/10 text-muted-foreground hover:text-foreground hover:border-white/30"
@@ -254,7 +254,7 @@ const Showcase = () => {
       {/* Templates Grid */}
       <section className="pb-24 px-4">
         <div className="container mx-auto">
-          <div className="grid md:grid-cols-2 gap-2 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-6xl mx-auto">
             {filteredTemplates.map((template, index) => (
               <TiltCard key={template.name} template={template} index={index} />
             ))}

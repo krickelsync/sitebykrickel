@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Palette, Code, Brain, TrendingUp, Lightbulb, RefreshCw, Target } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,16 +8,30 @@ import SkillBar from "@/components/SkillBar";
 import ExpertiseCard from "@/components/ExpertiseCard";
 import WhyChooseCard from "@/components/WhyChooseCard";
 import AnimatedText from "@/components/AnimatedText";
+import ContactForm from "@/components/ContactForm";
 import profileImage from "@/assets/elfan-profile.jpg";
 import workingImage from "@/assets/elfan-working.jpg";
 
 const About = () => {
   const bioSectionRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
   
   const { scrollYProgress } = useScroll({
     target: bioSectionRef,
     offset: ["start end", "end start"]
   });
+
+  // Handle scroll to contact section on hash change
+  useEffect(() => {
+    if (location.hash === "#contact") {
+      setTimeout(() => {
+        const contactSection = document.getElementById("contact");
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
+    }
+  }, [location]);
   
   // Photo moves slower than content (parallax effect)
   const photoY = useTransform(scrollYProgress, [0, 1], [100, -100]);
@@ -292,6 +307,34 @@ const About = () => {
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {softSkills.map((skill, index) => <WhyChooseCard key={skill.title} icon={skill.icon} title={skill.title} description={skill.description} delay={index} />)}
           </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-20 md:py-32 relative">
+        {/* Subtle gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="font-mono text-xs text-primary tracking-widest uppercase">
+              // Let's Connect
+            </span>
+            <h2 className="font-display text-3xl md:text-4xl font-bold mt-4">
+              Let's Work Together
+            </h2>
+            <p className="font-mono text-sm text-muted-foreground mt-4 max-w-md mx-auto">
+              Have a project in mind? Drop me a message and let's create something amazing.
+            </p>
+          </motion.div>
+
+          <ContactForm />
         </div>
       </section>
 

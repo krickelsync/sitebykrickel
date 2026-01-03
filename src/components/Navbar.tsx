@@ -90,7 +90,7 @@ const Navbar = () => {
           {/* CTA Button */}
           <div className="hidden md:block">
             <a
-              href="/#pricing"
+              href="/about#contact"
               className="cta-shiny glass-card px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium"
             >
               Get Started
@@ -162,7 +162,7 @@ const Navbar = () => {
                     transition: { delay: 0.1 + navLinks.length * 0.05 }
                   }}
                   exit={{ opacity: 0, x: -10 }}
-                  href="/#pricing"
+                  href="/about#contact"
                   onClick={() => setIsOpen(false)}
                   className="cta-shiny glass-card px-6 py-2.5 font-mono text-sm text-center mt-2"
                 >
