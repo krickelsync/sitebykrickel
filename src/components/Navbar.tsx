@@ -89,11 +89,11 @@ const Navbar = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <a
+          <a
               href="/about#contact"
               className="cta-shiny glass-card px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium"
             >
-              Get Started
+              <span className="relative z-10">Get Started</span>
             </a>
           </div>
 
@@ -166,7 +166,7 @@ const Navbar = () => {
                   onClick={() => setIsOpen(false)}
                   className="cta-shiny glass-card px-6 py-2.5 font-mono text-sm text-center mt-2"
                 >
-                  Get Started
+                  <span className="relative z-10">Get Started</span>
                 </motion.a>
               </div>
             </motion.div>
