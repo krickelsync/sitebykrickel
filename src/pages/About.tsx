@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { Palette, Code, Brain, TrendingUp, Lightbulb, RefreshCw, Target } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,7 +9,17 @@ import WhyChooseCard from "@/components/WhyChooseCard";
 import AnimatedText from "@/components/AnimatedText";
 import profileImage from "@/assets/elfan-profile.jpg";
 import workingImage from "@/assets/elfan-working.jpg";
+
 const About = () => {
+  const bioSectionRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: bioSectionRef,
+    offset: ["start end", "end start"]
+  });
+  
+  // Photo moves slower than content (parallax effect)
+  const photoY = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const creativeSkills = [{
     name: "Photoshop",
     percentage: 100
@@ -99,46 +110,36 @@ const About = () => {
       </section>
 
       {/* Bio Section */}
-      <section className="py-20 md:py-32">
+      <section ref={bioSectionRef} className="py-20 md:py-32">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
-            {/* Photo Container - tinggi lebih besar untuk scroll space */}
-            <div className="relative lg:min-h-[150vh]">
-              <motion.div initial={{
-              opacity: 0,
-              x: -50
-            }} whileInView={{
-              opacity: 1,
-              x: 0
-            }} transition={{
-              duration: 0.8
-            }} viewport={{
-              once: true
-            }} className="lg:sticky lg:top-24">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
-                  <img src={profileImage} alt="Elfan Tinar" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-                </div>
-                
-                {/* Floating card */}
-                <motion.div initial={{
-                opacity: 0,
-                y: 20
-              }} whileInView={{
-                opacity: 1,
-                y: 0
-              }} transition={{
-                duration: 0.6,
-                delay: 0.4
-              }} viewport={{
-                once: true
-              }} className="absolute -bottom-6 -right-6 glass-card p-4 max-w-[200px]">
-                  <p className="font-mono text-xs text-muted-foreground">
-                    <span className="text-primary">5+ years</span> of hands-on experience in design & development
-                  </p>
-                </motion.div>
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+            {/* Photo with Parallax */}
+            <motion.div 
+              style={{ y: photoY }}
+              initial={{ opacity: 0, x: -50 }} 
+              whileInView={{ opacity: 1, x: 0 }} 
+              transition={{ duration: 0.8 }} 
+              viewport={{ once: true }}
+              className="relative"
+            >
+              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+                <img src={profileImage} alt="Elfan Tinar" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              </div>
+              
+              {/* Floating card */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }} 
+                whileInView={{ opacity: 1, y: 0 }} 
+                transition={{ duration: 0.6, delay: 0.4 }} 
+                viewport={{ once: true }} 
+                className="absolute -bottom-6 -right-6 glass-card p-4 max-w-[200px]"
+              >
+                <p className="font-mono text-xs text-muted-foreground">
+                  <span className="text-primary">5+ years</span> of hands-on experience in design & development
+                </p>
               </motion.div>
-            </div>
+            </motion.div>
 
             {/* Bio Text */}
             <motion.div initial={{
