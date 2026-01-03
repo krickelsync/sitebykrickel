@@ -2,6 +2,54 @@ import { motion } from "framer-motion";
 import { Instagram, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 
+const AnimatedBrandText = ({ text, className, delay = 0 }: { text: string; className?: string; delay?: number }) => {
+  const letters = text.split("");
+  
+  const container = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+        delayChildren: delay,
+      },
+    },
+  };
+
+  const letterVariant = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: [0.6, -0.05, 0.01, 0.99] as const,
+      },
+    },
+  };
+
+  return (
+    <motion.span
+      className={className}
+      variants={container}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+    >
+      {letters.map((letter, index) => (
+        <motion.span
+          key={index}
+          variants={letterVariant}
+          className="inline-block"
+          whileHover={{ y: -2, transition: { duration: 0.2 } }}
+        >
+          {letter === " " ? "\u00A0" : letter}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+};
+
 const Footer = () => {
   const quickLinks = [
     { name: "Home", href: "/" },
@@ -23,12 +71,15 @@ const Footer = () => {
             className="space-y-4"
           >
             <h2 className="font-syne text-2xl md:text-3xl font-extrabold uppercase tracking-tight">
-              <span className="text-foreground">SITE BY</span>{" "}
-              <span
-                className="text-yellow-400 bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-400 bg-clip-text text-transparent bg-[length:200%_100%] animate-shimmer"
-              >
-                KRICKEL
-              </span>
+              <AnimatedBrandText 
+                text="SITE BY " 
+                className="text-foreground"
+              />
+              <AnimatedBrandText 
+                text="KRICKEL" 
+                className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent"
+                delay={0.4}
+              />
             </h2>
             <p className="font-mono text-sm text-muted-foreground max-w-xs">
               Creative Agency. Graphic & Web Design for Clothing Brands & any business ready to stand out.
