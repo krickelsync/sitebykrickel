@@ -83,14 +83,14 @@ const About = () => {
       {/* Hero Section with Spline */}
       <section className="relative flex flex-col">
         {/* Spline 3D Interactive Area */}
-        <div className="relative w-full h-[70vh] md:h-[80vh] pt-24">
+        <div className="relative w-full h-[70vh] md:h-[80vh] pt-40 md:pt-52">
           <iframe src="https://my.spline.design/hellodistortingintro-UsGKO20dRWLBJGjUEMlwLUuf/" frameBorder="0" width="100%" height="100%" className="absolute inset-0" style={{
           border: 'none'
         }} />
         </div>
 
         {/* Hero Content - Below Spline with overlap */}
-        <div className="relative z-10 container mx-auto px-4 py-8 -mt-40 md:-mt-52">
+        <div className="relative z-10 container mx-auto px-4 py-8 -mt-56 md:-mt-72">
           <motion.div initial={{
           opacity: 0,
           y: 40
