@@ -69,7 +69,7 @@ const About = () => {
   }, {
     icon: Code,
     title: "Web Designer/Dev",
-    items: ["E-commerce", "Portfolio", "Company Profile"]
+    items: ["E-commerce", "Portfolio", "Company Profile", "Software as a Service (SaaS)", "Landing Page", "Blog"]
   }, {
     icon: Brain,
     title: "Artificial Intelligence",
@@ -77,7 +77,7 @@ const About = () => {
   }, {
     icon: TrendingUp,
     title: "Financial Analysis",
-    items: ["Fundamental & Technical Analysis", "Risk Management (SnR)", "Crypto & Forex Markets"]
+    items: ["Fundamental & Technical Analysis", "Risk Management", "Crypto & Forex Markets", "Support And Resistance (SnR)"]
   }];
   const softSkills = [{
     icon: Lightbulb,
