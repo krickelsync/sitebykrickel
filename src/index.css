@@ -62,30 +62,19 @@
     --input: 0 0% 15%;
     --ring: 74 100% 50%;
   }
+}
 
-  .light {
-    --background: 45 30% 97%;
-    --foreground: 220 20% 12%;
-    --card: 45 25% 95%;
-    --card-foreground: 220 20% 12%;
-    --popover: 45 25% 95%;
-    --popover-foreground: 220 20% 12%;
-    --primary: 74 75% 35%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 45 15% 90%;
-    --secondary-foreground: 220 15% 25%;
-    --muted: 45 12% 88%;
-    --muted-foreground: 220 10% 40%;
-    --accent: 74 75% 35%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 65% 50%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 220 15% 82%;
-    --input: 220 15% 82%;
-    --ring: 74 75% 35%;
-    --glass-bg: 220 20% 12% / 0.04;
-    --glass-border: 220 20% 12% / 0.1;
-  }
+/* Light mode with CSS invert filter */
+.light {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Keep images/videos normal (double invert = original) */
+.light img,
+.light video,
+.light canvas,
+.light [data-no-invert] {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 @layer base {
