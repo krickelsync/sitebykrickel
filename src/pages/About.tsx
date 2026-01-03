@@ -84,9 +84,11 @@ const About = () => {
       <section className="relative flex flex-col">
         {/* Spline 3D Interactive Area */}
         <div className="relative w-full h-[45vh] md:h-[55vh] pt-32 md:pt-40">
-          <iframe src="https://my.spline.design/hellodistortingintro-UsGKO20dRWLBJGjUEMlwLUuf/" frameBorder="0" width="100%" height="100%" className="absolute inset-0" style={{
-          border: 'none'
-        }} />
+          <spline-viewer 
+            hint 
+            url="https://prod.spline.design/Zkl1fjrHtunP9HZZ/scene.splinecode"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+          />
         </div>
 
         {/* Hero Content - Below Spline with overlap */}
