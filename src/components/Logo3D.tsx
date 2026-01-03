@@ -3,7 +3,7 @@ import { useGLTF, OrbitControls, Environment } from '@react-three/drei';
 import { Suspense, useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 
-const GLB_URL = 'https://pgppgdlkoblmpqdyfxfc.supabase.co/storage/v1/object/public/logo//untitled1%20(1).glb';
+const GLB_URL = '/models/logo.glb';
 
 const Model = () => {
   const { scene } = useGLTF(GLB_URL);
