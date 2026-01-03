@@ -19,7 +19,9 @@ const About = () => {
   });
   
   // Photo moves slower than content (parallax effect)
-  const photoY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const photoY = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  // Working image parallax - moves in opposite direction
+  const workingImageY = useTransform(scrollYProgress, [0, 1], [-50, 50]);
   const creativeSkills = [{
     name: "Photoshop",
     percentage: 100
@@ -166,19 +168,15 @@ const About = () => {
                 </p>
               </div>
 
-              {/* Working image */}
-              <motion.div initial={{
-              opacity: 0,
-              y: 20
-            }} whileInView={{
-              opacity: 1,
-              y: 0
-            }} transition={{
-              duration: 0.6,
-              delay: 0.2
-            }} viewport={{
-              once: true
-            }} className="relative aspect-video overflow-hidden rounded-xl mt-8">
+              {/* Working image with parallax */}
+              <motion.div 
+                style={{ y: workingImageY }}
+                initial={{ opacity: 0, y: 20 }} 
+                whileInView={{ opacity: 1, y: 0 }} 
+                transition={{ duration: 0.6, delay: 0.2 }} 
+                viewport={{ once: true }} 
+                className="relative aspect-video overflow-hidden rounded-xl mt-8"
+              >
                 <img src={workingImage} alt="Elfan working" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-primary/10" />
               </motion.div>
