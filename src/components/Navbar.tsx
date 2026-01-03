@@ -41,13 +41,20 @@ const Navbar = () => {
   const location = useLocation();
 
   const isActive = (href: string) => {
-    if (href === '/') return location.pathname === '/';
-    if (href.includes('#')) {
-      const [path] = href.split('#');
-      if (path === '' || path === '/') return location.pathname === '/';
-      return location.pathname === path || location.pathname.startsWith(path);
+    // Exact match untuk Home "/"
+    if (href === '/') {
+      return location.pathname === '/' && !location.hash;
     }
-    return location.pathname === href || location.pathname.startsWith(href);
+    
+    // Link dengan hash (seperti /#pricing, /about#contact)
+    if (href.includes('#')) {
+      const [path, hash] = href.split('#');
+      const targetPath = path === '' ? '/' : path;
+      return location.pathname === targetPath && location.hash === `#${hash}`;
+    }
+    
+    // Regular page links
+    return location.pathname === href;
   };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -113,7 +120,7 @@ const Navbar = () => {
                 className={cn(
                   "font-mono text-sm transition-all duration-400 ease-out hover-lift relative",
                   isActive(link.href) 
-                    ? "text-primary font-semibold after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-0.5 after:bg-primary" 
+                    ? "text-primary font-semibold after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-px after:bg-primary" 
                     : "text-muted-foreground hover:text-foreground hover-underline-reveal"
                 )}
               >
