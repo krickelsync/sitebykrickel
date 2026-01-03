@@ -168,21 +168,26 @@ const Pricing = () => {
             </a>
           </motion.div>
 
-          {/* Ultimate Premium Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.98 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="relative premium-card rounded-xl p-3 md:p-8 pt-6 md:pt-10 flex flex-col glow-border overflow-visible"
-          >
-            {/* Promo Badge */}
-            <div className="absolute -top-2.5 md:-top-3 left-1/2 -translate-x-1/2 z-10">
-              <span className="inline-flex items-center gap-1 md:gap-1.5 px-2 md:px-4 py-0.5 md:py-1 bg-primary text-primary-foreground font-mono text-[8px] md:text-[10px] uppercase tracking-wider rounded-full">
+          {/* Ultimate Premium Card Wrapper */}
+          <div className="relative">
+            {/* Promo Badge - Outside card for visibility */}
+            <div className="absolute -top-2.5 md:-top-3 left-1/2 -translate-x-1/2 z-20">
+              <span className="inline-flex items-center gap-1 md:gap-1.5 px-2 md:px-4 py-0.5 md:py-1 bg-primary text-primary-foreground font-mono text-[8px] md:text-[10px] uppercase tracking-wider rounded-full shadow-lg">
                 <AlertTriangle className="w-2.5 h-2.5 md:w-3 md:h-3" />
                 PROMO!
               </span>
             </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              whileHover={{ y: -5 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="relative glass-card shiny-card rounded-xl p-3 md:p-8 pt-6 md:pt-10 flex flex-col hover:border-primary/30 transition-all duration-500"
+            >
+              {/* Premium glow overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 pointer-events-none rounded-xl" />
 
             {/* Header */}
             <div className="text-center mb-4 md:mb-6 pb-4 md:pb-6 border-b border-primary/20">
@@ -231,7 +236,8 @@ const Pricing = () => {
               </span>
               <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             </a>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
 
         {/* Footer Note */}
