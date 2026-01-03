@@ -1,12 +1,22 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Eye } from "lucide-react";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 // Lazy load heavy Prism component
 const Prism = lazy(() => import("./Prism"));
 
 const Hero = () => {
+  const [prismScale, setPrismScale] = useState(typeof window !== 'undefined' && window.innerWidth < 768 ? 1.8 : 3);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setPrismScale(window.innerWidth < 768 ? 1.8 : 3);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Prism Background Effect - z-index 0 */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-background">
@@ -16,7 +26,7 @@ const Hero = () => {
             timeScale={0.5}
             height={4}
             baseWidth={5}
-            scale={3}
+            scale={prismScale}
             hueShift={0}
             colorFrequency={1}
             noise={0}
