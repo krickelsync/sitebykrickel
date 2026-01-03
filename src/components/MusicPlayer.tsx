@@ -1,25 +1,13 @@
-import { useState, useRef } from 'react';
 import { Play, Pause } from 'lucide-react';
+import { useMusicPlayer } from '@/contexts/MusicContext';
 
 const MusicPlayer = () => {
-  const [playing, setPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
-
-  const toggle = () => {
-    if (!audioRef.current) return;
-    
-    if (playing) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setPlaying(!playing);
-  };
+  const { isPlaying, togglePlay } = useMusicPlayer();
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex items-center gap-4 h-14 px-4 rounded-full glass border border-white/10 shadow-2xl">
       <div 
-        className={`w-10 h-10 rounded-full overflow-hidden border border-white/20 ${playing ? 'animate-spin' : ''}`}
+        className={`w-10 h-10 rounded-full overflow-hidden border border-white/20 ${isPlaying ? 'animate-spin' : ''}`}
         style={{ animationDuration: '3s' }}
       >
         <img 
@@ -29,12 +17,12 @@ const MusicPlayer = () => {
         />
       </div>
       <button 
-        onClick={toggle} 
+        onClick={togglePlay} 
         className={`flex items-center gap-2 text-xs font-bold tracking-widest uppercase transition-colors ${
-          playing ? 'text-[#DFFF00]' : 'text-white/80 hover:text-white'
+          isPlaying ? 'text-[#DFFF00]' : 'text-white/80 hover:text-white'
         }`}
       >
-        {playing ? (
+        {isPlaying ? (
           <>
             <Pause className="w-4 h-4" />
             <span className="hidden sm:inline">PAUSE</span>
@@ -46,11 +34,6 @@ const MusicPlayer = () => {
           </>
         )}
       </button>
-      <audio 
-        ref={audioRef} 
-        src="https://pgppgdlkoblmpqdyfxfc.supabase.co/storage/v1/object/public/logo//audio_6848604906-2.mp3" 
-        loop 
-      />
     </div>
   );
 };

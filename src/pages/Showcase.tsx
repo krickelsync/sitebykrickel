@@ -28,7 +28,7 @@ const templates = [
   }
 ];
 
-const categories = ["All", "E-commerce", "Portfolio", "Landing Page"];
+const categories = ["All", "E-commerce", "SAAS", "COMPANY PROFILE", "Portfolio", "Landing Page"];
 
 interface TiltCardProps {
   template: typeof templates[0];
@@ -228,7 +228,7 @@ const Showcase = () => {
             </a>
             
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight mb-3 md:mb-4">
-              <span className="text-primary glow-text">SHOWCASE</span>
+              <span className="text-primary glow-text">WEBSITES</span>
             </h1>
             <p className="font-mono text-xs sm:text-sm md:text-base text-muted-foreground max-w-xl mx-auto px-2">
               Explore our premium Shopify themes. Click any template to see it live.
