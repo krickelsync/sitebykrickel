@@ -35,7 +35,7 @@ const Footer = () => {
               </span>
             </h2>
             <p className="font-mono text-sm text-muted-foreground max-w-xs">
-              Premium Shopify Themes & Web Development for brands that want to stand out.
+              Creative Agency. Graphic & Web Design for Clothing Brands & any business ready to stand out.
             </p>
           </motion.div>
 
