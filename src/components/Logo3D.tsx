@@ -1,11 +1,12 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, OrbitControls, Environment } from '@react-three/drei';
-import { Suspense, useRef, useState, useEffect } from 'react';
+import { Suspense, useRef, useState, useEffect, memo } from 'react';
 import * as THREE from 'three';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const GLB_URL = '/models/logo.glb';
 
-const Model = () => {
+const Model = memo(() => {
   const { scene } = useGLTF(GLB_URL);
   const groupRef = useRef<THREE.Group>(null);
   const { camera } = useThree();
@@ -49,13 +50,36 @@ const Model = () => {
   });
 
   return <group ref={groupRef} />;
-};
+});
+
+Model.displayName = 'Model';
 
 // Preload the model for better performance
 useGLTF.preload(GLB_URL);
 
-const Logo3D = () => {
+// Static logo fallback for mobile
+const StaticLogo = memo(() => (
+  <div className="w-10 h-10 flex items-center justify-center">
+    <svg viewBox="0 0 32 32" className="w-8 h-8 text-primary">
+      <polygon 
+        points="16,2 30,28 2,28" 
+        fill="currentColor" 
+        className="drop-shadow-[0_0_10px_hsl(var(--primary)/0.5)]"
+      />
+    </svg>
+  </div>
+));
+
+StaticLogo.displayName = 'StaticLogo';
+
+const Logo3D = memo(() => {
+  const isMobile = useIsMobile();
   const [isHovered, setIsHovered] = useState(false);
+
+  // On mobile, show static logo for performance
+  if (isMobile) {
+    return <StaticLogo />;
+  }
 
   // Prevent default drag behavior on touch/pointer events
   const handlePointerDown = (e: React.PointerEvent) => {
@@ -85,6 +109,8 @@ const Logo3D = () => {
           touchAction: 'none'
         }}
         gl={{ alpha: true, antialias: true }}
+        dpr={[1, 1.5]} // Limit DPR for performance
+        frameloop="demand" // Only render on demand
       >
         <ambientLight intensity={0.8} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
@@ -105,6 +131,8 @@ const Logo3D = () => {
       </Canvas>
     </div>
   );
-};
+});
+
+Logo3D.displayName = 'Logo3D';
 
 export default Logo3D;

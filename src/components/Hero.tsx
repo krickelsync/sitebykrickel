@@ -1,37 +1,38 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Check, Eye } from "lucide-react";
-import Prism from "./Prism";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
-import AnimatedText from "./AnimatedText";
+import { useIsMobile } from "@/hooks/use-mobile";
+
+// Lazy load heavy Prism component
+const Prism = lazy(() => import("./Prism"));
 
 const Hero = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const isMobile = useIsMobile();
 
   return <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Prism Background Effect - z-index 0 */}
+      {/* Prism Background Effect - z-index 0 - Disabled on mobile for performance */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-background">
-        <Prism 
-          animationType="rotate"
-          timeScale={0.5}
-          height={4}
-          baseWidth={5}
-          scale={isMobile ? 1.4 : 3}
-          hueShift={0}
-          colorFrequency={1}
-          noise={0}
-          glow={1}
-          bloom={1}
-          offset={{ x: 0, y: 0 }}
-          suspendWhenOffscreen={true}
-        />
+        {!isMobile ? (
+          <Suspense fallback={<div className="w-full h-full bg-gradient-to-br from-primary/10 via-background to-background" />}>
+            <Prism 
+              animationType="rotate"
+              timeScale={0.5}
+              height={4}
+              baseWidth={5}
+              scale={3}
+              hueShift={0}
+              colorFrequency={1}
+              noise={0}
+              glow={1}
+              bloom={1}
+              offset={{ x: 0, y: 0 }}
+              suspendWhenOffscreen={true}
+            />
+          </Suspense>
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-primary/20 via-background to-background" />
+        )}
         {/* Fade overlay at the bottom */}
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent z-[1]" />
       </div>
@@ -61,7 +62,7 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* Main Headline */}
+          {/* Main Headline - Simplified on mobile */}
           <motion.h1 initial={{
           opacity: 0,
           y: 30
@@ -73,16 +74,16 @@ const Hero = () => {
           delay: 0.3
         }} className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold uppercase leading-[0.9] tracking-tight mb-8">
             <span className="block hover-lift">
-              <AnimatedText text="DON'T JUST" variant="stagger" />
+              DON'T JUST
             </span>
             <span className="block hover-lift">
-              <AnimatedText text="SELL PRODUCT." variant="stagger" />
+              SELL PRODUCT.
             </span>
-            <span className="block text-primary glow-text hover-glow-intense">
-              <AnimatedText text="SELL AN" variant="glitch" glowOnHover />
+            <span className="block text-primary glow-text-mobile md:glow-text hover-glow-intense">
+              SELL AN
             </span>
-            <span className="block text-primary glow-text hover-glow-intense">
-              <AnimatedText text="EXPERIENCE." variant="glitch" glowOnHover />
+            <span className="block text-primary glow-text-mobile md:glow-text hover-glow-intense">
+              EXPERIENCE.
             </span>
           </motion.h1>
 

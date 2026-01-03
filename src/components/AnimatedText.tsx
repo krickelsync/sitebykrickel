@@ -1,11 +1,14 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
+
 interface AnimatedTextProps {
   text: string;
   className?: string;
   variant?: "stagger" | "wave" | "glitch";
   glowOnHover?: boolean;
 }
+
 const AnimatedText = ({
   text,
   className = "",
@@ -13,6 +16,13 @@ const AnimatedText = ({
   glowOnHover = false
 }: AnimatedTextProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const isMobile = useIsMobile();
+  
+  // On mobile, return plain text for performance
+  if (isMobile) {
+    return <span className={className}>{text}</span>;
+  }
+  
   const letters = text.split("");
   const containerVariants = {
     hover: {
