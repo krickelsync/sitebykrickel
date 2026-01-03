@@ -363,7 +363,6 @@
 .cta-shiny {
   position: relative;
   overflow: hidden;
-  isolation: isolate;
 }
 
 .cta-shiny::before {
@@ -381,8 +380,7 @@
   );
   transform: skewX(-25deg);
   pointer-events: none;
-  border-radius: inherit;
-  z-index: -1;
+  z-index: 1;
 }
 
 .cta-shiny:hover::before {
