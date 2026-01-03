@@ -37,20 +37,20 @@ const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => {
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navLinks = [{
-    name: "Features",
-    href: "/#features",
+    name: "Home",
+    href: "/",
+    external: false
+  }, {
+    name: "Portofolio",
+    href: "/showcase",
     external: false
   }, {
     name: "Pricing",
     href: "/#pricing",
     external: false
   }, {
-    name: "Showcase",
-    href: "/showcase",
-    external: false
-  }, {
-    name: "About Me",
-    href: "/about",
+    name: "Contact",
+    href: "/about#contact",
     external: false
   }];
 
