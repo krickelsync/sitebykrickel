@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { useState, useRef, MouseEvent } from "react";
@@ -281,6 +282,8 @@ const Showcase = () => {
           )}
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };
