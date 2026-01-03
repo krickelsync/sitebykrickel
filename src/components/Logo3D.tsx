@@ -2,7 +2,6 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, OrbitControls, Environment } from '@react-three/drei';
 import { Suspense, useRef, useState, useEffect, memo } from 'react';
 import * as THREE from 'three';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 const GLB_URL = '/models/logo.glb';
 
@@ -73,13 +72,7 @@ const StaticLogo = memo(() => (
 StaticLogo.displayName = 'StaticLogo';
 
 const Logo3D = memo(() => {
-  const isMobile = useIsMobile();
   const [isHovered, setIsHovered] = useState(false);
-
-  // On mobile, show static logo for performance
-  if (isMobile) {
-    return <StaticLogo />;
-  }
 
   // Prevent default drag behavior on touch/pointer events
   const handlePointerDown = (e: React.PointerEvent) => {
