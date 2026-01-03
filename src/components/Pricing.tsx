@@ -22,6 +22,7 @@ const standardFeatures = [
     { feature: "Revisions", value: "1x Minor" },
     { feature: "Turnaround", value: "24 Hours" },
     { feature: "Support", value: "Standard" },
+    { feature: "License", value: "Lifetime" },
   ]},
 ];
 
@@ -66,6 +67,7 @@ const ultimateFeatures = [
     { feature: "Revisions", value: "10x Major" },
     { feature: "Turnaround", value: "2-3 Days" },
     { feature: "Support", value: "VIP WhatsApp" },
+    { feature: "License", value: "Lifetime" },
   ]},
 ];
 
