@@ -6,7 +6,6 @@ import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import CurvedLoop from "@/components/CurvedLoop";
-import MusicPlayer from "@/components/MusicPlayer";
 
 const Index = () => {
   return (
@@ -19,7 +18,6 @@ const Index = () => {
       <CurvedLoop />
       <FAQ />
       <Footer />
-      <MusicPlayer />
     </main>
   );
 };

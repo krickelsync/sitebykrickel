@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Showcase from "./pages/Showcase";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
+import MusicPlayer from "./components/MusicPlayer";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <MusicPlayer />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
