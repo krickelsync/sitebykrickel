@@ -37,6 +37,13 @@ const templates = [
     category: "E-commerce"
   },
   {
+    name: "Genes",
+    url: "https://genes.clothing",
+    description: "Modern Clothing Brand Store",
+    tagline: "Premium fashion with clean aesthetics",
+    category: "E-commerce"
+  },
+  {
     name: "Kulipixel",
     url: "https://kulipixel.com",
     description: "Freelance Designer Project Management",
