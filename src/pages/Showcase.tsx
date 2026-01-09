@@ -39,8 +39,8 @@ const templates = [
   {
     name: "Genes",
     url: "https://genes.clothing",
-    description: "Modern Clothing Brand Store",
-    tagline: "Premium fashion with clean aesthetics",
+    description: "Vintage Luxury Clothing Brand",
+    tagline: "Timeless elegance meets modern streetwear",
     category: "E-commerce"
   },
   {
