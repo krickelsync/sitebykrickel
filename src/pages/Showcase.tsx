@@ -28,6 +28,20 @@ const templates = [
     description: "Shopify Template for Clothing Brand",
     tagline: "Pure Front End And Backend Shopify",
     category: "E-commerce"
+  },
+  {
+    name: "SUP",
+    url: "https://sup.sitebykrickel.com",
+    description: "Supreme-Inspired Streetwear Store",
+    tagline: "Bold drops and hype culture aesthetics",
+    category: "E-commerce"
+  },
+  {
+    name: "Kulipixel",
+    url: "https://kulipixel.com",
+    description: "Freelance Designer Project Management",
+    tagline: "Organize clients, projects, and invoices in one place",
+    category: "SAAS"
   }
 ];
 
