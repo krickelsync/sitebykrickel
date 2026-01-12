@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDown, ChevronRight, Zap, Camera, Clock, Sparkles, Users, Check, Upload, Palette, Download, MessageSquare } from "lucide-react";
+import { ArrowDown, ChevronRight, Zap, Camera, Clock, Sparkles, Users, Check, Upload, Palette, Download, MessageSquare, Star, Search, ThumbsUp } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BundleOfferModal from "@/components/products/BundleOfferModal";
@@ -8,12 +8,23 @@ import CheckoutModal from "@/components/products/CheckoutModal";
 import PayPalProvider from "@/components/PayPalProvider";
 import ProductMarquee from "@/components/products/ProductMarquee";
 import ProductVelocityText from "@/components/products/ProductVelocityText";
+import BeforeAfterSlider from "@/components/products/BeforeAfterSlider";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 // Import portfolio images
 import modelAlleyStreetwear from "@/assets/portfolio/model-alley-streetwear.png";
@@ -27,17 +38,76 @@ import modelSilverBasquiat from "@/assets/portfolio/model-silver-basquiat.png";
 import modelLoungingHelmet from "@/assets/portfolio/model-lounging-helmet.jpg";
 import modelStudioFisheye from "@/assets/portfolio/model-studio-fisheye.png";
 
-const portfolioImages = [
-  { src: modelAlleyStreetwear, alt: "Streetwear model in urban alley" },
-  { src: modelTracksuitConcrete, alt: "Tracksuit model on concrete" },
-  { src: modelStairsTechwear, alt: "Techwear model on stairs" },
-  { src: modelLibraryGrunge, alt: "Grunge style in library" },
-  { src: modelRooftopHoodie, alt: "Hoodie model on rooftop" },
-  { src: modelSkateparkPuffer, alt: "Puffer jacket at skatepark" },
-  { src: modelStudioPatches, alt: "Patch jacket studio shot" },
-  { src: modelSilverBasquiat, alt: "Silver jacket artistic" },
-  { src: modelLoungingHelmet, alt: "Casual lounging style" },
-  { src: modelStudioFisheye, alt: "Fisheye studio shot" },
+// Customer showcase with slang American captions
+const customerShowcase = [
+  { src: modelAlleyStreetwear, customerName: "@drip.collective", caption: "bro this AI is lowkey insane 🔥 saved my whole budget fr fr" },
+  { src: modelTracksuitConcrete, customerName: "@urban.threads.co", caption: "no cap, my sales went UP after using these pics. W tool 💯" },
+  { src: modelStairsTechwear, customerName: "@techwear.labs", caption: "the vibes are immaculate. customers think we hired real models lmaooo" },
+  { src: modelLibraryGrunge, customerName: "@grunge.szn", caption: "this hits different. whole lookbook done in a day 🤯" },
+  { src: modelRooftopHoodie, customerName: "@elevated.fits", caption: "deadass thought it was a real photoshoot. AI be wilding" },
+  { src: modelSkateparkPuffer, customerName: "@skate.drip.official", caption: "aight whoever made this deserves a raise fr 🙌" },
+  { src: modelStudioPatches, customerName: "@patch.works.co", caption: "we're cooked (in a good way). this changed the game ngl" },
+  { src: modelSilverBasquiat, customerName: "@basquiat.vintage", caption: "its giving high fashion but make it affordable 💀✨" },
+  { src: modelLoungingHelmet, customerName: "@helmet.head.fits", caption: "POV: you saved $2k and got better pics than Nike 😭" },
+  { src: modelStudioFisheye, customerName: "@fisheye.fashion", caption: "sheeeesh the quality is unmatched. take my money 💸" },
+];
+
+// Fake reviews data
+const fakeReviews = [
+  {
+    id: 1,
+    name: "Brandon M.",
+    date: "Jan 8, 2026",
+    rating: 5,
+    title: "Absolute fire for my streetwear brand",
+    content: "No cap, this saved me at least $3k on my first drop. The AI models look legit af and my customers couldn't even tell the difference. 10/10 would recommend to anyone starting a clothing brand.",
+    helpful: 24,
+  },
+  {
+    id: 2,
+    name: "Jasmine T.",
+    date: "Jan 5, 2026",
+    rating: 5,
+    title: "Game changer for e-commerce",
+    content: "Was spending way too much on product photography. This tool hits different - got my whole catalog done in 2 days instead of 2 weeks. The diversity options are chef's kiss.",
+    helpful: 18,
+  },
+  {
+    id: 3,
+    name: "DeShawn W.",
+    date: "Jan 2, 2026",
+    rating: 5,
+    title: "Better than expected fr fr",
+    content: "I was skeptical at first but bruh... the results are insane. My IG engagement went up 40% after switching to these AI model pics. Worth every penny.",
+    helpful: 31,
+  },
+  {
+    id: 4,
+    name: "Maria G.",
+    date: "Dec 28, 2025",
+    rating: 5,
+    title: "Finally affordable model photography",
+    content: "As a small business owner, I couldn't afford real model shoots. This is literally a lifesaver. The quality is unreal and turnaround is crazy fast.",
+    helpful: 15,
+  },
+  {
+    id: 5,
+    name: "Tyler K.",
+    date: "Dec 22, 2025",
+    rating: 4,
+    title: "Really good, minor tweaks needed",
+    content: "Super impressed overall. Had to request a couple revisions but they delivered quickly. My Shopify store looks way more professional now.",
+    helpful: 9,
+  },
+];
+
+// Rating breakdown
+const ratingBreakdown = [
+  { stars: 5, count: 47, percentage: 94 },
+  { stars: 4, count: 3, percentage: 6 },
+  { stars: 3, count: 0, percentage: 0 },
+  { stars: 2, count: 0, percentage: 0 },
+  { stars: 1, count: 0, percentage: 0 },
 ];
 
 const campaignModes = [
@@ -176,14 +246,26 @@ const ProductAIModelStudio = () => {
   const [showBundleOffer, setShowBundleOffer] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [showStickyCTA, setShowStickyCTA] = useState(false);
+  const [showReviewDialog, setShowReviewDialog] = useState(false);
+  const [reviewRating, setReviewRating] = useState(5);
   const [checkoutProduct, setCheckoutProduct] = useState<{
     name: string;
     price: number;
     isBundle: boolean;
   } | null>(null);
 
+  const { toast } = useToast();
   const examplesRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
+
+  const handleSubmitReview = () => {
+    setShowReviewDialog(false);
+    setReviewRating(5);
+    toast({
+      title: "Thanks for your review! 🙌",
+      description: "Your review is currently under review and will be published soon.",
+    });
+  };
 
   // Track scroll position for sticky CTA
   useEffect(() => {
@@ -351,7 +433,7 @@ const ProductAIModelStudio = () => {
         {/* MARQUEE */}
         <ProductMarquee />
 
-        {/* BEFORE / AFTER SECTION */}
+        {/* BEFORE / AFTER INTERACTIVE SLIDER */}
         <section ref={examplesRef} className="py-32 bg-background">
           <div className="container mx-auto px-4">
             {/* Section Header */}
@@ -367,6 +449,9 @@ const ProductAIModelStudio = () => {
               <h2 className="font-display text-4xl md:text-5xl font-bold">
                 The Transformation
               </h2>
+              <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
+                Drag the slider to compare: boring flat lay vs. AI-generated model wearing your product
+              </p>
             </motion.div>
 
             <motion.div
@@ -374,46 +459,26 @@ const ProductAIModelStudio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
             >
-              {/* Before */}
-              <div className="space-y-4">
-                <p className="text-sm font-mono text-destructive uppercase tracking-wider flex items-center gap-2">
-                  ❌ THE OLD WAY
+              <BeforeAfterSlider
+                beforeImage="/placeholder.svg"
+                afterImage={modelAlleyStreetwear}
+                beforeLabel="OLD WAY"
+                afterLabel="AI WAY"
+              />
+              <div className="flex justify-center gap-8 mt-6 text-sm">
+                <p className="text-muted-foreground">
+                  <span className="text-destructive font-bold">❌ OLD:</span> $3,000+ & weeks of waiting
                 </p>
-                <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-secondary/30 border border-destructive/20">
-                  <img
-                    src="/placeholder.svg"
-                    alt="Traditional photoshoot"
-                    className="w-full h-full object-cover opacity-60 grayscale"
-                  />
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Hire models, rent studio, wait weeks, spend $3,000+
-                </p>
-              </div>
-
-              {/* After */}
-              <div className="space-y-4">
-                <p className="text-sm font-mono text-primary uppercase tracking-wider flex items-center gap-2">
-                  ✅ THE NEW WAY
-                </p>
-                <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-secondary/30 ring-2 ring-primary/30 shadow-lg shadow-primary/10">
-                  <img
-                    src={modelAlleyStreetwear}
-                    alt="AI generated model"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <p className="text-sm text-foreground font-medium">
-                  Upload product. Generate model. Done in minutes. Just $70.
+                <p className="text-foreground font-medium">
+                  <span className="text-primary font-bold">✅ AI:</span> $70 & done in 24-48h
                 </p>
               </div>
             </motion.div>
           </div>
         </section>
 
-        {/* PORTFOLIO GALLERY */}
+        {/* CUSTOMER SHOWCASE GALLERY */}
         <section className="py-24 bg-secondary/10">
           <div className="container mx-auto px-4">
             {/* Section Header */}
@@ -424,34 +489,151 @@ const ProductAIModelStudio = () => {
               className="text-center mb-12"
             >
               <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-mono mb-4">
-                REAL AI-GENERATED RESULTS
+                REAL RESULTS FROM REAL BRANDS
               </span>
               <h2 className="font-display text-4xl md:text-5xl font-bold">
-                See What's Possible
+                What Our Customers Made
               </h2>
               <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-                Every image below was generated using AI Model Studio. No real models, no photoshoots—just AI magic.
+                These are actual results from brands using AI Model Studio. Their words, not ours.
               </p>
             </motion.div>
 
-            {/* Masonry Grid */}
+            {/* Masonry Grid with Testimonial Captions */}
             <div className="columns-2 md:columns-3 lg:columns-4 gap-4 max-w-7xl mx-auto">
-              {portfolioImages.map((image, index) => (
+              {customerShowcase.map((item, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.05 }}
-                  className="mb-4 break-inside-avoid rounded-xl overflow-hidden group cursor-pointer"
+                  className="mb-4 break-inside-avoid rounded-xl overflow-hidden group cursor-pointer bg-secondary/50"
                 >
                   <img
-                    src={image.src}
-                    alt={image.alt}
+                    src={item.src}
+                    alt={`Customer showcase ${item.customerName}`}
                     className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
+                  <div className="p-4">
+                    <p className="font-bold text-sm text-primary">{item.customerName}</p>
+                    <p className="text-xs text-muted-foreground italic mt-1">"{item.caption}"</p>
+                  </div>
                 </motion.div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CUSTOMER REVIEWS SECTION */}
+        <section className="py-24 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              {/* Reviews Header */}
+              <div className="flex flex-col lg:flex-row gap-8 mb-12">
+                {/* Rating Summary */}
+                <div className="lg:w-1/3 glass-card p-6 space-y-4">
+                  <div className="flex items-center gap-4">
+                    <span className="text-5xl font-bold text-primary">5.0</span>
+                    <div>
+                      <div className="flex gap-0.5">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star key={star} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                        ))}
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-1">Based on 50 reviews</p>
+                    </div>
+                  </div>
+                  
+                  {/* Rating Bars */}
+                  <div className="space-y-2">
+                    {ratingBreakdown.map((item) => (
+                      <div key={item.stars} className="flex items-center gap-2 text-sm">
+                        <span className="w-8">{item.stars}★</span>
+                        <div className="flex-1 h-2 bg-secondary rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-yellow-400 rounded-full"
+                            style={{ width: `${item.percentage}%` }}
+                          />
+                        </div>
+                        <span className="w-8 text-right text-muted-foreground">{item.count}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Reviews Controls */}
+                <div className="lg:flex-1 space-y-4">
+                  <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                    <h3 className="text-2xl font-bold">Reviews (50)</h3>
+                    <Button
+                      onClick={() => setShowReviewDialog(true)}
+                      className="bg-primary hover:bg-primary/90"
+                    >
+                      <MessageSquare className="w-4 h-4 mr-2" />
+                      Write A Review
+                    </Button>
+                  </div>
+                  
+                  {/* Fake Search & Sort */}
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="relative flex-1">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <Input
+                        placeholder="Search reviews..."
+                        className="pl-10 bg-secondary/50"
+                        readOnly
+                      />
+                    </div>
+                    <select className="px-4 py-2 rounded-lg bg-secondary/50 border border-border text-sm cursor-not-allowed">
+                      <option>Sort by: Most Recent</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Reviews List */}
+              <div className="space-y-6">
+                {fakeReviews.map((review, index) => (
+                  <motion.div
+                    key={review.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="glass-card p-6 space-y-4"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">
+                          {review.name.charAt(0)}
+                        </div>
+                        <div>
+                          <p className="font-bold">{review.name}</p>
+                          <p className="text-xs text-muted-foreground">{review.date}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-0.5">
+                        {[...Array(review.rating)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h4 className="font-bold mb-2">{review.title}</h4>
+                      <p className="text-sm text-muted-foreground">{review.content}</p>
+                    </div>
+                    
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <button className="flex items-center gap-1 hover:text-foreground transition-colors">
+                        <ThumbsUp className="w-3 h-3" />
+                        Helpful ({review.helpful})
+                      </button>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -818,6 +1000,56 @@ const ProductAIModelStudio = () => {
             isBundle={checkoutProduct.isBundle}
           />
         )}
+
+        {/* Write Review Dialog (Fake - just shows "under review" toast) */}
+        <Dialog open={showReviewDialog} onOpenChange={setShowReviewDialog}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Write A Review</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              {/* Star Rating Selector */}
+              <div>
+                <label className="text-sm font-medium mb-2 block">Your Rating</label>
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      onClick={() => setReviewRating(star)}
+                      className="p-1 hover:scale-110 transition-transform"
+                    >
+                      <Star
+                        className={`w-8 h-8 transition-colors ${
+                          star <= reviewRating
+                            ? "fill-yellow-400 text-yellow-400"
+                            : "text-muted-foreground"
+                        }`}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium mb-2 block">Review Title</label>
+                <Input placeholder="Summarize your experience" className="bg-secondary/50" />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium mb-2 block">Your Review</label>
+                <Textarea
+                  placeholder="Tell us what you think about AI Model Studio..."
+                  rows={4}
+                  className="bg-secondary/50"
+                />
+              </div>
+
+              <Button onClick={handleSubmitReview} className="w-full">
+                Submit Review
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </PayPalProvider>
   );
