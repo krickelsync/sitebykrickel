@@ -52,7 +52,7 @@ const customerShowcase = [
   { src: modelStudioFisheye, customerName: "@fisheye.fashion", caption: "sheeeesh the quality is unmatched. take my money 💸" },
 ];
 
-// Reviews data for 3 columns with vertical marquee
+// Reviews data for 3 columns with vertical marquee - mix of 4 and 5 star ratings
 const reviewsColumn1 = [
   {
     id: 1,
@@ -66,7 +66,7 @@ const reviewsColumn1 = [
     id: 2,
     name: "Jasmine T.",
     initials: "JT",
-    rating: 5,
+    rating: 4,
     content: "Was spending way too much on product photography. This tool hits different - got my whole catalog done in 2 days instead of 2 weeks.",
     avatarColor: "bg-blue-500",
   },
@@ -82,7 +82,7 @@ const reviewsColumn1 = [
     id: 4,
     name: "Ashley K.",
     initials: "AK",
-    rating: 5,
+    rating: 4,
     content: "I would tell my friends that this is the perfect tool for their brand. No cap, it's fire. 🔥",
     avatarColor: "bg-pink-500",
   },
@@ -109,7 +109,7 @@ const reviewsColumn2 = [
     id: 7,
     name: "Maria G.",
     initials: "MG",
-    rating: 5,
+    rating: 4,
     content: "As a small business owner, I couldn't afford real model shoots. This is literally a lifesaver. The quality is unreal!",
     avatarColor: "bg-yellow-500",
   },
@@ -133,7 +133,7 @@ const reviewsColumn2 = [
     id: 10,
     name: "Chris H.",
     initials: "CH",
-    rating: 5,
+    rating: 4,
     content: "CUSTOMIZABLE AND THE OPTIONS ARE VERY GOOD. This changed the game fr fr 🙌",
     avatarColor: "bg-red-500",
   },
@@ -152,7 +152,7 @@ const reviewsColumn3 = [
     id: 12,
     name: "Samantha L.",
     initials: "SL",
-    rating: 5,
+    rating: 4,
     content: "I purchased a few AI tools in the past but they don't compare to this... Best tool hands down and easy to use.",
     avatarColor: "bg-emerald-500",
   },
@@ -176,7 +176,7 @@ const reviewsColumn3 = [
     id: 15,
     name: "Andre J.",
     initials: "AJ",
-    rating: 5,
+    rating: 4,
     content: "POV: you saved $2k and got better pics than Nike 😭 This hits different fr fr",
     avatarColor: "bg-amber-500",
   },
@@ -184,7 +184,7 @@ const reviewsColumn3 = [
 
 const campaignModes = [
   {
-    title: "Editorial Pose",
+    title: "Campaign",
     description: "High fashion, magazine-ready",
     image: modelRooftopHoodie,
   },
@@ -320,6 +320,16 @@ const ProductAIModelStudio = () => {
   const [showStickyCTA, setShowStickyCTA] = useState(false);
   const [showReviewDialog, setShowReviewDialog] = useState(false);
   const [reviewRating, setReviewRating] = useState(5);
+  const [reviewName, setReviewName] = useState("");
+  const [reviewContent, setReviewContent] = useState("");
+  const [userReviews, setUserReviews] = useState<{
+    id: number;
+    name: string;
+    initials: string;
+    rating: number;
+    content: string;
+    avatarColor: string;
+  }[]>([]);
   const [checkoutProduct, setCheckoutProduct] = useState<{
     name: string;
     price: number;
@@ -331,13 +341,46 @@ const ProductAIModelStudio = () => {
   const heroRef = useRef<HTMLElement>(null);
 
   const handleSubmitReview = () => {
+    if (reviewRating >= 4 && reviewName.trim() && reviewContent.trim()) {
+      const initials = reviewName.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+      const colors = ["bg-green-500", "bg-blue-500", "bg-purple-500", "bg-pink-500", "bg-orange-500", "bg-teal-500", "bg-cyan-500"];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      
+      setUserReviews(prev => [{
+        id: Date.now(),
+        name: reviewName,
+        initials,
+        rating: reviewRating,
+        content: reviewContent,
+        avatarColor: randomColor,
+      }, ...prev]);
+      
+      toast({
+        title: "Thanks for your review! 🙌",
+        description: "Your review is now live!",
+      });
+    } else if (reviewRating < 4) {
+      toast({
+        title: "Thanks for your feedback!",
+        description: "We appreciate your honest feedback and will work to improve.",
+      });
+    } else {
+      toast({
+        title: "Please fill in all fields",
+        description: "Name and review content are required.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setShowReviewDialog(false);
     setReviewRating(5);
-    toast({
-      title: "Thanks for your review! 🙌",
-      description: "Your review is currently under review and will be published soon.",
-    });
+    setReviewName("");
+    setReviewContent("");
   };
+
+  // Combine user reviews with column 1
+  const allColumn1Reviews = [...userReviews, ...reviewsColumn1];
 
   // Track scroll position for sticky CTA
   useEffect(() => {
@@ -588,8 +631,7 @@ const ProductAIModelStudio = () => {
                     className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="p-4">
-                    <p className="font-bold text-sm text-primary">{item.customerName}</p>
-                    <p className="text-xs text-muted-foreground italic mt-1">"{item.caption}"</p>
+                    <p className="text-xs text-muted-foreground italic">"{item.caption}"</p>
                   </div>
                 </motion.div>
               ))}
@@ -616,14 +658,17 @@ const ProductAIModelStudio = () => {
             </motion.div>
 
             {/* 3 Column Vertical Marquee */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-[600px] overflow-hidden max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-[600px] max-w-6xl mx-auto">
               {/* Column 1 */}
               <div className="overflow-hidden relative">
+                {/* Top shadow gradient */}
+                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
+                
                 <div 
-                  className="animate-marquee-vertical hover:pause"
+                  className="animate-marquee-vertical hover:[animation-play-state:paused]"
                   style={{ animationDuration: "30s" }}
                 >
-                  {[...reviewsColumn1, ...reviewsColumn1].map((review, i) => (
+                  {[...allColumn1Reviews, ...allColumn1Reviews].map((review, i) => (
                     <div key={`col1-${review.id}-${i}`} className="glass-card p-6 mb-4 space-y-4">
                       <p className="text-muted-foreground italic leading-relaxed">
                         "{review.content}"
@@ -645,12 +690,18 @@ const ProductAIModelStudio = () => {
                     </div>
                   ))}
                 </div>
+                
+                {/* Bottom shadow gradient */}
+                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
               </div>
 
               {/* Column 2 - different speed for organic feel */}
               <div className="overflow-hidden relative hidden md:block">
+                {/* Top shadow gradient */}
+                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
+                
                 <div 
-                  className="animate-marquee-vertical hover:pause"
+                  className="animate-marquee-vertical hover:[animation-play-state:paused]"
                   style={{ animationDuration: "25s" }}
                 >
                   {[...reviewsColumn2, ...reviewsColumn2].map((review, i) => (
@@ -675,12 +726,18 @@ const ProductAIModelStudio = () => {
                     </div>
                   ))}
                 </div>
+                
+                {/* Bottom shadow gradient */}
+                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
               </div>
 
               {/* Column 3 */}
               <div className="overflow-hidden relative hidden md:block">
+                {/* Top shadow gradient */}
+                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
+                
                 <div 
-                  className="animate-marquee-vertical hover:pause"
+                  className="animate-marquee-vertical hover:[animation-play-state:paused]"
                   style={{ animationDuration: "35s" }}
                 >
                   {[...reviewsColumn3, ...reviewsColumn3].map((review, i) => (
@@ -705,6 +762,9 @@ const ProductAIModelStudio = () => {
                     </div>
                   ))}
                 </div>
+                
+                {/* Bottom shadow gradient */}
+                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
               </div>
             </div>
 
@@ -865,49 +925,6 @@ const ProductAIModelStudio = () => {
                 ))}
               </ul>
             </motion.div>
-          </div>
-        </section>
-
-        {/* TESTIMONIALS */}
-        <section className="py-24 bg-background">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-mono mb-4">
-                CUSTOMER LOVE
-              </span>
-              <h2 className="font-display text-4xl md:text-5xl font-bold">
-                What Brands Say
-              </h2>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {testimonials.map((testimonial, index) => (
-                <motion.div
-                  key={testimonial.name}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="glass-card p-6 space-y-4"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">
-                      {testimonial.avatar}
-                    </div>
-                    <div>
-                      <p className="font-bold">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.brand}</p>
-                    </div>
-                  </div>
-                  <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
-                </motion.div>
-              ))}
-            </div>
           </div>
         </section>
 
@@ -1111,11 +1128,21 @@ const ProductAIModelStudio = () => {
                     </button>
                   ))}
                 </div>
+                {reviewRating < 4 && (
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Note: Reviews with less than 4 stars will be submitted as private feedback.
+                  </p>
+                )}
               </div>
 
               <div>
-                <label className="text-sm font-medium mb-2 block">Review Title</label>
-                <Input placeholder="Summarize your experience" className="bg-secondary/50" />
+                <label className="text-sm font-medium mb-2 block">Your Name</label>
+                <Input 
+                  placeholder="John D." 
+                  value={reviewName}
+                  onChange={(e) => setReviewName(e.target.value)}
+                  className="bg-secondary/50" 
+                />
               </div>
 
               <div>
@@ -1123,6 +1150,8 @@ const ProductAIModelStudio = () => {
                 <Textarea
                   placeholder="Tell us what you think about AI Model Studio..."
                   rows={4}
+                  value={reviewContent}
+                  onChange={(e) => setReviewContent(e.target.value)}
                   className="bg-secondary/50"
                 />
               </div>
