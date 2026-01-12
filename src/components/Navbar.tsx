@@ -186,6 +186,10 @@ const Navbar = () => {
     href: "/showcase",
     external: false
   }, {
+    name: "Products",
+    href: "/products",
+    external: false
+  }, {
     name: "Pricing",
     href: "/#pricing",
     external: false
