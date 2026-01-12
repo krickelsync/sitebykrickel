@@ -8,7 +8,8 @@ const products = [
     title: "AI Product Studio",
     description:
       "Generate clean, catalog-ready product visuals without traditional photoshoots.",
-    price: 100,
+    price: 70,
+    originalPrice: 100,
     image: "/placeholder.svg",
     href: "/products/ai-product-studio",
   },

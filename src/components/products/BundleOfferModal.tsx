@@ -19,7 +19,7 @@ const BundleOfferModal = ({
   originalProduct,
 }: BundleOfferModalProps) => {
   const [hasExpired, setHasExpired] = useState(false);
-  const [initialSeconds, setInitialSeconds] = useState(120);
+  const [initialSeconds, setInitialSeconds] = useState(60);
 
   useEffect(() => {
     if (isOpen) {
@@ -35,12 +35,12 @@ const BundleOfferModal = ({
           setHasExpired(true);
         }
       } else {
-        // Set new expiry time
+        // Set new expiry time - 60 seconds (1 minute)
         sessionStorage.setItem(
           "bundleOfferExpiry",
-          String(Date.now() + 120000)
+          String(Date.now() + 60000)
         );
-        setInitialSeconds(120);
+        setInitialSeconds(60);
       }
     }
   }, [isOpen]);
@@ -102,7 +102,7 @@ const BundleOfferModal = ({
                     transition={{ delay: 0.3 }}
                     className="text-sm font-mono text-primary uppercase tracking-wider"
                   >
-                    Wait — Special Offer
+                    Wait — Exclusive Bundle Deal
                   </motion.p>
                   <motion.h2
                     initial={{ opacity: 0, y: 10 }}
@@ -110,7 +110,7 @@ const BundleOfferModal = ({
                     transition={{ delay: 0.4 }}
                     className="font-display text-2xl md:text-3xl font-bold"
                   >
-                    Bundle Offer Just for You
+                    This discount is only for you
                   </motion.h2>
                 </div>
 
@@ -133,10 +133,10 @@ const BundleOfferModal = ({
                       $200
                     </span>
                     <span className="text-3xl font-bold font-mono text-primary">
-                      $160
+                      $100
                     </span>
                     <span className="bg-primary text-primary-foreground px-2 py-1 rounded text-xs font-mono font-bold">
-                      SAVE $40
+                      SAVE $100
                     </span>
                   </div>
                 </motion.div>
@@ -181,7 +181,7 @@ const BundleOfferModal = ({
                       onClick={onAcceptBundle}
                       className="w-full py-4 px-6 bg-primary text-primary-foreground font-mono font-bold rounded-xl hover:opacity-90 transition-opacity"
                     >
-                      Get Both for $160
+                      Get Both for $100
                     </button>
                   )}
                   <button
