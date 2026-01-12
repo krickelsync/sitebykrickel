@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDown, ChevronRight, Zap, Camera, Clock, Sparkles } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -60,6 +60,7 @@ const valueCards = [
 const ProductAIProductStudio = () => {
   const [showBundleOffer, setShowBundleOffer] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
+  const [showStickyCTA, setShowStickyCTA] = useState(false);
   const [checkoutProduct, setCheckoutProduct] = useState<{
     name: string;
     price: number;
@@ -67,6 +68,19 @@ const ProductAIProductStudio = () => {
   } | null>(null);
 
   const examplesRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Track scroll position for sticky CTA
+  useEffect(() => {
+    const handleScroll = () => {
+      if (heroRef.current) {
+        const heroBottom = heroRef.current.offsetTop + heroRef.current.offsetHeight;
+        setShowStickyCTA(window.scrollY > heroBottom);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToExamples = () => {
     examplesRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -113,7 +127,7 @@ const ProductAIProductStudio = () => {
         <Navbar />
 
         {/* HERO SECTION - FOMO Style */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
           {/* Background Image */}
           <div className="absolute inset-0">
             <img
@@ -436,6 +450,38 @@ const ProductAIProductStudio = () => {
         </section>
 
         <Footer />
+
+        {/* Sticky CTA Bar */}
+        <AnimatePresence>
+          {showStickyCTA && (
+            <motion.div
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 100, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-t border-border py-4 shadow-lg shadow-black/10"
+            >
+              <div className="container mx-auto px-4 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <span className="font-bold text-sm md:text-base">AI Product Studio</span>
+                  <span className="text-muted-foreground line-through text-sm">$100</span>
+                  <span className="text-xl md:text-2xl font-bold text-primary font-mono">$70</span>
+                  <span className="hidden sm:inline-block px-2 py-0.5 bg-green-500/20 text-green-500 text-xs font-bold rounded">
+                    SAVE 30%
+                  </span>
+                </div>
+                <motion.button
+                  onClick={handleBuyClick}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-4 md:px-6 py-2 md:py-3 bg-primary text-primary-foreground font-mono font-bold rounded-xl text-sm md:text-base shadow-lg shadow-primary/25"
+                >
+                  Get Now →
+                </motion.button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Bundle Offer Modal */}
         <BundleOfferModal
