@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDown, ChevronRight, Zap, Camera, Clock, Sparkles, Users, Check, Upload, Palette, Download, MessageSquare, Star, Search, ThumbsUp } from "lucide-react";
+import { ArrowDown, ChevronRight, Zap, Camera, Clock, Sparkles, Users, Check, Upload, Palette, Download, MessageSquare, Star } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BundleOfferModal from "@/components/products/BundleOfferModal";
@@ -52,62 +52,134 @@ const customerShowcase = [
   { src: modelStudioFisheye, customerName: "@fisheye.fashion", caption: "sheeeesh the quality is unmatched. take my money 💸" },
 ];
 
-// Fake reviews data
-const fakeReviews = [
+// Reviews data for 3 columns with vertical marquee
+const reviewsColumn1 = [
   {
     id: 1,
     name: "Brandon M.",
-    date: "Jan 8, 2026",
+    initials: "BM",
     rating: 5,
-    title: "Absolute fire for my streetwear brand",
-    content: "No cap, this saved me at least $3k on my first drop. The AI models look legit af and my customers couldn't even tell the difference. 10/10 would recommend to anyone starting a clothing brand.",
-    helpful: 24,
+    content: "No cap, this saved me at least $3k on my first drop. The AI models look legit af and my customers couldn't even tell the difference.",
+    avatarColor: "bg-green-500",
   },
   {
     id: 2,
     name: "Jasmine T.",
-    date: "Jan 5, 2026",
+    initials: "JT",
     rating: 5,
-    title: "Game changer for e-commerce",
-    content: "Was spending way too much on product photography. This tool hits different - got my whole catalog done in 2 days instead of 2 weeks. The diversity options are chef's kiss.",
-    helpful: 18,
+    content: "Was spending way too much on product photography. This tool hits different - got my whole catalog done in 2 days instead of 2 weeks.",
+    avatarColor: "bg-blue-500",
   },
   {
     id: 3,
-    name: "DeShawn W.",
-    date: "Jan 2, 2026",
+    name: "Marcus L.",
+    initials: "ML",
     rating: 5,
-    title: "Better than expected fr fr",
-    content: "I was skeptical at first but bruh... the results are insane. My IG engagement went up 40% after switching to these AI model pics. Worth every penny.",
-    helpful: 31,
+    content: "Genuinely one of the best tools for running a clothing brand. $700 days as of rn and I plan on achieving way more with this.",
+    avatarColor: "bg-purple-500",
   },
   {
     id: 4,
-    name: "Maria G.",
-    date: "Dec 28, 2025",
+    name: "Ashley K.",
+    initials: "AK",
     rating: 5,
-    title: "Finally affordable model photography",
-    content: "As a small business owner, I couldn't afford real model shoots. This is literally a lifesaver. The quality is unreal and turnaround is crazy fast.",
-    helpful: 15,
+    content: "I would tell my friends that this is the perfect tool for their brand. No cap, it's fire. 🔥",
+    avatarColor: "bg-pink-500",
   },
   {
     id: 5,
-    name: "Tyler K.",
-    date: "Dec 22, 2025",
-    rating: 4,
-    title: "Really good, minor tweaks needed",
-    content: "Super impressed overall. Had to request a couple revisions but they delivered quickly. My Shopify store looks way more professional now.",
-    helpful: 9,
+    name: "Devon R.",
+    initials: "DR",
+    rating: 5,
+    content: "The vibes are immaculate. My customers literally thought we hired real models lmaooo",
+    avatarColor: "bg-orange-500",
   },
 ];
 
-// Rating breakdown
-const ratingBreakdown = [
-  { stars: 5, count: 47, percentage: 94 },
-  { stars: 4, count: 3, percentage: 6 },
-  { stars: 3, count: 0, percentage: 0 },
-  { stars: 2, count: 0, percentage: 0 },
-  { stars: 1, count: 0, percentage: 0 },
+const reviewsColumn2 = [
+  {
+    id: 6,
+    name: "DeShawn W.",
+    initials: "DW",
+    rating: 5,
+    content: "I was skeptical at first but bruh... the results are insane. My IG engagement went up 40% after switching to these AI model pics.",
+    avatarColor: "bg-purple-500",
+  },
+  {
+    id: 7,
+    name: "Maria G.",
+    initials: "MG",
+    rating: 5,
+    content: "As a small business owner, I couldn't afford real model shoots. This is literally a lifesaver. The quality is unreal!",
+    avatarColor: "bg-yellow-500",
+  },
+  {
+    id: 8,
+    name: "Tyler K.",
+    initials: "TK",
+    rating: 5,
+    content: "Super impressed overall. My Shopify store looks way more professional now. Deadass the best investment I made this year.",
+    avatarColor: "bg-teal-500",
+  },
+  {
+    id: 9,
+    name: "Nina P.",
+    initials: "NP",
+    rating: 5,
+    content: "It was super easy to use. Loving all the features. Cannot wait to go live in a couple of weeks!",
+    avatarColor: "bg-indigo-500",
+  },
+  {
+    id: 10,
+    name: "Chris H.",
+    initials: "CH",
+    rating: 5,
+    content: "CUSTOMIZABLE AND THE OPTIONS ARE VERY GOOD. This changed the game fr fr 🙌",
+    avatarColor: "bg-red-500",
+  },
+];
+
+const reviewsColumn3 = [
+  {
+    id: 11,
+    name: "Jordan B.",
+    initials: "JB",
+    rating: 5,
+    content: "So grateful to find this tool and the team is always so on top of everything. Couldn't thank you guys enough",
+    avatarColor: "bg-cyan-500",
+  },
+  {
+    id: 12,
+    name: "Samantha L.",
+    initials: "SL",
+    rating: 5,
+    content: "I purchased a few AI tools in the past but they don't compare to this... Best tool hands down and easy to use.",
+    avatarColor: "bg-emerald-500",
+  },
+  {
+    id: 13,
+    name: "Kevin D.",
+    initials: "KD",
+    rating: 5,
+    content: "Still can't believe this is AI. My customers literally thought we hired real models lmaooo 💀",
+    avatarColor: "bg-violet-500",
+  },
+  {
+    id: 14,
+    name: "Rachel M.",
+    initials: "RM",
+    rating: 5,
+    content: "If you're wondering whether to get this, go ahead — it's straightforward and easy to use. W tool 💯",
+    avatarColor: "bg-rose-500",
+  },
+  {
+    id: 15,
+    name: "Andre J.",
+    initials: "AJ",
+    rating: 5,
+    content: "POV: you saved $2k and got better pics than Nike 😭 This hits different fr fr",
+    avatarColor: "bg-amber-500",
+  },
 ];
 
 const campaignModes = [
@@ -525,115 +597,126 @@ const ProductAIModelStudio = () => {
           </div>
         </section>
 
-        {/* CUSTOMER REVIEWS SECTION */}
-        <section className="py-24 bg-background">
+        {/* CUSTOMER REVIEWS SECTION - VERTICAL MARQUEE */}
+        <section className="py-24 bg-background overflow-hidden">
           <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              {/* Reviews Header */}
-              <div className="flex flex-col lg:flex-row gap-8 mb-12">
-                {/* Rating Summary */}
-                <div className="lg:w-1/3 glass-card p-6 space-y-4">
-                  <div className="flex items-center gap-4">
-                    <span className="text-5xl font-bold text-primary">5.0</span>
-                    <div>
+            {/* Section Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-mono mb-4">
+                CUSTOMER REVIEWS
+              </span>
+              <h2 className="font-display text-4xl md:text-5xl font-bold">
+                What People Say
+              </h2>
+            </motion.div>
+
+            {/* 3 Column Vertical Marquee */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-[600px] overflow-hidden max-w-6xl mx-auto">
+              {/* Column 1 */}
+              <div className="overflow-hidden relative">
+                <div 
+                  className="animate-marquee-vertical hover:pause"
+                  style={{ animationDuration: "30s" }}
+                >
+                  {[...reviewsColumn1, ...reviewsColumn1].map((review, i) => (
+                    <div key={`col1-${review.id}-${i}`} className="glass-card p-6 mb-4 space-y-4">
+                      <p className="text-muted-foreground italic leading-relaxed">
+                        "{review.content}"
+                      </p>
                       <div className="flex gap-0.5">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <Star key={star} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                        {[...Array(review.rating)].map((_, j) => (
+                          <Star key={j} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                         ))}
                       </div>
-                      <p className="text-sm text-muted-foreground mt-1">Based on 50 reviews</p>
-                    </div>
-                  </div>
-                  
-                  {/* Rating Bars */}
-                  <div className="space-y-2">
-                    {ratingBreakdown.map((item) => (
-                      <div key={item.stars} className="flex items-center gap-2 text-sm">
-                        <span className="w-8">{item.stars}★</span>
-                        <div className="flex-1 h-2 bg-secondary rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-yellow-400 rounded-full"
-                            style={{ width: `${item.percentage}%` }}
-                          />
-                        </div>
-                        <span className="w-8 text-right text-muted-foreground">{item.count}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Reviews Controls */}
-                <div className="lg:flex-1 space-y-4">
-                  <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-                    <h3 className="text-2xl font-bold">Reviews (50)</h3>
-                    <Button
-                      onClick={() => setShowReviewDialog(true)}
-                      className="bg-primary hover:bg-primary/90"
-                    >
-                      <MessageSquare className="w-4 h-4 mr-2" />
-                      Write A Review
-                    </Button>
-                  </div>
-                  
-                  {/* Fake Search & Sort */}
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <div className="relative flex-1">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                      <Input
-                        placeholder="Search reviews..."
-                        className="pl-10 bg-secondary/50"
-                        readOnly
-                      />
-                    </div>
-                    <select className="px-4 py-2 rounded-lg bg-secondary/50 border border-border text-sm cursor-not-allowed">
-                      <option>Sort by: Most Recent</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Reviews List */}
-              <div className="space-y-6">
-                {fakeReviews.map((review, index) => (
-                  <motion.div
-                    key={review.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="glass-card p-6 space-y-4"
-                  >
-                    <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">
-                          {review.name.charAt(0)}
+                        <div className={`w-10 h-10 rounded-full ${review.avatarColor} flex items-center justify-center text-white font-bold text-sm`}>
+                          {review.initials}
                         </div>
                         <div>
-                          <p className="font-bold">{review.name}</p>
-                          <p className="text-xs text-muted-foreground">{review.date}</p>
+                          <p className="font-bold text-sm">{review.name}</p>
+                          <p className="text-xs text-muted-foreground">Verified Buyer</p>
                         </div>
                       </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 2 - different speed for organic feel */}
+              <div className="overflow-hidden relative hidden md:block">
+                <div 
+                  className="animate-marquee-vertical hover:pause"
+                  style={{ animationDuration: "25s" }}
+                >
+                  {[...reviewsColumn2, ...reviewsColumn2].map((review, i) => (
+                    <div key={`col2-${review.id}-${i}`} className="glass-card p-6 mb-4 space-y-4">
+                      <p className="text-muted-foreground italic leading-relaxed">
+                        "{review.content}"
+                      </p>
                       <div className="flex gap-0.5">
-                        {[...Array(review.rating)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                        {[...Array(review.rating)].map((_, j) => (
+                          <Star key={j} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                         ))}
                       </div>
+                      <div className="flex items-center gap-3">
+                        <div className={`w-10 h-10 rounded-full ${review.avatarColor} flex items-center justify-center text-white font-bold text-sm`}>
+                          {review.initials}
+                        </div>
+                        <div>
+                          <p className="font-bold text-sm">{review.name}</p>
+                          <p className="text-xs text-muted-foreground">Verified Buyer</p>
+                        </div>
+                      </div>
                     </div>
-                    
-                    <div>
-                      <h4 className="font-bold mb-2">{review.title}</h4>
-                      <p className="text-sm text-muted-foreground">{review.content}</p>
-                    </div>
-                    
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <button className="flex items-center gap-1 hover:text-foreground transition-colors">
-                        <ThumbsUp className="w-3 h-3" />
-                        Helpful ({review.helpful})
-                      </button>
-                    </div>
-                  </motion.div>
-                ))}
+                  ))}
+                </div>
               </div>
+
+              {/* Column 3 */}
+              <div className="overflow-hidden relative hidden md:block">
+                <div 
+                  className="animate-marquee-vertical hover:pause"
+                  style={{ animationDuration: "35s" }}
+                >
+                  {[...reviewsColumn3, ...reviewsColumn3].map((review, i) => (
+                    <div key={`col3-${review.id}-${i}`} className="glass-card p-6 mb-4 space-y-4">
+                      <p className="text-muted-foreground italic leading-relaxed">
+                        "{review.content}"
+                      </p>
+                      <div className="flex gap-0.5">
+                        {[...Array(review.rating)].map((_, j) => (
+                          <Star key={j} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                        ))}
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className={`w-10 h-10 rounded-full ${review.avatarColor} flex items-center justify-center text-white font-bold text-sm`}>
+                          {review.initials}
+                        </div>
+                        <div>
+                          <p className="font-bold text-sm">{review.name}</p>
+                          <p className="text-xs text-muted-foreground">Verified Buyer</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Write Review Button */}
+            <div className="text-center mt-12">
+              <Button
+                onClick={() => setShowReviewDialog(true)}
+                className="bg-primary hover:bg-primary/90"
+              >
+                <MessageSquare className="w-4 h-4 mr-2" />
+                Write A Review
+              </Button>
             </div>
           </div>
         </section>
