@@ -19,7 +19,7 @@ const BundleOfferModal = ({
   originalProduct,
 }: BundleOfferModalProps) => {
   const [hasExpired, setHasExpired] = useState(false);
-  const [initialSeconds, setInitialSeconds] = useState(60);
+  const [initialSeconds, setInitialSeconds] = useState(120);
 
   useEffect(() => {
     if (isOpen) {
@@ -35,12 +35,12 @@ const BundleOfferModal = ({
           setHasExpired(true);
         }
       } else {
-        // Set new expiry time - 60 seconds (1 minute)
+        // Set new expiry time - 120 seconds (2 minutes)
         sessionStorage.setItem(
           "bundleOfferExpiry",
-          String(Date.now() + 60000)
+          String(Date.now() + 120000)
         );
-        setInitialSeconds(60);
+        setInitialSeconds(120);
       }
     }
   }, [isOpen]);
@@ -68,9 +68,9 @@ const BundleOfferModal = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 30 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-lg px-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
-            <div className="glass-card p-8 relative overflow-hidden">
+            <div className="w-full max-w-lg glass-card p-8 relative overflow-hidden">
               {/* Decorative background */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 pointer-events-none" />
 
@@ -149,24 +149,32 @@ const BundleOfferModal = ({
                     transition={{ delay: 0.6 }}
                     className="space-y-2"
                   >
-                    <p className="text-sm text-muted-foreground font-mono">
-                      This offer expires in:
+                    <p className="text-sm text-muted-foreground font-mono font-bold">
+                      ⏰ HURRY UP! This offer expires in:
                     </p>
                     <CountdownTimer
                       initialSeconds={initialSeconds}
                       onExpire={handleExpire}
                     />
+                    <p className="text-xs text-destructive/80 mt-2 font-medium">
+                      ⚠️ After time runs out, this discount will NEVER appear again!
+                    </p>
                   </motion.div>
                 )}
 
                 {hasExpired && (
-                  <motion.p
+                  <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="text-destructive font-mono text-sm"
+                    className="space-y-2 p-4 bg-destructive/10 rounded-xl"
                   >
-                    Offer expired
-                  </motion.p>
+                    <p className="text-destructive font-mono text-sm font-bold">
+                      ❌ OFFER EXPIRED
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      This exclusive 50% discount is no longer available.
+                    </p>
+                  </motion.div>
                 )}
 
                 {/* Buttons */}
