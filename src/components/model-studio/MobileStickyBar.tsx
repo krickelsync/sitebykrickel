@@ -34,7 +34,7 @@ const MobileStickyBar = ({ onCtaClick }: MobileStickyBarProps) => {
               onClick={onCtaClick}
               className="w-full py-5 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90"
             >
-              Get Access Now
+              Get Instant Access
             </Button>
           </div>
         </motion.div>

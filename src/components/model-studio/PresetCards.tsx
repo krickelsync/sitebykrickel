@@ -10,22 +10,22 @@ const presets = [
   {
     image: campaignImg,
     name: "Clean Catalog",
-    description: "Catalog · Studio White · Straight Stand · iPhone RAW · 4:5 · Output 4",
+    description: "studio white, classic look",
   },
   {
     image: lifestyleImg,
-    name: "Lookbook for IG",
-    description: "Catalog · Minimal Gallery · Weight Shift · iPhone RAW · 4:5 · Output 4–6",
+    name: "IG Lookbook",
+    description: "lifestyle polish",
   },
   {
     image: lookbookImg,
     name: "Campaign Edge",
-    description: "Campaign · Concrete Interior · 360 Camera · Low Angle · 9:16 · Output 6",
+    description: "high-impact visuals",
   },
   {
     image: editorialImg,
-    name: "Garment Detail Highlight",
-    description: "Catalog · Studio Grey · Top Down · 3:4 · Output 3–4",
+    name: "Detail Focus",
+    description: "fabric & cut highlight",
   },
 ];
 
@@ -77,7 +77,7 @@ const PresetCards = () => {
         transition={{ duration: 0.4, delay: 0.3 }}
         className="text-center text-sm text-muted-foreground"
       >
-        Purpose: pick a recipe, generate, upload.
+        Choose a preset → generate → upload.
       </motion.p>
     </div>
   );

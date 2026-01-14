@@ -9,28 +9,28 @@ import { Button } from "@/components/ui/button";
 
 const faqs = [
   {
-    question: "Do I have to upload face references?",
-    answer: "No. Use them if you want consistent faces; otherwise focus on product images.",
+    question: "Do I need face references?",
+    answer: "No — optional for consistent models.",
   },
   {
-    question: "How many photos can I upload?",
-    answer: "Clothing Product up to 4. Face References up to 4.",
+    question: "How many uploads?",
+    answer: "Up to 4 product images.",
   },
   {
-    question: "How many outputs per generate?",
-    answer: "You choose 1–6.",
+    question: "How many outputs?",
+    answer: "Choose 1–6 each time.",
   },
   {
-    question: "Can I use these for IG & marketplaces?",
-    answer: "Yes — output ratios are ready: 1:1, 4:5, 3:4, 9:16.",
+    question: "For social & marketplaces?",
+    answer: "Yes — presets & ready ratios.",
   },
   {
-    question: "What if the results aren't perfect?",
-    answer: "Try different pose, lens option, angle preset, or background.",
+    question: "Bad results?",
+    answer: "Try another angle or preset.",
   },
   {
-    question: "Is this safe for commercial use?",
-    answer: "Use assets you own or have proper rights & follow platform policies.",
+    question: "Safe to use?",
+    answer: "Use your own images — commercial use okay.",
   },
 ];
 
