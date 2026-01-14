@@ -22,10 +22,11 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
     }
   };
 
-const microCopyItems = [
-    "1–6 outputs each generate",
-    "Ready crop sizes: 1:1 · 4:5 · 3:4 · 9:16",
-    "Works for Catalog & Campaign",
+  const featurePoints = [
+    "Lookbook- and catalog-ready visuals",
+    "Upload your product or mockup",
+    "Control pose, camera, and background",
+    "Generate consistent model photos on demand",
   ];
 
   return (
@@ -69,14 +70,37 @@ const microCopyItems = [
 
         {/* Main Headline */}
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground leading-[1.15] mb-6">
-          Pro-Grade Product Photos in Minutes —{" "}
-          <span className="text-primary">No Photoshoots Needed.</span>
+          A Faster Way to Create{" "}
+          <span className="text-primary">Product Photos</span>
         </h1>
 
-        {/* Subheadline */}
-        <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
-          Upload product images → choose pose, angle & background → generate ready-to-sell model photos.
+        {/* Primary Subheadline */}
+        <p className="text-lg md:text-xl text-foreground/90 max-w-2xl mx-auto mb-4 leading-relaxed font-medium">
+          A game changer for clothing brand owners and designers.
+          <br />
+          <span className="text-muted-foreground">Save thousands on photoshoots by using one tool.</span>
         </p>
+
+        {/* Secondary Subheadline - Feature Points */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-xl mx-auto mb-8 text-left"
+        >
+          {featurePoints.map((point, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.7 + index * 0.1 }}
+              className="flex items-center gap-2 text-sm md:text-base text-muted-foreground"
+            >
+              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-primary" />
+              {point}
+            </motion.div>
+          ))}
+        </motion.div>
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 max-w-md mx-auto sm:max-w-none">
@@ -98,20 +122,15 @@ const microCopyItems = [
           </Button>
         </div>
 
-        {/* Microcopy bullets */}
-        <motion.div
+        {/* Microcopy */}
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs md:text-sm text-muted-foreground"
+          transition={{ delay: 0.9 }}
+          className="text-xs md:text-sm text-muted-foreground/70"
         >
-          {microCopyItems.map((item, index) => (
-            <span key={index} className="flex items-center gap-2">
-              <span className="w-1 h-1 rounded-full bg-primary/60" />
-              {item}
-            </span>
-          ))}
-        </motion.div>
+          1–6 outputs each generate · Ready crop sizes: 1:1 · 4:5 · 3:4 · 9:16
+        </motion.p>
       </motion.div>
 
       {/* Scroll indicator */}
