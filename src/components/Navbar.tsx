@@ -127,7 +127,18 @@ const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => {
   );
 };
 
-const Navbar = () => {
+interface NavbarProps {
+  customLinks?: Array<{
+    name: string;
+    href: string;
+    external: boolean;
+  }>;
+  ctaText?: string;
+  ctaHref?: string;
+  onCtaClick?: () => void;
+}
+
+const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {}) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -173,7 +184,7 @@ const Navbar = () => {
     }
   };
 
-  const navLinks = [{
+  const defaultLinks = [{
     name: "Home",
     href: "/",
     external: false
@@ -199,6 +210,9 @@ const Navbar = () => {
     external: false
   }];
 
+  const navLinks = customLinks || defaultLinks;
+  const finalCtaText = ctaText || "Get Started";
+  const finalCtaHref = ctaHref || "/about#contact";
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -250,13 +264,22 @@ const Navbar = () => {
           {/* CTA Button + Theme Toggle */}
           <div className="hidden md:flex items-center gap-3">
             <ThemeToggle />
-            <a
-              href="/about#contact"
-              onClick={(e) => handleNavClick(e, "/about#contact")}
-              className="cta-shiny rounded-xl bg-background/5 border border-foreground/10 px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium cursor-pointer"
-            >
-              <span className="relative z-10">Get Started</span>
-            </a>
+            {onCtaClick ? (
+              <button
+                onClick={onCtaClick}
+                className="cta-shiny rounded-xl bg-background/5 border border-foreground/10 px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium cursor-pointer"
+              >
+                <span className="relative z-10">{finalCtaText}</span>
+              </button>
+            ) : (
+              <a
+                href={finalCtaHref}
+                onClick={(e) => handleNavClick(e, finalCtaHref)}
+                className="cta-shiny rounded-xl bg-background/5 border border-foreground/10 px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium cursor-pointer"
+              >
+                <span className="relative z-10">{finalCtaText}</span>
+              </a>
+            )}
           </div>
 
           {/* Mobile Menu Button + Theme Toggle */}
@@ -351,23 +374,42 @@ const Navbar = () => {
                     </motion.div>
                   )
                 )}
-                <motion.a
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    transition: { delay: 0.1 + navLinks.length * 0.05 }
-                  }}
-                  exit={{ opacity: 0, x: -10 }}
-                  href="/about#contact"
-                  onClick={(e) => {
-                    handleNavClick(e, "/about#contact");
-                    setIsOpen(false);
-                  }}
-                  className="cta-shiny rounded-xl bg-background/5 border border-white/10 px-6 py-2.5 font-mono text-sm text-center mt-2 cursor-pointer"
-                >
-                  <span className="relative z-10">Get Started</span>
-                </motion.a>
+                {onCtaClick ? (
+                  <motion.button
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                      transition: { delay: 0.1 + navLinks.length * 0.05 }
+                    }}
+                    exit={{ opacity: 0, x: -10 }}
+                    onClick={() => {
+                      onCtaClick();
+                      setIsOpen(false);
+                    }}
+                    className="cta-shiny rounded-xl bg-background/5 border border-white/10 px-6 py-2.5 font-mono text-sm text-center mt-2 cursor-pointer"
+                  >
+                    <span className="relative z-10">{finalCtaText}</span>
+                  </motion.button>
+                ) : (
+                  <motion.a
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                      transition: { delay: 0.1 + navLinks.length * 0.05 }
+                    }}
+                    exit={{ opacity: 0, x: -10 }}
+                    href={finalCtaHref}
+                    onClick={(e) => {
+                      handleNavClick(e, finalCtaHref);
+                      setIsOpen(false);
+                    }}
+                    className="cta-shiny rounded-xl bg-background/5 border border-white/10 px-6 py-2.5 font-mono text-sm text-center mt-2 cursor-pointer"
+                  >
+                    <span className="relative z-10">{finalCtaText}</span>
+                  </motion.a>
+                )}
               </div>
             </motion.div>
           )}

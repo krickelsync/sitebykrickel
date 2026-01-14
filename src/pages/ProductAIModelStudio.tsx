@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { Star, Pen } from "lucide-react";
 
 // Components
-import ModelStudioNavbar from "@/components/model-studio/ModelStudioNavbar";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import HeroSection from "@/components/model-studio/HeroSection";
 import SectionHeader from "@/components/model-studio/SectionHeader";
 import ProblemBlock from "@/components/model-studio/ProblemBlock";
@@ -139,10 +140,33 @@ const ProductAIModelStudio = () => {
   // Combine user reviews with existing reviews
   const allColumn1 = [...userReviews, ...reviewsColumn1];
 
+  // Custom nav links for AI Model Studio page
+  const modelStudioLinks = [
+    { name: "How It Works", href: "#how-it-works", external: false },
+    { name: "Controls", href: "#controls", external: false },
+    { name: "Presets", href: "#presets", external: false },
+    { name: "Pricing", href: "#pricing", external: false },
+    { name: "FAQ", href: "#faq", external: false },
+  ];
+
+  // Custom footer links for AI Model Studio page
+  const modelStudioFooterLinks = [
+    { name: "How It Works", href: "#how-it-works" },
+    { name: "Controls", href: "#controls" },
+    { name: "Presets", href: "#presets" },
+    { name: "Pricing", href: "#pricing" },
+    { name: "FAQ", href: "#faq" },
+    { name: "Back to Home", href: "/" },
+  ];
+
   return (
     <div className="min-h-screen bg-background text-foreground pb-20 md:pb-0">
       {/* Navbar */}
-      <ModelStudioNavbar onCtaClick={handleCtaClick} />
+      <Navbar 
+        customLinks={modelStudioLinks}
+        ctaText="Get Instant Access"
+        onCtaClick={handleCtaClick}
+      />
 
       {/* Hero Section */}
       <HeroSection onCtaClick={handleCtaClick} />
@@ -372,6 +396,9 @@ const ProductAIModelStudio = () => {
           <FinalCTA onCtaClick={handleCtaClick} />
         </div>
       </section>
+
+      {/* Footer */}
+      <Footer customQuickLinks={modelStudioFooterLinks} />
 
       {/* Mobile Sticky Bar */}
       <MobileStickyBar onCtaClick={handleCtaClick} />

@@ -50,8 +50,15 @@ const AnimatedBrandText = ({
         </motion.span>)}
     </motion.span>;
 };
-const Footer = () => {
-  const quickLinks = [{
+interface FooterProps {
+  customQuickLinks?: Array<{
+    name: string;
+    href: string;
+  }>;
+}
+
+const Footer = ({ customQuickLinks }: FooterProps = {}) => {
+  const defaultQuickLinks = [{
     name: "Home",
     href: "/"
   }, {
@@ -67,6 +74,8 @@ const Footer = () => {
     name: "Contact",
     href: "/about#contact"
   }];
+
+  const quickLinks = customQuickLinks || defaultQuickLinks;
   return <footer className="py-16 md:py-24 border-t border-muted">
       <div className="container px-4">
         <div className="grid md:grid-cols-3 gap-12 md:gap-8 mb-12">
