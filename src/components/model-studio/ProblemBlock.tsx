@@ -30,29 +30,44 @@ const ProblemCard = ({
         {/* Badge */}
         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 mb-3 sm:mb-4">
           <span className="text-orange-400">{icon}</span>
-          <span className="text-[10px] sm:text-xs font-mono text-orange-400 tracking-wide uppercase">
+          <span className="text-[10px] sm:text-xs font-mono text-orange-400 tracking-widest uppercase">
             {badge}
           </span>
         </div>
 
         {/* Problem Statement */}
-        <h3 className="text-sm sm:text-base md:text-lg font-semibold text-foreground mb-3 sm:mb-4 leading-snug">
+        <h3 className="text-sm sm:text-base md:text-lg font-display font-bold text-foreground uppercase tracking-tight mb-3 sm:mb-4 leading-tight">
           {problemStatement}
         </h3>
 
-        {/* Bullets */}
+        {/* Bullets with stagger animation */}
         <div className="space-y-2 mb-4 sm:mb-5">
           {bullets.map((bullet, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: delay + 0.15 + index * 0.08 }}
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-20px" }}
+              transition={{ 
+                duration: 0.4,
+                delay: delay + 0.2 + index * 0.1,
+                ease: [0.16, 1, 0.3, 1]
+              }}
               className="flex items-start gap-2"
             >
-              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 sm:mt-2" />
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              <motion.span 
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ 
+                  delay: delay + 0.15 + index * 0.1,
+                  type: "spring",
+                  stiffness: 500,
+                  damping: 25 
+                }}
+                className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 sm:mt-2" 
+              />
+              <p className="text-xs sm:text-sm font-mono text-muted-foreground leading-relaxed">
                 {bullet}
               </p>
             </motion.div>
@@ -61,17 +76,23 @@ const ProblemCard = ({
 
         {/* Closing Lines */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: delay + 0.4 }}
-          className="pt-3 sm:pt-4 border-t border-border/40 space-y-0.5"
+          transition={{ 
+            delay: delay + 0.5,
+            duration: 0.4,
+            ease: [0.16, 1, 0.3, 1]
+          }}
+          className="pt-3 sm:pt-4 border-t border-border/40 space-y-1"
         >
           {closingLines.map((line, index) => (
             <p
               key={index}
               className={`text-xs sm:text-sm leading-relaxed ${
-                index === 0 ? "text-primary font-medium" : "text-muted-foreground"
+                index === 0 
+                  ? "font-display font-semibold text-primary uppercase tracking-wide" 
+                  : "font-mono text-muted-foreground"
               }`}
             >
               {line}
@@ -126,13 +147,19 @@ const ProblemBlock = () => {
         transition={{ duration: 0.4 }}
         className="text-center mb-6 sm:mb-8 md:mb-10"
       >
-        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 mb-3">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 mb-3"
+        >
           <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" />
-          <span className="text-[10px] sm:text-xs font-mono text-orange-400 tracking-wide">
+          <span className="text-[10px] sm:text-xs font-mono text-orange-400 tracking-widest uppercase">
             THE PROBLEM
           </span>
-        </div>
-        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold text-foreground">
+        </motion.div>
+        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold text-foreground uppercase tracking-tight">
           Sound familiar?
         </h2>
       </motion.div>
