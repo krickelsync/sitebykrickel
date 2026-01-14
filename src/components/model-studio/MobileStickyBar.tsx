@@ -4,10 +4,9 @@ import { Button } from "@/components/ui/button";
 
 interface MobileStickyBarProps {
   onCtaClick: () => void;
-  onPricingClick: () => void;
 }
 
-const MobileStickyBar = ({ onCtaClick, onPricingClick }: MobileStickyBarProps) => {
+const MobileStickyBar = ({ onCtaClick }: MobileStickyBarProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -30,22 +29,13 @@ const MobileStickyBar = ({ onCtaClick, onPricingClick }: MobileStickyBarProps) =
           transition={{ duration: 0.3 }}
           className="fixed bottom-0 left-0 right-0 z-50 md:hidden"
         >
-          <div className="bg-background/90 backdrop-blur-xl border-t border-white/10 px-4 py-3 safe-area-inset-bottom">
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                onClick={onPricingClick}
-                className="flex-1 py-5 text-sm border-white/10 hover:bg-white/5"
-              >
-                See Pricing
-              </Button>
-              <Button
-                onClick={onCtaClick}
-                className="flex-1 py-5 text-sm bg-primary text-primary-foreground hover:bg-primary/90"
-              >
-                Get Access
-              </Button>
-            </div>
+          <div className="bg-background/95 backdrop-blur-xl border-t border-white/10 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
+            <Button
+              onClick={onCtaClick}
+              className="w-full py-5 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              Get Access Now
+            </Button>
           </div>
         </motion.div>
       )}

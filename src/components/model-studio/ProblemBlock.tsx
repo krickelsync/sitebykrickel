@@ -25,7 +25,7 @@ const ProblemBlock = () => {
           </span>
         </div>
 
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground leading-tight mb-6">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-foreground leading-tight mb-6">
           You can have a great product… but still lose at first scroll.
         </h2>
 
@@ -34,8 +34,8 @@ const ProblemBlock = () => {
           {problemBullets.map((bullet, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 + index * 0.1 }}
               className="flex items-start gap-3 text-left max-w-xl mx-auto"

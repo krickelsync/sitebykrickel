@@ -68,11 +68,11 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 max-w-md mx-auto sm:max-w-none">
           <Button
             onClick={onCtaClick}
             size="lg"
-            className="w-full sm:w-auto px-8 py-6 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 group"
+            className="w-full sm:w-auto px-8 py-6 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 group"
           >
             Get Access to AI Model Studio
             <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -81,7 +81,7 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
             variant="outline"
             size="lg"
             onClick={scrollToControls}
-            className="w-full sm:w-auto px-8 py-6 text-base border-white/10 hover:bg-white/5"
+            className="w-full sm:w-auto px-8 py-6 text-base border-white/10 hover:bg-white/5 transition-all duration-200"
           >
             See Controls
           </Button>
