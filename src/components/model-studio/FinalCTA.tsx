@@ -9,8 +9,8 @@ interface FinalCTAProps {
 const FinalCTA = ({ onCtaClick }: FinalCTAProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6 }}
       className="relative text-center"
@@ -28,7 +28,7 @@ const FinalCTA = ({ onCtaClick }: FinalCTAProps) => {
         <Button
           onClick={onCtaClick}
           size="lg"
-          className="px-8 py-6 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 group"
+          className="px-8 py-6 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 group"
         >
           Get Access to AI Model Studio
           <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />

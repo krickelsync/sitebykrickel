@@ -37,11 +37,11 @@ const PresetCards = () => {
           {presets.map((preset, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="group relative w-64 md:w-auto flex-shrink-0 md:flex-shrink rounded-xl overflow-hidden bg-card/40 border border-white/5 hover:border-primary/20 transition-all duration-300"
+              transition={{ duration: 0.4, delay: index * 0.08 }}
+              className="group relative w-64 md:w-auto flex-shrink-0 md:flex-shrink rounded-xl overflow-hidden bg-card/40 border border-white/5 hover:border-primary/20 transition-colors duration-300"
             >
               {/* Image */}
               <div className="aspect-[3/4] overflow-hidden">

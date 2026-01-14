@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { Check, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ArrowRight, Check, Shield } from "lucide-react";
 
 const features = [
   "AI Model Studio Access",
@@ -18,71 +18,70 @@ const PricingCard = ({ onCtaClick }: PricingCardProps) => {
     <div className="space-y-8">
       {/* Main Pricing Card */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 0.6 }}
-        className="relative max-w-lg mx-auto"
+        transition={{ duration: 0.5 }}
+        className="max-w-lg mx-auto p-6 md:p-8 rounded-2xl bg-card/50 border border-white/10 backdrop-blur-sm"
       >
-        {/* Subtle glow effect */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 rounded-2xl blur-xl opacity-50" />
-
-        <div className="relative p-6 md:p-10 rounded-2xl bg-card/60 border border-white/10 backdrop-blur-sm">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h3 className="text-xl md:text-2xl font-display font-bold text-foreground mb-2">
-              AI Model Studio — Access
-            </h3>
-            <div className="flex items-baseline justify-center gap-2">
-              <span className="text-4xl md:text-5xl font-display font-bold text-foreground">
-                [PRICE / PLAN HERE]
-              </span>
-            </div>
+        {/* Title & Price */}
+        <div className="text-center mb-8">
+          <h3 className="text-lg md:text-xl font-display font-semibold text-foreground mb-4">
+            AI Model Studio — Access
+          </h3>
+          <div className="flex items-baseline justify-center gap-2">
+            <span className="text-4xl md:text-5xl font-display font-bold text-primary">
+              [PRICE / PLAN HERE]
+            </span>
           </div>
-
-          {/* Features */}
-          <ul className="space-y-3 mb-8">
-            {features.map((feature, index) => (
-              <li key={index} className="flex items-start gap-3">
-                <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Check className="w-3 h-3 text-primary" />
-                </div>
-                <span className="text-sm md:text-base text-foreground/90">{feature}</span>
-              </li>
-            ))}
-          </ul>
-
-          {/* CTA */}
-          <Button
-            onClick={onCtaClick}
-            className="w-full py-6 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300"
-          >
-            Get Access Now
-          </Button>
         </div>
+
+        {/* Features */}
+        <ul className="space-y-3 mb-8">
+          {features.map((feature, index) => (
+            <li key={index} className="flex items-start gap-3">
+              <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
+                <Check className="w-3 h-3 text-primary" />
+              </div>
+              <span className="text-sm md:text-base text-muted-foreground">
+                {feature}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        {/* CTA Button */}
+        <Button
+          onClick={onCtaClick}
+          size="lg"
+          className="w-full py-6 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 group"
+        >
+          Get Access Now
+          <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+        </Button>
       </motion.div>
 
       {/* Guarantee Box */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="max-w-lg mx-auto p-5 md:p-6 rounded-xl bg-card/40 border border-white/5 backdrop-blur-sm"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+        className="max-w-lg mx-auto p-5 md:p-6 rounded-xl bg-primary/5 border border-primary/20 backdrop-blur-sm"
       >
         <div className="flex items-start gap-4">
-          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+          <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
             <Shield className="w-5 h-5 text-primary" />
           </div>
           <div>
-            <h4 className="text-base font-display font-semibold text-foreground mb-2">
+            <h4 className="font-semibold text-base text-foreground mb-1">
               Guarantee that makes it easy to try.
             </h4>
-            <p className="text-sm text-muted-foreground mb-3">
+            <p className="text-sm text-muted-foreground leading-relaxed mb-2">
               [GUARANTEE HERE]
             </p>
             <p className="text-xs text-muted-foreground/70">
-              Note: Use assets you own or have license for.
+              Use assets you own or have license for.
             </p>
           </div>
         </div>

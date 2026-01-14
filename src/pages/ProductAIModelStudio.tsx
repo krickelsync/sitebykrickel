@@ -139,7 +139,7 @@ const ProductAIModelStudio = () => {
   const allColumn1 = [...userReviews, ...reviewsColumn1];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground pb-20 md:pb-0">
       {/* Navbar */}
       <ModelStudioNavbar onCtaClick={handleCtaClick} />
 
@@ -153,7 +153,7 @@ const ProductAIModelStudio = () => {
       <ProductVelocityText />
 
       {/* How It Works */}
-      <section id="how-it-works" className="py-20 md:py-32 px-4 md:px-6">
+      <section id="how-it-works" className="py-14 md:py-32 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           {/* Block A: Problem */}
           <ProblemBlock />
@@ -171,7 +171,7 @@ const ProductAIModelStudio = () => {
       </section>
 
       {/* Customer Showcase */}
-      <section className="py-16 md:py-24 px-4 md:px-6 bg-card/10">
+      <section className="py-12 md:py-24 px-4 md:px-6 bg-card/10">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="SHOWCASE"
@@ -191,6 +191,7 @@ const ProductAIModelStudio = () => {
                 <img
                   src={item.src}
                   alt={item.caption}
+                  loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -207,7 +208,7 @@ const ProductAIModelStudio = () => {
       </section>
 
       {/* Controls / Features */}
-      <section id="controls" className="py-20 md:py-32 px-4 md:px-6 bg-card/20">
+      <section id="controls" className="py-14 md:py-32 px-4 md:px-6 bg-card/20">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="CONTROLS"
@@ -220,7 +221,7 @@ const ProductAIModelStudio = () => {
       </section>
 
       {/* Presets */}
-      <section id="presets" className="py-20 md:py-32 px-4 md:px-6">
+      <section id="presets" className="py-14 md:py-32 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="PRESETS"
@@ -233,7 +234,7 @@ const ProductAIModelStudio = () => {
       </section>
 
       {/* Customer Reviews - 3 Column Vertical Marquee */}
-      <section className="py-16 md:py-24 px-4 md:px-6 bg-card/10 overflow-hidden">
+      <section className="py-12 md:py-24 px-4 md:px-6 bg-card/10 overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-8 md:mb-12">
             <SectionHeader
@@ -340,7 +341,7 @@ const ProductAIModelStudio = () => {
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-20 md:py-32 px-4 md:px-6 bg-card/20">
+      <section id="pricing" className="py-16 md:py-32 px-4 md:px-6 bg-card/20">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="PRICING"
@@ -353,27 +354,27 @@ const ProductAIModelStudio = () => {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-20 md:py-32 px-4 md:px-6">
+      <section id="faq" className="py-14 md:py-32 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="FAQ"
             title="Frequently Asked Questions"
           />
           <div className="mt-12 md:mt-16">
-            <FAQAccordion />
+            <FAQAccordion onCtaClick={handleCtaClick} />
           </div>
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 md:py-32 px-4 md:px-6 border-t border-white/5">
+      <section className="py-16 md:py-32 px-4 md:px-6 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           <FinalCTA onCtaClick={handleCtaClick} />
         </div>
       </section>
 
       {/* Mobile Sticky Bar */}
-      <MobileStickyBar onCtaClick={handleCtaClick} onPricingClick={handlePricingClick} />
+      <MobileStickyBar onCtaClick={handleCtaClick} />
 
       {/* Review Dialog */}
       <Dialog open={showReviewDialog} onOpenChange={setShowReviewDialog}>

@@ -62,11 +62,11 @@ const FeatureGrid = () => {
         {controlGroups.map((group, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
-            className="group relative p-5 md:p-6 rounded-xl bg-card/40 border border-white/5 backdrop-blur-sm hover:border-primary/20 hover:bg-card/60 transition-all duration-300"
+            transition={{ duration: 0.4, delay: index * 0.08 }}
+            className="group relative p-5 md:p-6 rounded-xl bg-card/40 border border-white/5 backdrop-blur-sm hover:border-primary/20 hover:bg-card/60 transition-colors duration-300"
           >
             {/* Subtle glow on hover */}
             <div className="absolute inset-0 rounded-xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl" />

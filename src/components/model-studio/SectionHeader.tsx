@@ -21,7 +21,7 @@ const SectionHeader = ({ eyebrow, title, description, align = "center" }: Sectio
           {eyebrow}
         </span>
       )}
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground leading-tight">
+      <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-foreground leading-tight">
         {title}
       </h2>
       {description && (
