@@ -1,21 +1,23 @@
 import { motion } from "framer-motion";
-import { ShoppingBag, Palette } from "lucide-react";
+import { ShoppingBag, Palette, X, Check } from "lucide-react";
 
 interface ProblemCardProps {
   badge: string;
   icon: React.ReactNode;
-  problemStatement: string;
-  bullets: string[];
-  closingLines: string[];
+  headlinePart1: string;
+  headlinePart2: string;
+  painPoints: string[];
+  solution: string;
   delay?: number;
 }
 
 const ProblemCard = ({
   badge,
   icon,
-  problemStatement,
-  bullets,
-  closingLines,
+  headlinePart1,
+  headlinePart2,
+  painPoints,
+  solution,
   delay = 0,
 }: ProblemCardProps) => {
   return (
@@ -26,57 +28,67 @@ const ProblemCard = ({
       transition={{ duration: 0.5, delay }}
       className="relative group"
     >
-      <div className="h-full p-4 sm:p-5 md:p-6 rounded-xl bg-card/40 backdrop-blur-sm border border-border/40 hover:border-orange-500/20 transition-all duration-300">
-        {/* Badge */}
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 mb-3 sm:mb-4">
-          <span className="text-orange-400">{icon}</span>
-          <span className="text-[10px] sm:text-xs font-mono text-orange-400 tracking-wide uppercase">
+      {/* Gradient border effect on hover */}
+      <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-b from-orange-500/0 via-orange-500/0 to-orange-500/0 group-hover:from-orange-500/20 group-hover:via-orange-500/10 group-hover:to-transparent transition-all duration-500 opacity-0 group-hover:opacity-100" />
+      
+      <div className="relative h-full p-6 sm:p-8 rounded-2xl bg-card/40 backdrop-blur-sm border border-border/40 transition-all duration-300">
+        {/* Badge with Icon */}
+        <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20">
+            <span className="text-orange-400">{icon}</span>
+          </div>
+          <span className="text-xs font-mono text-orange-400 tracking-wide uppercase">
             {badge}
           </span>
         </div>
 
-        {/* Problem Statement */}
-        <h3 className="text-sm sm:text-base md:text-lg font-semibold text-foreground mb-3 sm:mb-4 leading-snug">
-          {problemStatement}
-        </h3>
+        {/* Split Headline for Impact */}
+        <div className="mb-6">
+          <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-foreground leading-tight">
+            {headlinePart1}
+          </h3>
+          <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-muted-foreground leading-tight">
+            {headlinePart2}
+          </h3>
+        </div>
 
-        {/* Bullets */}
-        <div className="space-y-2 mb-4 sm:mb-5">
-          {bullets.map((bullet, index) => (
+        {/* Pain Points - Clean with X icons */}
+        <div className="space-y-3 mb-6">
+          {painPoints.map((point, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: delay + 0.15 + index * 0.08 }}
-              className="flex items-start gap-2"
+              transition={{ delay: delay + 0.15 + index * 0.1 }}
+              className="flex items-center gap-3"
             >
-              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 sm:mt-2" />
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                {bullet}
+              <div className="flex-shrink-0 w-5 h-5 rounded-full bg-red-500/10 flex items-center justify-center">
+                <X className="w-3 h-3 text-red-400" />
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {point}
               </p>
             </motion.div>
           ))}
         </div>
 
-        {/* Closing Lines */}
+        {/* Solution - Single line with checkmark */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: delay + 0.4 }}
-          className="pt-3 sm:pt-4 border-t border-border/40 space-y-0.5"
+          className="pt-5 border-t border-border/40"
         >
-          {closingLines.map((line, index) => (
-            <p
-              key={index}
-              className={`text-xs sm:text-sm leading-relaxed ${
-                index === 0 ? "text-primary font-medium" : "text-muted-foreground"
-              }`}
-            >
-              {line}
+          <div className="flex items-center gap-3">
+            <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+              <Check className="w-3 h-3 text-primary" />
+            </div>
+            <p className="text-sm font-medium text-primary">
+              {solution}
             </p>
-          ))}
+          </div>
         </motion.div>
       </div>
     </motion.div>
@@ -86,33 +98,26 @@ const ProblemCard = ({
 const ProblemBlock = () => {
   const problemCards = [
     {
-      badge: "For Clothing Brand Owners",
-      icon: <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4" />,
-      problemStatement: "Built for new clothing brand owners with limited budgets.",
-      bullets: [
-        "Product is ready, photos aren't",
-        "Finding models is expensive and time-consuming",
-        "Scheduling shoots slows everything down",
+      badge: "Brand Owners",
+      icon: <ShoppingBag className="w-5 h-5" />,
+      headlinePart1: "Product ready.",
+      headlinePart2: "Photos aren't.",
+      painPoints: [
+        "Finding models is expensive",
+        "Scheduling slows everything down",
       ],
-      closingLines: [
-        "AI Model Studio removes those problems.",
-        "Generate product photos whenever you need them.",
-      ],
+      solution: "Generate photos whenever you need them.",
     },
     {
-      badge: "For Clothing Brand Designers",
-      icon: <Palette className="w-3.5 h-3.5 sm:w-4 sm:h-4" />,
-      problemStatement: "Your designs are finished, but mockups all look the same.",
-      bullets: [
-        "Clients struggle to visualize the final result",
-        "Flat mockups don't show how the product really looks",
-        '"Is this design actually good?"',
+      badge: "Designers",
+      icon: <Palette className="w-5 h-5" />,
+      headlinePart1: "Designs done.",
+      headlinePart2: "Mockups look flat.",
+      painPoints: [
+        "Clients can't visualize the result",
+        "Paying $20–50 per mockup adds up",
       ],
-      closingLines: [
-        "Stop paying $20–$50 for a single mockup.",
-        "Create realistic model mockups in minutes.",
-        "Sell your own mockups with blank products on AI models.",
-      ],
+      solution: "Create realistic mockups in minutes.",
     },
   ];
 
@@ -124,21 +129,21 @@ const ProblemBlock = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.4 }}
-        className="text-center mb-6 sm:mb-8 md:mb-10"
+        className="text-center mb-8 sm:mb-10 md:mb-12"
       >
-        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 mb-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 mb-4">
           <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" />
-          <span className="text-[10px] sm:text-xs font-mono text-orange-400 tracking-wide">
+          <span className="text-xs font-mono text-orange-400 tracking-wide">
             THE PROBLEM
           </span>
         </div>
-        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold text-foreground">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground">
           Sound familiar?
         </h2>
       </motion.div>
 
       {/* Problem Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6 max-w-4xl mx-auto px-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-8 max-w-4xl mx-auto">
         {problemCards.map((card, index) => (
           <ProblemCard key={index} {...card} delay={index * 0.12} />
         ))}
