@@ -56,7 +56,7 @@ const Steps = () => {
 
           <div className="relative p-6 md:p-8 rounded-2xl bg-card/50 border border-white/5 backdrop-blur-sm transition-all duration-300 group-hover:border-primary/20 group-hover:bg-card/70">
             {/* Step Number */}
-            <span className="absolute -top-3 -left-3 text-6xl md:text-7xl font-display font-bold text-primary/10 select-none">
+            <span className="absolute -top-3 -left-3 text-6xl md:text-7xl font-display font-bold text-primary/10 select-none tracking-tight">
               {step.number}
             </span>
 
@@ -66,13 +66,13 @@ const Steps = () => {
             </div>
 
             {/* Content */}
-            <h3 className="text-lg md:text-xl font-display font-semibold text-foreground mb-3">
+            <h3 className="text-lg md:text-xl font-display font-bold text-foreground uppercase tracking-tight mb-3">
               {step.title}
             </h3>
 
             {/* Description or Bullets */}
             {step.description && (
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+              <p className="text-sm md:text-base font-mono text-muted-foreground leading-relaxed">
                 {step.description}
               </p>
             )}
@@ -80,13 +80,32 @@ const Steps = () => {
             {step.bullets && (
               <ul className="space-y-2">
                 {step.bullets.map((bullet, bulletIndex) => (
-                  <li
+                  <motion.li
                     key={bulletIndex}
-                    className="flex items-start gap-2 text-sm md:text-base text-muted-foreground"
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ 
+                      duration: 0.4,
+                      delay: index * 0.1 + 0.2 + bulletIndex * 0.1,
+                      ease: [0.16, 1, 0.3, 1]
+                    }}
+                    className="flex items-start gap-2 text-sm md:text-base font-mono text-muted-foreground"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-2 flex-shrink-0" />
+                    <motion.span 
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ 
+                        delay: index * 0.1 + 0.15 + bulletIndex * 0.1,
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 25 
+                      }}
+                      className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-2 flex-shrink-0" 
+                    />
                     <span>{bullet.text}</span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             )}
