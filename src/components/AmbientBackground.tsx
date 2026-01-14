@@ -28,7 +28,7 @@ const AmbientBackground = ({
     <div className={`relative min-h-screen overflow-hidden ${className}`}>
       {/* Base gradient layer - different for light/dark */}
       <div 
-        className="fixed inset-0 -z-50 bg-gradient-to-b from-background via-background to-background-deep dark:from-[hsl(240_10%_6%)] dark:via-background dark:to-background-deep light:from-slate-50 light:via-white light:to-slate-100"
+        className="fixed inset-0 -z-50 dark:bg-[radial-gradient(ellipse_at_top,hsl(240_10%_6%)_0%,hsl(240_9%_2%)_50%,hsl(240_7%_1%)_100%)] light:bg-gradient-to-b light:from-slate-50 light:via-white light:to-slate-100"
       />
 
       {/* Animated gradient blobs */}
@@ -38,7 +38,7 @@ const AmbientBackground = ({
           className="absolute dark:opacity-100 light:opacity-60"
           style={{
             width: '900px',
-            height: '1200px',
+            height: '1400px',
             top: '-20%',
             left: '50%',
             transform: 'translateX(-50%)',
@@ -46,8 +46,8 @@ const AmbientBackground = ({
             filter: 'blur(150px)',
           }}
           animate={{
-            y: [0, -30, 0],
-            rotate: [0, 2, 0],
+            y: [0, -20, 0],
+            rotate: [0, 1, 0],
             scale: [1, 1.02, 1],
           }}
           transition={{
@@ -56,12 +56,9 @@ const AmbientBackground = ({
             ease: "easeInOut",
           }}
         >
-          {/* Use CSS for light/dark background colors */}
+          {/* Light mode: softer indigo, Dark mode: stronger lime glow */}
           <div 
-            className="w-full h-full rounded-full"
-            style={{
-              background: `hsl(var(--primary) / ${primaryIntensity})`,
-            }}
+            className="w-full h-full rounded-full ambient-blob-primary"
           />
         </motion.div>
 
@@ -89,7 +86,7 @@ const AmbientBackground = ({
           }}
         >
           <div 
-            className="w-full h-full rounded-full dark:bg-[hsl(280_60%_50%/0.08)] light:bg-[hsl(263_70%_50%/0.05)]"
+            className="w-full h-full rounded-full ambient-blob-secondary"
           />
         </motion.div>
 
@@ -117,7 +114,7 @@ const AmbientBackground = ({
           }}
         >
           <div 
-            className="w-full h-full rounded-full dark:bg-[hsl(220_70%_50%/0.06)] light:bg-[hsl(239_84%_67%/0.04)]"
+            className="w-full h-full rounded-full ambient-blob-tertiary"
           />
         </motion.div>
 
@@ -130,7 +127,6 @@ const AmbientBackground = ({
             bottom: '-10%',
             left: '50%',
             transform: 'translateX(-50%)',
-            background: 'hsl(var(--primary) / 0.08)',
             borderRadius: '50%',
             filter: 'blur(100px)',
           }}
@@ -143,7 +139,9 @@ const AmbientBackground = ({
             repeat: Infinity,
             ease: "easeInOut",
           }}
-        />
+        >
+          <div className="w-full h-full rounded-full ambient-blob-primary" style={{ opacity: 0.5 }} />
+        </motion.div>
       </div>
 
       {/* Noise texture overlay - hidden in light mode via CSS */}
