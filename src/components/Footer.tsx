@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Instagram, Mail } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 const AnimatedBrandText = ({
   text,
   className,
@@ -58,6 +58,8 @@ interface FooterProps {
 }
 
 const Footer = ({ customQuickLinks }: FooterProps = {}) => {
+  const location = useLocation();
+  
   const defaultQuickLinks = [{
     name: "Home",
     href: "/"
@@ -76,6 +78,17 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
   }];
 
   const quickLinks = customQuickLinks || defaultQuickLinks;
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const hash = href.substring(1);
+      const element = document.getElementById(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
   return <footer className="py-16 md:py-24 border-t border-muted">
       <div className="container px-4">
         <div className="grid md:grid-cols-3 gap-12 md:gap-8 mb-12">
@@ -118,11 +131,23 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
             </h3>
             <ul className="space-y-3">
               {quickLinks.map(link => <li key={link.name}>
-                  {link.href.startsWith("/") && !link.href.includes("#") ? <Link to={link.href} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  {link.href.startsWith("/") && !link.href.includes("#") ? (
+                    <Link to={link.href} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors">
                       {link.name}
-                    </Link> : <a href={link.href} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    </Link>
+                  ) : link.href.startsWith("#") ? (
+                    <a 
+                      href={link.href} 
+                      onClick={(e) => handleNavClick(e, link.href)}
+                      className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                    >
                       {link.name}
-                    </a>}
+                    </a>
+                  ) : (
+                    <a href={link.href} className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors">
+                      {link.name}
+                    </a>
+                  )}
                 </li>)}
             </ul>
           </motion.div>
