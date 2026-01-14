@@ -149,10 +149,15 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
       return location.pathname === '/' && !location.hash;
     }
     
+    // Anchor-only links (e.g., "#pricing") - untuk halaman saat ini
+    if (href.startsWith('#') && !href.includes('/')) {
+      return location.hash === href;
+    }
+    
     // Link dengan hash (seperti /#pricing, /about#contact)
     if (href.includes('#')) {
       const [path, hash] = href.split('#');
-      const targetPath = path === '' ? '/' : path;
+      const targetPath = path === '' ? location.pathname : path;
       return location.pathname === targetPath && location.hash === `#${hash}`;
     }
     
@@ -164,7 +169,8 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
     if (href.includes('#')) {
       e.preventDefault();
       const [path, hash] = href.split('#');
-      const targetPath = path === '' ? '/' : path;
+      // Jika path kosong, gunakan halaman saat ini (bukan redirect ke /)
+      const targetPath = path === '' ? location.pathname : path;
       const isCurrentPage = location.pathname === targetPath;
       
       if (isCurrentPage && hash) {
