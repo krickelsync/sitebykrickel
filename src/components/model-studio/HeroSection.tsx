@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import aiModelStudioIcon from "@/assets/icons/ai-model-studio-icon.png";
 import { Suspense, lazy, useState, useEffect } from "react";
 
@@ -12,6 +12,8 @@ interface HeroSectionProps {
 
 const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
   const [prismScale, setPrismScale] = useState(2);
+  const [roleIndex, setRoleIndex] = useState(0);
+  const roles = ["Owner", "Designer"];
 
   useEffect(() => {
     const handleResize = () => {
@@ -30,19 +32,20 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Rotating text animation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   const scrollToNext = () => {
     const element = document.querySelector("#how-it-works");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-
-  const featurePoints = [
-    "Lookbook- and catalog-ready visuals",
-    "Upload your product or mockup",
-    "Control pose, camera, and background",
-    "Generate consistent model photos on demand",
-  ];
 
   return (
     <section
@@ -77,86 +80,82 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="relative z-10 text-center max-w-4xl mx-auto pt-20 pb-12"
       >
-        {/* App Icon */}
+        {/* Premium Badge - Small & Elegant */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
           className="mb-6"
         >
-          <img
-            src={aiModelStudioIcon}
-            alt="AI Model Studio"
-            className="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-2xl shadow-lg shadow-primary/20"
-          />
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary/10 backdrop-blur-sm border border-primary/20 text-[10px] md:text-xs font-mono tracking-widest text-primary uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+            AI Model Studio
+          </span>
         </motion.div>
 
-        {/* Eyebrow Badge */}
+        {/* App Icon with Shimmer Effect */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="mb-8"
+          className="mb-8 inline-block relative"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-xs md:text-sm font-mono tracking-[0.2em] text-primary/90">
-            AI MODEL STUDIO
-          </span>
-        </motion.div>
-
-        {/* Main Headline */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground leading-tight mb-8">
-          <span className="block mb-2">A Faster Way to</span>
-          <span className="block text-primary drop-shadow-[0_0_30px_hsl(var(--primary)/0.5)]">
-            Create Product Photos
-          </span>
-        </h1>
-
-        {/* Primary Subheadline */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="max-w-xl mx-auto mb-8 space-y-2"
-        >
-          <p className="text-base sm:text-lg md:text-xl text-foreground/90 leading-relaxed font-medium">
-            A game changer for clothing brand owners and designers.
-          </p>
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed">
-            Save thousands on photoshoots by using one tool.
-          </p>
-        </motion.div>
-
-        {/* Feature Points - Glass Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="max-w-md mx-auto mb-10 p-5 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10"
-        >
-          <div className="flex flex-col gap-3">
-            {featurePoints.map((point, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.7 + index * 0.1 }}
-                className="flex items-center gap-3 text-sm sm:text-base text-foreground/80"
-              >
-                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
-                  <Check className="w-3 h-3 text-primary" />
-                </span>
-                <span className="text-left">{point}</span>
-              </motion.div>
-            ))}
+          <div className="relative">
+            <img
+              src={aiModelStudioIcon}
+              alt="AI Model Studio"
+              className="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-2xl shadow-2xl shadow-primary/30"
+            />
+            {/* Shimmer overlay */}
+            <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+              <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            </div>
+            {/* Glow ring */}
+            <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary/20 via-primary/40 to-primary/20 blur-sm -z-10 animate-pulse" />
           </div>
         </motion.div>
 
+        {/* Main Headline with Rotating Text */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mb-10"
+        >
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground leading-tight">
+            <span className="block mb-2">Game Changer for</span>
+            <span className="block mb-2">Clothing Brand</span>
+            <span className="relative inline-flex h-[1.2em] overflow-hidden align-bottom">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={roles[roleIndex]}
+                  initial={{ y: "100%", opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: "-100%", opacity: 0 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  className="text-primary"
+                  style={{
+                    textShadow: "0 0 40px hsl(var(--primary) / 0.5), 0 0 80px hsl(var(--primary) / 0.3)"
+                  }}
+                >
+                  {roles[roleIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </span>
+          </h1>
+        </motion.div>
+
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 max-w-sm mx-auto sm:max-w-none px-2 sm:px-0">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-sm mx-auto sm:max-w-none px-2 sm:px-0"
+        >
           <Button
             onClick={onCtaClick}
             size="lg"
-            className="w-full sm:w-auto px-8 py-6 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 group"
+            className="w-full sm:w-auto px-8 py-6 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 group shadow-lg shadow-primary/25 hover:shadow-primary/40"
           >
             Get Instant Access
             <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -169,24 +168,14 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
           >
             See How It Works
           </Button>
-        </div>
-
-        {/* Microcopy */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.9 }}
-          className="text-xs md:text-sm text-muted-foreground/70"
-        >
-          1–6 outputs each generate · Ready crop sizes: 1:1 · 4:5 · 3:4 · 9:16
-        </motion.p>
+        </motion.div>
       </motion.div>
 
       {/* Scroll indicator - styled like Home */}
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
+        transition={{ delay: 1 }}
         onClick={scrollToNext}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
         aria-label="Scroll to learn more"

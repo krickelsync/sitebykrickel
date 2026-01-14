@@ -180,6 +180,40 @@ const ProductAIModelStudio = () => {
       {/* How It Works */}
       <section id="how-it-works" className="py-14 md:py-32 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
+          {/* Introduction - moved from Hero */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-3xl mx-auto mb-16 md:mb-24"
+          >
+            <p className="text-xl md:text-2xl text-foreground font-medium mb-3">
+              A game changer for clothing brand owners and designers.
+            </p>
+            <p className="text-base md:text-lg text-muted-foreground mb-8">
+              Save thousands on photoshoots by using one tool.
+            </p>
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm text-foreground/80">
+              <span className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                Lookbook- and catalog-ready visuals
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                Upload your product or mockup
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                Control pose, camera, and background
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                Generate consistent model photos on demand
+              </span>
+            </div>
+          </motion.div>
+
           {/* Block A: Problem */}
           <ProblemBlock />
 
