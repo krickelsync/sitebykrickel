@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronDown, Eye } from "lucide-react";
+import aiModelStudioIcon from "@/assets/icons/ai-model-studio-icon.png";
 
 interface HeroSectionProps {
   onCtaClick: () => void;
@@ -43,6 +44,20 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="relative text-center max-w-4xl mx-auto"
       >
+        {/* App Icon */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mb-4"
+        >
+          <img
+            src={aiModelStudioIcon}
+            alt="AI Model Studio"
+            className="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-2xl shadow-lg shadow-primary/20"
+          />
+        </motion.div>
+
         {/* Eyebrow */}
         <motion.span
           initial={{ opacity: 0 }}

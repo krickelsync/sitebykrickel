@@ -14,6 +14,7 @@ import PricingCard from "@/components/model-studio/PricingCard";
 import FAQAccordion from "@/components/model-studio/FAQAccordion";
 import FinalCTA from "@/components/model-studio/FinalCTA";
 import MobileStickyBar from "@/components/model-studio/MobileStickyBar";
+import ProductStudioPromoPopup from "@/components/model-studio/ProductStudioPromoPopup";
 import CheckoutModal from "@/components/products/CheckoutModal";
 import BundleOfferModal from "@/components/products/BundleOfferModal";
 import ProductMarquee from "@/components/products/ProductMarquee";
@@ -453,6 +454,9 @@ const ProductAIModelStudio = () => {
         price={selectedProduct === "bundle" ? 100 : 100}
         isBundle={selectedProduct === "bundle"}
       />
+
+      {/* AI Product Studio Promo Popup */}
+      <ProductStudioPromoPopup />
     </div>
   );
 };
