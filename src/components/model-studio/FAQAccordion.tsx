@@ -8,24 +8,28 @@ import {
 
 const faqs = [
   {
-    question: "[FAQ 1 QUESTION]",
-    answer: "[FAQ 1 ANSWER]",
+    question: "Do I have to upload face references?",
+    answer: "No. Use them if you want consistent faces; otherwise focus on product images.",
   },
   {
-    question: "[FAQ 2 QUESTION]",
-    answer: "[FAQ 2 ANSWER]",
+    question: "How many photos can I upload?",
+    answer: "Clothing Product up to 4. Face References up to 4.",
   },
   {
-    question: "[FAQ 3 QUESTION]",
-    answer: "[FAQ 3 ANSWER]",
+    question: "How many outputs per generate?",
+    answer: "You choose 1–6.",
   },
   {
-    question: "[FAQ 4 QUESTION]",
-    answer: "[FAQ 4 ANSWER]",
+    question: "Can I use these for IG & marketplaces?",
+    answer: "Yes — output ratios are ready: 1:1, 4:5, 3:4, 9:16.",
   },
   {
-    question: "[FAQ 5 QUESTION]",
-    answer: "[FAQ 5 ANSWER]",
+    question: "What if the results aren't perfect?",
+    answer: "Try different pose, lens option, angle preset, or background.",
+  },
+  {
+    question: "Is this safe for commercial use?",
+    answer: "Use assets you own or have proper rights & follow platform policies.",
   },
 ];
 

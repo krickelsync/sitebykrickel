@@ -211,8 +211,7 @@ const ProductAIModelStudio = () => {
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="CONTROLS"
-            title="[CONTROLS TITLE]"
-            description="[CONTROLS DESCRIPTION]"
+            title="You control the look—not the AI doing random ideas."
           />
           <div className="mt-12 md:mt-16">
             <FeatureGrid />
@@ -225,8 +224,7 @@ const ProductAIModelStudio = () => {
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="PRESETS"
-            title="[PRESETS TITLE]"
-            description="[PRESETS DESCRIPTION]"
+            title="Ready-to-use Shot Recipes"
           />
           <div className="mt-12 md:mt-16">
             <PresetCards />
@@ -346,8 +344,7 @@ const ProductAIModelStudio = () => {
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="PRICING"
-            title="[PRICING TITLE]"
-            description="[PRICING DESCRIPTION]"
+            title="AI Model Studio — Access"
           />
           <div className="mt-12 md:mt-16">
             <PricingCard onCtaClick={handleCtaClick} />
@@ -360,8 +357,7 @@ const ProductAIModelStudio = () => {
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="FAQ"
-            title="[FAQ TITLE]"
-            description="[FAQ DESCRIPTION]"
+            title="Frequently Asked Questions"
           />
           <div className="mt-12 md:mt-16">
             <FAQAccordion />
