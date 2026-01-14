@@ -17,25 +17,23 @@ const steps: Step[] = [
   {
     number: "01",
     icon: Upload,
-    title: "Upload your assets",
+    title: "Upload Images",
     bullets: [
-      { text: "Clothing Product (0/4) — upload up to 4 product images" },
-      { text: "Face References (0/4) — upload up to 4 face references (optional)" },
+      { text: "Upload up to 4 product shots" },
+      { text: "Optional face refs for model consistency" },
     ],
   },
   {
     number: "02",
     icon: Sliders,
-    title: "Choose style & shot",
-    description:
-      "Pick gender, front/back, cutting, pose, lens, angle, background, ratio, and output count.",
+    title: "Choose Shot Settings",
+    description: "Pose, lens, angle, background, ratio, count",
   },
   {
     number: "03",
     icon: Sparkles,
-    title: "Generate",
-    description:
-      "Click generate and get photo variations based on your settings. Done.",
+    title: "Generate Photos",
+    description: "Get studio-style visuals ready to sell",
   },
 ];
 

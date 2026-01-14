@@ -6,35 +6,32 @@ const controlGroups = [
     title: "Input",
     icon: Upload,
     items: [
-      "Clothing Product (0/4) — upload up to 4 product images",
-      "Face References (0/4) — upload up to 4 face references",
+      "Up to 4 product images",
+      "Optional face references",
     ],
   },
   {
     title: "Styling",
     icon: Palette,
     items: [
-      "Model Gender: Male / Female",
-      "Shoot View: Front / Back",
-      "Garment Cutting: Regular · Oversize · Boxy · Crop · Baggy Pant · Boxy Oversize",
+      "Choose model gender & view",
+      "Multiple garment cutting options",
     ],
   },
   {
     title: "Camera",
     icon: Camera,
     items: [
-      "Lens & Perspective: iPhone RAW · 360 Camera (Extreme Wide) · 360 Linear View (Rectilinear Wide)",
-      "Angle presets: Front Look · Low Angle · Side Look · Wide POV · Top Down · Drone Fly",
-      "Manual sliders: FOV · Vertical Position · Horizontal Position · Camera Distance",
+      "Lens presets + angle control",
+      "Manual fine-tuning sliders",
     ],
   },
   {
     title: "Output",
     icon: Image,
     items: [
-      "Background: Studio White · Minimal Gallery · Concrete Interior · Studio Grey (Catalog / Campaign)",
-      "Size Ratio: 1:1 · 4:5 · 3:4 · 9:16",
-      "Output count: choose 1–6",
+      "Background styles",
+      "Output count & ratios",
     ],
   },
 ];

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronDown, Eye } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import aiModelStudioIcon from "@/assets/icons/ai-model-studio-icon.png";
 
 interface HeroSectionProps {
@@ -22,11 +22,10 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
     }
   };
 
-  const microCopyItems = [
-    "Output per generate: 1–6 photos",
-    "Ready-made ratios: 1:1 · 4:5 (IG Feed) · 3:4 · 9:16 (Story)",
-    "Modes: Catalog / Campaign",
-    "Views: Front / Back",
+const microCopyItems = [
+    "1–6 outputs each generate",
+    "Ready crop sizes: 1:1 · 4:5 · 3:4 · 9:16",
+    "Works for Catalog & Campaign",
   ];
 
   return (
@@ -70,16 +69,13 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
 
         {/* Main Headline */}
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground leading-[1.15] mb-6">
-          Fashion catalog photos that look{" "}
-          <span className="text-primary">"premium"</span>—without scheduling
-          photoshoots.
+          Pro-Grade Product Photos in Minutes —{" "}
+          <span className="text-primary">No Photoshoots Needed.</span>
         </h1>
 
         {/* Subheadline */}
         <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
-          Upload your product photos + (optional) face references. Choose pose,
-          lens, angle, background, and output ratio. Get model photos ready to
-          upload for catalogs & campaigns — in minutes.
+          Upload product images → choose pose, angle & background → generate ready-to-sell model photos.
         </p>
 
         {/* CTA Buttons */}
@@ -89,16 +85,16 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
             size="lg"
             className="w-full sm:w-auto px-8 py-6 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 group"
           >
-            Get Access to AI Model Studio
+            Get Instant Access
             <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Button>
           <Button
             variant="outline"
             size="lg"
-            onClick={scrollToControls}
+            onClick={scrollToNext}
             className="w-full sm:w-auto px-8 py-6 text-base border-white/10 hover:bg-white/5 transition-all duration-200"
           >
-            See Controls
+            See How It Works
           </Button>
         </div>
 
@@ -116,31 +112,6 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
             </span>
           ))}
         </motion.div>
-      </motion.div>
-
-      {/* Trust Callout Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1 }}
-        className="relative mt-12 md:mt-16 max-w-lg mx-auto"
-      >
-        <div className="glass-card p-5 md:p-6 border border-white/10 rounded-xl bg-card/40 backdrop-blur-sm">
-          <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Eye className="w-5 h-5 text-primary" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-sm md:text-base text-foreground mb-1">
-                People decide with their eyes first.
-              </h3>
-              <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
-                56% of users' first action on a product page is exploring
-                images. So photos aren't decoration—photos are decision makers.
-              </p>
-            </div>
-          </div>
-        </div>
       </motion.div>
 
       {/* Scroll indicator */}

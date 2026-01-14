@@ -3,10 +3,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Shield } from "lucide-react";
 
 const features = [
-  "AI Model Studio Access",
-  "Full controls (pose, lens, angle, background, ratio, output 1–6)",
+  "Full photo generator access",
+  "Complete shot control",
   "Catalog & Campaign modes",
-  "[BONUS HERE]",
 ];
 
 interface PricingCardProps {
@@ -56,7 +55,7 @@ const PricingCard = ({ onCtaClick }: PricingCardProps) => {
           size="lg"
           className="w-full py-6 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 group"
         >
-          Get Access Now
+          Buy Now — Instant Access
           <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
         </Button>
       </motion.div>
@@ -75,13 +74,10 @@ const PricingCard = ({ onCtaClick }: PricingCardProps) => {
           </div>
           <div>
             <h4 className="font-semibold text-base text-foreground mb-1">
-              Guarantee that makes it easy to try.
+              Try risk-free.
             </h4>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-2">
-              [GUARANTEE HERE]
-            </p>
-            <p className="text-xs text-muted-foreground/70">
-              Use assets you own or have license for.
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Try 7 days or refund.
             </p>
           </div>
         </div>

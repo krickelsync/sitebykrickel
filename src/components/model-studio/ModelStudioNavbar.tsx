@@ -75,7 +75,7 @@ const ModelStudioNavbar = ({ onCtaClick }: ModelStudioNavbarProps) => {
                 onClick={onCtaClick}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium px-6"
               >
-                Get Access
+                Get Instant Access
               </Button>
             </div>
 
@@ -119,7 +119,7 @@ const ModelStudioNavbar = ({ onCtaClick }: ModelStudioNavbarProps) => {
                 }}
                 className="w-full max-w-xs mt-4 bg-primary text-primary-foreground hover:bg-primary/90"
               >
-                Get Access
+                Get Instant Access
               </Button>
             </div>
           </motion.div>

@@ -162,8 +162,7 @@ const ProductAIModelStudio = () => {
           {/* Block B: Steps */}
           <SectionHeader
             eyebrow="3 SIMPLE STEPS"
-            title="From Upload to Campaign-Ready"
-            description="Get professional model photos in minutes, not days."
+            title="How It Works — 3 Steps"
           />
           <div className="mt-12 md:mt-16">
             <Steps />
@@ -213,7 +212,7 @@ const ProductAIModelStudio = () => {
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="CONTROLS"
-            title="You control the look—not the AI doing random ideas."
+            title="Total Creative Control"
           />
           <div className="mt-12 md:mt-16">
             <FeatureGrid />
@@ -226,7 +225,7 @@ const ProductAIModelStudio = () => {
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="PRESETS"
-            title="Ready-to-use Shot Recipes"
+            title="Smart Shot Presets"
           />
           <div className="mt-12 md:mt-16">
             <PresetCards />
@@ -346,7 +345,7 @@ const ProductAIModelStudio = () => {
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="PRICING"
-            title="AI Model Studio — Access"
+            title="Pricing"
           />
           <div className="mt-12 md:mt-16">
             <PricingCard onCtaClick={handleCtaClick} />
