@@ -13,7 +13,7 @@ interface HeroSectionProps {
 const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
   const [prismScale, setPrismScale] = useState(2);
   const [roleIndex, setRoleIndex] = useState(0);
-  const roles = ["Owner", "Designer"];
+  const roles = ["Clothing Brand", "Owner"];
 
   useEffect(() => {
     const handleResize = () => {
@@ -120,11 +120,10 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mb-10"
+          className="mb-6"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground leading-tight">
             <span className="block mb-2">Game Changer for</span>
-            <span className="block mb-2">Clothing Brand</span>
             <span className="relative inline-flex h-[1.2em] overflow-hidden align-bottom">
               <AnimatePresence mode="wait">
                 <motion.span
@@ -144,6 +143,16 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
             </span>
           </h1>
         </motion.div>
+
+        {/* Sub-headline with strikethrough */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="font-mono text-sm md:text-base text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+        >
+          Save <span className="line-through text-muted-foreground/60">$1000</span> on photoshoots by using one tool.
+        </motion.p>
 
         {/* CTA Buttons */}
         <motion.div
