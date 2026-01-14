@@ -28,12 +28,12 @@ import modelLoungingHelmet from "@/assets/portfolio/model-lounging-helmet.jpg";
 
 // Customer showcase data (without username)
 const customerShowcase = [
-  { src: modelAlleyStreetwear, caption: "bro this AI is lowkey insane saved my whole budget fr fr", profileInitials: "BM", profileColor: "bg-green-500" },
-  { src: modelTracksuitConcrete, caption: "no cap, my sales went UP after using these pics. W tool", profileInitials: "JT", profileColor: "bg-blue-500" },
-  { src: modelSilverBasquiat, caption: "finally some AI that actually gets streetwear aesthetics", profileInitials: "DR", profileColor: "bg-purple-500" },
-  { src: modelRooftopHoodie, caption: "used this for my drop and it went crazy. 10/10 would recommend", profileInitials: "AK", profileColor: "bg-pink-500" },
-  { src: modelSkateparkPuffer, caption: "the vibes are immaculate ngl. my brand looks so professional now", profileInitials: "MW", profileColor: "bg-orange-500" },
-  { src: modelStudioFisheye, caption: "saved me so much money on photoshoots. this is the future fr", profileInitials: "ZP", profileColor: "bg-teal-500" },
+  { src: modelAlleyStreetwear, caption: "bro this AI is lowkey insane saved my whole budget fr fr" },
+  { src: modelTracksuitConcrete, caption: "no cap, my sales went UP after using these pics. W tool" },
+  { src: modelSilverBasquiat, caption: "finally some AI that actually gets streetwear aesthetics" },
+  { src: modelRooftopHoodie, caption: "used this for my drop and it went crazy. 10/10 would recommend" },
+  { src: modelSkateparkPuffer, caption: "the vibes are immaculate ngl. my brand looks so professional now" },
+  { src: modelStudioFisheye, caption: "saved me so much money on photoshoots. this is the future fr" },
 ];
 
 // Reviews data with mixed 4 and 5 star ratings
@@ -308,23 +308,23 @@ const ProductAIProductStudio = () => {
         <ProductMarquee />
 
         {/* CUSTOMER SHOWCASE */}
-        <section className="py-24 bg-background">
-          <div className="container mx-auto px-4">
+        <section className="py-12 md:py-24 bg-background">
+          <div className="container mx-auto px-3 md:px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-12"
+              className="text-center mb-6 md:mb-12"
             >
-              <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-mono mb-4">
+              <span className="inline-block px-3 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-mono mb-3 md:mb-4">
                 REAL RESULTS
               </span>
-              <h2 className="font-display text-4xl md:text-5xl font-bold">
+              <h2 className="font-display text-2xl md:text-4xl lg:text-5xl font-bold">
                 Customer Showcase
               </h2>
             </motion.div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 max-w-6xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4 max-w-6xl mx-auto">
               {customerShowcase.map((item, index) => (
                 <motion.div
                   key={index}
@@ -332,7 +332,7 @@ const ProductAIProductStudio = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="group relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer"
+                  className="group relative aspect-[3/4] rounded-xl md:rounded-2xl overflow-hidden cursor-pointer"
                 >
                   <img
                     src={item.src}
@@ -340,15 +340,10 @@ const ProductAIProductStudio = () => {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <div className="flex items-center gap-2 md:gap-3">
-                      <p className="text-xs md:text-sm text-foreground font-medium flex-1 line-clamp-2">
-                        "{item.caption}"
-                      </p>
-                      <div className={`w-7 h-7 md:w-8 md:h-8 rounded-full ${item.profileColor} flex items-center justify-center text-white text-xs font-bold flex-shrink-0`}>
-                        {item.profileInitials}
-                      </div>
-                    </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-2 md:p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <p className="text-[10px] md:text-xs text-foreground/90 font-medium leading-snug line-clamp-2">
+                      "{item.caption}"
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -357,62 +352,63 @@ const ProductAIProductStudio = () => {
         </section>
 
         {/* CUSTOMER REVIEWS - Vertical Marquee */}
-        <section className="py-16 md:py-24 bg-secondary/20">
-          <div className="container mx-auto px-4">
+        <section className="py-12 md:py-24 bg-secondary/20">
+          <div className="container mx-auto px-3 md:px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-8 md:mb-12"
+              className="text-center mb-6 md:mb-12"
             >
-              <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-mono mb-4">
+              <span className="inline-block px-3 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-mono mb-3 md:mb-4">
                 ⭐ 4.8/5 RATING
               </span>
-              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+              <h2 className="font-display text-2xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
                 What Customers Say
               </h2>
               <Button
                 onClick={() => setShowReviewDialog(true)}
                 variant="outline"
-                className="gap-2"
+                size="sm"
+                className="gap-2 text-xs md:text-sm"
               >
-                <Pen className="w-4 h-4" />
+                <Pen className="w-3 h-3 md:w-4 md:h-4" />
                 Write A Review
               </Button>
             </motion.div>
 
             {/* Vertical Marquee Reviews */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto h-[400px] md:h-[600px] overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 max-w-6xl mx-auto h-[350px] md:h-[600px] overflow-hidden">
               {/* Column 1 */}
               <div className="relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-secondary to-transparent z-10 pointer-events-none" />
-                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-secondary to-transparent z-10 pointer-events-none" />
+                <div className="absolute top-0 left-0 right-0 h-12 md:h-24 bg-gradient-to-b from-[hsl(var(--secondary))] via-[hsl(var(--secondary)/0.5)] to-transparent z-10 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 h-12 md:h-24 bg-gradient-to-t from-[hsl(var(--secondary))] via-[hsl(var(--secondary)/0.5)] to-transparent z-10 pointer-events-none" />
                 <div 
-                  className="animate-marquee-vertical hover:[animation-play-state:paused] space-y-3 md:space-y-4"
+                  className="animate-marquee-vertical hover:[animation-play-state:paused] space-y-2 md:space-y-4"
                   style={{ animationDuration: "30s" }}
                 >
                   {[...displayReviews1, ...displayReviews1].map((review, index) => (
                     <div
                       key={`${review.id}-${index}`}
-                      className="glass-card p-3 md:p-4 space-y-2 md:space-y-3"
+                      className="glass-card p-2 md:p-3 space-y-1.5 md:space-y-2"
                     >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full ${review.avatarColor} flex items-center justify-center text-white font-bold text-xs md:text-sm`}>
+                      <div className="flex items-center gap-2">
+                        <div className={`w-7 h-7 md:w-10 md:h-10 rounded-full ${review.avatarColor} flex items-center justify-center text-white font-bold text-[10px] md:text-sm`}>
                           {review.initials}
                         </div>
-                        <div className="flex-1">
-                          <span className="font-semibold text-sm">{review.name}</span>
+                        <div className="flex-1 min-w-0">
+                          <span className="font-semibold text-xs md:text-sm block truncate">{review.name}</span>
                           <div className="flex gap-0.5">
                             {[...Array(review.rating)].map((_, i) => (
-                              <Star key={i} className="w-3 h-3 fill-yellow-500 text-yellow-500" />
+                              <Star key={i} className="w-2.5 h-2.5 md:w-3 md:h-3 fill-yellow-500 text-yellow-500" />
                             ))}
                             {[...Array(5 - review.rating)].map((_, i) => (
-                              <Star key={i} className="w-3 h-3 text-muted-foreground" />
+                              <Star key={i} className="w-2.5 h-2.5 md:w-3 md:h-3 text-muted-foreground" />
                             ))}
                           </div>
                         </div>
                       </div>
-                      <p className="text-xs md:text-sm text-muted-foreground">{review.content}</p>
+                      <p className="text-[11px] md:text-sm text-muted-foreground leading-relaxed line-clamp-3">{review.content}</p>
                     </div>
                   ))}
                 </div>
@@ -420,8 +416,8 @@ const ProductAIProductStudio = () => {
 
               {/* Column 2 */}
               <div className="relative overflow-hidden hidden md:block">
-                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-secondary to-transparent z-10 pointer-events-none" />
-                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-secondary to-transparent z-10 pointer-events-none" />
+                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[hsl(var(--secondary))] via-[hsl(var(--secondary)/0.5)] to-transparent z-10 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[hsl(var(--secondary))] via-[hsl(var(--secondary)/0.5)] to-transparent z-10 pointer-events-none" />
                 <div 
                   className="animate-marquee-vertical hover:[animation-play-state:paused] space-y-4"
                   style={{ animationDuration: "25s", animationDirection: "reverse" }}
@@ -429,14 +425,14 @@ const ProductAIProductStudio = () => {
                   {[...reviewsColumn2, ...reviewsColumn2].map((review, index) => (
                     <div
                       key={`${review.id}-${index}`}
-                      className="glass-card p-4 space-y-3"
+                      className="glass-card p-3 space-y-2"
                     >
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2">
                         <div className={`w-10 h-10 rounded-full ${review.avatarColor} flex items-center justify-center text-white font-bold text-sm`}>
                           {review.initials}
                         </div>
-                        <div className="flex-1">
-                          <span className="font-semibold text-sm">{review.name}</span>
+                        <div className="flex-1 min-w-0">
+                          <span className="font-semibold text-sm block truncate">{review.name}</span>
                           <div className="flex gap-0.5">
                             {[...Array(review.rating)].map((_, i) => (
                               <Star key={i} className="w-3 h-3 fill-yellow-500 text-yellow-500" />
@@ -447,7 +443,7 @@ const ProductAIProductStudio = () => {
                           </div>
                         </div>
                       </div>
-                      <p className="text-sm text-muted-foreground">{review.content}</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">{review.content}</p>
                     </div>
                   ))}
                 </div>
@@ -455,8 +451,8 @@ const ProductAIProductStudio = () => {
 
               {/* Column 3 */}
               <div className="relative overflow-hidden hidden md:block">
-                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-secondary to-transparent z-10 pointer-events-none" />
-                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-secondary to-transparent z-10 pointer-events-none" />
+                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[hsl(var(--secondary))] via-[hsl(var(--secondary)/0.5)] to-transparent z-10 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[hsl(var(--secondary))] via-[hsl(var(--secondary)/0.5)] to-transparent z-10 pointer-events-none" />
                 <div 
                   className="animate-marquee-vertical hover:[animation-play-state:paused] space-y-4"
                   style={{ animationDuration: "35s" }}
@@ -464,14 +460,14 @@ const ProductAIProductStudio = () => {
                   {[...reviewsColumn3, ...reviewsColumn3].map((review, index) => (
                     <div
                       key={`${review.id}-${index}`}
-                      className="glass-card p-4 space-y-3"
+                      className="glass-card p-3 space-y-2"
                     >
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2">
                         <div className={`w-10 h-10 rounded-full ${review.avatarColor} flex items-center justify-center text-white font-bold text-sm`}>
                           {review.initials}
                         </div>
-                        <div className="flex-1">
-                          <span className="font-semibold text-sm">{review.name}</span>
+                        <div className="flex-1 min-w-0">
+                          <span className="font-semibold text-sm block truncate">{review.name}</span>
                           <div className="flex gap-0.5">
                             {[...Array(review.rating)].map((_, i) => (
                               <Star key={i} className="w-3 h-3 fill-yellow-500 text-yellow-500" />
@@ -482,7 +478,7 @@ const ProductAIProductStudio = () => {
                           </div>
                         </div>
                       </div>
-                      <p className="text-sm text-muted-foreground">{review.content}</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">{review.content}</p>
                     </div>
                   ))}
                 </div>
