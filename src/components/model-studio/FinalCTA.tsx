@@ -20,17 +20,17 @@ const FinalCTA = ({ onCtaClick }: FinalCTAProps) => {
 
       <div className="relative">
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-foreground mb-4">
-          [FINAL CTA HEADLINE]
+          You can wait for a photoshoot… or you can publish today.
         </h2>
         <p className="text-base md:text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-          [FINAL CTA SUBTEXT]
+          If your product is ready to sell, high quality visuals shouldn't delay launch. That's one of the fastest ways to win.
         </p>
         <Button
           onClick={onCtaClick}
           size="lg"
           className="px-8 py-6 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 group"
         >
-          Get Access
+          Get Access to AI Model Studio
           <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
         </Button>
       </div>
