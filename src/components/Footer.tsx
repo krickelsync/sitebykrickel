@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Instagram, Mail } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { scrollToId } from "@/lib/scroll";
 const AnimatedBrandText = ({
   text,
   className,
@@ -83,10 +84,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
     if (href.startsWith('#')) {
       e.preventDefault();
       const hash = href.substring(1);
-      const element = document.getElementById(hash);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      scrollToId(hash);
     }
   };
   return <footer className="py-16 md:py-24 border-t border-muted">

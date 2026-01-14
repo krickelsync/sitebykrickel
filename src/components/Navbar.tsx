@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 import Logo3D from "./Logo3D";
 import { cn } from "@/lib/utils";
+import { scrollToId } from "@/lib/scroll";
 
 // Theme Toggle with dramatic animation
 const ThemeToggle = () => {
@@ -169,26 +170,31 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
     if (href.includes('#')) {
       e.preventDefault();
       const [path, hash] = href.split('#');
-      // Jika path kosong, gunakan halaman saat ini (bukan redirect ke /)
       const targetPath = path === '' ? location.pathname : path;
       const isCurrentPage = location.pathname === targetPath;
       
       if (isCurrentPage && hash) {
-        const element = document.getElementById(hash);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        scrollToId(hash);
       } else {
-        navigate(targetPath);
-        setTimeout(() => {
-          const element = document.getElementById(hash);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }, 100);
+        // Navigate dengan hash, biar useEffect auto-scroll setelah render
+        navigate(`${targetPath}#${hash}`);
       }
+      
+      setIsOpen(false);
     }
   };
+
+  // Auto-scroll saat location.hash berubah (termasuk saat navigate dari halaman lain)
+  useEffect(() => {
+    if (location.hash) {
+      const hash = location.hash.slice(1);
+      // Delay sedikit untuk memastikan DOM sudah render
+      const timer = setTimeout(() => {
+        scrollToId(hash);
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [location.pathname, location.hash]);
 
   const defaultLinks = [{
     name: "Home",
