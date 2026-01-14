@@ -13,7 +13,7 @@ interface HeroSectionProps {
 const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
   const [prismScale, setPrismScale] = useState(2);
   const [roleIndex, setRoleIndex] = useState(0);
-  const roles = ["Clothing Brand", "Owner"];
+  const roles = ["Owner", "Designer"];
 
   useEffect(() => {
     const handleResize = () => {
@@ -124,34 +124,55 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground leading-tight">
             <span className="block mb-2">Game Changer for</span>
-            <span className="relative inline-flex h-[1.2em] overflow-hidden align-bottom">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={roles[roleIndex]}
-                  initial={{ y: "100%", opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: "-100%", opacity: 0 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="text-primary"
-                  style={{
-                    textShadow: "0 0 40px hsl(var(--primary) / 0.5), 0 0 80px hsl(var(--primary) / 0.3)"
-                  }}
-                >
-                  {roles[roleIndex]}
-                </motion.span>
-              </AnimatePresence>
-            </span>
+            <span className="block mb-2">Clothing Brand</span>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={roles[roleIndex]}
+                initial={{ opacity: 0, y: 15, filter: "blur(8px)" }}
+                animate={{ 
+                  opacity: 1, 
+                  y: 0, 
+                  filter: "blur(0px)",
+                }}
+                exit={{ 
+                  opacity: 0, 
+                  y: -15, 
+                  filter: "blur(8px)",
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="inline-block text-primary"
+                style={{
+                  textShadow: "0 0 30px hsl(var(--primary) / 0.6), 0 0 60px hsl(var(--primary) / 0.3)"
+                }}
+              >
+                {roles[roleIndex]}
+              </motion.span>
+            </AnimatePresence>
           </h1>
         </motion.div>
 
-        {/* Sub-headline with strikethrough */}
+        {/* Sub-headline with animated strikethrough */}
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
           className="font-mono text-sm md:text-base text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Save <span className="line-through text-muted-foreground/60">$1000</span> on photoshoots by using one tool.
+          Save{" "}
+          <span className="relative inline-block text-muted-foreground/60">
+            $1000
+            <motion.span
+              className="absolute left-0 top-1/2 h-[2px] bg-red-500 -translate-y-1/2 rounded-full"
+              initial={{ width: "0%" }}
+              animate={{ width: "100%" }}
+              transition={{ 
+                duration: 0.6, 
+                delay: 1.2,
+                ease: "easeOut" 
+              }}
+            />
+          </span>{" "}
+          on photoshoots by using one tool.
         </motion.p>
 
         {/* CTA Buttons */}
