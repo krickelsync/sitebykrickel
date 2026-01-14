@@ -1,24 +1,41 @@
 import { motion } from "framer-motion";
-import { Upload, Sliders, Download } from "lucide-react";
+import { Upload, Sliders, Sparkles } from "lucide-react";
 
-const steps = [
+interface StepBullet {
+  text: string;
+}
+
+interface Step {
+  number: string;
+  icon: typeof Upload;
+  title: string;
+  description?: string;
+  bullets?: StepBullet[];
+}
+
+const steps: Step[] = [
   {
     number: "01",
     icon: Upload,
-    title: "[STEP 1 TITLE]",
-    description: "[STEP 1 DESCRIPTION]",
+    title: "Upload your assets",
+    bullets: [
+      { text: "Clothing Product (0/4) — upload up to 4 product images" },
+      { text: "Face References (0/4) — upload up to 4 face references (optional)" },
+    ],
   },
   {
     number: "02",
     icon: Sliders,
-    title: "[STEP 2 TITLE]",
-    description: "[STEP 2 DESCRIPTION]",
+    title: "Choose style & shot",
+    description:
+      "Pick gender, front/back, cutting, pose, lens, angle, background, ratio, and output count.",
   },
   {
     number: "03",
-    icon: Download,
-    title: "[STEP 3 TITLE]",
-    description: "[STEP 3 DESCRIPTION]",
+    icon: Sparkles,
+    title: "Generate",
+    description:
+      "Click generate and get photo variations based on your settings. Done.",
   },
 ];
 
@@ -54,9 +71,27 @@ const Steps = () => {
             <h3 className="text-lg md:text-xl font-display font-semibold text-foreground mb-3">
               {step.title}
             </h3>
-            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-              {step.description}
-            </p>
+
+            {/* Description or Bullets */}
+            {step.description && (
+              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                {step.description}
+              </p>
+            )}
+
+            {step.bullets && (
+              <ul className="space-y-2">
+                {step.bullets.map((bullet, bulletIndex) => (
+                  <li
+                    key={bulletIndex}
+                    className="flex items-start gap-2 text-sm md:text-base text-muted-foreground"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-2 flex-shrink-0" />
+                    <span>{bullet.text}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </motion.div>
       ))}

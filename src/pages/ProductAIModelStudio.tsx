@@ -6,6 +6,7 @@ import { Star, Pen } from "lucide-react";
 import ModelStudioNavbar from "@/components/model-studio/ModelStudioNavbar";
 import HeroSection from "@/components/model-studio/HeroSection";
 import SectionHeader from "@/components/model-studio/SectionHeader";
+import ProblemBlock from "@/components/model-studio/ProblemBlock";
 import Steps from "@/components/model-studio/Steps";
 import FeatureGrid from "@/components/model-studio/FeatureGrid";
 import PresetCards from "@/components/model-studio/PresetCards";
@@ -154,10 +155,14 @@ const ProductAIModelStudio = () => {
       {/* How It Works */}
       <section id="how-it-works" className="py-20 md:py-32 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
+          {/* Block A: Problem */}
+          <ProblemBlock />
+
+          {/* Block B: Steps */}
           <SectionHeader
-            eyebrow="HOW IT WORKS"
-            title="[HOW IT WORKS TITLE]"
-            description="[HOW IT WORKS DESCRIPTION]"
+            eyebrow="3 SIMPLE STEPS"
+            title="From Upload to Campaign-Ready"
+            description="Get professional model photos in minutes, not days."
           />
           <div className="mt-12 md:mt-16">
             <Steps />
