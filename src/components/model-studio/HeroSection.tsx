@@ -69,24 +69,27 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
         </motion.span>
 
         {/* Main Headline */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground leading-[1.15] mb-6">
-          A Faster Way to Create{" "}
-          <span className="text-primary">Product Photos</span>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground leading-tight mb-4 md:mb-6">
+          <span className="block">A Faster Way to</span>
+          <span className="block text-primary">Create Product Photos</span>
         </h1>
 
         {/* Primary Subheadline */}
-        <p className="text-lg md:text-xl text-foreground/90 max-w-2xl mx-auto mb-4 leading-relaxed font-medium">
-          A game changer for clothing brand owners and designers.
-          <br />
-          <span className="text-muted-foreground">Save thousands on photoshoots by using one tool.</span>
-        </p>
+        <div className="max-w-xl mx-auto mb-5 md:mb-6 space-y-1">
+          <p className="text-sm sm:text-base md:text-lg text-foreground/90 leading-relaxed font-medium">
+            A game changer for clothing brand owners and designers.
+          </p>
+          <p className="text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed">
+            Save thousands on photoshoots by using one tool.
+          </p>
+        </div>
 
         {/* Secondary Subheadline - Feature Points */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-xl mx-auto mb-8 text-left"
+          className="flex flex-col items-start gap-1.5 sm:gap-2 max-w-xs sm:max-w-md mx-auto mb-6 md:mb-8 pl-2 sm:pl-0"
         >
           {featurePoints.map((point, index) => (
             <motion.div
@@ -94,20 +97,20 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.7 + index * 0.1 }}
-              className="flex items-center gap-2 text-sm md:text-base text-muted-foreground"
+              className="flex items-start gap-2 text-xs sm:text-sm text-muted-foreground"
             >
-              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-primary" />
-              {point}
+              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-primary mt-1.5" />
+              <span className="text-left">{point}</span>
             </motion.div>
           ))}
         </motion.div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 max-w-md mx-auto sm:max-w-none">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6 md:mb-8 max-w-sm mx-auto sm:max-w-none px-2 sm:px-0">
           <Button
             onClick={onCtaClick}
             size="lg"
-            className="w-full sm:w-auto px-8 py-6 text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 group"
+            className="w-full sm:w-auto px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 group"
           >
             Get Instant Access
             <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -116,7 +119,7 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
             variant="outline"
             size="lg"
             onClick={scrollToNext}
-            className="w-full sm:w-auto px-8 py-6 text-base border-white/10 hover:bg-white/5 transition-all duration-200"
+            className="w-full sm:w-auto px-6 sm:px-8 py-5 sm:py-6 text-sm sm:text-base border-white/10 hover:bg-white/5 transition-all duration-200"
           >
             See How It Works
           </Button>
