@@ -259,7 +259,7 @@ const ProductAIProductStudio = () => {
               </motion.span>
 
               {/* Main Headline */}
-              <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none">
+              <h1 className="font-display text-4xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none">
                 STOP WASTING $$$
                 <br />
                 <span className="text-primary">ON PHOTOSHOOTS.</span>
@@ -268,7 +268,7 @@ const ProductAIProductStudio = () => {
               </h1>
 
               {/* Social Proof */}
-              <p className="text-sm font-mono text-muted-foreground tracking-wider">
+              <p className="text-xs md:text-sm font-mono text-muted-foreground tracking-wider">
                 ✦ TRUSTED BY 500+ BRANDS ✦
               </p>
 
@@ -278,7 +278,7 @@ const ProductAIProductStudio = () => {
                   onClick={handleBuyClick}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-primary text-primary-foreground font-mono font-bold rounded-xl text-lg hover:opacity-90 transition-all shadow-lg shadow-primary/25"
+                  className="px-6 py-3 md:px-8 md:py-4 bg-primary text-primary-foreground font-mono font-bold rounded-xl text-sm md:text-lg hover:opacity-90 transition-all shadow-lg shadow-primary/25"
                 >
                   GET INSTANT ACCESS → $70
                 </motion.button>
@@ -378,11 +378,11 @@ const ProductAIProductStudio = () => {
             </motion.div>
 
             {/* Vertical Marquee Reviews */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 max-w-6xl mx-auto h-[350px] md:h-[600px] overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 max-w-6xl mx-auto h-[320px] md:h-[600px] overflow-hidden">
               {/* Column 1 */}
               <div className="relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-12 md:h-24 bg-gradient-to-b from-[hsl(var(--secondary))] via-[hsl(var(--secondary)/0.5)] to-transparent z-10 pointer-events-none" />
-                <div className="absolute bottom-0 left-0 right-0 h-12 md:h-24 bg-gradient-to-t from-[hsl(var(--secondary))] via-[hsl(var(--secondary)/0.5)] to-transparent z-10 pointer-events-none" />
+                <div className="absolute top-0 left-0 right-0 h-12 md:h-24 bg-gradient-to-b from-black via-black/50 to-transparent z-10 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 h-12 md:h-24 bg-gradient-to-t from-black via-black/50 to-transparent z-10 pointer-events-none" />
                 <div 
                   className="animate-marquee-vertical hover:[animation-play-state:paused] space-y-2 md:space-y-4"
                   style={{ animationDuration: "30s" }}
@@ -390,25 +390,25 @@ const ProductAIProductStudio = () => {
                   {[...displayReviews1, ...displayReviews1].map((review, index) => (
                     <div
                       key={`${review.id}-${index}`}
-                      className="glass-card p-2 md:p-3 space-y-1.5 md:space-y-2"
+                      className="glass-card p-2 md:p-3 space-y-1 md:space-y-2"
                     >
-                      <div className="flex items-center gap-2">
-                        <div className={`w-7 h-7 md:w-10 md:h-10 rounded-full ${review.avatarColor} flex items-center justify-center text-white font-bold text-[10px] md:text-sm`}>
+                      <div className="flex items-center gap-1.5 md:gap-2">
+                        <div className={`w-6 h-6 md:w-10 md:h-10 rounded-full ${review.avatarColor} flex items-center justify-center text-white font-bold text-[9px] md:text-sm`}>
                           {review.initials}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <span className="font-semibold text-xs md:text-sm block truncate">{review.name}</span>
+                          <span className="font-semibold text-[10px] md:text-sm block truncate">{review.name}</span>
                           <div className="flex gap-0.5">
                             {[...Array(review.rating)].map((_, i) => (
-                              <Star key={i} className="w-2.5 h-2.5 md:w-3 md:h-3 fill-yellow-500 text-yellow-500" />
+                              <Star key={i} className="w-2 h-2 md:w-3 md:h-3 fill-yellow-500 text-yellow-500" />
                             ))}
                             {[...Array(5 - review.rating)].map((_, i) => (
-                              <Star key={i} className="w-2.5 h-2.5 md:w-3 md:h-3 text-muted-foreground" />
+                              <Star key={i} className="w-2 h-2 md:w-3 md:h-3 text-muted-foreground" />
                             ))}
                           </div>
                         </div>
                       </div>
-                      <p className="text-[11px] md:text-sm text-muted-foreground leading-relaxed line-clamp-3">{review.content}</p>
+                      <p className="text-[10px] md:text-sm text-muted-foreground leading-snug line-clamp-3">{review.content}</p>
                     </div>
                   ))}
                 </div>
@@ -416,8 +416,8 @@ const ProductAIProductStudio = () => {
 
               {/* Column 2 */}
               <div className="relative overflow-hidden hidden md:block">
-                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[hsl(var(--secondary))] via-[hsl(var(--secondary)/0.5)] to-transparent z-10 pointer-events-none" />
-                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[hsl(var(--secondary))] via-[hsl(var(--secondary)/0.5)] to-transparent z-10 pointer-events-none" />
+                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black via-black/50 to-transparent z-10 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black via-black/50 to-transparent z-10 pointer-events-none" />
                 <div 
                   className="animate-marquee-vertical hover:[animation-play-state:paused] space-y-4"
                   style={{ animationDuration: "25s", animationDirection: "reverse" }}
@@ -451,8 +451,8 @@ const ProductAIProductStudio = () => {
 
               {/* Column 3 */}
               <div className="relative overflow-hidden hidden md:block">
-                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[hsl(var(--secondary))] via-[hsl(var(--secondary)/0.5)] to-transparent z-10 pointer-events-none" />
-                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[hsl(var(--secondary))] via-[hsl(var(--secondary)/0.5)] to-transparent z-10 pointer-events-none" />
+                <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black via-black/50 to-transparent z-10 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black via-black/50 to-transparent z-10 pointer-events-none" />
                 <div 
                   className="animate-marquee-vertical hover:[animation-play-state:paused] space-y-4"
                   style={{ animationDuration: "35s" }}
@@ -488,19 +488,19 @@ const ProductAIProductStudio = () => {
         </section>
 
         {/* BEFORE / AFTER SECTION */}
-        <section ref={examplesRef} className="py-32 bg-background">
-          <div className="container mx-auto px-4">
+        <section ref={examplesRef} className="py-16 md:py-32 bg-background">
+          <div className="container mx-auto px-3 md:px-4">
             {/* Section Header */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              className="text-center mb-8 md:mb-16"
             >
-              <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-mono mb-4">
-                $2,000+ WORTH OF PHOTOSHOOT → JUST $70
+              <span className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-primary/10 text-primary rounded-full text-[10px] md:text-sm font-mono mb-3 md:mb-4">
+                $2,000+ PHOTOSHOOT → $70
               </span>
-              <h2 className="font-display text-4xl md:text-5xl font-bold">
+              <h2 className="font-display text-2xl md:text-4xl lg:text-5xl font-bold">
                 The Transformation
               </h2>
             </motion.div>
@@ -510,39 +510,39 @@ const ProductAIProductStudio = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+              className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-8 max-w-5xl mx-auto"
             >
               {/* Before */}
-              <div className="space-y-4">
-                <p className="text-sm font-mono text-destructive uppercase tracking-wider flex items-center gap-2">
-                  ❌ THE OLD WAY
+              <div className="space-y-2 md:space-y-4">
+                <p className="text-[10px] md:text-sm font-mono text-destructive uppercase tracking-wider flex items-center gap-1 md:gap-2">
+                  ❌ OLD WAY
                 </p>
-                <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-secondary/30 border border-destructive/20">
+                <div className="aspect-[4/5] rounded-xl md:rounded-2xl overflow-hidden bg-secondary/30 border border-destructive/20">
                   <img
                     src={modelLibraryGrunge}
                     alt="Raw product"
                     className="w-full h-full object-cover opacity-60 grayscale"
                   />
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  Hire photographer, rent studio, wait weeks, spend $2,000+
+                <p className="text-[10px] md:text-sm text-muted-foreground line-clamp-2">
+                  Hire photographer, rent studio, spend $2,000+
                 </p>
               </div>
 
               {/* After */}
-              <div className="space-y-4">
-                <p className="text-sm font-mono text-primary uppercase tracking-wider flex items-center gap-2">
-                  ✅ THE NEW WAY
+              <div className="space-y-2 md:space-y-4">
+                <p className="text-[10px] md:text-sm font-mono text-primary uppercase tracking-wider flex items-center gap-1 md:gap-2">
+                  ✅ NEW WAY
                 </p>
-                <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-secondary/30 ring-2 ring-primary/30 shadow-lg shadow-primary/10">
+                <div className="aspect-[4/5] rounded-xl md:rounded-2xl overflow-hidden bg-secondary/30 ring-2 ring-primary/30 shadow-lg shadow-primary/10">
                   <img
                     src={modelStudioFisheye}
                     alt="AI generated campaign"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <p className="text-sm text-foreground font-medium">
-                  Upload. Generate. Done in minutes. Just $70.
+                <p className="text-[10px] md:text-sm text-foreground font-medium line-clamp-2">
+                  Upload. Generate. Done in minutes. $70.
                 </p>
               </div>
             </motion.div>
@@ -553,9 +553,9 @@ const ProductAIProductStudio = () => {
         <ProductVelocityText />
 
         {/* VALUE PROPOSITION CARDS */}
-        <section className="py-24 bg-secondary/20">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        <section className="py-12 md:py-24 bg-secondary/20">
+          <div className="container mx-auto px-3 md:px-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6 max-w-6xl mx-auto">
               {valueCards.map((card, index) => (
                 <motion.div
                   key={card.title}
@@ -563,13 +563,13 @@ const ProductAIProductStudio = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="glass-card p-6 text-center space-y-3 hover:border-primary/30 transition-colors"
+                  className="glass-card p-3 md:p-6 text-center space-y-2 md:space-y-3 hover:border-primary/30 transition-colors"
                 >
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-                    <card.icon className="w-6 h-6 text-primary" />
+                  <div className="w-8 h-8 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
+                    <card.icon className="w-4 h-4 md:w-6 md:h-6 text-primary" />
                   </div>
-                  <h3 className="font-bold text-lg">{card.title}</h3>
-                  <p className="text-sm text-muted-foreground">{card.description}</p>
+                  <h3 className="font-bold text-xs md:text-lg leading-tight">{card.title}</h3>
+                  <p className="text-[10px] md:text-sm text-muted-foreground leading-snug">{card.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -577,41 +577,40 @@ const ProductAIProductStudio = () => {
         </section>
 
         {/* CONCEPT SECTION - Why Brands Use This */}
-        <section className="py-32 bg-background">
+        <section className="py-16 md:py-32 bg-background">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="max-w-3xl mx-auto text-center space-y-8"
+              className="max-w-3xl mx-auto text-center space-y-4 md:space-y-8"
             >
-              <h2 className="font-display text-4xl md:text-5xl font-bold">
+              <h2 className="font-display text-2xl md:text-4xl lg:text-5xl font-bold">
                 Why brands use this
               </h2>
-              <div className="w-16 h-px bg-primary mx-auto" />
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              <div className="w-12 md:w-16 h-px bg-primary mx-auto" />
+              <p className="text-sm md:text-lg lg:text-xl text-muted-foreground leading-relaxed">
                 Skip the traditional photoshoot. AI Product Studio transforms raw
-                product photos into polished, campaign-ready visuals in minutes—giving
-                you creative freedom at a fraction of the cost.
+                product photos into polished, campaign-ready visuals in minutes.
               </p>
             </motion.div>
           </div>
         </section>
 
         {/* CAMPAIGN MODES */}
-        <section className="py-32 bg-secondary/20">
-          <div className="container mx-auto px-4">
+        <section className="py-16 md:py-32 bg-secondary/20">
+          <div className="container mx-auto px-3 md:px-4">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="font-display text-3xl md:text-4xl font-bold text-center mb-16"
+              className="font-display text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8 md:mb-16"
             >
               Campaign Modes
             </motion.h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-8 max-w-6xl mx-auto">
               {campaignModes.map((mode, index) => (
                 <motion.div
                   key={mode.title}
@@ -619,7 +618,7 @@ const ProductAIProductStudio = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer"
+                  className="group relative aspect-[3/4] rounded-xl md:rounded-2xl overflow-hidden cursor-pointer"
                 >
                   <img
                     src={mode.image}
@@ -627,11 +626,11 @@ const ProductAIProductStudio = () => {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="font-display text-xl font-bold mb-1">
+                  <div className="absolute bottom-0 left-0 right-0 p-2 md:p-6">
+                    <h3 className="font-display text-[10px] md:text-xl font-bold mb-0.5 md:mb-1 truncate">
                       {mode.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-[9px] md:text-sm text-muted-foreground line-clamp-2">
                       {mode.description}
                     </p>
                   </div>
@@ -642,7 +641,7 @@ const ProductAIProductStudio = () => {
         </section>
 
         {/* WHO IT'S FOR */}
-        <section className="py-32 bg-background">
+        <section className="py-16 md:py-32 bg-background">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -651,10 +650,10 @@ const ProductAIProductStudio = () => {
               transition={{ duration: 0.6 }}
               className="max-w-xl mx-auto text-center"
             >
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-12">
+              <h2 className="font-display text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-12">
                 Built for
               </h2>
-              <ul className="space-y-4">
+              <ul className="space-y-2 md:space-y-4">
                 {targetUsers.map((user, index) => (
                   <motion.li
                     key={user}
@@ -662,9 +661,9 @@ const ProductAIProductStudio = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="flex items-center justify-center gap-3 text-lg text-muted-foreground"
+                    className="flex items-center justify-center gap-2 md:gap-3 text-sm md:text-lg text-muted-foreground"
                   >
-                    <ChevronRight className="w-4 h-4 text-primary" />
+                    <ChevronRight className="w-3 h-3 md:w-4 md:h-4 text-primary" />
                     {user}
                   </motion.li>
                 ))}
@@ -674,7 +673,7 @@ const ProductAIProductStudio = () => {
         </section>
 
         {/* PRICE SECTION - FOMO Style */}
-        <section className="py-32 bg-secondary/20">
+        <section className="py-16 md:py-32 bg-secondary/20">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -689,40 +688,40 @@ const ProductAIProductStudio = () => {
                 <div className="absolute -inset-4 bg-primary/20 blur-3xl rounded-3xl" />
                 
                 {/* Card */}
-                <div className="relative glass-card p-10 text-center space-y-6 border-primary/30">
+                <div className="relative glass-card p-6 md:p-10 text-center space-y-4 md:space-y-6 border-primary/30">
                   {/* PROMO Badge */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="px-4 py-2 bg-destructive text-white text-sm font-bold rounded-full shadow-lg animate-pulse">
+                  <div className="absolute -top-3 md:-top-4 left-1/2 -translate-x-1/2">
+                    <span className="px-3 py-1.5 md:px-4 md:py-2 bg-destructive text-white text-[10px] md:text-sm font-bold rounded-full shadow-lg animate-pulse whitespace-nowrap">
                       🔥 PROMO ENDS SOON!
                     </span>
                   </div>
 
-                  <p className="text-sm font-mono text-muted-foreground uppercase tracking-wider pt-4">
+                  <p className="text-xs md:text-sm font-mono text-muted-foreground uppercase tracking-wider pt-4">
                     One-time access
                   </p>
 
                   {/* Price with SAVE badge */}
-                  <div className="flex items-center justify-center gap-4">
-                    <span className="text-2xl text-muted-foreground line-through font-mono">
+                  <div className="flex items-center justify-center gap-2 md:gap-4 flex-wrap">
+                    <span className="text-lg md:text-2xl text-muted-foreground line-through font-mono">
                       $100
                     </span>
-                    <span className="text-5xl md:text-6xl font-bold font-mono text-primary">
+                    <span className="text-4xl md:text-5xl lg:text-6xl font-bold font-mono text-primary">
                       $70
                     </span>
-                    <span className="px-2 py-1 bg-green-500/20 text-green-500 text-sm font-bold rounded">
+                    <span className="px-2 py-1 bg-green-500/20 text-green-500 text-[10px] md:text-sm font-bold rounded">
                       SAVE 30%
                     </span>
                   </div>
 
                   <button
                     onClick={handleBuyClick}
-                    className="w-full py-4 px-8 bg-primary text-primary-foreground font-mono font-bold rounded-xl hover:opacity-90 transition-all text-lg shadow-lg shadow-primary/25 hover:shadow-primary/40"
+                    className="w-full py-3 md:py-4 px-6 md:px-8 bg-primary text-primary-foreground font-mono font-bold rounded-xl hover:opacity-90 transition-all text-sm md:text-lg shadow-lg shadow-primary/25 hover:shadow-primary/40"
                   >
                     GET INSTANT ACCESS →
                   </button>
 
                   {/* Social Proof */}
-                  <p className="text-xs text-muted-foreground font-mono">
+                  <p className="text-[10px] md:text-xs text-muted-foreground font-mono">
                     ⚡ 127 people bought this week
                   </p>
                 </div>
