@@ -225,8 +225,34 @@ const ProductAIModelStudio = () => {
         </div>
       </section>
 
+      {/* Presets */}
+      <section id="presets" className="py-12 md:py-24 px-4 md:px-6 bg-card/10">
+        <div className="max-w-6xl mx-auto">
+          <SectionHeader
+            eyebrow="PRESETS"
+            title="Smart Shot Presets"
+          />
+          <div className="mt-12 md:mt-16">
+            <PresetCards />
+          </div>
+        </div>
+      </section>
+
+      {/* Controls / Features */}
+      <section id="controls" className="py-14 md:py-32 px-4 md:px-6 bg-card/20">
+        <div className="max-w-6xl mx-auto">
+          <SectionHeader
+            eyebrow="CONTROLS"
+            title="Total Creative Control"
+          />
+          <div className="mt-12 md:mt-16">
+            <FeatureGrid />
+          </div>
+        </div>
+      </section>
+
       {/* Customer Showcase */}
-      <section className="py-12 md:py-24 px-4 md:px-6 bg-card/10">
+      <section className="py-14 md:py-32 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="SHOWCASE"
@@ -258,32 +284,6 @@ const ProductAIModelStudio = () => {
                 </div>
               </motion.div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Controls / Features */}
-      <section id="controls" className="py-14 md:py-32 px-4 md:px-6 bg-card/20">
-        <div className="max-w-6xl mx-auto">
-          <SectionHeader
-            eyebrow="CONTROLS"
-            title="Total Creative Control"
-          />
-          <div className="mt-12 md:mt-16">
-            <FeatureGrid />
-          </div>
-        </div>
-      </section>
-
-      {/* Presets */}
-      <section id="presets" className="py-14 md:py-32 px-4 md:px-6">
-        <div className="max-w-6xl mx-auto">
-          <SectionHeader
-            eyebrow="PRESETS"
-            title="Smart Shot Presets"
-          />
-          <div className="mt-12 md:mt-16">
-            <PresetCards />
           </div>
         </div>
       </section>
