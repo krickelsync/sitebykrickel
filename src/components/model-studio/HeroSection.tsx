@@ -33,29 +33,21 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
       id="hero"
       className="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-6"
     >
-      {/* Beams Background - Stage Container like React Bits */}
-      <div className="absolute inset-0 z-0 pointer-events-none bg-background overflow-hidden flex items-center justify-center">
-        <div 
-          className="relative"
-          style={{
-            width: 'min(1080px, 150vw)',
-            height: 'min(1080px, 150vh)',
-          }}
-        >
-          <Beams
-            beamWidth={2}
-            beamHeight={15}
-            beamNumber={12}
-            lightColor="#ffffff"
-            speed={2}
-            noiseIntensity={1.75}
-            scale={0.2}
-            rotation={0}
-          />
-        </div>
+      {/* Beams Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none bg-background overflow-hidden">
+        <Beams
+          beamWidth={1.5}
+          beamHeight={15}
+          beamNumber={12}
+          lightColor="#ffffff"
+          speed={2}
+          noiseIntensity={1.75}
+          scale={0.2}
+          rotation={0}
+        />
+        <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-background to-transparent" />
       </div>
-      {/* Bottom fade for text readability */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background via-background/50 to-transparent z-[1] pointer-events-none" />
+      <div className="absolute inset-0 z-[1] bg-background/20 pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
