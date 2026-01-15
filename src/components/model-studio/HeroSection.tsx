@@ -81,25 +81,22 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
               alt="AI Model Studio"
               className="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-2xl shadow-2xl shadow-primary/30"
             />
-            {/* Diagonal Shine Effect */}
-            <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-              <div 
-                className="absolute inset-0 animate-diagonal-shimmer"
-                style={{
-                  background: `linear-gradient(
-                    135deg,
-                    transparent 0%,
-                    transparent 35%,
-                    rgba(255, 255, 255, 0.3) 45%,
-                    rgba(255, 255, 255, 0.5) 50%,
-                    rgba(255, 255, 255, 0.3) 55%,
-                    transparent 65%,
-                    transparent 100%
-                  )`,
-                  backgroundSize: '200% 200%',
-                }}
-              />
-            </div>
+            {/* Static Diagonal Shine */}
+            <div 
+              className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none"
+              style={{
+                background: `linear-gradient(
+                  135deg,
+                  transparent 0%,
+                  transparent 40%,
+                  rgba(255, 255, 255, 0.25) 45%,
+                  rgba(255, 255, 255, 0.4) 50%,
+                  rgba(255, 255, 255, 0.25) 55%,
+                  transparent 60%,
+                  transparent 100%
+                )`,
+              }}
+            />
             {/* Glow ring */}
             <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary/20 via-primary/40 to-primary/20 blur-sm -z-10 animate-pulse" />
           </div>
