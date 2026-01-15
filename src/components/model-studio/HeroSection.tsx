@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import aiModelStudioIcon from "@/assets/icons/ai-model-studio-icon.png";
 import { useState, useEffect } from "react";
 import Beams from "@/components/ui/beams";
+import ShinyText from "@/components/ui/shiny-text";
 
 interface HeroSectionProps {
   onCtaClick: () => void;
@@ -68,7 +69,7 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
           </span>
         </motion.div>
 
-        {/* App Icon with Shimmer Effect */}
+        {/* App Icon with Animated Shine Effect */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -81,7 +82,7 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
               alt="AI Model Studio"
               className="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-2xl shadow-2xl shadow-primary/30"
             />
-            {/* Static Diagonal Shine */}
+            {/* Animated Diagonal Shine */}
             <div 
               className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none"
               style={{
@@ -95,6 +96,8 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
                   transparent 60%,
                   transparent 100%
                 )`,
+                backgroundSize: '300% 300%',
+                animation: 'diagonal-shimmer 3s ease-in-out infinite',
               }}
             />
             {/* Glow ring */}
@@ -102,16 +105,36 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
           </div>
         </motion.div>
 
-        {/* Main Headline with Rotating Text */}
+        {/* Main Headline with ShinyText */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mb-6"
         >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground leading-tight">
-            <span className="block mb-2">Game Changer for</span>
-            <span className="block mb-2">Clothing Brand</span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
+            <span className="block mb-2">
+              <ShinyText
+                text="Game Changer for"
+                speed={2}
+                delay={0}
+                color="#b5b5b5"
+                shineColor="#ffffff"
+                spread={120}
+                direction="left"
+              />
+            </span>
+            <span className="block mb-2">
+              <ShinyText
+                text="Clothing Brand"
+                speed={2}
+                delay={0.3}
+                color="#b5b5b5"
+                shineColor="#ffffff"
+                spread={120}
+                direction="left"
+              />
+            </span>
             <AnimatePresence mode="wait">
               <motion.span
                 key={roles[roleIndex]}
