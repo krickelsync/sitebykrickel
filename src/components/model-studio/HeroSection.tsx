@@ -36,7 +36,7 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
       {/* Beams Background */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-background overflow-hidden">
         <Beams
-          beamWidth={2}
+          beamWidth={1.5}
           beamHeight={15}
           beamNumber={12}
           lightColor="#ffffff"

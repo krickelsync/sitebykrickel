@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { useMemo } from "react";
 
 interface BeamsProps {
   beamWidth?: number;
@@ -16,7 +15,7 @@ interface BeamsProps {
 }
 
 export default function Beams({
-  beamWidth = 2,
+  beamWidth = 1.5,
   beamHeight = 15,
   beamNumber = 12,
   lightColor = "#ffffff",
@@ -26,144 +25,77 @@ export default function Beams({
   rotation = 0,
   className = "",
 }: BeamsProps) {
-  const containerRef = useRef<SVGSVGElement>(null);
-  const [dimensions, setDimensions] = useState({ width: 1920, height: 1080 });
-
-  useEffect(() => {
-    const updateDimensions = () => {
-      if (containerRef.current?.parentElement) {
-        setDimensions({
-          width: containerRef.current.parentElement.offsetWidth || 1920,
-          height: containerRef.current.parentElement.offsetHeight || 1080,
-        });
-      }
-    };
-    updateDimensions();
-    window.addEventListener("resize", updateDimensions);
-    return () => window.removeEventListener("resize", updateDimensions);
-  }, []);
-
-  // Generate curved beam paths
-  const generatePaths = () => {
-    const paths: string[] = [];
-    const { width, height } = dimensions;
-    
+  // Generate random but stable beam positions using noiseIntensity
+  const beams = useMemo(() => {
+    const result = [];
     for (let i = 0; i < beamNumber; i++) {
-      const startX = (width / beamNumber) * i + (Math.random() - 0.5) * noiseIntensity * 50;
-      const startY = -height * 0.2;
-      const controlX1 = startX + (Math.random() - 0.5) * noiseIntensity * 100;
-      const controlY1 = height * 0.3;
-      const controlX2 = startX + (Math.random() - 0.5) * noiseIntensity * 100;
-      const controlY2 = height * 0.7;
-      const endX = startX + (Math.random() - 0.5) * noiseIntensity * 80;
-      const endY = height * 1.2;
+      // Base position evenly distributed
+      const basePosition = (i / beamNumber) * 100;
+      // Add noise to position
+      const noise = (Math.random() - 0.5) * noiseIntensity * 10;
+      const position = Math.max(0, Math.min(100, basePosition + noise));
       
-      paths.push(`M${startX} ${startY} C${controlX1} ${controlY1}, ${controlX2} ${controlY2}, ${endX} ${endY}`);
+      // Random opacity variation
+      const opacity = 0.3 + Math.random() * 0.7;
+      
+      // Random width variation based on beamWidth
+      const width = beamWidth * (0.5 + Math.random());
+      
+      // Random blur variation based on beamHeight
+      const blur = beamHeight * (0.8 + Math.random() * 0.4);
+      
+      // Random delay for animation
+      const delay = Math.random() * (2 / speed);
+      
+      result.push({ position, opacity, width, blur, delay });
     }
-    return paths;
-  };
+    return result;
+  }, [beamNumber, noiseIntensity, beamWidth, beamHeight, speed]);
 
-  const paths = generatePaths();
-  const animationDuration = 3 / speed;
+  // Convert hex to rgba for gradient
+  const hexToRgba = (hex: string, alpha: number) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  };
 
   return (
     <div 
       className={`absolute inset-0 overflow-hidden ${className}`}
-      style={{ transform: `rotate(${rotation}deg) scale(${scale > 0.5 ? 1 : scale * 2 + 0.5})` }}
+      style={{ 
+        transform: `rotate(${rotation}deg) scale(${1 + scale})`,
+        transformOrigin: 'center center'
+      }}
     >
-      <svg
-        ref={containerRef}
-        className="w-full h-full"
-        viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
-        preserveAspectRatio="xMidYMid slice"
-        fill="none"
-      >
-        <defs>
-          {paths.map((_, index) => (
-            <motion.linearGradient
-              key={`gradient-${index}`}
-              id={`beam-gradient-${index}`}
-              gradientUnits="userSpaceOnUse"
-              initial={{ x1: 0, y1: 0, x2: 0, y2: dimensions.height * 0.3 }}
-              animate={{
-                x1: [0, 0, 0],
-                y1: [-dimensions.height * 0.2, dimensions.height * 0.5, dimensions.height * 1.2],
-                x2: [0, 0, 0],
-                y2: [dimensions.height * 0.1, dimensions.height * 0.8, dimensions.height * 1.5],
-              }}
-              transition={{
-                duration: animationDuration + (Math.random() * 0.5),
-                delay: (index / beamNumber) * animationDuration * 0.5,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            >
-              <stop offset="0%" stopColor={lightColor} stopOpacity="0" />
-              <stop offset="30%" stopColor={lightColor} stopOpacity="0.6" />
-              <stop offset="50%" stopColor={lightColor} stopOpacity="1" />
-              <stop offset="70%" stopColor={lightColor} stopOpacity="0.6" />
-              <stop offset="100%" stopColor={lightColor} stopOpacity="0" />
-            </motion.linearGradient>
-          ))}
-        </defs>
-
-        {/* Glow layer */}
-        <g filter="url(#beam-glow)">
-          {paths.map((path, index) => (
-            <motion.path
-              key={`glow-${index}`}
-              d={path}
-              stroke={`url(#beam-gradient-${index})`}
-              strokeWidth={beamWidth * beamHeight * 0.3}
-              strokeLinecap="round"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ 
-                pathLength: [0, 0.6, 0],
-                opacity: [0, 0.3, 0],
-              }}
-              transition={{
-                duration: animationDuration + (Math.random() * 0.5),
-                delay: (index / beamNumber) * animationDuration * 0.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-        </g>
-
-        {/* Core beams */}
-        {paths.map((path, index) => (
-          <motion.path
-            key={`beam-${index}`}
-            d={path}
-            stroke={`url(#beam-gradient-${index})`}
-            strokeWidth={beamWidth}
-            strokeLinecap="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ 
-              pathLength: [0, 0.5, 0],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: animationDuration + (Math.random() * 0.5),
-              delay: (index / beamNumber) * animationDuration * 0.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-
-        {/* Blur filter for glow */}
-        <defs>
-          <filter id="beam-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation={beamWidth * 2} result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-      </svg>
+      {beams.map((beam, index) => (
+        <div
+          key={index}
+          className="absolute top-0 h-full"
+          style={{
+            left: `${beam.position}%`,
+            width: `${beam.width}%`,
+            background: `linear-gradient(180deg, 
+              transparent 0%, 
+              ${hexToRgba(lightColor, beam.opacity * 0.15)} 20%,
+              ${hexToRgba(lightColor, beam.opacity)} 50%,
+              ${hexToRgba(lightColor, beam.opacity * 0.15)} 80%,
+              transparent 100%
+            )`,
+            filter: `blur(${beam.blur}px)`,
+            opacity: beam.opacity,
+            animation: `beam-pulse ${4 / speed}s ease-in-out ${beam.delay}s infinite`,
+          }}
+        />
+      ))}
+      
+      {/* CSS Keyframes */}
+      <style>{`
+        @keyframes beam-pulse {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.8; }
+        }
+      `}</style>
     </div>
   );
 }
