@@ -2,35 +2,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import aiModelStudioIcon from "@/assets/icons/ai-model-studio-icon.png";
-import { Suspense, lazy, useState, useEffect } from "react";
-
-const Prism = lazy(() => import("@/components/Prism"));
+import { useState, useEffect } from "react";
+import Beams from "@/components/ui/beams";
 
 interface HeroSectionProps {
   onCtaClick: () => void;
 }
 
 const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
-  const [prismScale, setPrismScale] = useState(2);
   const [roleIndex, setRoleIndex] = useState(0);
   const roles = ["Owner", "Designer"];
-
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-      if (width < 640) {
-        setPrismScale(1.2);
-      } else if (width < 1024) {
-        setPrismScale(1.6);
-      } else {
-        setPrismScale(2);
-      }
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   // Rotating text animation
   useEffect(() => {
@@ -52,24 +33,18 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
       id="hero"
       className="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-6"
     >
-      {/* Prism Background */}
-      <div className="absolute inset-0 z-0 pointer-events-none bg-background">
-        <Suspense
-          fallback={
-            <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-background to-background" />
-          }
-        >
-          <Prism
-            animationType="rotate"
-            timeScale={0.4}
-            height={4}
-            baseWidth={5}
-            scale={prismScale}
-            hueShift={20}
-            glow={1}
-            bloom={1}
-          />
-        </Suspense>
+      {/* Beams Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none bg-background overflow-hidden">
+        <Beams
+          beamWidth={2}
+          beamHeight={15}
+          beamNumber={12}
+          lightColor="#ffffff"
+          speed={2}
+          noiseIntensity={1.75}
+          scale={0.2}
+          rotation={0}
+        />
         <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-background to-transparent" />
       </div>
       <div className="absolute inset-0 z-[1] bg-background/50 pointer-events-none" />
