@@ -1,30 +1,30 @@
 import { motion } from "framer-motion";
 
 // Import portfolio images
-import campaignImg from "@/assets/portfolio/model-alley-streetwear.png";
-import lifestyleImg from "@/assets/portfolio/model-rooftop-hoodie.png";
-import lookbookImg from "@/assets/portfolio/model-studio-fisheye.png";
-import editorialImg from "@/assets/portfolio/model-silver-basquiat.png";
+import cleanCatalogImg from "@/assets/portfolio/preset-clean-catalog.png";
+import feedIgImg from "@/assets/portfolio/preset-feed-ig.png";
+import camera360Img from "@/assets/portfolio/preset-360-camera.png";
+import lookbookImg from "@/assets/portfolio/preset-lookbook.png";
 
 const presets = [
   {
-    image: campaignImg,
+    image: cleanCatalogImg,
     name: "Clean Catalog",
     description: "studio white, classic look",
   },
   {
-    image: lifestyleImg,
-    name: "IG Lookbook",
+    image: feedIgImg,
+    name: "Feed IG",
     description: "lifestyle polish",
   },
   {
-    image: lookbookImg,
-    name: "Campaign Edge",
+    image: camera360Img,
+    name: "360 Camera",
     description: "high-impact visuals",
   },
   {
-    image: editorialImg,
-    name: "Detail Focus",
+    image: lookbookImg,
+    name: "Lookbook",
     description: "fabric & cut highlight",
   },
 ];
