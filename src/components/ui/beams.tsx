@@ -71,7 +71,7 @@ export default function Beams({
 
       gsap.to(beam, {
         y: "140%",
-        opacity: 0.6 + Math.random() * 0.4,
+        opacity: 0.7 + Math.random() * 0.3,
         duration: duration,
         delay: delay,
         repeat: -1,
@@ -85,7 +85,7 @@ export default function Beams({
 
       // Opacity pulsing
       gsap.to(beam, {
-        opacity: 0.2 + Math.random() * 0.3,
+        opacity: 0.4 + Math.random() * 0.4,
         duration: 1 + Math.random(),
         repeat: -1,
         yoyo: true,
