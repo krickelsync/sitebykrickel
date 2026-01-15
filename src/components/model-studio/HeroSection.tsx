@@ -36,13 +36,13 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
       {/* Beams Background */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-background overflow-hidden">
         <Beams
-          beamWidth={3}
-          beamHeight={25}
-          beamNumber={15}
-          lightColor="#d4ff00"
-          speed={1.5}
-          noiseIntensity={2}
-          scale={1}
+          beamWidth={2}
+          beamHeight={15}
+          beamNumber={12}
+          lightColor="#ffffff"
+          speed={2}
+          noiseIntensity={1.75}
+          scale={0.2}
           rotation={0}
         />
         <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-background to-transparent" />

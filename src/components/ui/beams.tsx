@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 interface BeamsProps {
   beamWidth?: number;
@@ -26,88 +26,144 @@ export default function Beams({
   rotation = 0,
   className = "",
 }: BeamsProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const beamsRef = useRef<HTMLDivElement[]>([]);
+  const containerRef = useRef<SVGSVGElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 1920, height: 1080 });
 
   useEffect(() => {
-    if (!containerRef.current) return;
-
-    const container = containerRef.current;
-    const beams: HTMLDivElement[] = [];
-
-    // Clear existing beams
-    container.innerHTML = "";
-    beamsRef.current = [];
-
-    // Create beams
-    for (let i = 0; i < beamNumber; i++) {
-      const beam = document.createElement("div");
-      beam.style.position = "absolute";
-      beam.style.width = `${beamWidth}px`;
-      beam.style.height = `${beamHeight}%`;
-      beam.style.background = `linear-gradient(180deg, ${lightColor}00 0%, ${lightColor}40 20%, ${lightColor}80 50%, ${lightColor}40 80%, ${lightColor}00 100%)`;
-      beam.style.left = `${(i / beamNumber) * 100}%`;
-      beam.style.top = "-20%";
-      beam.style.opacity = "0";
-      beam.style.filter = `blur(${beamWidth * 0.5}px)`;
-      beam.style.transform = `rotate(${rotation}deg) scaleX(${scale})`;
-      beam.style.transformOrigin = "top center";
-      beam.style.willChange = "transform, opacity";
-      
-      container.appendChild(beam);
-      beams.push(beam);
-      beamsRef.current.push(beam);
-    }
-
-    // Animate beams
-    beams.forEach((beam, index) => {
-      const delay = (index / beamNumber) * (2 / speed);
-      const duration = 3 / speed;
-      const randomOffset = Math.random() * noiseIntensity * 10;
-
-      gsap.set(beam, {
-        x: randomOffset,
-      });
-
-      gsap.to(beam, {
-        y: "140%",
-        opacity: 0.7 + Math.random() * 0.3,
-        duration: duration,
-        delay: delay,
-        repeat: -1,
-        ease: "none",
-        onRepeat: () => {
-          gsap.set(beam, {
-            x: (Math.random() - 0.5) * noiseIntensity * 20,
-          });
-        },
-      });
-
-      // Opacity pulsing
-      gsap.to(beam, {
-        opacity: 0.4 + Math.random() * 0.4,
-        duration: 1 + Math.random(),
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        delay: Math.random() * 2,
-      });
-    });
-
-    return () => {
-      beams.forEach((beam) => {
-        gsap.killTweensOf(beam);
-      });
+    const updateDimensions = () => {
+      if (containerRef.current?.parentElement) {
+        setDimensions({
+          width: containerRef.current.parentElement.offsetWidth || 1920,
+          height: containerRef.current.parentElement.offsetHeight || 1080,
+        });
+      }
     };
-  }, [beamWidth, beamHeight, beamNumber, lightColor, speed, noiseIntensity, scale, rotation]);
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+  // Generate curved beam paths
+  const generatePaths = () => {
+    const paths: string[] = [];
+    const { width, height } = dimensions;
+    
+    for (let i = 0; i < beamNumber; i++) {
+      const startX = (width / beamNumber) * i + (Math.random() - 0.5) * noiseIntensity * 50;
+      const startY = -height * 0.2;
+      const controlX1 = startX + (Math.random() - 0.5) * noiseIntensity * 100;
+      const controlY1 = height * 0.3;
+      const controlX2 = startX + (Math.random() - 0.5) * noiseIntensity * 100;
+      const controlY2 = height * 0.7;
+      const endX = startX + (Math.random() - 0.5) * noiseIntensity * 80;
+      const endY = height * 1.2;
+      
+      paths.push(`M${startX} ${startY} C${controlX1} ${controlY1}, ${controlX2} ${controlY2}, ${endX} ${endY}`);
+    }
+    return paths;
+  };
+
+  const paths = generatePaths();
+  const animationDuration = 3 / speed;
 
   return (
-    <div
-      ref={containerRef}
+    <div 
       className={`absolute inset-0 overflow-hidden ${className}`}
-      style={{
-        transform: `rotate(${rotation}deg)`,
-      }}
-    />
+      style={{ transform: `rotate(${rotation}deg) scale(${scale > 0.5 ? 1 : scale * 2 + 0.5})` }}
+    >
+      <svg
+        ref={containerRef}
+        className="w-full h-full"
+        viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+        preserveAspectRatio="xMidYMid slice"
+        fill="none"
+      >
+        <defs>
+          {paths.map((_, index) => (
+            <motion.linearGradient
+              key={`gradient-${index}`}
+              id={`beam-gradient-${index}`}
+              gradientUnits="userSpaceOnUse"
+              initial={{ x1: 0, y1: 0, x2: 0, y2: dimensions.height * 0.3 }}
+              animate={{
+                x1: [0, 0, 0],
+                y1: [-dimensions.height * 0.2, dimensions.height * 0.5, dimensions.height * 1.2],
+                x2: [0, 0, 0],
+                y2: [dimensions.height * 0.1, dimensions.height * 0.8, dimensions.height * 1.5],
+              }}
+              transition={{
+                duration: animationDuration + (Math.random() * 0.5),
+                delay: (index / beamNumber) * animationDuration * 0.5,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            >
+              <stop offset="0%" stopColor={lightColor} stopOpacity="0" />
+              <stop offset="30%" stopColor={lightColor} stopOpacity="0.6" />
+              <stop offset="50%" stopColor={lightColor} stopOpacity="1" />
+              <stop offset="70%" stopColor={lightColor} stopOpacity="0.6" />
+              <stop offset="100%" stopColor={lightColor} stopOpacity="0" />
+            </motion.linearGradient>
+          ))}
+        </defs>
+
+        {/* Glow layer */}
+        <g filter="url(#beam-glow)">
+          {paths.map((path, index) => (
+            <motion.path
+              key={`glow-${index}`}
+              d={path}
+              stroke={`url(#beam-gradient-${index})`}
+              strokeWidth={beamWidth * beamHeight * 0.3}
+              strokeLinecap="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ 
+                pathLength: [0, 0.6, 0],
+                opacity: [0, 0.3, 0],
+              }}
+              transition={{
+                duration: animationDuration + (Math.random() * 0.5),
+                delay: (index / beamNumber) * animationDuration * 0.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </g>
+
+        {/* Core beams */}
+        {paths.map((path, index) => (
+          <motion.path
+            key={`beam-${index}`}
+            d={path}
+            stroke={`url(#beam-gradient-${index})`}
+            strokeWidth={beamWidth}
+            strokeLinecap="round"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ 
+              pathLength: [0, 0.5, 0],
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration: animationDuration + (Math.random() * 0.5),
+              delay: (index / beamNumber) * animationDuration * 0.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+
+        {/* Blur filter for glow */}
+        <defs>
+          <filter id="beam-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation={beamWidth * 2} result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+      </svg>
+    </div>
   );
 }
