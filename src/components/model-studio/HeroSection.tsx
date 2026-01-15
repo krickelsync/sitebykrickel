@@ -43,7 +43,7 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
           }}
         >
           <Beams
-            beamWidth={1.5}
+            beamWidth={2}
             beamHeight={15}
             beamNumber={12}
             lightColor="#ffffff"
