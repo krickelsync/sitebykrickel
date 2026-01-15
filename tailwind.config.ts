@@ -95,6 +95,10 @@ export default {
           "0%": { transform: "translateY(0)" },
           "100%": { transform: "translateY(-50%)" },
         },
+        "diagonal-shimmer": {
+          "0%": { backgroundPosition: "200% 200%" },
+          "100%": { backgroundPosition: "-100% -100%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -105,6 +109,7 @@ export default {
         "scale-in": "scale-in 0.5s ease-out",
         marquee: "marquee 20s linear infinite",
         "marquee-vertical": "marquee-vertical 30s linear infinite",
+        "diagonal-shimmer": "diagonal-shimmer 3s ease-in-out infinite",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
