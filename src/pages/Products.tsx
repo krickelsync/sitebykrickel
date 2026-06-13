@@ -3,26 +3,14 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/products/ProductCard";
 
-const products = [
-  {
-    title: "AI Product Studio",
-    description:
-      "Generate clean, catalog-ready product visuals without traditional photoshoots.",
-    price: 70,
-    originalPrice: 100,
-    image: "/placeholder.svg",
-    href: "/products/ai-product-studio",
-  },
-  {
-    title: "AI Model Studio",
-    description:
-      "Create campaign and lookbook visuals using AI-generated fashion models.",
-    price: 70,
-    originalPrice: 100,
-    image: "/placeholder.svg",
-    href: "/products/ai-model-studio",
-  },
-];
+const products: Array<{
+  title: string;
+  description: string;
+  price: number;
+  originalPrice: number;
+  image: string;
+  href: string;
+}> = [];
 
 const Products = () => {
   return (
@@ -56,15 +44,21 @@ const Products = () => {
           </motion.div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {products.map((product, index) => (
-              <ProductCard
-                key={product.title}
-                {...product}
-                index={index}
-              />
-            ))}
-          </div>
+          {products.length === 0 ? (
+            <p className="text-center text-muted-foreground font-mono">
+              New products coming soon.
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {products.map((product, index) => (
+                <ProductCard
+                  key={product.title}
+                  {...product}
+                  index={index}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </main>
 
