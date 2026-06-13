@@ -1,6 +1,5 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { useEffect } from "react";
 
 export type DesignSize = 'small' | 'medium' | 'large' | 'wide' | 'tall';
 export type DesignCategory = 'Logo' | 'Clothing' | 'Packaging';
@@ -17,8 +16,6 @@ export interface DesignItem {
 }
 
 export const useDesignPortfolio = (category?: string) => {
-  const queryClient = useQueryClient();
-
   const query = useQuery({
     queryKey: ['design-portfolio', category],
     queryFn: async () => {
@@ -36,28 +33,6 @@ export const useDesignPortfolio = (category?: string) => {
       return data as DesignItem[];
     }
   });
-
-  // Realtime subscription
-  useEffect(() => {
-    const channel = supabase
-      .channel('design-portfolio-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'design_portfolio'
-        },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['design-portfolio'] });
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [queryClient]);
 
   return query;
 };
