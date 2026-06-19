@@ -5,31 +5,36 @@ const MusicPlayer = () => {
   const { isPlaying, togglePlay } = useMusicPlayer();
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-4 h-14 px-4 rounded-full glass border border-white/10 shadow-2xl">
+    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-4 h-14 px-4 rounded-full glass border border-border shadow-2xl">
       <div 
-        className={`w-10 h-10 rounded-full overflow-hidden border border-white/20 ${isPlaying ? 'animate-spin' : ''}`}
+        className={`w-10 h-10 rounded-full overflow-hidden border border-border ${isPlaying ? 'animate-spin' : ''}`}
         style={{ animationDuration: '3s' }}
+        aria-hidden="true"
       >
         <img 
           src="https://pgppgdlkoblmpqdyfxfc.supabase.co/storage/v1/object/public/logo//528284001_17883276201357771_6980898582265939174_n.jpg" 
-          alt="Album cover"
+          alt=""
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover" 
         />
       </div>
       <button 
         onClick={togglePlay} 
+        aria-label={isPlaying ? 'Pause music' : 'Play music'}
+        aria-pressed={isPlaying}
         className={`flex items-center gap-2 text-xs font-bold tracking-widest uppercase transition-colors ${
-          isPlaying ? 'text-[#DFFF00]' : 'text-white/80 hover:text-white'
+          isPlaying ? 'text-primary' : 'text-foreground/80 hover:text-foreground'
         }`}
       >
         {isPlaying ? (
           <>
-            <Pause className="w-4 h-4" />
+            <Pause className="w-4 h-4" aria-hidden="true" />
             <span className="hidden sm:inline">PAUSE</span>
           </>
         ) : (
           <>
-            <Play className="w-4 h-4" />
+            <Play className="w-4 h-4" aria-hidden="true" />
             <span className="hidden sm:inline">PLAY</span>
           </>
         )}

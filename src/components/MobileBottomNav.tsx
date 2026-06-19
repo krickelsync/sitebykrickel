@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Home, Tag, Briefcase, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -15,19 +15,19 @@ const MobileBottomNav = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(true);
-  const [lastY, setLastY] = useState(0);
+  const lastY = useRef(0);
 
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
       if (y < 80) setVisible(true);
-      else if (y > lastY + 8) setVisible(false);
-      else if (y < lastY - 8) setVisible(true);
-      setLastY(y);
+      else if (y > lastY.current + 8) setVisible(false);
+      else if (y < lastY.current - 8) setVisible(true);
+      lastY.current = y;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [lastY]);
+  }, []);
 
   const isActive = (href: string) => {
     if (href === "/") return location.pathname === "/" && !location.hash;
