@@ -54,7 +54,7 @@ const Features = () => {
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
-              <motion.div
+              <motion.article
                 key={index}
                 variants={fadeUpLg}
                 className={`group relative glass-card p-6 md:p-8 hover:border-primary/30 transition-all duration-500 ${
@@ -67,7 +67,7 @@ const Features = () => {
                     ? "bg-primary text-primary-foreground" 
                     : "bg-muted text-foreground"
                 }`}>
-                  <Icon size={24} />
+                  <Icon size={24} aria-hidden="true" />
                 </div>
 
                 {/* Content */}
@@ -79,10 +79,10 @@ const Features = () => {
                 </p>
 
                 {/* Hover Glow Effect */}
-                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <div aria-hidden="true" className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
                   <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 to-transparent" />
                 </div>
-              </motion.div>
+              </motion.article>
             );
           })}
         </motion.div>

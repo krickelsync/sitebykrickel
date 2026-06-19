@@ -247,6 +247,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
+                  aria-current={isActive(link.href) ? "page" : undefined}
                   className={cn(
                     "font-mono text-sm transition-all duration-400 ease-out hover-lift relative cursor-pointer",
                     isActive(link.href) 
@@ -260,6 +261,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
                 <Link
                   key={link.name}
                   to={link.href}
+                  aria-current={isActive(link.href) ? "page" : undefined}
                   className={cn(
                     "font-mono text-sm transition-all duration-400 ease-out hover-lift relative",
                     isActive(link.href) 
@@ -299,8 +301,10 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2"
-              aria-label="Toggle menu"
+              className="p-2 min-h-11 min-w-11 inline-flex items-center justify-center"
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
+              aria-controls="mobile-nav"
             >
               <HamburgerIcon isOpen={isOpen} />
             </button>
@@ -311,6 +315,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
         <AnimatePresence>
           {isOpen && (
             <motion.div
+              id="mobile-nav"
               initial={{ opacity: 0, height: 0, y: -20 }}
               animate={{
                 opacity: 1,
