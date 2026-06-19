@@ -68,8 +68,8 @@ const VelocityText = () => {
     <>
       {Array(6).fill(null).map((_, i) => (
         <span key={i}>
-          <span className="text-white">TRUSTED BY 1000+ STORES</span>
-          <span className="text-gray-500 mx-3">✦</span>
+          <span className="text-foreground">TRUSTED BY 1000+ STORES</span>
+          <span className="text-primary mx-3">✦</span>
         </span>
       ))}
     </>
@@ -79,8 +79,8 @@ const VelocityText = () => {
     <>
       {Array(6).fill(null).map((_, i) => (
         <span key={i}>
-          <span className="text-[#CCFF00] drop-shadow-[0_0_10px_rgba(204,255,0,0.7)]">PRICE CAN CHANGE ANYTIME!</span>
-          <span className="text-gray-500 mx-3">✦</span>
+          <span className="text-primary glow-text">PRICE CAN CHANGE ANYTIME!</span>
+          <span className="text-muted-foreground mx-3">✦</span>
         </span>
       ))}
     </>
