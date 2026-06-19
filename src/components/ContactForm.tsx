@@ -6,6 +6,7 @@ import { z } from "zod";
 import { Send, Loader2, CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { playSuccess } from "@/lib/sound";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
@@ -33,14 +34,22 @@ const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.functions.invoke("send-contact-email", {
-        body: data,
+      // Persist lead first (anyone can insert per RLS)
+      const { error: insertError } = await supabase.from("leads").insert({
+        name: data.name,
+        email: data.email,
+        message: data.message,
       });
+      if (insertError) throw insertError;
 
-      if (error) throw error;
+      // Fire-and-forget email notification (don't block UX if it fails)
+      supabase.functions
+        .invoke("send-contact-email", { body: data })
+        .catch((err) => console.warn("Email notification failed:", err));
 
       setIsSuccess(true);
       reset();
+      playSuccess();
       toast({
         title: "Message sent! ✨",
         description: "Thank you for reaching out. I'll get back to you soon!",
