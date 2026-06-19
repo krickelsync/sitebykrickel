@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ArrowRight, Check, Eye } from "lucide-react";
-import { lazy, Suspense, useState, useEffect } from "react";
+import { lazy, Suspense, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { scrollToId } from "@/lib/scroll";
 import { useMagnetic } from "@/hooks/useMagnetic";
@@ -11,6 +11,15 @@ const Prism = lazy(() => import("./Prism"));
 const Hero = () => {
   const [prismScale, setPrismScale] = useState(typeof window !== 'undefined' && window.innerWidth < 768 ? 1.8 : 3);
   const magneticRef = useMagnetic<HTMLAnchorElement>(0.25);
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const headlineY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -120]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.6, 0]);
+  const bgY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 80]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -20,9 +29,9 @@ const Hero = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return <section aria-labelledby="hero-heading" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20 pb-24">
+  return <section ref={sectionRef} aria-labelledby="hero-heading" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20 pb-24">
       {/* Prism Background Effect - z-index 0 */}
-      <div className="absolute inset-0 z-0 pointer-events-none bg-background">
+      <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 pointer-events-none bg-background">
         <Suspense fallback={<div className="w-full h-full bg-gradient-to-br from-primary/10 via-background to-background" />}>
           <Prism 
             animationType="rotate"
@@ -41,12 +50,24 @@ const Hero = () => {
         </Suspense>
         {/* Fade overlay at the bottom */}
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent z-[1]" />
-      </div>
+      </motion.div>
 
       {/* Dark Overlay for text readability - z-index 1 */}
       <div className="absolute inset-0 z-[1] bg-background/50 pointer-events-none" />
 
-      <div className="container relative z-10 px-4">
+      {/* Kinetic grid overlay */}
+      <div aria-hidden className="absolute inset-0 z-[2] pointer-events-none opacity-[0.08] hero-grid-overlay" />
+      {/* Grain noise */}
+      <div aria-hidden className="absolute inset-0 z-[2] pointer-events-none opacity-[0.06] hero-noise mix-blend-overlay" />
+      {/* Vertical scroll label (desktop) */}
+      <div aria-hidden className="hidden lg:flex absolute right-6 bottom-32 z-[3] flex-col items-end gap-2 pointer-events-none">
+        <div className="h-24 w-px bg-gradient-to-b from-primary to-transparent" />
+        <span className="font-mono text-primary text-[10px] tracking-widest uppercase" style={{ writingMode: "vertical-rl" }}>
+          Scroll To Explore
+        </span>
+      </div>
+
+      <motion.div style={{ y: headlineY, opacity: contentOpacity }} className="container relative z-10 px-4">
         <div className="max-w-5xl mx-auto text-center">
           {/* Eyebrow */}
           <motion.div initial={{
@@ -68,7 +89,17 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* Main Headline - Simplified on mobile */}
+          {/* Main Headline with floating accent */}
+          <div className="relative inline-block">
+            <motion.span
+              initial={{ opacity: 0, scale: 0.6, rotate: 0 }}
+              animate={{ opacity: 1, scale: 1, rotate: 12 }}
+              transition={{ delay: 1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              aria-hidden
+              className="hidden md:inline-block absolute -top-4 -right-6 z-20 font-mono text-primary bg-background border border-primary/40 px-3 py-1 text-[10px] uppercase tracking-tighter backdrop-blur-md shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
+            >
+              Hyper-Fast
+            </motion.span>
           <motion.h1 initial={{
           opacity: 0,
           y: 30
@@ -92,6 +123,7 @@ const Hero = () => {
               EXPERIENCE.
             </span>
           </motion.h1>
+          </div>
 
           {/* Sub-headline */}
           <motion.p initial={{
@@ -140,6 +172,28 @@ const Hero = () => {
               <span>SHOWCASE</span>
             </Link>
           </motion.div>
+        </div>
+      </motion.div>
+
+      {/* Tilted bottom marquee ribbon */}
+      <div
+        aria-hidden
+        className="absolute bottom-16 md:bottom-20 left-0 right-0 z-[3] overflow-hidden border-y border-border/40 py-3 bg-background/40 backdrop-blur-sm pointer-events-none"
+        style={{ transform: "rotate(-1.5deg)" }}
+      >
+        <div className="flex whitespace-nowrap" style={{ animation: "hero-marquee 30s linear infinite" }}>
+          {Array.from({ length: 2 }).map((_, i) => (
+            <div key={i} className="flex shrink-0 items-center gap-10 px-6 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.4em]">
+              <span>Premium Shopify Setup</span>
+              <span className="text-primary">✦</span>
+              <span>High Conversion Architecture</span>
+              <span className="text-primary">✦</span>
+              <span>2-Day Delivery</span>
+              <span className="text-primary">✦</span>
+              <span>Siteby Krickel Studio</span>
+              <span className="text-primary">✦</span>
+            </div>
+          ))}
         </div>
       </div>
 
