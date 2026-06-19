@@ -96,7 +96,7 @@ const Hero = () => {
               animate={{ opacity: 1, scale: 1, rotate: 12 }}
               transition={{ delay: 1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               aria-hidden
-              className="hidden md:inline-block absolute -top-4 -right-6 z-20 font-mono text-primary bg-background border border-primary/40 px-3 py-1 text-[10px] uppercase tracking-tighter backdrop-blur-md shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
+              className="inline-block absolute -top-3 -right-2 md:-top-4 md:-right-6 z-20 font-mono text-primary bg-background/90 border border-primary/40 px-2 md:px-3 py-0.5 md:py-1 text-[9px] md:text-[10px] uppercase tracking-tighter backdrop-blur-md shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
             >
               Hyper-Fast
             </motion.span>
@@ -175,10 +175,10 @@ const Hero = () => {
         </div>
       </motion.div>
 
-      {/* Tilted bottom marquee ribbon */}
+      {/* Tilted bottom marquee ribbon — lifted above mobile bottom nav */}
       <div
         aria-hidden
-        className="absolute bottom-16 md:bottom-20 left-0 right-0 z-[3] overflow-hidden border-y border-border/40 py-3 bg-background/40 backdrop-blur-sm pointer-events-none"
+        className="absolute bottom-28 md:bottom-20 left-0 right-0 z-[3] overflow-hidden border-y border-border/40 py-2 md:py-3 bg-background/40 backdrop-blur-sm pointer-events-none"
         style={{ transform: "rotate(-1.5deg)" }}
       >
         <div className="flex whitespace-nowrap" style={{ animation: "hero-marquee 30s linear infinite" }}>
@@ -196,6 +196,27 @@ const Hero = () => {
           ))}
         </div>
       </div>
+
+      {/* Corner brackets — mobile premium accent */}
+      <div aria-hidden className="md:hidden absolute inset-4 z-[3] pointer-events-none">
+        <span className="absolute top-0 left-0 w-5 h-5 border-t border-l border-primary/50" />
+        <span className="absolute top-0 right-0 w-5 h-5 border-t border-r border-primary/50" />
+        <span className="absolute bottom-0 left-0 w-5 h-5 border-b border-l border-primary/50" />
+        <span className="absolute bottom-0 right-0 w-5 h-5 border-b border-r border-primary/50" />
+      </div>
+
+      {/* Animated radial pulse — mobile only */}
+      <motion.div
+        aria-hidden
+        className="md:hidden absolute inset-0 z-[2] pointer-events-none"
+        initial={{ opacity: 0.4 }}
+        animate={{ opacity: [0.4, 0.7, 0.4] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 40% at 50% 35%, hsl(var(--primary) / 0.18), transparent 70%)",
+        }}
+      />
 
       {/* Scroll Indicator */}
       <motion.div aria-hidden="true" initial={{
