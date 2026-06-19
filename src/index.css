@@ -602,3 +602,18 @@
     transform: scale(1.02) !important;
   }
 }
+
+/* Custom cursor — hide native cursor when active (desktop only) */
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor [role="button"],
+  html.has-custom-cursor input,
+  html.has-custom-cursor textarea,
+  html.has-custom-cursor select,
+  html.has-custom-cursor label {
+    cursor: none !important;
+  }
+}
