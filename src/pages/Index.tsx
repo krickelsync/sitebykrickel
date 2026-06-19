@@ -2,6 +2,8 @@ import { lazy, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
+import ScrollProgress from "@/components/ScrollProgress";
+import LandingStickyCTA from "@/components/LandingStickyCTA";
 
 // Lazy load below-the-fold components
 const Features = lazy(() => import("@/components/Features"));
@@ -20,6 +22,7 @@ const SectionLoader = () => (
 const Index = () => {
   return (
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <ScrollProgress />
       <Navbar />
       <Hero />
       <Marquee />
@@ -38,6 +41,7 @@ const Index = () => {
       <Suspense fallback={<SectionLoader />}>
         <Footer />
       </Suspense>
+      <LandingStickyCTA />
     </main>
   );
 };
