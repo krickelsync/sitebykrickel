@@ -1,45 +1,80 @@
-## Gallery White — Light Mode Premium Rebuild
+# Build Plan — Garap Pelan-Pelan, Pastiin Smua Work
 
-Mengganti light mode dari "Paper Mode" jadi **Gallery White**: pure white background, near-black ink, electric blue accent, hairline borders + soft shadows. Neon yellow di-replace total di light mode (dipertahankan hanya di dark mode sebagai brand utama).
+Garapan dibagi jadi **4 fase**. Tiap task selesai → verify via screenshot/console sebelum lanjut. Dark mode tetep matrix neon, light mode tetep Gallery White.
 
-### Palette final
+---
 
-| Token | Light (Gallery White) | Dark (tetap) |
-|---|---|---|
-| background | `#FFFFFF` / `0 0% 100%` | `#050505` |
-| surface (card) | `#FAFAFA` / `0 0% 98%` | `#0D0D0D` |
-| foreground | `#0A0A0A` / `0 0% 4%` | `#FFFFFF` |
-| muted-foreground | `#737373` / `0 0% 45%` | `#999999` |
-| primary (accent) | `#0066FF` / `218 100% 50%` electric blue | neon yellow `74 100% 50%` |
-| border | `#E5E5E5` / `0 0% 90%` | `0 0% 15%` |
-| ring | electric blue | neon yellow |
+## FASE 1 — Countdown & Trust (½ hari)
 
-### Visual rules untuk Gallery White
+**Task 1.1 — Countdown Timer**
+- Komponen `<CountdownBanner />` di atas Hero atau di Pricing.
+- Target: end of month (auto-reset tiap bulan). Format `DD : HH : MM : SS`.
+- Copy: "PROMO BULAN INI BERAKHIR DALAM" + sub "Harga naik Rp500K setelah timer habis."
+- Style: hairline border, mono digits (JetBrains), accent neon/blue per theme.
 
-- **No glow halos.** Neon text-shadow diganti subtle drop-shadow `0 1px 2px rgb(0 0 0 / 0.04)`.
-- **Hairline borders** `1px solid #E5E5E5` di semua card/glass, bukan blur tebal.
-- **Cards**: solid `bg-card` + 1px border + `shadow-sm`, no backdrop-blur in light.
-- **Buttons**: primary jadi solid blue dengan hover blue-700, secondary jadi ghost dengan border.
-- **Gold luxury accent** tetep gold tapi di-tone-down jadi muted gold `#B8860B` di light biar gak silau.
-- **Marquee/velocity text** jadi ink hitam dengan accent blue, no neon halo.
+---
 
-### Task breakdown (kerjain satu-satu)
+## FASE 2 — Wow Factor (1–2 hari)
 
-```text
-1. Tokens — rewrite .light di src/index.css (palette + glow disable)
-2. Glass / glow utilities — pisah behavior light vs dark
-3. Hero — verify CTA, luxury gold, scroll indicator
-4. Marquee + VelocityText + CurvedLoop — accent blue, no neon
-5. Pricing card — premium variant blue accent, badge tone-down
-6. Features + FAQ + Footer — borders & muted tones cek
-7. Screenshot verify per section, polish edge cases
-```
+**Task 2.1 — Custom Cursor**
+- Dot + ring follower, blend-mode difference. Hover-grow di link/button. Disable di touch device.
 
-### Catatan
+**Task 2.2 — Page Transition (Matrix wipe)**
+- Overlay full-screen waktu route change, karakter katakana jatuh 400ms, lalu fade out. Pakai `framer-motion` + `AnimatePresence` di `App.tsx`.
 
-- Dark mode TIDAK diubah sama sekali — brand utama tetap neon matrix.
-- Memory project "Balenciaga meets Matrix" hanya berlaku untuk dark mode; light mode jadi alternate "gallery/SaaS premium" identity.
-- Setiap task gw verifikasi via Playwright screenshot sebelum lanjut ke task berikutnya.
-- Komponen sub-page (model-studio, products) di-skip dulu — fokus landing page (Hero→Footer) sesuai scope aktif.
+**Task 2.3 — Hero Video Background**
+- Looping muted video (low-bitrate webm) di belakang Hero, overlay gelap 60%. Fallback ke Prism shader yg udah ada kalau `prefers-reduced-motion` atau mobile.
 
-Setelah lo approve plan, gw mulai dari Task 1.
+**Task 2.4 — Scroll-snap Pricing Showcase**
+- Section baru: 3 paket sebagai full-viewport snap cards, scroll horizontal di desktop / vertical di mobile.
+
+**Task 2.5 — Interactive 3D Product**
+- `react-three-fiber` rotating model (re-use .glb logo or generated sneaker) di section "Apa yang kamu dapat". Drag to rotate.
+
+---
+
+## FASE 3 — Functional / Backend (2 hari)
+
+**Task 3.1 — Contact Form → Lovable Cloud**
+- Table `leads (id, name, email, whatsapp, package, message, created_at)` dgn RLS (insert public, select admin only) + GRANT.
+- Form di `/contact` atau modal CTA. Validasi zod + react-hook-form. Toast sukses. Email notif lewat Resend (RESEND_API_KEY udah ada) via edge function `send-lead-notification`.
+
+**Task 3.2 — Admin Dashboard `/admin`**
+- Auth (Lovable Cloud, email+password + Google).
+- `user_roles` table + `has_role()` (pattern wajib).
+- Page list leads (table view), filter by status, mark as contacted.
+
+**Task 3.3 — Stripe Checkout**
+- Pakai `payments--recommend_payment_provider` dulu → enable Stripe seamless.
+- Edge function `create-checkout` (per paket: STARTER/PRO/ULTRA) → redirect Stripe Checkout → success page.
+
+---
+
+## FASE 4 — Polish (½ hari)
+
+**Task 4.1 — Mobile Bottom Nav**
+- Fixed bottom bar mobile only (`md:hidden`): Home / Pricing / Work / Contact. Active state pakai accent color. Hide saat scroll down, show saat scroll up.
+
+**Task 4.2 — UI Sounds**
+- Subtle clicks (button), whoosh (page transition), success (form submit). File MP3 kecil di `/public/sfx/`.
+- Toggle mute di navbar (persist localStorage). Respect `prefers-reduced-motion` → default mute.
+
+---
+
+## Execution Rules
+- Satu task = satu batch edit + screenshot verify.
+- Dark mode unchanged kecuali ada element baru.
+- No hardcoded colors; pakai semantic tokens.
+- Tiap fase selesai → lapor user, baru lanjut fase berikut.
+- Total estimasi: ~4 hari kerja.
+
+---
+
+## Order of Work
+1. Task 1.1 Countdown
+2. Task 4.1 Mobile bottom nav (quick win, dipake di semua test berikutnya)
+3. Task 2.1 → 2.2 → 2.3 → 2.4 → 2.5
+4. Task 3.1 → 3.2 → 3.3
+5. Task 4.2 Sound design (terakhir biar ga ganggu dev)
+
+Approve plan → gw mulai dari Task 1.1.
