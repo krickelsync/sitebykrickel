@@ -15,6 +15,7 @@ import CustomCursor from "./components/CustomCursor";
 import PageTransition from "./components/PageTransition";
 import MobileBottomNav from "./components/MobileBottomNav";
 import SoundToggle from "./components/SoundToggle";
+import SmoothScroll from "./components/SmoothScroll";
 import { useEffect } from "react";
 import { installGlobalClickSound } from "@/lib/sound";
 
@@ -26,6 +27,7 @@ const AppInner = () => {
   }, []);
   return (
     <>
+      <SmoothScroll />
       <CustomCursor />
       <PageTransition />
       <Routes>
