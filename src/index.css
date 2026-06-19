@@ -74,15 +74,45 @@
 
 /* Light mode with CSS invert filter */
 .light {
-  filter: invert(1) hue-rotate(180deg);
-}
+  /* Paper Mode — cream paper + ink black + neon accent (editorial / zine) */
+  --background: 40 30% 94%;
+  --foreground: 0 0% 8%;
 
-/* Keep images/videos normal (double invert = original) */
-.light img,
-.light video,
-.light canvas,
-.light [data-no-invert] {
-  filter: invert(1) hue-rotate(180deg);
+  --card: 40 25% 97%;
+  --card-foreground: 0 0% 8%;
+
+  --popover: 40 25% 97%;
+  --popover-foreground: 0 0% 8%;
+
+  /* Neon accent slightly darkened so it stays legible on cream */
+  --primary: 74 90% 38%;
+  --primary-foreground: 0 0% 0%;
+
+  --secondary: 40 20% 88%;
+  --secondary-foreground: 0 0% 8%;
+
+  --muted: 40 15% 85%;
+  --muted-foreground: 0 0% 35%;
+
+  --accent: 74 90% 38%;
+  --accent-foreground: 0 0% 0%;
+
+  --destructive: 0 72% 45%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 0 0% 12% / 0.12;
+  --input: 0 0% 12% / 0.12;
+  --ring: 74 90% 38%;
+
+  /* Glass + glow re-tuned for light surfaces */
+  --glass-bg: 0 0% 0% / 0.04;
+  --glass-border: 0 0% 0% / 0.1;
+  --glow-green: 74 90% 38%;
+  --glow-intensity: 0.15;
+
+  --gold: 38 80% 42%;
+  --gold-foreground: 0 0% 100%;
+  --success: 142 65% 35%;
 }
 
 @layer base {
