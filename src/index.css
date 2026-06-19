@@ -170,47 +170,69 @@
   }
 
   /* ============================================== */
-  /* PAPER MODE — light theme overrides             */
-  /* Cream paper + ink + restrained olive accent.   */
-  /* Glow becomes a soft drop-shadow (no neon halo  */
-  /* blur — that only works on dark surfaces).      */
+  /* GALLERY WHITE — light theme overrides          */
+  /* Premium SaaS aesthetic: hairline borders +     */
+  /* soft shadows. NO neon halos.                   */
   /* ============================================== */
 
   .light .glow-text,
   .light .glow-text-mobile {
-    color: hsl(0 0% 8%);
-    text-shadow: 1px 1px 0 hsl(74 90% 38% / 0.35);
+    color: hsl(0 0% 4%);
+    text-shadow: none;
   }
 
   .light .glow-text-luxury,
   .light .glow-text-luxury-mobile {
-    color: hsl(28 75% 32%);
-    text-shadow: 1px 1px 0 hsl(38 80% 45% / 0.35);
+    color: hsl(38 75% 38%);
+    text-shadow: none;
   }
 
   .light .glow-border {
-    box-shadow: 0 1px 0 hsl(0 0% 0% / 0.06),
-                0 0 0 1px hsl(0 0% 0% / 0.08);
+    box-shadow: 0 0 0 1px hsl(0 0% 90%);
   }
 
   .light .glow-box {
-    box-shadow: 0 6px 24px -8px hsl(0 0% 0% / 0.18),
-                0 2px 6px -2px hsl(0 0% 0% / 0.1);
+    box-shadow: 0 1px 2px hsl(0 0% 0% / 0.04),
+                0 4px 12px -4px hsl(0 0% 0% / 0.08);
   }
 
   .light .hover-glow-intense:hover {
-    text-shadow: 2px 2px 0 hsl(74 90% 38% / 0.5);
+    text-shadow: none;
+    color: hsl(218 100% 50%);
   }
 
-  /* Tone text-gradient down on cream (foreground→primary→foreground
-     reads as washed-out on light bg) */
+  /* Replace foreground→primary→foreground gradient with subtle ink gradient */
   .light .text-gradient {
     background-image: linear-gradient(
       to right,
-      hsl(0 0% 8%),
-      hsl(74 60% 28%),
-      hsl(0 0% 8%)
+      hsl(0 0% 4%),
+      hsl(0 0% 30%),
+      hsl(0 0% 4%)
     );
+  }
+
+  /* Glass cards in light = solid surface + hairline border, no blur */
+  .light .glass,
+  .light .glass-card {
+    background-color: hsl(0 0% 98%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-color: hsl(0 0% 90%);
+  }
+
+  /* Premium card gradient → flat surface in light */
+  .light .premium-card {
+    background: hsl(0 0% 98%);
+    border: 1px solid hsl(0 0% 90%);
+  }
+  .light .premium-card::before {
+    display: none;
+  }
+
+  /* Shiny card decorations off in light */
+  .light .shiny-card {
+    background: hsl(0 0% 98%);
+    border: 1px solid hsl(0 0% 90%);
   }
 
   .glow-border {
