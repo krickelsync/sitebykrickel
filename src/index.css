@@ -39,6 +39,11 @@
     --glass-border: 0 0% 100% / 0.1;
     --glow-green: 74 100% 50%;
     --glow-intensity: 0.5;
+
+    /* Brand accents */
+    --gold: 45 100% 58%;
+    --gold-foreground: 0 0% 0%;
+    --success: 142 71% 45%;
   }
 
   .dark {
@@ -61,6 +66,9 @@
     --border: 0 0% 15%;
     --input: 0 0% 15%;
     --ring: 74 100% 50%;
+    --gold: 45 100% 58%;
+    --gold-foreground: 0 0% 0%;
+    --success: 142 71% 45%;
   }
 }
 

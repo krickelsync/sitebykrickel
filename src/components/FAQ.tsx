@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import SectionHeader from "./shared/SectionHeader";
 
 const faqs = [
   {
@@ -33,23 +34,11 @@ const FAQ = () => {
   return (
     <section className="py-24 md:py-32 border-t border-muted">
       <div className="container px-4">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="inline-block px-4 py-2 glass-card font-mono text-xs text-primary tracking-widest mb-6">
-            FAQ
-          </span>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight">
-            QUESTIONS?
-            <br />
-            <span className="text-primary glow-text">WE GOT ANSWERS.</span>
-          </h2>
-        </motion.div>
+        <SectionHeader
+          eyebrow="FAQ"
+          title="QUESTIONS?"
+          accent="WE GOT ANSWERS."
+        />
 
         {/* FAQ Accordion */}
         <motion.div
