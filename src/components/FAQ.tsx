@@ -32,7 +32,7 @@ const faqs = [
 
 const FAQ = () => {
   return (
-    <section className="py-24 md:py-32 border-t border-muted">
+    <section id="faq" aria-labelledby="faq-heading" className="py-24 md:py-32 border-t border-muted">
       <div className="container px-4">
         <SectionHeader
           eyebrow="FAQ"

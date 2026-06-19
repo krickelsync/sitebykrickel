@@ -167,15 +167,15 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
               Get in Touch
             </h3>
             <div className="space-y-3">
-              <a href="mailto:contact@sitebykrickel.com" className="flex items-center gap-3 font-mono text-sm text-muted-foreground hover:text-foreground transition-colors group">
+              <a href="mailto:contact@sitebykrickel.com" aria-label="Email contact@sitebykrickel.com" className="flex items-center gap-3 font-mono text-sm text-muted-foreground hover:text-foreground transition-colors group">
                 <div className="w-10 h-10 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
-                  <Mail size={16} />
+                  <Mail size={16} aria-hidden="true" />
                 </div>
                 <span>contact@sitebykrickel.com</span>
               </a>
-              <a href="https://www.instagram.com/krickel.sync/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 font-mono text-sm text-muted-foreground hover:text-foreground transition-colors group">
+              <a href="https://www.instagram.com/krickel.sync/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @krickel.sync (opens in new tab)" className="flex items-center gap-3 font-mono text-sm text-muted-foreground hover:text-foreground transition-colors group">
                 <div className="w-10 h-10 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
-                  <Instagram size={16} />
+                  <Instagram size={16} aria-hidden="true" />
                 </div>
                 <span>@krickel.sync</span>
               </a>
