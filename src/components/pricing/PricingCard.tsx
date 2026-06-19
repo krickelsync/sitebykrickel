@@ -178,12 +178,18 @@ const PricingCard = ({
 
   return (
     <div className="relative">
-      <div className="absolute -top-2.5 md:-top-3 left-1/2 -translate-x-1/2 z-20">
-        <span className="inline-flex items-center gap-1 md:gap-1.5 px-2 md:px-4 py-0.5 md:py-1 bg-primary text-primary-foreground font-mono text-[8px] md:text-[10px] uppercase tracking-wider rounded-full shadow-lg">
-          <AlertTriangle className="w-2.5 h-2.5 md:w-3 md:h-3" />
+      <motion.div
+        initial={{ opacity: 0, y: -8, scale: 0.9 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4, delay: (delay ?? 0) + 0.2 }}
+        className="absolute -top-2.5 md:-top-3 left-1/2 -translate-x-1/2 z-20"
+      >
+        <span className="inline-flex items-center gap-1 md:gap-1.5 px-2 md:px-4 py-0.5 md:py-1 bg-primary text-primary-foreground font-mono text-[8px] md:text-[10px] uppercase tracking-wider rounded-full shadow-lg animate-pulse-glow">
+          <AlertTriangle className="w-2.5 h-2.5 md:w-3 md:h-3" aria-hidden="true" />
           {badge}
         </span>
-      </div>
+      </motion.div>
       {card}
     </div>
   );

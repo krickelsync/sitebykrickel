@@ -3,12 +3,14 @@ import { ArrowRight, Check, Eye } from "lucide-react";
 import { lazy, Suspense, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { scrollToId } from "@/lib/scroll";
+import { useMagnetic } from "@/hooks/useMagnetic";
 
 // Lazy load heavy Prism component
 const Prism = lazy(() => import("./Prism"));
 
 const Hero = () => {
   const [prismScale, setPrismScale] = useState(typeof window !== 'undefined' && window.innerWidth < 768 ? 1.8 : 3);
+  const magneticRef = useMagnetic<HTMLAnchorElement>(0.25);
 
   useEffect(() => {
     const handleResize = () => {
@@ -119,13 +121,14 @@ const Hero = () => {
           delay: 0.7
         }} className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
+              ref={magneticRef}
               href="#pricing"
               aria-label="View pricing packages"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToId('pricing');
               }}
-              className="group relative inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 font-mono text-sm font-bold uppercase tracking-wider overflow-hidden transition-all duration-300 hover:glow-box cursor-pointer"
+              className="group relative inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 font-mono text-sm font-bold uppercase tracking-wider overflow-hidden hover:glow-box cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background will-change-transform"
             >
               <span className="relative z-10">View Packages</span>
               <ArrowRight size={18} aria-hidden="true" className="relative z-10 group-hover:translate-x-1 transition-transform" />
