@@ -74,45 +74,46 @@
 
 /* Light mode with CSS invert filter */
 .light {
-  /* Paper Mode — cream paper + ink black + neon accent (editorial / zine) */
-  --background: 40 30% 94%;
-  --foreground: 0 0% 8%;
+    /* Gallery White — premium SaaS aesthetic (Linear / Vercel / Apple) */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 4%;
 
-  --card: 40 25% 97%;
-  --card-foreground: 0 0% 8%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 4%;
 
-  --popover: 40 25% 97%;
-  --popover-foreground: 0 0% 8%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 4%;
 
-  /* Neon accent slightly darkened so it stays legible on cream */
-  --primary: 74 90% 38%;
-  --primary-foreground: 0 0% 0%;
+    /* Electric blue accent — no more neon yellow in light mode */
+    --primary: 218 100% 50%;
+    --primary-foreground: 0 0% 100%;
 
-  --secondary: 40 20% 88%;
-  --secondary-foreground: 0 0% 8%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 4%;
 
-  --muted: 40 15% 85%;
-  --muted-foreground: 0 0% 35%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-  --accent: 74 90% 38%;
-  --accent-foreground: 0 0% 0%;
+    --accent: 218 100% 50%;
+    --accent-foreground: 0 0% 100%;
 
-  --destructive: 0 72% 45%;
-  --destructive-foreground: 0 0% 100%;
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-  --border: 0 0% 12% / 0.12;
-  --input: 0 0% 12% / 0.12;
-  --ring: 74 90% 38%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 218 100% 50%;
 
-  /* Glass + glow re-tuned for light surfaces */
-  --glass-bg: 0 0% 0% / 0.04;
-  --glass-border: 0 0% 0% / 0.1;
-  --glow-green: 74 90% 38%;
-  --glow-intensity: 0.15;
+    /* Glass / glow — hairline + soft shadow, no halo */
+    --glass-bg: 0 0% 0% / 0.02;
+    --glass-border: 0 0% 0% / 0.08;
+    --glow-green: 218 100% 50%;
+    --glow-intensity: 0;
 
-  --gold: 38 80% 42%;
-  --gold-foreground: 0 0% 100%;
-  --success: 142 65% 35%;
+    /* Gold tone-down so it doesn't glare on white */
+    --gold: 38 75% 38%;
+    --gold-foreground: 0 0% 100%;
+    --success: 142 60% 38%;
 }
 
 @layer base {
@@ -169,47 +170,69 @@
   }
 
   /* ============================================== */
-  /* PAPER MODE — light theme overrides             */
-  /* Cream paper + ink + restrained olive accent.   */
-  /* Glow becomes a soft drop-shadow (no neon halo  */
-  /* blur — that only works on dark surfaces).      */
+  /* GALLERY WHITE — light theme overrides          */
+  /* Premium SaaS aesthetic: hairline borders +     */
+  /* soft shadows. NO neon halos.                   */
   /* ============================================== */
 
   .light .glow-text,
   .light .glow-text-mobile {
-    color: hsl(0 0% 8%);
-    text-shadow: 1px 1px 0 hsl(74 90% 38% / 0.35);
+    color: hsl(0 0% 4%);
+    text-shadow: none;
   }
 
   .light .glow-text-luxury,
   .light .glow-text-luxury-mobile {
-    color: hsl(28 75% 32%);
-    text-shadow: 1px 1px 0 hsl(38 80% 45% / 0.35);
+    color: hsl(38 75% 38%);
+    text-shadow: none;
   }
 
   .light .glow-border {
-    box-shadow: 0 1px 0 hsl(0 0% 0% / 0.06),
-                0 0 0 1px hsl(0 0% 0% / 0.08);
+    box-shadow: 0 0 0 1px hsl(0 0% 90%);
   }
 
   .light .glow-box {
-    box-shadow: 0 6px 24px -8px hsl(0 0% 0% / 0.18),
-                0 2px 6px -2px hsl(0 0% 0% / 0.1);
+    box-shadow: 0 1px 2px hsl(0 0% 0% / 0.04),
+                0 4px 12px -4px hsl(0 0% 0% / 0.08);
   }
 
   .light .hover-glow-intense:hover {
-    text-shadow: 2px 2px 0 hsl(74 90% 38% / 0.5);
+    text-shadow: none;
+    color: hsl(218 100% 50%);
   }
 
-  /* Tone text-gradient down on cream (foreground→primary→foreground
-     reads as washed-out on light bg) */
+  /* Replace foreground→primary→foreground gradient with subtle ink gradient */
   .light .text-gradient {
     background-image: linear-gradient(
       to right,
-      hsl(0 0% 8%),
-      hsl(74 60% 28%),
-      hsl(0 0% 8%)
+      hsl(0 0% 4%),
+      hsl(0 0% 30%),
+      hsl(0 0% 4%)
     );
+  }
+
+  /* Glass cards in light = solid surface + hairline border, no blur */
+  .light .glass,
+  .light .glass-card {
+    background-color: hsl(0 0% 98%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-color: hsl(0 0% 90%);
+  }
+
+  /* Premium card gradient → flat surface in light */
+  .light .premium-card {
+    background: hsl(0 0% 98%);
+    border: 1px solid hsl(0 0% 90%);
+  }
+  .light .premium-card::before {
+    display: none;
+  }
+
+  /* Shiny card decorations off in light */
+  .light .shiny-card {
+    background: hsl(0 0% 98%);
+    border: 1px solid hsl(0 0% 90%);
   }
 
   .glow-border {

@@ -104,7 +104,11 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
         }} className="space-y-4">
             <h2 className="font-syne text-2xl md:text-3xl font-extrabold uppercase tracking-tight flex flex-col">
               <AnimatedBrandText text="SITE BY" className="text-foreground" />
-              <AnimatedBrandText text="KRICKEL" className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent" delay={0.4} />
+              <AnimatedBrandText
+                text="KRICKEL"
+                className="text-[hsl(38_75%_38%)] dark:text-transparent dark:bg-gradient-to-r dark:from-amber-300 dark:via-yellow-400 dark:to-amber-300 dark:bg-clip-text"
+                delay={0.4}
+              />
             </h2>
             <p className="font-mono text-sm text-muted-foreground max-w-xs">
               Creative Agency. Graphic & Web Design for Clothing Brands & any business ready to stand out.
