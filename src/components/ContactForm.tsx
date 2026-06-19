@@ -93,7 +93,7 @@ const ContactForm = () => {
             className="w-full bg-muted/30 border border-white/5 rounded-lg px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-white/20 focus:bg-muted/40 transition-all"
           />
           {errors.name && (
-            <p className="text-xs text-red-400 font-mono">{errors.name.message}</p>
+            <p className="text-xs text-destructive font-mono">{errors.name.message}</p>
           )}
         </div>
 
@@ -110,7 +110,7 @@ const ContactForm = () => {
             className="w-full bg-muted/30 border border-white/5 rounded-lg px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-white/20 focus:bg-muted/40 transition-all"
           />
           {errors.email && (
-            <p className="text-xs text-red-400 font-mono">{errors.email.message}</p>
+            <p className="text-xs text-destructive font-mono">{errors.email.message}</p>
           )}
         </div>
 
@@ -127,7 +127,7 @@ const ContactForm = () => {
             className="w-full bg-muted/30 border border-white/5 rounded-lg px-4 py-3 font-mono text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-white/20 focus:bg-muted/40 transition-all resize-none"
           />
           {errors.message && (
-            <p className="text-xs text-red-400 font-mono">{errors.message.message}</p>
+            <p className="text-xs text-destructive font-mono">{errors.message.message}</p>
           )}
         </div>
 

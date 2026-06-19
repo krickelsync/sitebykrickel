@@ -6,6 +6,7 @@ import { Sun, Moon } from "lucide-react";
 import Logo3D from "./Logo3D";
 import { cn } from "@/lib/utils";
 import { scrollToId } from "@/lib/scroll";
+import { PRIMARY_NAV, type NavLinkItem } from "@/lib/nav";
 
 // Theme Toggle with dramatic animation
 const ThemeToggle = () => {
@@ -129,11 +130,7 @@ const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => {
 };
 
 interface NavbarProps {
-  customLinks?: Array<{
-    name: string;
-    href: string;
-    external: boolean;
-  }>;
+  customLinks?: NavLinkItem[];
   ctaText?: string;
   ctaHref?: string;
   onCtaClick?: () => void;
@@ -196,33 +193,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
     }
   }, [location.pathname, location.hash]);
 
-  const defaultLinks = [{
-    name: "Home",
-    href: "/",
-    external: false
-  }, {
-    name: "About",
-    href: "/about",
-    external: false
-  }, {
-    name: "Portofolio",
-    href: "/showcase",
-    external: false
-  }, {
-    name: "Products",
-    href: "/products",
-    external: false
-  }, {
-    name: "Pricing",
-    href: "/#pricing",
-    external: false
-  }, {
-    name: "Contact",
-    href: "/about#contact",
-    external: false
-  }];
-
-  const navLinks = customLinks || defaultLinks;
+  const navLinks = customLinks ?? PRIMARY_NAV;
   const finalCtaText = ctaText || "Get Started";
   const finalCtaHref = ctaHref || "/about#contact";
   return (
