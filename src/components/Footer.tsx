@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Instagram, Mail } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { scrollToId } from "@/lib/scroll";
+import { FOOTER_QUICK_LINKS, type NavLinkItem } from "@/lib/nav";
 const AnimatedBrandText = ({
   text,
   className,
@@ -52,33 +53,11 @@ const AnimatedBrandText = ({
     </motion.span>;
 };
 interface FooterProps {
-  customQuickLinks?: Array<{
-    name: string;
-    href: string;
-  }>;
+  customQuickLinks?: NavLinkItem[];
 }
 
 const Footer = ({ customQuickLinks }: FooterProps = {}) => {
-  const location = useLocation();
-  
-  const defaultQuickLinks = [{
-    name: "Home",
-    href: "/"
-  }, {
-    name: "About",
-    href: "/about"
-  }, {
-    name: "Portofolio",
-    href: "/showcase"
-  }, {
-    name: "Pricing",
-    href: "/#pricing"
-  }, {
-    name: "Contact",
-    href: "/about#contact"
-  }];
-
-  const quickLinks = customQuickLinks || defaultQuickLinks;
+  const quickLinks = customQuickLinks ?? FOOTER_QUICK_LINKS;
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith('#')) {
