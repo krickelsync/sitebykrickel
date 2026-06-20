@@ -48,11 +48,11 @@ const PricingCard = ({
 
   const card = (
     <motion.div
-      initial={{ opacity: 0, y: 30, scale: isPremium ? 0.98 : 1 }}
+      initial={{ opacity: 1, y: 0, scale: 1 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       whileHover={isPremium ? { y: -5 } : undefined}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
+      transition={{ duration: 0.01 }}
       className={cn(
         "glass-card p-3 md:p-8 flex flex-col",
         isPremium &&
@@ -179,10 +179,10 @@ const PricingCard = ({
   return (
     <div className="relative">
       <motion.div
-        initial={{ opacity: 0, y: -8, scale: 0.9 }}
+        initial={{ opacity: 1, y: 0, scale: 1 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: (delay ?? 0) + 0.2 }}
+        transition={{ duration: 0.01 }}
         className="absolute -top-2.5 md:-top-3 left-1/2 -translate-x-1/2 z-20"
       >
         <span className="inline-flex items-center gap-1 md:gap-1.5 px-2 md:px-4 py-0.5 md:py-1 bg-primary text-primary-foreground font-mono text-[8px] md:text-[10px] uppercase tracking-wider rounded-full shadow-lg animate-pulse-glow">

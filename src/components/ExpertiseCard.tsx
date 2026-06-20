@@ -11,9 +11,9 @@ interface ExpertiseCardProps {
 const ExpertiseCard = ({ icon: Icon, title, items, delay = 0 }: ExpertiseCardProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 1, y: 0 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: delay * 0.15, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.01 }}
       viewport={{ once: true }}
       className="glass-card shiny-card p-6 group hover:border-primary/30 transition-all duration-500"
     >
@@ -30,9 +30,9 @@ const ExpertiseCard = ({ icon: Icon, title, items, delay = 0 }: ExpertiseCardPro
         {items.map((item, index) => (
           <motion.li
             key={index}
-            initial={{ opacity: 0, x: -10 }}
+            initial={{ opacity: 1, x: 0 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, delay: (delay * 0.15) + (index * 0.1) }}
+            transition={{ duration: 0.01 }}
             viewport={{ once: true }}
             className="flex items-start gap-2"
           >

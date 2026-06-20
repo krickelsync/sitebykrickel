@@ -281,7 +281,7 @@ const Showcase = () => {
           {/* Empty State */}
           {filteredTemplates.length === 0 && (
             <motion.div
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
               className="text-center py-16"
             >
@@ -297,10 +297,10 @@ const Showcase = () => {
       <section className="py-16 px-4 border-t border-border">
         <div className="container mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.01 }}
             className="text-center mb-8"
           >
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight mb-3 md:mb-4">
@@ -313,10 +313,10 @@ const Showcase = () => {
 
           {/* Design Category Filters */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.01 }}
             className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 px-2"
           >
             {designCategories.map((category) => (
