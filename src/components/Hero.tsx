@@ -176,19 +176,6 @@ const Hero = () => {
         }}
       />
 
-      {/* Scroll Indicator */}
-      <motion.div aria-hidden="true" initial={{
-      opacity: 0
-    }} animate={{
-      opacity: 1
-    }} transition={{
-      delay: 1.2
-    }} className="absolute bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-        <div className="flex flex-col items-center gap-2">
-          <span className="font-mono text-xs text-muted-foreground tracking-widest">SCROLL</span>
-          <div className="w-px h-8 md:h-10 bg-gradient-to-b from-muted-foreground to-transparent animate-scroll-line origin-top" />
-        </div>
-      </motion.div>
     </section>;
 };
 export default Hero;
