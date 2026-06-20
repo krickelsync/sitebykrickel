@@ -58,7 +58,14 @@ const MobileBottomNav = () => {
         visible ? "translate-y-0" : "translate-y-[150%]"
       )}
     >
-      <ul className="glass menu-rotating-glow rounded-full !border-transparent flex items-center gap-1 py-1.5 px-2 shadow-lg">
+      <ul
+        className="menu-rotating-glow rounded-full border-transparent flex items-center gap-1 py-1.5 px-2 shadow-lg"
+        style={{
+          background: "hsl(var(--background) / 0.25)",
+          backdropFilter: "blur(18px) saturate(160%)",
+          WebkitBackdropFilter: "blur(18px) saturate(160%)",
+        }}
+      >
         {items.map(({ name, href, icon: Icon }) => {
           const active = isActive(href);
           const content = (
