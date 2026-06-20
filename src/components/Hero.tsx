@@ -81,17 +81,8 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* Main Headline with floating accent */}
+          {/* Main Headline */}
           <div className="relative inline-block">
-            <motion.span
-              initial={{ opacity: 0, scale: 0.6, rotate: 0 }}
-              animate={{ opacity: 1, scale: 1, rotate: 12 }}
-              transition={{ delay: 1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              aria-hidden
-              className="inline-block absolute -top-3 -right-2 md:-top-4 md:-right-6 z-20 font-mono text-primary bg-background/95 border border-primary/40 px-2 md:px-3 py-0.5 md:py-1 text-[9px] md:text-[10px] uppercase tracking-tighter md:backdrop-blur-md shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
-            >
-              Hyper-Fast
-            </motion.span>
           <motion.h1
             {...fadeUpDelay(0.3, 0.8)}
             id="hero-heading"
