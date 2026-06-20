@@ -545,8 +545,8 @@
   animation: cta-shine 0.6s ease-out;
 }
 
-/* On touch devices (no hover), auto-loop the shine so the CTA still feels alive */
-@media (hover: none) {
+/* On touch devices / small screens, auto-loop the shine so the CTA still feels alive */
+@media (hover: none), (max-width: 768px) {
   .cta-shiny::before {
     animation: cta-shine 2.8s ease-in-out infinite;
     animation-delay: 1.2s;
