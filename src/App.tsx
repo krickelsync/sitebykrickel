@@ -10,14 +10,15 @@ import Showcase from "./pages/Showcase";
 import About from "./pages/About";
 import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
-import MusicPlayer from "./components/MusicPlayer";
-import CustomCursor from "./components/CustomCursor";
-import PageTransition from "./components/PageTransition";
 import MobileBottomNav from "./components/MobileBottomNav";
 import SoundToggle from "./components/SoundToggle";
 import SmoothScroll from "./components/SmoothScroll";
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { installGlobalClickSound } from "@/lib/sound";
+
+const MusicPlayer = lazy(() => import("./components/MusicPlayer"));
+const CustomCursor = lazy(() => import("./components/CustomCursor"));
+const PageTransition = lazy(() => import("./components/PageTransition"));
 
 const queryClient = new QueryClient();
 
@@ -28,8 +29,10 @@ const AppInner = () => {
   return (
     <>
       <SmoothScroll />
-      <CustomCursor />
-      <PageTransition />
+      <Suspense fallback={null}>
+        <CustomCursor />
+        <PageTransition />
+      </Suspense>
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/showcase" element={<Showcase />} />
@@ -37,7 +40,9 @@ const AppInner = () => {
         <Route path="/products" element={<Products />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <MusicPlayer />
+      <Suspense fallback={null}>
+        <MusicPlayer />
+      </Suspense>
       <MobileBottomNav />
       <SoundToggle />
     </>
