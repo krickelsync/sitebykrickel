@@ -718,6 +718,7 @@
     from var(--menu-angle),
     transparent 0deg,
     hsl(var(--primary)) 30deg,
+    hsl(0 0% 100%) 50deg,
     hsl(var(--primary)) 70deg,
     transparent 120deg,
     transparent 360deg
@@ -729,7 +730,8 @@
           mask-composite: exclude;
   animation: menu-glow-spin 4s linear infinite;
   pointer-events: none;
-  filter: drop-shadow(0 0 6px hsl(var(--primary) / 0.55));
+  filter: drop-shadow(0 0 6px hsl(var(--primary) / 0.55))
+          drop-shadow(0 0 4px hsl(0 0% 100% / 0.4));
   z-index: 2;
 }
 /* Fallback when @property unsupported — static soft outline */
