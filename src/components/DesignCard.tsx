@@ -18,10 +18,10 @@ const DesignCard = ({ design, onClick }: DesignCardProps) => {
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, scale: 0.9 }}
+      initial={{ opacity: 1, scale: 1 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.01 }}
       className={`${sizeClasses[design.size]} relative group cursor-pointer overflow-hidden rounded-xl bg-card border border-border`}
       onClick={onClick}
     >
