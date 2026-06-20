@@ -123,9 +123,9 @@ const About = () => {
             {/* Photo with Parallax */}
             <motion.div 
               style={{ y: photoY }}
-              initial={{ opacity: 0, x: -50 }} 
+              initial={{ opacity: 1, x: 0 }} 
               whileInView={{ opacity: 1, x: 0 }} 
-              transition={{ duration: 0.8 }} 
+              transition={{ duration: 0.01 }} 
               viewport={{ once: true }}
               className="relative"
             >
@@ -136,9 +136,9 @@ const About = () => {
               
               {/* Floating card */}
               <motion.div 
-                initial={{ opacity: 0, y: 20 }} 
+                initial={{ opacity: 1, y: 0 }} 
                 whileInView={{ opacity: 1, y: 0 }} 
-                transition={{ duration: 0.6, delay: 0.4 }} 
+                transition={{ duration: 0.01 }} 
                 viewport={{ once: true }} 
                 className="absolute -bottom-6 -right-6 glass-card p-4 max-w-[200px]"
               >
@@ -150,13 +150,13 @@ const About = () => {
 
             {/* Bio Text */}
             <motion.div initial={{
-            opacity: 0,
-            x: 50
+            opacity: 1,
+            x: 0
           }} whileInView={{
             opacity: 1,
             x: 0
           }} transition={{
-            duration: 0.8
+            duration: 0.01
           }} viewport={{
             once: true
           }} className="space-y-6">
@@ -176,9 +176,9 @@ const About = () => {
               {/* Working image with parallax */}
               <motion.div 
                 style={{ y: workingImageY }}
-                initial={{ opacity: 0, y: 20 }} 
+                initial={{ opacity: 1, y: 0 }} 
                 whileInView={{ opacity: 1, y: 0 }} 
-                transition={{ duration: 0.6, delay: 0.2 }} 
+                transition={{ duration: 0.01 }} 
                 viewport={{ once: true }} 
                 className="relative aspect-video overflow-hidden rounded-xl mt-8"
               >
@@ -194,13 +194,13 @@ const About = () => {
       <section className="py-20 md:py-32 bg-muted/5">
         <div className="container mx-auto px-4">
           <motion.div initial={{
-          opacity: 0,
-          y: 30
+          opacity: 1,
+          y: 0
         }} whileInView={{
           opacity: 1,
           y: 0
         }} transition={{
-          duration: 0.6
+          duration: 0.01
         }} viewport={{
           once: true
         }} className="text-center mb-16">
@@ -215,9 +215,9 @@ const About = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
             {/* Creative Skills */}
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.01 }}
               viewport={{ once: true }}
               className="glass-card shiny-card rounded-2xl p-8 hover:border-primary/30 transition-all duration-500"
             >
@@ -234,9 +234,9 @@ const About = () => {
 
             {/* Dev Stack */}
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.01 }}
               viewport={{ once: true }}
               className="glass-card shiny-card rounded-2xl p-8 hover:border-primary/30 transition-all duration-500"
             >
@@ -258,13 +258,13 @@ const About = () => {
       <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
           <motion.div initial={{
-          opacity: 0,
-          y: 30
+          opacity: 1,
+          y: 0
         }} whileInView={{
           opacity: 1,
           y: 0
         }} transition={{
-          duration: 0.6
+          duration: 0.01
         }} viewport={{
           once: true
         }} className="text-center mb-16">
@@ -286,13 +286,13 @@ const About = () => {
       <section className="py-20 md:py-32 bg-muted/5">
         <div className="container mx-auto px-4">
           <motion.div initial={{
-          opacity: 0,
-          y: 30
+          opacity: 1,
+          y: 0
         }} whileInView={{
           opacity: 1,
           y: 0
         }} transition={{
-          duration: 0.6
+          duration: 0.01
         }} viewport={{
           once: true
         }} className="text-center mb-16">
@@ -317,9 +317,9 @@ const About = () => {
         
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.01 }}
             viewport={{ once: true }}
             className="text-center mb-16"
           >
