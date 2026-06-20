@@ -552,16 +552,21 @@
 
 /* Mobile Performance Optimizations */
 @media (max-width: 768px) {
-  /* Disable heavy backdrop-blur */
+  /* Disable backdrop-blur on mobile: expensive over animated/WebGL layers */
   .glass,
-  .glass-card {
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
+  .glass-card,
+  .navbar-pill {
+    background-color: hsl(var(--background) / 0.88) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
   /* Reduce glow effects */
-  .glow-text {
-    text-shadow: 0 0 10px hsl(var(--primary) / 0.4) !important;
+  .glow-text,
+  .glow-text-mobile,
+  .glow-text-luxury,
+  .glow-text-luxury-mobile {
+    text-shadow: 0 0 8px hsl(var(--primary) / 0.25) !important;
   }
 
   .glow-border {
@@ -579,7 +584,12 @@
 
   /* Simplify hover effects */
   .hover-glow-intense:hover {
-    text-shadow: 0 0 15px hsl(var(--primary) / 0.5) !important;
+    text-shadow: none !important;
+  }
+
+  .navbar-pill::after,
+  .hero-grid-overlay {
+    animation: none !important;
   }
 
   /* Reduce premium card effects */

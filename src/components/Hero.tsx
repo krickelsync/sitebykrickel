@@ -96,7 +96,7 @@ const Hero = () => {
               animate={{ opacity: 1, scale: 1, rotate: 12 }}
               transition={{ delay: 1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               aria-hidden
-              className="inline-block absolute -top-3 -right-2 md:-top-4 md:-right-6 z-20 font-mono text-primary bg-background/90 border border-primary/40 px-2 md:px-3 py-0.5 md:py-1 text-[9px] md:text-[10px] uppercase tracking-tighter backdrop-blur-md shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
+              className="inline-block absolute -top-3 -right-2 md:-top-4 md:-right-6 z-20 font-mono text-primary bg-background/95 border border-primary/40 px-2 md:px-3 py-0.5 md:py-1 text-[9px] md:text-[10px] uppercase tracking-tighter md:backdrop-blur-md shadow-[0_0_20px_hsl(var(--primary)/0.3)]"
             >
               Hyper-Fast
             </motion.span>
@@ -178,7 +178,7 @@ const Hero = () => {
       {/* Tilted bottom marquee ribbon — lifted above mobile bottom nav */}
       <div
         aria-hidden
-        className="absolute bottom-28 md:bottom-20 left-0 right-0 z-[3] overflow-hidden border-y border-border/40 py-2 md:py-3 bg-background/40 backdrop-blur-sm pointer-events-none"
+        className="absolute bottom-28 md:bottom-20 left-0 right-0 z-[3] overflow-hidden border-y border-border/40 py-2 md:py-3 bg-background/70 md:bg-background/40 md:backdrop-blur-sm pointer-events-none"
         style={{ transform: "rotate(-1.5deg)" }}
       >
         <div className="flex whitespace-nowrap" style={{ animation: "hero-marquee 30s linear infinite" }}>
