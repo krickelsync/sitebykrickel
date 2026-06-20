@@ -751,10 +751,6 @@
 .animate-scroll-line {
   animation: scroll-line 2.2s ease-in-out infinite;
 }
-@keyframes _unused_marker {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
 .hero-grid-overlay {
   background-image: linear-gradient(hsl(var(--primary)) 1px, transparent 1px),
                     linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px);
