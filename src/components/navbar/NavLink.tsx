@@ -27,7 +27,10 @@ const NavLink = ({
       ? "font-mono text-sm px-3 py-1.5 rounded-full transition-all duration-300"
       : "font-mono text-sm px-4 py-2.5 rounded-full transition-colors block";
 
-  const activeClass = "bg-foreground text-background font-semibold";
+  const activeClass =
+    variant === "desktop"
+      ? "bg-foreground/10 text-foreground font-semibold"
+      : "bg-foreground/10 text-foreground font-semibold";
   const inactiveClass =
     variant === "desktop"
       ? "text-muted-foreground hover:text-foreground"
