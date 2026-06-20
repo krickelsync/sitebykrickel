@@ -740,6 +740,55 @@
   .menu-rotating-glow::before { display: none; }
 }
 
+/* Trusted badge — yellow/blue/white rotating shine outline */
+.badge-rotating-shine {
+  position: relative;
+  isolation: isolate;
+}
+.badge-rotating-shine::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--menu-angle),
+    transparent 0deg,
+    hsl(45 100% 60%) 30deg,
+    hsl(0 0% 100%) 50deg,
+    hsl(210 100% 65%) 70deg,
+    transparent 130deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: menu-glow-spin 5s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+.badge-shine-sweep::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(110deg, transparent 35%, hsl(0 0% 100% / 0.35) 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: badge-sweep 3.8s ease-in-out infinite;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+@keyframes badge-sweep {
+  0%   { transform: translateX(-100%); }
+  60%  { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+@supports not (background: conic-gradient(from 0deg, red, blue)) {
+  .badge-rotating-shine::before { display: none; }
+}
+
 @keyframes hero-marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
