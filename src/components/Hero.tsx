@@ -65,11 +65,19 @@ const Hero = () => {
         <div className="max-w-5xl mx-auto text-center">
           {/* Eyebrow */}
           <motion.div {...fadeUpDelay(0.2)} className="mb-8">
-            <span className="group relative inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full font-mono text-[11px] md:text-xs text-foreground tracking-[0.18em] uppercase overflow-hidden border border-primary/30 bg-gradient-to-r from-background/80 via-background/60 to-background/80 backdrop-blur-xl shadow-[0_0_24px_-6px_hsl(var(--primary)/0.55),inset_0_1px_0_0_hsl(var(--primary)/0.25)]">
-              <span aria-hidden className="pointer-events-none absolute inset-0 rounded-full opacity-60" style={{ background: "linear-gradient(120deg, transparent 30%, hsl(var(--primary) / 0.18) 50%, transparent 70%)" }} />
-              <img src={shopifyBadge} alt="Shopify" className="relative w-4 h-4 shrink-0 object-contain drop-shadow-[0_0_6px_hsl(var(--primary)/0.6)]" />
-              <span className="relative whitespace-nowrap">Trusted by <span className="text-primary font-bold">1,900+</span> Brands</span>
-              <Check size={13} className="relative shrink-0 text-success drop-shadow-[0_0_4px_hsl(var(--success)/0.7)]" aria-hidden="true" />
+            <span
+              className="badge-rotating-shine badge-shine-sweep relative inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono text-[9.5px] md:text-[11px] text-foreground/90 tracking-[0.16em] uppercase overflow-hidden border border-white/10"
+              style={{
+                background: "linear-gradient(135deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.02))",
+                backdropFilter: "blur(16px) saturate(160%)",
+                WebkitBackdropFilter: "blur(16px) saturate(160%)",
+              }}
+            >
+              <img src={shopifyBadge} alt="Shopify" className="relative z-[3] w-3.5 h-3.5 md:w-4 md:h-4 shrink-0 object-contain" />
+              <span className="relative z-[3] whitespace-nowrap">
+                Trusted by <span className="font-bold" style={{ color: "hsl(45 100% 60%)" }}>1,900+</span> Brands
+              </span>
+              <Check size={11} className="relative z-[3] shrink-0" style={{ color: "hsl(210 100% 70%)" }} aria-hidden="true" />
             </span>
           </motion.div>
 
