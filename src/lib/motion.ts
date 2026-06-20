@@ -47,3 +47,13 @@ export const fadeDown: Variants = {
     transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] },
   },
 };
+
+/**
+ * Inline fade-up factory for hero/landing entry sequences where each block
+ * needs its own delay. Use directly on `initial`/`animate`/`transition` props.
+ */
+export const fadeUpDelay = (delay = 0, duration = 0.6) => ({
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration, delay, ease: [0.4, 0, 0.2, 1] as const },
+});
