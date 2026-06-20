@@ -714,25 +714,45 @@
   inset: -1.5px;
   border-radius: inherit;
   padding: 1.5px;
-  background: conic-gradient(
-    from var(--menu-angle),
-    transparent 0deg,
-    #CCFF00 40deg,
-    #00F0FF 90deg,
-    transparent 160deg,
-    transparent 200deg,
-    #CCFF00 250deg,
-    transparent 320deg
+  background:
+    conic-gradient(
+      from var(--menu-angle),
+      transparent 0deg,
+      #CCFF00 30deg,
+      #00F0FF 90deg,
+      #CCFF00 150deg,
+      transparent 200deg,
+      transparent 360deg
+    );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: menu-glow-spin 4s linear infinite;
+  pointer-events: none;
+  filter: drop-shadow(0 0 6px hsl(72 100% 50% / 0.55));
+  z-index: 2;
+}
+/* Faint continuous outline so the whole perimeter stays visible */
+.menu-rotating-glow::after {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(
+    135deg,
+    hsl(var(--foreground) / 0.18),
+    hsl(var(--foreground) / 0.06)
   );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
           mask-composite: exclude;
-  animation: menu-glow-spin 5s linear infinite;
   pointer-events: none;
-  filter: drop-shadow(0 0 6px hsl(72 100% 50% / 0.45));
-  z-index: 2;
+  z-index: 1;
 }
 /* Fallback when @property unsupported — static soft outline */
 @supports not (background: conic-gradient(from 0deg, red, blue)) {
