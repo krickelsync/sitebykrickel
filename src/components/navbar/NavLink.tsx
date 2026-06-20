@@ -24,7 +24,7 @@ const NavLink = ({
 }: NavLinkProps) => {
   const baseClass =
     variant === "desktop"
-      ? "font-mono text-sm px-3 py-1.5 rounded-full transition-all duration-300"
+      ? "font-mono text-xs lg:text-sm px-2 lg:px-3 py-1.5 rounded-full transition-all duration-300 whitespace-nowrap"
       : "font-mono text-sm px-4 py-2.5 rounded-full transition-colors block";
 
   const activeClass =
