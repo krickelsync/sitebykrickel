@@ -106,32 +106,14 @@ const Hero = () => {
           </div>
 
           {/* Sub-headline */}
-          <motion.p initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.6,
-          delay: 0.5
-        }} className="font-mono text-sm md:text-base text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
+          <p className="font-mono text-sm md:text-base text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
             Premium Shopify Setup Service. 
             <br className="hidden sm:block" />
             We build your high-end store in <span className="text-primary">2 Days </span>.
-          </motion.p>
+          </p>
 
           {/* CTA Buttons */}
-          <motion.div initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.6,
-          delay: 0.7
-        }} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               ref={magneticRef}
               href="#pricing"
@@ -151,7 +133,7 @@ const Hero = () => {
               <Eye size={18} aria-hidden="true" className="group-hover:scale-110 transition-transform" />
               <span>SHOWCASE</span>
             </Link>
-          </motion.div>
+          </div>
         </div>
       </motion.div>
 
@@ -199,18 +181,12 @@ const Hero = () => {
       />
 
       {/* Scroll Indicator */}
-      <motion.div aria-hidden="true" initial={{
-      opacity: 0
-    }} animate={{
-      opacity: 1
-    }} transition={{
-      delay: 1.2
-    }} className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+      <div aria-hidden="true" className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
         <div className="flex flex-col items-center gap-2">
           <span className="font-mono text-xs text-muted-foreground tracking-widest">SCROLL</span>
           <div className="w-px h-8 md:h-10 bg-gradient-to-b from-muted-foreground to-transparent" />
         </div>
-      </motion.div>
+      </div>
     </section>;
 };
 export default Hero;
