@@ -590,7 +590,6 @@
     text-shadow: none !important;
   }
 
-  .navbar-pill::after,
   .hero-grid-overlay {
     animation: none !important;
   }
