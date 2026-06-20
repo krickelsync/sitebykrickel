@@ -201,17 +201,21 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed top-0 left-0 right-0 z-50 glass overflow-visible"
+      className="fixed top-3 left-0 right-0 z-50 overflow-visible px-3 sm:px-6"
     >
-      <div className="container mx-auto px-4 overflow-visible">
-        <div className="flex items-center justify-between h-20 overflow-visible">
-          {/* 3D Logo */}
-          <Link to="/" className="flex items-center justify-center overflow-visible" style={{ overflow: 'visible' }}>
+      <div className="container mx-auto overflow-visible relative">
+        <div className="flex items-center justify-between gap-3 overflow-visible">
+          {/* 3D Logo — pill capsule */}
+          <Link
+            to="/"
+            className="navbar-pill flex items-center justify-center h-12 px-4 shrink-0"
+            style={{ overflow: 'visible' }}
+          >
             <Logo3D />
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Navigation — pill capsule */}
+          <div className="hidden md:flex items-center gap-1 navbar-pill h-12 px-2">
             {navLinks.map(link => 
               link.href.includes('#') ? (
                 <a
@@ -220,10 +224,10 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
                   onClick={(e) => handleNavClick(e, link.href)}
                   aria-current={isActive(link.href) ? "page" : undefined}
                   className={cn(
-                    "font-mono text-sm transition-all duration-400 ease-out hover-lift relative cursor-pointer",
-                    isActive(link.href) 
-                      ? "text-primary font-semibold after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-px after:bg-primary" 
-                      : "text-muted-foreground hover:text-foreground hover-underline-reveal"
+                    "font-mono text-sm px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer",
+                    isActive(link.href)
+                      ? "bg-foreground text-background font-semibold"
+                      : "text-muted-foreground hover:text-foreground"
                   )}
                 >
                   {link.name}
@@ -234,10 +238,10 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
                   to={link.href}
                   aria-current={isActive(link.href) ? "page" : undefined}
                   className={cn(
-                    "font-mono text-sm transition-all duration-400 ease-out hover-lift relative",
-                    isActive(link.href) 
-                      ? "text-primary font-semibold after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-px after:bg-primary" 
-                      : "text-muted-foreground hover:text-foreground hover-underline-reveal"
+                    "font-mono text-sm px-3 py-1.5 rounded-full transition-all duration-300",
+                    isActive(link.href)
+                      ? "bg-foreground text-background font-semibold"
+                      : "text-muted-foreground hover:text-foreground"
                   )}
                 >
                   {link.name}
@@ -246,13 +250,13 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
             )}
           </div>
 
-          {/* CTA Button + Theme Toggle */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* CTA Button + Theme Toggle — pill capsule */}
+          <div className="hidden md:flex items-center gap-2 navbar-pill h-12 px-2">
             <ThemeToggle />
             {onCtaClick ? (
               <button
                 onClick={onCtaClick}
-                className="cta-shiny rounded-xl bg-background/5 border border-foreground/10 px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium cursor-pointer"
+                className="cta-shiny rounded-full bg-foreground text-background px-5 py-2 font-mono text-sm hover:opacity-90 transition-all duration-300 cursor-pointer"
               >
                 <span className="relative z-10">{finalCtaText}</span>
               </button>
@@ -260,19 +264,19 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
               <a
                 href={finalCtaHref}
                 onClick={(e) => handleNavClick(e, finalCtaHref)}
-                className="cta-shiny rounded-xl bg-background/5 border border-foreground/10 px-6 py-2.5 font-mono text-sm hover:bg-primary/10 transition-all duration-300 hover:glow-border animate-pulse-glow hover-scale-premium cursor-pointer"
+                className="cta-shiny rounded-full bg-foreground text-background px-5 py-2 font-mono text-sm hover:opacity-90 transition-all duration-300 cursor-pointer"
               >
                 <span className="relative z-10">{finalCtaText}</span>
               </a>
             )}
           </div>
 
-          {/* Mobile Menu Button + Theme Toggle */}
-          <div className="flex md:hidden items-center gap-2">
+          {/* Mobile Menu Button + Theme Toggle — pill capsule */}
+          <div className="flex md:hidden items-center gap-1 navbar-pill h-12 px-2">
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 min-h-11 min-w-11 inline-flex items-center justify-center"
+              className="p-2 min-h-10 min-w-10 inline-flex items-center justify-center rounded-full hover:bg-foreground/5 transition-colors"
               aria-label={isOpen ? "Close menu" : "Open menu"}
               aria-expanded={isOpen}
               aria-controls="mobile-nav"
@@ -282,56 +286,36 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           </div>
         </div>
 
-        {/* Mobile Navigation with AnimatePresence */}
+        {/* Mobile Navigation — floating dropdown pill, anchored top-right */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
               id="mobile-nav"
-              initial={{ opacity: 0, height: 0, y: -20 }}
-              animate={{
-                opacity: 1,
-                height: "auto",
-                y: 0,
-                transition: {
-                  height: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
-                  opacity: { duration: 0.3, delay: 0.1 },
-                  y: { duration: 0.3, ease: "easeOut" }
-                }
-              }}
-              exit={{
-                opacity: 0,
-                height: 0,
-                y: -10,
-                transition: {
-                  height: { duration: 0.3 },
-                  opacity: { duration: 0.2 },
-                  y: { duration: 0.2 }
-                }
-              }}
-              className="md:hidden pb-6 overflow-hidden"
+              initial={{ opacity: 0, scale: 0.92, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -8 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              style={{ transformOrigin: "top right" }}
+              className="md:hidden absolute right-0 top-14 w-56 navbar-pill !rounded-3xl p-2 shadow-2xl"
             >
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1">
                 {navLinks.map((link, index) => 
                   link.href.includes('#') ? (
                     <motion.a
                       key={link.name}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{
-                        opacity: 1,
-                        x: 0,
-                        transition: { delay: 0.1 + index * 0.05 }
-                      }}
-                      exit={{ opacity: 0, x: -10 }}
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0, transition: { delay: 0.04 + index * 0.04 } }}
+                      exit={{ opacity: 0 }}
                       href={link.href}
                       onClick={(e) => {
                         handleNavClick(e, link.href);
                         setIsOpen(false);
                       }}
                       className={cn(
-                        "font-mono text-sm transition-colors cursor-pointer",
-                        isActive(link.href) 
-                          ? "text-primary font-semibold" 
-                          : "text-muted-foreground hover:text-foreground"
+                        "font-mono text-sm px-4 py-2.5 rounded-full transition-colors cursor-pointer",
+                        isActive(link.href)
+                          ? "bg-foreground text-background font-semibold"
+                          : "text-foreground/80 hover:bg-foreground/5 hover:text-foreground"
                       )}
                     >
                       {link.name}
@@ -339,22 +323,18 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
                   ) : (
                     <motion.div
                       key={link.name}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{
-                        opacity: 1,
-                        x: 0,
-                        transition: { delay: 0.1 + index * 0.05 }
-                      }}
-                      exit={{ opacity: 0, x: -10 }}
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0, transition: { delay: 0.04 + index * 0.04 } }}
+                      exit={{ opacity: 0 }}
                     >
                       <Link
                         to={link.href}
                         onClick={() => setIsOpen(false)}
                         className={cn(
-                          "font-mono text-sm transition-colors block",
-                          isActive(link.href) 
-                            ? "text-primary font-semibold" 
-                            : "text-muted-foreground hover:text-foreground"
+                          "font-mono text-sm px-4 py-2.5 rounded-full transition-colors block",
+                          isActive(link.href)
+                            ? "bg-foreground text-background font-semibold"
+                            : "text-foreground/80 hover:bg-foreground/5 hover:text-foreground"
                         )}
                       >
                         {link.name}
@@ -364,36 +344,28 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
                 )}
                 {onCtaClick ? (
                   <motion.button
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                      transition: { delay: 0.1 + navLinks.length * 0.05 }
-                    }}
-                    exit={{ opacity: 0, x: -10 }}
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0, transition: { delay: 0.04 + navLinks.length * 0.04 } }}
+                    exit={{ opacity: 0 }}
                     onClick={() => {
                       onCtaClick();
                       setIsOpen(false);
                     }}
-                    className="cta-shiny rounded-xl bg-background/5 border border-white/10 px-6 py-2.5 font-mono text-sm text-center mt-2 cursor-pointer"
+                    className="cta-shiny rounded-full bg-foreground text-background px-4 py-2.5 font-mono text-sm text-center mt-1 cursor-pointer"
                   >
                     <span className="relative z-10">{finalCtaText}</span>
                   </motion.button>
                 ) : (
                   <motion.a
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                      transition: { delay: 0.1 + navLinks.length * 0.05 }
-                    }}
-                    exit={{ opacity: 0, x: -10 }}
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0, transition: { delay: 0.04 + navLinks.length * 0.04 } }}
+                    exit={{ opacity: 0 }}
                     href={finalCtaHref}
                     onClick={(e) => {
                       handleNavClick(e, finalCtaHref);
                       setIsOpen(false);
                     }}
-                    className="cta-shiny rounded-xl bg-background/5 border border-white/10 px-6 py-2.5 font-mono text-sm text-center mt-2 cursor-pointer"
+                    className="cta-shiny rounded-full bg-foreground text-background px-4 py-2.5 font-mono text-sm text-center mt-1 cursor-pointer"
                   >
                     <span className="relative z-10">{finalCtaText}</span>
                   </motion.a>
