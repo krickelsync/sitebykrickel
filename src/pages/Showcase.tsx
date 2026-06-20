@@ -55,10 +55,9 @@ const categories = ["All", "E-commerce", "SAAS", "COMPANY PROFILE", "Portfolio",
 
 interface TiltCardProps {
   template: typeof templates[0];
-  index: number;
 }
 
-const TiltCard = ({ template, index }: TiltCardProps) => {
+const TiltCard = ({ template }: TiltCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -275,7 +274,7 @@ const Showcase = () => {
         <div className="max-w-[calc(100%-2rem)] md:max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {filteredTemplates.map((template, index) => (
-              <TiltCard key={template.name} template={template} index={index} />
+              <TiltCard key={template.name} template={template} />
             ))}
           </div>
 
