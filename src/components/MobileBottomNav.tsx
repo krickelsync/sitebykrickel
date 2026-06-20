@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, Tag, Briefcase, Mail, Play, Pause } from "lucide-react";
+import { Home, Tag, Briefcase, Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { scrollToId } from "@/lib/scroll";
 import { useMusicPlayer } from "@/contexts/MusicContext";
