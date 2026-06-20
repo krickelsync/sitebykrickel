@@ -3,7 +3,6 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import ScrollProgress from "@/components/ScrollProgress";
-import LandingStickyCTA from "@/components/LandingStickyCTA";
 
 // Lazy load below-the-fold components
 const Features = lazy(() => import("@/components/Features"));
@@ -45,7 +44,6 @@ const Index = () => {
       <Suspense fallback={<SectionLoader />}>
         <Footer />
       </Suspense>
-      <LandingStickyCTA />
     </main>
   );
 };
