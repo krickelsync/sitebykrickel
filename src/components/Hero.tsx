@@ -115,7 +115,7 @@ const Hero = () => {
           {/* Sub-headline */}
           <motion.p
             {...fadeUpDelay(0.5)}
-            className="font-mono text-[13px] sm:text-sm md:text-base text-muted-foreground max-w-xl md:max-w-2xl mx-auto mb-12 leading-relaxed md:leading-loose tracking-wide px-4 sm:px-0"
+            className="font-mono text-[11px] sm:text-sm md:text-base text-muted-foreground max-w-xs sm:max-w-xl md:max-w-2xl mx-auto mb-12 leading-relaxed md:leading-loose tracking-wide px-4 sm:px-0"
           >
             Build your store in <span className="text-primary">minutes</span> with a
             high-performance Shopify theme
