@@ -717,8 +717,8 @@
   background: conic-gradient(
     from var(--menu-angle),
     transparent 0deg,
-    #CCFF00 30deg,
-    #00F0FF 70deg,
+    #60A5FA 30deg,
+    #E0F2FE 70deg,
     transparent 120deg,
     transparent 360deg
   );
@@ -729,7 +729,7 @@
           mask-composite: exclude;
   animation: menu-glow-spin 4s linear infinite;
   pointer-events: none;
-  filter: drop-shadow(0 0 6px hsl(72 100% 50% / 0.55));
+  filter: drop-shadow(0 0 6px hsl(213 93% 68% / 0.6));
   z-index: 2;
 }
 /* Fallback when @property unsupported — static soft outline */
