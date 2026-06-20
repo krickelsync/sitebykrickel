@@ -5,7 +5,7 @@ const MusicPlayer = () => {
   const { isPlaying, togglePlay } = useMusicPlayer();
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-4 h-14 px-4 rounded-full glass border border-border shadow-2xl">
+    <div className="fixed bottom-6 right-6 z-50 hidden md:flex items-center gap-4 h-14 px-4 rounded-full glass border border-border shadow-2xl">
       <div 
         className={`w-10 h-10 rounded-full overflow-hidden border border-border ${isPlaying ? 'animate-spin' : ''}`}
         style={{ animationDuration: '3s' }}

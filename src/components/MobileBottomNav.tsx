@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, Tag, Briefcase, Mail } from "lucide-react";
+import { Home, Tag, Briefcase, Mail, Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { scrollToId } from "@/lib/scroll";
+import { useMusicPlayer } from "@/contexts/MusicContext";
 
 const items = [
   { name: "Home", href: "/", icon: Home },
@@ -16,6 +17,7 @@ const MobileBottomNav = () => {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(true);
   const lastY = useRef(0);
+  const { isPlaying, togglePlay } = useMusicPlayer();
 
   useEffect(() => {
     const onScroll = () => {
@@ -84,6 +86,22 @@ const MobileBottomNav = () => {
             </li>
           );
         })}
+        <li>
+          <button
+            onClick={togglePlay}
+            aria-label={isPlaying ? "Pause music" : "Play music"}
+            aria-pressed={isPlaying}
+            className={cn(
+              "flex flex-col items-center justify-center gap-0.5 px-2.5 py-1 rounded-full transition-colors",
+              isPlaying ? "text-primary" : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+            <span className="text-[9px] font-mono uppercase tracking-wider">
+              {isPlaying ? "Pause" : "Music"}
+            </span>
+          </button>
+        </li>
       </ul>
     </nav>
   );

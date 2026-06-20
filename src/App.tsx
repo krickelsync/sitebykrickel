@@ -11,7 +11,6 @@ import About from "./pages/About";
 import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
 import MobileBottomNav from "./components/MobileBottomNav";
-import SoundToggle from "./components/SoundToggle";
 import SmoothScroll from "./components/SmoothScroll";
 import { useEffect, lazy, Suspense } from "react";
 import { installGlobalClickSound } from "@/lib/sound";
@@ -44,7 +43,6 @@ const AppInner = () => {
         <MusicPlayer />
       </Suspense>
       <MobileBottomNav />
-      <SoundToggle />
     </>
   );
 };
