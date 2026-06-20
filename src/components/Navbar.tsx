@@ -8,6 +8,7 @@ import NavLink from "./navbar/NavLink";
 import MobileMenu from "./navbar/MobileMenu";
 import { scrollToId } from "@/lib/scroll";
 import { PRIMARY_NAV, type NavLinkItem } from "@/lib/nav";
+import { useHashScroll } from "@/hooks/useHashScroll";
 
 interface NavbarProps {
   customLinks?: NavLinkItem[];
@@ -51,16 +52,8 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
     }
   };
 
-  // Auto-scroll when hash changes (incl. cross-page navigation).
-  useEffect(() => {
-    if (location.hash) {
-      const hash = location.hash.slice(1);
-      const timer = setTimeout(() => {
-        scrollToId(hash);
-      }, 50);
-      return () => clearTimeout(timer);
-    }
-  }, [location.pathname, location.hash]);
+  // Auto-scroll on hash change (also handles cross-page navigation).
+  useHashScroll();
 
   const navLinks = customLinks ?? PRIMARY_NAV;
   const finalCtaText = ctaText || "Get Started";

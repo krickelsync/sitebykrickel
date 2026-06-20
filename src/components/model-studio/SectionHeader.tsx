@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { fadeUp } from "@/lib/motion";
 
 interface SectionHeaderProps {
   eyebrow?: string;
@@ -10,10 +11,10 @@ interface SectionHeaderProps {
 const SectionHeader = ({ eyebrow, title, description, align = "center" }: SectionHeaderProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6 }}
       className={`max-w-3xl ${align === "center" ? "mx-auto text-center" : ""}`}
     >
       {eyebrow && (
