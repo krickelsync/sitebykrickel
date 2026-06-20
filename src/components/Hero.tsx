@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Eye } from "lucide-react";
 import { lazy, Suspense, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
@@ -12,6 +12,12 @@ const Prism = lazy(() => import("./Prism"));
 
 const Hero = () => {
   const [prismScale, setPrismScale] = useState(typeof window !== 'undefined' && window.innerWidth < 768 ? 1.8 : 3);
+  const rotatingWords = ["CLOTHING BRAND", "STREETWEAR", "DROPSHIPPER", "BARBERSHOP"];
+  const [wordIndex, setWordIndex] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setWordIndex((i) => (i + 1) % rotatingWords.length), 2500);
+    return () => clearInterval(id);
+  }, []);
   const magneticRef = useMagnetic<HTMLAnchorElement>(0.25);
   const sectionRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
@@ -88,17 +94,20 @@ const Hero = () => {
             id="hero-heading"
             className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold uppercase leading-[0.9] tracking-tight mb-8"
           >
-            <span className="block hover-lift">
-              DON'T JUST
-            </span>
-            <span className="block hover-lift">
-              SELL PRODUCT.
-            </span>
-            <span className="block glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense">
-              SELL AN
-            </span>
-            <span className="block glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense">
-              EXPERIENCE.
+            <span className="block hover-lift">THEMES FOR</span>
+            <span className="block glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense min-h-[1em]">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={rotatingWords[wordIndex]}
+                  initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  className="inline-block"
+                >
+                  {rotatingWords[wordIndex]}
+                </motion.span>
+              </AnimatePresence>
             </span>
           </motion.h1>
           </div>
