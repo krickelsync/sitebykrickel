@@ -108,7 +108,7 @@ const Logo3D = memo(() => {
         <ambientLight intensity={0.8} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
         <directionalLight position={[-5, -5, -5]} intensity={0.5} />
-        <pointLight position={[0, 5, 0]} intensity={0.5} color="#CCFF00" />
+        <pointLight position={[0, 5, 0]} intensity={0.5} color="#60A5FA" />
         <Suspense fallback={null}>
           <Model />
           <Environment preset="city" />
