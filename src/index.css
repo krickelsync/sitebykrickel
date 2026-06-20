@@ -711,7 +711,7 @@
 .menu-rotating-glow::before {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: -1.5px;
   border-radius: inherit;
   padding: 1.5px;
   background: conic-gradient(
