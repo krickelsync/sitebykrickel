@@ -144,7 +144,7 @@ const Hero = () => {
       {/* Tilted bottom marquee ribbon — lifted above mobile bottom nav */}
       <div
         aria-hidden
-        className="absolute bottom-28 md:bottom-20 left-0 right-0 z-[3] overflow-hidden border-y border-border/40 py-2 md:py-3 bg-background/70 md:bg-background/40 md:backdrop-blur-sm pointer-events-none"
+        className="absolute bottom-28 md:bottom-20 left-0 right-0 z-[3] overflow-hidden border-y-0 md:border-y md:border-border/40 py-2 md:py-3 bg-background/70 md:bg-background/40 md:backdrop-blur-sm pointer-events-none"
         style={{ transform: "rotate(-1.5deg)" }}
       >
         <div className="flex whitespace-nowrap" style={{ animation: "hero-marquee 30s linear infinite" }}>
@@ -191,10 +191,10 @@ const Hero = () => {
       opacity: 1
     }} transition={{
       delay: 1.2
-    }} className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+    }} className="absolute bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
         <div className="flex flex-col items-center gap-2">
           <span className="font-mono text-xs text-muted-foreground tracking-widest">SCROLL</span>
-          <div className="w-px h-8 md:h-10 bg-gradient-to-b from-muted-foreground to-transparent" />
+          <div className="w-px h-8 md:h-10 bg-gradient-to-b from-muted-foreground to-transparent animate-scroll-line origin-top" />
         </div>
       </motion.div>
     </section>;
