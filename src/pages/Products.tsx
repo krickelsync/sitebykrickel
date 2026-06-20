@@ -14,7 +14,7 @@ const products: Array<{
 
 const Products = () => {
   return (
-    <div className="min-h-dvh bg-background">
+    <div className="min-h-dvh">
       <Navbar />
 
       <main className="pt-32 pb-20">
