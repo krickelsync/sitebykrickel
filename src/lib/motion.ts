@@ -28,3 +28,22 @@ export const staggerContainer = (stagger = 0.08): Variants => ({
     transition: { staggerChildren: stagger },
   },
 });
+
+/** Plain fade-in (no Y travel). */
+export const fadeIn: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] },
+  },
+};
+
+/** Reverse fade-up (entry from above). */
+export const fadeDown: Variants = {
+  hidden: { opacity: 0, y: -10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] },
+  },
+};
