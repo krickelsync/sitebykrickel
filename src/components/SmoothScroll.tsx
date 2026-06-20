@@ -8,15 +8,17 @@ import Lenis from "lenis";
 const SmoothScroll = () => {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    // Skip on mobile: native scroll is smoother and Lenis adds RAF overhead
-    if (window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768) return;
+
+    const isTouch =
+      window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768;
 
     const lenis = new Lenis({
-      duration: 1.15,
+      duration: isTouch ? 0.9 : 1.15,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      touchMultiplier: 1.2,
-    });
+      smoothTouch: isTouch,
+      touchMultiplier: isTouch ? 1.5 : 1.2,
+    } as ConstructorParameters<typeof Lenis>[0]);
 
     let raf = 0;
     const tick = (time: number) => {
