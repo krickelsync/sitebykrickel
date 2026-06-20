@@ -13,7 +13,7 @@
     --popover: 0 0% 5%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 74 100% 50%;
+    --primary: 213 93% 68%;
     --primary-foreground: 0 0% 0%;
 
     --secondary: 0 0% 8%;
@@ -22,7 +22,7 @@
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 60%;
 
-    --accent: 74 100% 50%;
+    --accent: 204 94% 94%;
     --accent-foreground: 0 0% 0%;
 
     --destructive: 0 84.2% 60.2%;
@@ -30,14 +30,14 @@
 
     --border: 0 0% 15%;
     --input: 0 0% 15%;
-    --ring: 74 100% 50%;
+    --ring: 213 93% 68%;
 
     --radius: 0.5rem;
 
     /* Custom tokens */
     --glass-bg: 0 0% 100% / 0.05;
     --glass-border: 0 0% 100% / 0.1;
-    --glow-green: 74 100% 50%;
+    --glow-green: 213 93% 68%;
     --glow-intensity: 0.5;
 
     /* Brand accents */
@@ -53,19 +53,19 @@
     --card-foreground: 0 0% 100%;
     --popover: 0 0% 5%;
     --popover-foreground: 0 0% 100%;
-    --primary: 74 100% 50%;
+    --primary: 213 93% 68%;
     --primary-foreground: 0 0% 0%;
     --secondary: 0 0% 8%;
     --secondary-foreground: 0 0% 100%;
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 60%;
-    --accent: 74 100% 50%;
+    --accent: 204 94% 94%;
     --accent-foreground: 0 0% 0%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 15%;
     --input: 0 0% 15%;
-    --ring: 74 100% 50%;
+    --ring: 213 93% 68%;
     --gold: 45 100% 58%;
     --gold-foreground: 0 0% 0%;
     --success: 142 71% 45%;
