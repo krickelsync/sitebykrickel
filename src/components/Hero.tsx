@@ -60,14 +60,6 @@ const Hero = () => {
       <div aria-hidden className="absolute inset-0 z-[2] pointer-events-none opacity-[0.08] hero-grid-overlay" />
       {/* Grain noise */}
       <div aria-hidden className="absolute inset-0 z-[2] pointer-events-none opacity-[0.06] hero-noise mix-blend-overlay" />
-      {/* Vertical scroll label (desktop) */}
-      <div aria-hidden className="hidden lg:flex absolute right-6 bottom-44 z-[3] flex-col items-end gap-2 pointer-events-none">
-        <div className="h-24 w-px bg-gradient-to-b from-primary to-transparent animate-scroll-line origin-top" />
-        <span className="font-mono text-primary text-[10px] tracking-widest uppercase" style={{ writingMode: "vertical-rl" }}>
-          Scroll To Explore
-        </span>
-      </div>
-
       <motion.div style={{ y: headlineY, opacity: contentOpacity }} className="container relative z-10 px-4">
         <div className="max-w-5xl mx-auto text-center">
           {/* Eyebrow */}
@@ -184,19 +176,6 @@ const Hero = () => {
         }}
       />
 
-      {/* Scroll Indicator */}
-      <motion.div aria-hidden="true" initial={{
-      opacity: 0
-    }} animate={{
-      opacity: 1
-    }} transition={{
-      delay: 1.2
-    }} className="absolute bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-        <div className="flex flex-col items-center gap-2">
-          <span className="font-mono text-xs text-muted-foreground tracking-widest">SCROLL</span>
-          <div className="w-px h-8 md:h-10 bg-gradient-to-b from-muted-foreground to-transparent animate-scroll-line origin-top" />
-        </div>
-      </motion.div>
     </section>;
 };
 export default Hero;
