@@ -2,7 +2,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Palette, Code, Brain, TrendingUp, Lightbulb, RefreshCw, Target } from "lucide-react";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SkillBar from "@/components/SkillBar";
 import ExpertiseCard from "@/components/ExpertiseCard";
@@ -93,8 +92,6 @@ const About = () => {
     description: "Whether it's pixel-perfect CSS or analyzing market charts."
   }];
   return <div className="min-h-dvh bg-background text-foreground overflow-x-hidden">
-      <Navbar />
-
       {/* Hero Section with Spline */}
       <section className="relative flex flex-col">
         {/* Spline 3D Interactive Area */}
@@ -108,23 +105,14 @@ const About = () => {
 
         {/* Hero Content - Below Spline with overlap */}
         <div className="relative z-10 container mx-auto px-4 py-8 -mt-32 md:-mt-40">
-          <motion.div initial={{
-          opacity: 0,
-          y: 40
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.8,
-          delay: 0.5
-        }} className="max-w-4xl bg-background/80 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-glass-border">
+          <div className="max-w-4xl bg-background/80 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-glass-border">
             
             <p className="text-lg md:text-xl text-muted-foreground font-mono max-w-2xl">
               <span className="text-primary">18 Years Old.</span>{" "}
               <span className="text-primary">5 Years Experience</span> in Graphic Designer, 
               creative bridging the gap between design, technology, and artificial intelligence.
             </p>
-          </motion.div>
+          </div>
         </div>
       </section>
 

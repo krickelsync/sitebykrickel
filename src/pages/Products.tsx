@@ -1,5 +1,3 @@
-import { motion } from "framer-motion";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/products/ProductCard";
 
@@ -15,25 +13,13 @@ const products: Array<{
 const Products = () => {
   return (
     <div className="min-h-dvh bg-background">
-      <Navbar />
-
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-4">
           {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto mb-16"
-          >
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-block px-4 py-1.5 mb-6 text-xs font-mono uppercase tracking-wider bg-primary/10 text-primary rounded-full"
-            >
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="inline-block px-4 py-1.5 mb-6 text-xs font-mono uppercase tracking-wider bg-primary/10 text-primary rounded-full">
               Digital Products
-            </motion.span>
+            </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Products & Tools
             </h1>
@@ -41,7 +27,7 @@ const Products = () => {
               Internal AI systems we use to create catalog and campaign visuals
               for brands.
             </p>
-          </motion.div>
+          </div>
 
           {/* Products Grid */}
           {products.length === 0 ? (

@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DesignBentoGrid from "@/components/DesignBentoGrid";
 import { useDesignPortfolio } from "@/hooks/useDesignPortfolio";
@@ -56,10 +55,9 @@ const categories = ["All", "E-commerce", "SAAS", "COMPANY PROFILE", "Portfolio",
 
 interface TiltCardProps {
   template: typeof templates[0];
-  index: number;
 }
 
-const TiltCard = ({ template, index }: TiltCardProps) => {
+const TiltCard = ({ template }: TiltCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -98,13 +96,7 @@ const TiltCard = ({ template, index }: TiltCardProps) => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.15 }}
-      style={{ perspective: "1000px" }}
-      className="relative"
-    >
+    <div style={{ perspective: "1000px" }} className="relative">
       <motion.div
         ref={cardRef}
         onMouseMove={handleMouseMove}
@@ -220,7 +212,7 @@ const TiltCard = ({ template, index }: TiltCardProps) => {
           </motion.div>
         </a>
       </motion.div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -238,17 +230,10 @@ const Showcase = () => {
 
   return (
     <div className="min-h-dvh bg-background overflow-x-hidden">
-      <Navbar />
-      
       {/* Hero Section */}
       <section className="pt-16 pb-4 px-4">
         <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-4"
-          >
+          <div className="text-center mb-4">
             <Link 
               to="/" 
               className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-foreground transition-colors mb-6 md:mb-8"
@@ -263,15 +248,10 @@ const Showcase = () => {
             <p className="font-mono text-xs sm:text-sm md:text-base text-muted-foreground max-w-xl mx-auto px-2">
               Explore our premium Shopify themes. Click any template to see it live.
             </p>
-          </motion.div>
+          </div>
 
           {/* Category Filters */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap justify-center gap-2 md:gap-3 mb-2 px-2"
-          >
+          <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-2 px-2">
             {categories.map((category) => (
               <button
                 key={category}
@@ -285,7 +265,7 @@ const Showcase = () => {
                 {category}
               </button>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -294,7 +274,7 @@ const Showcase = () => {
         <div className="max-w-[calc(100%-2rem)] md:max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {filteredTemplates.map((template, index) => (
-              <TiltCard key={template.name} template={template} index={index} />
+              <TiltCard key={template.name} template={template} />
             ))}
           </div>
 
