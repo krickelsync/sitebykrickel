@@ -557,8 +557,7 @@
 @media (max-width: 768px) {
   /* Disable backdrop-blur on mobile: expensive over animated/WebGL layers */
   .glass,
-  .glass-card,
-  .navbar-pill {
+  .glass-card {
     background-color: hsl(var(--background) / 0.88) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
@@ -643,9 +642,9 @@
 .navbar-pill {
   position: relative;
   border-radius: 9999px;
-  background: hsl(var(--background) / 0.6);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: hsl(var(--background) / 0.25);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
   border: 1px solid hsl(var(--foreground) / 0.08);
   box-shadow:
     0 1px 0 hsl(var(--foreground) / 0.05) inset,
@@ -654,7 +653,7 @@
 }
 
 .light .navbar-pill {
-  background: hsl(0 0% 100% / 0.75);
+  background: hsl(0 0% 100% / 0.35);
   border-color: hsl(0 0% 0% / 0.06);
   box-shadow:
     0 1px 0 hsl(0 0% 100% / 0.9) inset,
