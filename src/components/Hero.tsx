@@ -115,11 +115,12 @@ const Hero = () => {
           {/* Sub-headline */}
           <motion.p
             {...fadeUpDelay(0.5)}
-            className="font-mono text-sm md:text-base text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
+            className="font-mono text-[13px] sm:text-sm md:text-base text-muted-foreground max-w-xl md:max-w-2xl mx-auto mb-12 leading-relaxed md:leading-loose tracking-wide px-4 sm:px-0"
           >
-            Premium Shopify Setup Service. 
-            <br className="hidden sm:block" />
-            We build your high-end store in <span className="text-primary">2 Days </span>.
+            Build your store in <span className="text-primary">minutes</span> with a
+            high-performance Shopify theme
+            <br className="hidden md:block" />{" "}
+            and infinite customization features.
           </motion.p>
 
           {/* CTA Buttons */}
