@@ -97,13 +97,7 @@ const TiltCard = ({ template, index }: TiltCardProps) => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.15 }}
-      style={{ perspective: "1000px" }}
-      className="relative"
-    >
+    <div style={{ perspective: "1000px" }} className="relative">
       <motion.div
         ref={cardRef}
         onMouseMove={handleMouseMove}
@@ -219,7 +213,7 @@ const TiltCard = ({ template, index }: TiltCardProps) => {
           </motion.div>
         </a>
       </motion.div>
-    </motion.div>
+    </div>
   );
 };
 
