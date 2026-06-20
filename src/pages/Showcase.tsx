@@ -237,7 +237,7 @@ const Showcase = () => {
   );
 
   return (
-    <div className="min-h-dvh bg-background overflow-x-hidden">
+    <div className="min-h-dvh overflow-x-hidden">
       <Navbar />
       
       {/* Hero Section */}

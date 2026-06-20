@@ -92,7 +92,7 @@ const About = () => {
     title: "Precision Focused",
     description: "Whether it's pixel-perfect CSS or analyzing market charts."
   }];
-  return <div className="min-h-dvh bg-background text-foreground overflow-x-hidden">
+  return <div className="min-h-dvh text-foreground overflow-x-hidden">
       <Navbar />
 
       {/* Hero Section with Spline */}
