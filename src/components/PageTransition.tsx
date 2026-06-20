@@ -26,11 +26,11 @@ const PageTransition = () => {
       {show && (
         <motion.div
           key="page-transition"
-          initial={{ opacity: 1 }}
+          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[9998] pointer-events-none bg-background overflow-hidden"
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-[9998] pointer-events-none overflow-hidden"
           aria-hidden
         >
           <div className="absolute inset-0 grid" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
