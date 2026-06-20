@@ -78,8 +78,8 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
             <Logo3D />
           </Link>
 
-          {/* Desktop nav pill */}
-          <div className="hidden lg:flex items-center gap-1 navbar-pill h-12 px-2">
+          {/* Desktop / tablet nav pill */}
+          <div className="hidden md:flex items-center gap-1 navbar-pill h-12 px-1.5">
             {navLinks.map((link) => (
               <NavLink
                 key={link.name}
@@ -93,7 +93,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           </div>
 
           {/* CTA + theme pill */}
-          <div className="hidden lg:flex items-center gap-2 navbar-pill h-12 px-2">
+          <div className="hidden md:flex items-center gap-2 navbar-pill h-12 px-2">
             <ThemeToggle />
             {onCtaClick ? (
               <button
@@ -113,8 +113,8 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
             )}
           </div>
 
-          {/* Mobile / tablet trigger pill */}
-          <div className="flex lg:hidden items-center gap-1 navbar-pill h-12 px-2">
+          {/* Mobile trigger pill */}
+          <div className="flex md:hidden items-center gap-1 navbar-pill h-12 px-2">
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
