@@ -60,14 +60,6 @@ const Hero = () => {
       <div aria-hidden className="absolute inset-0 z-[2] pointer-events-none opacity-[0.08] hero-grid-overlay" />
       {/* Grain noise */}
       <div aria-hidden className="absolute inset-0 z-[2] pointer-events-none opacity-[0.06] hero-noise mix-blend-overlay" />
-      {/* Vertical scroll label (desktop) */}
-      <div aria-hidden className="hidden lg:flex absolute right-6 bottom-44 z-[3] flex-col items-end gap-2 pointer-events-none">
-        <div className="h-24 w-px bg-gradient-to-b from-primary to-transparent animate-scroll-line origin-top" />
-        <span className="font-mono text-primary text-[10px] tracking-widest uppercase" style={{ writingMode: "vertical-rl" }}>
-          Scroll To Explore
-        </span>
-      </div>
-
       <motion.div style={{ y: headlineY, opacity: contentOpacity }} className="container relative z-10 px-4">
         <div className="max-w-5xl mx-auto text-center">
           {/* Eyebrow */}
