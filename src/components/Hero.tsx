@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { scrollToId } from "@/lib/scroll";
 import { useMagnetic } from "@/hooks/useMagnetic";
 import { fadeUpDelay } from "@/lib/motion";
+import shopifyBadge from "@/assets/shopify-badge.png.asset.json";
 
 // Lazy load heavy Prism component
 const Prism = lazy(() => import("./Prism"));
@@ -64,12 +65,11 @@ const Hero = () => {
         <div className="max-w-5xl mx-auto text-center">
           {/* Eyebrow */}
           <motion.div {...fadeUpDelay(0.2)} className="mb-8">
-            <span className="inline-flex items-center gap-2 px-4 py-2 glass-card font-mono text-xs text-primary tracking-widest">
-              <svg viewBox="0 0 109 124" className="w-4 h-4 fill-current" aria-hidden="true" focusable="false">
-                <path d="M95.02 24.56c-.06-.46-.45-.76-.85-.79-.4-.03-8.47-.16-8.47-.16s-5.6-5.44-6.22-6.03c-.62-.59-1.82-.42-2.29-.28-.01 0-.92.28-2.46.76-1.47-4.24-4.06-8.14-8.63-8.14-.13 0-.25 0-.38.01-.13-.17-.27-.33-.41-.49C63.37 7.21 60.74 6 58.53 6c-16.37.52-24.16 20.48-26.6 30.9-6.35 1.97-10.86 3.37-11.43 3.55-3.57 1.12-3.68 1.23-4.15 4.59C15.98 47.38 0 166.06 0 166.06l74.34 12.83 40.21-10s.01 0 .01-.01c.01 0 .01-.01.01-.01l-19.55-143.31zM67.72 19.74l-4.17 1.29c0-.11.01-.21.01-.32 0-3.28-.45-5.94-1.2-8.05 2.97.37 4.95 3.77 5.36 7.08zM57.2 11.31c.84 2.03 1.38 4.93 1.38 8.91 0 .23 0 .44-.01.66-4.04 1.25-8.45 2.62-12.87 3.99 2.48-9.47 7.13-14.04 11.5-13.56zm-3.81-3.4c.75 0 1.49.25 2.21.75-5.49 2.59-11.38 9.11-13.87 22.13-3.52 1.09-6.97 2.16-10.14 3.14 2.81-9.51 9.51-25.67 21.8-26.02z"/>
-              </svg>
-              SHOPIFY PARTNER
-              <Check size={14} className="text-success" aria-hidden="true" />
+            <span className="group relative inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full font-mono text-[11px] md:text-xs text-foreground tracking-[0.18em] uppercase overflow-hidden border border-primary/30 bg-gradient-to-r from-background/80 via-background/60 to-background/80 backdrop-blur-xl shadow-[0_0_24px_-6px_hsl(var(--primary)/0.55),inset_0_1px_0_0_hsl(var(--primary)/0.25)]">
+              <span aria-hidden className="pointer-events-none absolute inset-0 rounded-full opacity-60" style={{ background: "linear-gradient(120deg, transparent 30%, hsl(var(--primary) / 0.18) 50%, transparent 70%)" }} />
+              <img src={shopifyBadge.url} alt="Shopify" className="relative w-4 h-4 object-contain drop-shadow-[0_0_6px_hsl(var(--primary)/0.6)]" />
+              <span className="relative">Trusted by <span className="text-primary font-bold">1,900+</span> Clothing Brands</span>
+              <Check size={13} className="relative text-success drop-shadow-[0_0_4px_hsl(var(--success)/0.7)]" aria-hidden="true" />
             </span>
           </motion.div>
 
