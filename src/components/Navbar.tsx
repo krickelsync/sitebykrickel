@@ -69,10 +69,10 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
     >
       <div className="container mx-auto overflow-visible relative">
         <div className="flex items-center justify-between gap-3 overflow-visible">
-          {/* Logo pill */}
+          {/* Logo (no pill) */}
           <Link
             to="/"
-            className="navbar-pill flex items-center justify-center h-12 px-4 shrink-0"
+            className="flex items-center justify-center h-12 shrink-0"
             style={{ overflow: 'visible' }}
           >
             <Logo3D />
