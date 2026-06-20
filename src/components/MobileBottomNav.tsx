@@ -37,7 +37,7 @@ const MobileBottomNav = () => {
       const [path, hash] = href.split("#");
       return location.pathname === (path || "/") && location.hash === `#${hash}`;
     }
-    return location.pathname === href;
+    return location.pathname === href && !location.hash;
   };
 
   const handle = (e: React.MouseEvent, href: string) => {

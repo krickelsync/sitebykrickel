@@ -34,7 +34,8 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
       const targetPath = path === '' ? location.pathname : path;
       return location.pathname === targetPath && location.hash === `#${hash}`;
     }
-    return location.pathname === href;
+    // Plain path (no hash) — only active when there's no hash in the URL.
+    return location.pathname === href && !location.hash;
   };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -97,7 +98,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
             {onCtaClick ? (
               <button
                 onClick={onCtaClick}
-                className="cta-shiny rounded-full bg-foreground text-background px-5 py-2 font-mono text-sm hover:opacity-90 transition-all duration-300 cursor-pointer"
+                className="cta-shiny rounded-full bg-foreground text-background px-5 py-2 font-mono text-sm whitespace-nowrap hover:opacity-90 transition-all duration-300 cursor-pointer"
               >
                 <span className="relative z-10">{finalCtaText}</span>
               </button>
@@ -105,7 +106,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
               <a
                 href={finalCtaHref}
                 onClick={(e) => handleNavClick(e, finalCtaHref)}
-                className="cta-shiny rounded-full bg-foreground text-background px-5 py-2 font-mono text-sm hover:opacity-90 transition-all duration-300 cursor-pointer"
+                className="cta-shiny rounded-full bg-foreground text-background px-5 py-2 font-mono text-sm whitespace-nowrap hover:opacity-90 transition-all duration-300 cursor-pointer"
               >
                 <span className="relative z-10">{finalCtaText}</span>
               </a>
