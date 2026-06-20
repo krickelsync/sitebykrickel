@@ -747,7 +747,7 @@
 .badge-rotating-shine::before {
   content: '';
   position: absolute;
-  inset: -1px;
+  inset: 0;
   border-radius: inherit;
   padding: 1px;
   background: conic-gradient(

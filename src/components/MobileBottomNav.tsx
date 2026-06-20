@@ -7,9 +7,8 @@ import { useMusicPlayer } from "@/contexts/MusicContext";
 
 const items = [
   { name: "Home", href: "/", icon: Home },
-  { name: "Pricing", href: "/#pricing", icon: Tag },
+  { name: "Products", href: "/products", icon: Tag },
   { name: "Work", href: "/showcase", icon: Briefcase },
-  { name: "Contact", href: "/about#contact", icon: Mail },
 ];
 
 const MobileBottomNav = () => {
