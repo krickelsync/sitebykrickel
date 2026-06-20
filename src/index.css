@@ -236,15 +236,13 @@
   }
 
   .glow-border {
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.3),
-                0 0 40px hsl(var(--primary) / 0.2),
-                inset 0 0 20px hsl(var(--primary) / 0.1);
+    box-shadow: 0 0 12px hsl(var(--primary) / 0.18),
+                inset 0 0 10px hsl(var(--primary) / 0.06);
   }
 
   .glow-box {
-    box-shadow: 0 0 30px hsl(var(--primary) / 0.4),
-                0 0 60px hsl(var(--primary) / 0.2),
-                0 0 90px hsl(var(--primary) / 0.1);
+    box-shadow: 0 0 16px hsl(var(--primary) / 0.22),
+                0 0 32px hsl(var(--primary) / 0.1);
   }
 
   .text-gradient {
@@ -342,12 +340,10 @@
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.3),
-                0 0 40px hsl(var(--primary) / 0.2);
+    box-shadow: 0 0 12px hsl(var(--primary) / 0.2);
   }
   50% {
-    box-shadow: 0 0 30px hsl(var(--primary) / 0.5),
-                0 0 60px hsl(var(--primary) / 0.3);
+    box-shadow: 0 0 18px hsl(var(--primary) / 0.32);
   }
 }
 
@@ -356,7 +352,7 @@
 }
 
 .animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
+  animation: pulse-glow 4s ease-in-out infinite;
 }
 
 /* Premium Luxury Hover Animations */
@@ -510,9 +506,8 @@
 
 .shiny-card:hover {
   box-shadow: 
-    0 0 20px hsl(0 0% 100% / 0.15),
-    0 0 40px hsl(0 0% 100% / 0.08),
-    inset 0 0 20px hsl(0 0% 100% / 0.03);
+    0 0 12px hsl(0 0% 100% / 0.1),
+    inset 0 0 10px hsl(0 0% 100% / 0.02);
 }
 
 /* CTA Button Shiny Sweep */
@@ -646,9 +641,8 @@
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid hsl(var(--foreground) / 0.08);
   box-shadow:
-    0 1px 0 hsl(var(--foreground) / 0.06) inset,
-    0 8px 24px -12px hsl(0 0% 0% / 0.4),
-    0 2px 6px -2px hsl(0 0% 0% / 0.2);
+    0 1px 0 hsl(var(--foreground) / 0.05) inset,
+    0 4px 14px -8px hsl(0 0% 0% / 0.3);
   overflow: hidden;
 }
 
@@ -681,7 +675,7 @@
     transparent 100%
   );
   pointer-events: none;
-  animation: navbar-pill-shine 5s ease-in-out infinite;
+  animation: navbar-pill-shine 10s ease-in-out infinite;
 }
 .light .navbar-pill::after {
   background: linear-gradient(
@@ -700,7 +694,7 @@
   background-image: linear-gradient(hsl(var(--primary)) 1px, transparent 1px),
                     linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px);
   background-size: 60px 60px;
-  animation: hero-grid-drift 20s linear infinite;
+  animation: hero-grid-drift 40s linear infinite;
   mask-image: radial-gradient(ellipse at center, black, transparent 75%);
   -webkit-mask-image: radial-gradient(ellipse at center, black, transparent 75%);
 }
