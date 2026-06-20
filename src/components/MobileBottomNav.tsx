@@ -52,22 +52,22 @@ const MobileBottomNav = () => {
     <nav
       aria-label="Mobile navigation"
       className={cn(
-        "md:hidden fixed bottom-3 left-3 right-3 z-50 transition-transform duration-300",
+        "md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 z-50 transition-transform duration-300",
         visible ? "translate-y-0" : "translate-y-[150%]"
       )}
     >
-      <ul className="glass rounded-2xl border border-border flex items-center justify-around py-2 px-2 shadow-lg">
+      <ul className="glass rounded-full border border-border flex items-center gap-1 py-1.5 px-2 shadow-lg">
         {items.map(({ name, href, icon: Icon }) => {
           const active = isActive(href);
           const content = (
             <div
               className={cn(
-                "flex flex-col items-center justify-center gap-1 px-3 py-1.5 rounded-xl transition-colors min-w-14",
+                "flex flex-col items-center justify-center gap-0.5 px-2.5 py-1 rounded-full transition-colors",
                 active ? "text-primary" : "text-muted-foreground hover:text-foreground"
               )}
             >
-              <Icon className="w-5 h-5" />
-              <span className="text-[10px] font-mono uppercase tracking-wider">{name}</span>
+              <Icon className="w-4 h-4" />
+              <span className="text-[9px] font-mono uppercase tracking-wider">{name}</span>
             </div>
           );
           return (
