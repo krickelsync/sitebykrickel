@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import Logo3D from "./Logo3D";
 import ThemeToggle from "./navbar/ThemeToggle";
