@@ -18,9 +18,9 @@ const SkillBar = ({ name, percentage, description, delay = 0 }: SkillBarProps) =
 
   return (
     <motion.div
-      initial={{ opacity: 1, x: 0 }}
+      initial={{ opacity: 0, x: -20 }}
       whileInView={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.01 }}
+      transition={{ duration: 0.5, delay: delay * 0.1 }}
       viewport={{ once: true }}
       className="group"
     >
@@ -35,7 +35,7 @@ const SkillBar = ({ name, percentage, description, delay = 0 }: SkillBarProps) =
       
       <div className="relative h-2 bg-muted/30 rounded-full overflow-hidden">
         <motion.div
-          initial={{ width: `${percentage}%` }}
+          initial={{ width: 0 }}
           whileInView={{ width: isVisible ? `${percentage}%` : 0 }}
           transition={{ duration: 1, delay: delay * 0.1, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true }}

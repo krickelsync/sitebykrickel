@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -12,13 +13,18 @@ const CurvedLoop = lazy(() => import("@/components/CurvedLoop"));
 const FAQ = lazy(() => import("@/components/FAQ"));
 const Footer = lazy(() => import("@/components/Footer"));
 
-// Invisible fallback — avoids spinner "blink" between route changes.
-const SectionLoader = () => <div className="py-24" aria-hidden />;
+// Simple loading fallback
+const SectionLoader = () => (
+  <div className="py-24 flex items-center justify-center">
+    <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+  </div>
+);
 
 const Index = () => {
   return (
     <main className="min-h-dvh bg-background text-foreground overflow-x-hidden">
       <ScrollProgress />
+      <Navbar />
       <Hero />
       <Marquee />
       <Suspense fallback={<SectionLoader />}>

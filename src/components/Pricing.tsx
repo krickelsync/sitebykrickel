@@ -128,10 +128,9 @@ const Pricing = () => {
         </div>
 
         <motion.p
-          initial={{ opacity: 1 }}
+          initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.01 }}
           className="font-mono text-xs text-muted-foreground text-center mt-8"
         >
           Secure payment • Setup starts within 24 hours

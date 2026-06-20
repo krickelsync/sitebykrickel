@@ -122,10 +122,7 @@
   }
 
   html {
-    /* Native smooth-scroll disabled: Lenis handles desktop, mobile uses native instant.
-       Removing this also prevents a visible scroll-jump "blink" on route change. */
-    scroll-behavior: auto;
-    background-color: hsl(var(--background));
+    scroll-behavior: smooth;
   }
 
   body {

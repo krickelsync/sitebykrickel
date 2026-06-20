@@ -70,9 +70,9 @@ const ContactForm = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.01 }}
+      transition={{ duration: 0.6 }}
       viewport={{ once: true }}
       className="max-w-xl mx-auto glass-card shiny-card rounded-2xl p-8 hover:border-primary/30 transition-all duration-500"
     >

@@ -13,13 +13,12 @@ import NotFound from "./pages/NotFound";
 import MobileBottomNav from "./components/MobileBottomNav";
 import SoundToggle from "./components/SoundToggle";
 import SmoothScroll from "./components/SmoothScroll";
-import ScrollToTop from "./components/ScrollToTop";
-import Navbar from "./components/Navbar";
 import { useEffect, lazy, Suspense } from "react";
 import { installGlobalClickSound } from "@/lib/sound";
 
 const MusicPlayer = lazy(() => import("./components/MusicPlayer"));
 const CustomCursor = lazy(() => import("./components/CustomCursor"));
+const PageTransition = lazy(() => import("./components/PageTransition"));
 
 const queryClient = new QueryClient();
 
@@ -30,10 +29,9 @@ const AppInner = () => {
   return (
     <>
       <SmoothScroll />
-      <ScrollToTop />
-      <Navbar />
       <Suspense fallback={null}>
         <CustomCursor />
+        <PageTransition />
       </Suspense>
       <Routes>
         <Route path="/" element={<Index />} />

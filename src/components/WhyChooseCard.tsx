@@ -11,9 +11,9 @@ interface WhyChooseCardProps {
 const WhyChooseCard = ({ icon: Icon, title, description, delay = 0 }: WhyChooseCardProps) => {
   return (
     <motion.div
-      initial={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.01 }}
+      transition={{ duration: 0.5, delay: delay * 0.1, ease: [0.22, 1, 0.36, 1] }}
       viewport={{ once: true }}
       whileHover={{ y: -5 }}
       className="glass-card shiny-card p-6 text-center group hover:border-primary/30 transition-all duration-500"

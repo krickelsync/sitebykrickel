@@ -29,7 +29,7 @@ const DesignBentoGrid = ({ designs, isLoading }: DesignBentoGridProps) => {
   if (designs.length === 0) {
     return (
       <motion.div
-        initial={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="text-center py-16"
       >
