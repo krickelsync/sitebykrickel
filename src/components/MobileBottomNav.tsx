@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, Tag, Briefcase, Mail, Play, Pause } from "lucide-react";
+import { Home, Tag, Briefcase, Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { scrollToId } from "@/lib/scroll";
 import { useMusicPlayer } from "@/contexts/MusicContext";
 
 const items = [
   { name: "Home", href: "/", icon: Home },
-  { name: "Pricing", href: "/#pricing", icon: Tag },
+  { name: "Products", href: "/products", icon: Tag },
   { name: "Work", href: "/showcase", icon: Briefcase },
-  { name: "Contact", href: "/about#contact", icon: Mail },
 ];
 
 const MobileBottomNav = () => {
