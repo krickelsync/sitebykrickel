@@ -5,6 +5,7 @@ import PricingCard, {
 } from "./pricing/PricingCard";
 import { useContactScroll } from "@/hooks/useContactScroll";
 import { motion } from "framer-motion";
+import { fadeIn } from "@/lib/motion";
 
 const standardFeatures: PricingFeatureSection[] = [
   { category: "CORE SETUP", items: [
@@ -128,8 +129,9 @@ const Pricing = () => {
         </div>
 
         <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          variants={fadeIn}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
           className="font-mono text-xs text-muted-foreground text-center mt-8"
         >
