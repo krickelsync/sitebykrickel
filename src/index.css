@@ -716,12 +716,11 @@
   padding: 1.5px;
   background: conic-gradient(
     from var(--menu-angle),
-    hsl(var(--foreground) / 0.10) 0deg,
-    #CCFF00 40deg,
-    #00F0FF 110deg,
-    #CCFF00 180deg,
-    hsl(var(--foreground) / 0.10) 260deg,
-    hsl(var(--foreground) / 0.10) 360deg
+    transparent 0deg,
+    #CCFF00 30deg,
+    #00F0FF 70deg,
+    transparent 120deg,
+    transparent 360deg
   );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
