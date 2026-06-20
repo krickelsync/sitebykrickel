@@ -651,40 +651,33 @@
     0 2px 4px -1px hsl(0 0% 0% / 0.05);
 }
 
-/* Diagonal beam sweep across the pill — ported from buildcleanslate.com .annc__beam */
-@keyframes navbar-pill-beam-sweep {
-  0%   { transform: translateX(-100%); }
-  45%  { transform: translateX(450%); }
-  100% { transform: translateX(450%); }
+/* Shiny sweep across the pill */
+@keyframes navbar-pill-shine {
+  0%   { transform: translateX(-120%) skewX(-20deg); }
+  60%  { transform: translateX(220%) skewX(-20deg); }
+  100% { transform: translateX(220%) skewX(-20deg); }
 }
 .navbar-pill::after {
   content: '';
   position: absolute;
   top: 0;
-  bottom: 0;
   left: 0;
-  width: 30%;
-  z-index: 1;
-  pointer-events: none;
+  width: 40%;
+  height: 100%;
   background: linear-gradient(
-    105deg,
+    90deg,
     transparent 0%,
-    transparent 30%,
-    hsl(var(--foreground) / 0.22) 50%,
-    transparent 70%,
+    hsl(var(--foreground) / 0.12) 50%,
     transparent 100%
   );
-  transform: translateX(-100%);
-  animation: navbar-pill-beam-sweep 9s ease-in-out infinite;
-  animation-delay: var(--beam-delay, 0s);
+  pointer-events: none;
+  animation: navbar-pill-shine 5s ease-in-out infinite;
 }
 .light .navbar-pill::after {
   background: linear-gradient(
-    105deg,
+    90deg,
     transparent 0%,
-    transparent 30%,
-    hsl(0 0% 100% / 0.95) 50%,
-    transparent 70%,
+    hsl(0 0% 100% / 0.9) 50%,
     transparent 100%
   );
 }

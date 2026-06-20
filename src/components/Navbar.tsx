@@ -209,16 +209,13 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           <Link
             to="/"
             className="navbar-pill flex items-center justify-center h-12 px-4 shrink-0"
-            style={{ overflow: 'visible', ['--beam-delay' as any]: '-2.3s' }}
+            style={{ overflow: 'visible' }}
           >
             <Logo3D />
           </Link>
 
           {/* Desktop Navigation — pill capsule */}
-          <div
-            className="hidden md:flex items-center gap-1 navbar-pill h-12 px-2"
-            style={{ ['--beam-delay' as any]: '-5.1s' }}
-          >
+          <div className="hidden md:flex items-center gap-1 navbar-pill h-12 px-2">
             {navLinks.map(link => 
               link.href.includes('#') ? (
                 <a
@@ -254,10 +251,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           </div>
 
           {/* CTA Button + Theme Toggle — pill capsule */}
-          <div
-            className="hidden md:flex items-center gap-2 navbar-pill h-12 px-2"
-            style={{ ['--beam-delay' as any]: '-7.4s' }}
-          >
+          <div className="hidden md:flex items-center gap-2 navbar-pill h-12 px-2">
             <ThemeToggle />
             {onCtaClick ? (
               <button
@@ -278,10 +272,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           </div>
 
           {/* Mobile Menu Button + Theme Toggle — pill capsule */}
-          <div
-            className="flex md:hidden items-center gap-1 navbar-pill h-12 px-2"
-            style={{ ['--beam-delay' as any]: '-4s' }}
-          >
+          <div className="flex md:hidden items-center gap-1 navbar-pill h-12 px-2">
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
