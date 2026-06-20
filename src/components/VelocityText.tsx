@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   motion,
   useScroll,
@@ -33,8 +33,22 @@ const VelocityRow = ({ children, direction, className }: VelocityRowProps) => {
   const x = useTransform(baseX, (v) => `${wrap(-25, -50, v)}%`);
 
   const directionFactor = useRef<number>(direction);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setActive(entry.isIntersecting),
+      { rootMargin: "100px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useAnimationFrame((t, delta) => {
+    if (!active) return;
     const velocity = velocityFactor.get();
     
     if (velocity < 0) {
@@ -48,7 +62,7 @@ const VelocityRow = ({ children, direction, className }: VelocityRowProps) => {
   });
 
   return (
-    <div className="w-full overflow-hidden whitespace-nowrap">
+    <div ref={containerRef} className="w-full overflow-hidden whitespace-nowrap">
       <motion.div
         className={`inline-block whitespace-nowrap font-syne font-bold uppercase text-lg md:text-xl tracking-wide ${className}`}
         style={{ 
@@ -68,8 +82,8 @@ const VelocityText = () => {
     <>
       {Array(6).fill(null).map((_, i) => (
         <span key={i}>
-          <span className="text-white">TRUSTED BY 1000+ STORES</span>
-          <span className="text-gray-500 mx-3">✦</span>
+          <span className="text-foreground">TRUSTED BY 1000+ STORES</span>
+          <span className="text-primary mx-3">✦</span>
         </span>
       ))}
     </>
@@ -79,8 +93,8 @@ const VelocityText = () => {
     <>
       {Array(6).fill(null).map((_, i) => (
         <span key={i}>
-          <span className="text-[#CCFF00] drop-shadow-[0_0_10px_rgba(204,255,0,0.7)]">PRICE CAN CHANGE ANYTIME!</span>
-          <span className="text-gray-500 mx-3">✦</span>
+          <span className="text-primary glow-text">PRICE CAN CHANGE ANYTIME!</span>
+          <span className="text-muted-foreground mx-3">✦</span>
         </span>
       ))}
     </>

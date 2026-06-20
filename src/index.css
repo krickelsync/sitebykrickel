@@ -39,6 +39,11 @@
     --glass-border: 0 0% 100% / 0.1;
     --glow-green: 74 100% 50%;
     --glow-intensity: 0.5;
+
+    /* Brand accents */
+    --gold: 45 100% 58%;
+    --gold-foreground: 0 0% 0%;
+    --success: 142 71% 45%;
   }
 
   .dark {
@@ -61,20 +66,54 @@
     --border: 0 0% 15%;
     --input: 0 0% 15%;
     --ring: 74 100% 50%;
+    --gold: 45 100% 58%;
+    --gold-foreground: 0 0% 0%;
+    --success: 142 71% 45%;
   }
 }
 
 /* Light mode with CSS invert filter */
 .light {
-  filter: invert(1) hue-rotate(180deg);
-}
+    /* Gallery White — premium SaaS aesthetic (Linear / Vercel / Apple) */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 4%;
 
-/* Keep images/videos normal (double invert = original) */
-.light img,
-.light video,
-.light canvas,
-.light [data-no-invert] {
-  filter: invert(1) hue-rotate(180deg);
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 4%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 4%;
+
+    /* Electric blue accent — no more neon yellow in light mode */
+    --primary: 218 100% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 4%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 218 100% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 218 100% 50%;
+
+    /* Glass / glow — hairline + soft shadow, no halo */
+    --glass-bg: 0 0% 0% / 0.02;
+    --glass-border: 0 0% 0% / 0.08;
+    --glow-green: 218 100% 50%;
+    --glow-intensity: 0;
+
+    /* Gold tone-down so it doesn't glare on white */
+    --gold: 38 75% 38%;
+    --gold-foreground: 0 0% 100%;
+    --success: 142 60% 38%;
 }
 
 @layer base {
@@ -130,60 +169,80 @@
     text-shadow: 0 0 15px hsl(45 100% 50% / 0.5);
   }
 
-  /* Exclude from light mode invert so gold stays gold */
+  /* ============================================== */
+  /* GALLERY WHITE — light theme overrides          */
+  /* Premium SaaS aesthetic: hairline borders +     */
+  /* soft shadows. NO neon halos.                   */
+  /* ============================================== */
+
+  .light .glow-text,
+  .light .glow-text-mobile {
+    color: hsl(0 0% 4%);
+    text-shadow: none;
+  }
+
   .light .glow-text-luxury,
   .light .glow-text-luxury-mobile {
-    filter: invert(1) hue-rotate(180deg);
+    color: hsl(38 75% 38%);
+    text-shadow: none;
   }
 
-  /* Light mode: Replace green with elegant deep blue for readability */
-  .light .glow-text {
-    color: hsl(220 80% 45%);
-    text-shadow: 
-      0 0 20px hsl(220 80% 50% / 0.5),
-      0 0 40px hsl(220 80% 50% / 0.3);
+  .light .glow-border {
+    box-shadow: 0 0 0 1px hsl(0 0% 90%);
   }
 
-  .light .glow-border,
   .light .glow-box {
-    box-shadow: 0 0 20px hsl(220 80% 50% / 0.3),
-                0 0 40px hsl(220 80% 50% / 0.2);
+    box-shadow: 0 1px 2px hsl(0 0% 0% / 0.04),
+                0 4px 12px -4px hsl(0 0% 0% / 0.08);
   }
 
   .light .hover-glow-intense:hover {
-    text-shadow: 
-      0 0 10px hsl(220 80% 50%),
-      0 0 20px hsl(220 80% 50%),
-      0 0 40px hsl(220 80% 50%);
+    text-shadow: none;
+    color: hsl(218 100% 50%);
   }
 
-  .light .text-primary {
-    color: hsl(220 80% 45%) !important;
+  /* Replace foreground→primary→foreground gradient with subtle ink gradient */
+  .light .text-gradient {
+    background-image: linear-gradient(
+      to right,
+      hsl(0 0% 4%),
+      hsl(0 0% 30%),
+      hsl(0 0% 4%)
+    );
   }
 
-  .light .border-primary {
-    border-color: hsl(220 80% 45%) !important;
+  /* Glass cards in light = solid surface + hairline border, no blur */
+  .light .glass,
+  .light .glass-card {
+    background-color: hsl(0 0% 98%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-color: hsl(0 0% 90%);
   }
 
-  .light .bg-primary {
-    background-color: hsl(220 80% 45%) !important;
+  /* Premium card gradient → flat surface in light */
+  .light .premium-card {
+    background: hsl(0 0% 98%);
+    border: 1px solid hsl(0 0% 90%);
+  }
+  .light .premium-card::before {
+    display: none;
   }
 
-  /* Exclude iframe previews from light mode invert */
-  .light iframe[data-no-invert] {
-    filter: invert(1) hue-rotate(180deg);
+  /* Shiny card decorations off in light */
+  .light .shiny-card {
+    background: hsl(0 0% 98%);
+    border: 1px solid hsl(0 0% 90%);
   }
 
   .glow-border {
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.3),
-                0 0 40px hsl(var(--primary) / 0.2),
-                inset 0 0 20px hsl(var(--primary) / 0.1);
+    box-shadow: 0 0 12px hsl(var(--primary) / 0.18),
+                inset 0 0 10px hsl(var(--primary) / 0.06);
   }
 
   .glow-box {
-    box-shadow: 0 0 30px hsl(var(--primary) / 0.4),
-                0 0 60px hsl(var(--primary) / 0.2),
-                0 0 90px hsl(var(--primary) / 0.1);
+    box-shadow: 0 0 16px hsl(var(--primary) / 0.22),
+                0 0 32px hsl(var(--primary) / 0.1);
   }
 
   .text-gradient {
@@ -281,12 +340,10 @@
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.3),
-                0 0 40px hsl(var(--primary) / 0.2);
+    box-shadow: 0 0 12px hsl(var(--primary) / 0.2);
   }
   50% {
-    box-shadow: 0 0 30px hsl(var(--primary) / 0.5),
-                0 0 60px hsl(var(--primary) / 0.3);
+    box-shadow: 0 0 18px hsl(var(--primary) / 0.32);
   }
 }
 
@@ -295,7 +352,7 @@
 }
 
 .animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
+  animation: pulse-glow 4s ease-in-out infinite;
 }
 
 /* Premium Luxury Hover Animations */
@@ -449,9 +506,8 @@
 
 .shiny-card:hover {
   box-shadow: 
-    0 0 20px hsl(0 0% 100% / 0.15),
-    0 0 40px hsl(0 0% 100% / 0.08),
-    inset 0 0 20px hsl(0 0% 100% / 0.03);
+    0 0 12px hsl(0 0% 100% / 0.1),
+    inset 0 0 10px hsl(0 0% 100% / 0.02);
 }
 
 /* CTA Button Shiny Sweep */
@@ -489,18 +545,30 @@
   animation: cta-shine 0.6s ease-out;
 }
 
+/* On touch devices / small screens, auto-loop the shine so the CTA still feels alive */
+@media (hover: none), (max-width: 768px) {
+  .cta-shiny::before {
+    animation: cta-shine 2.8s ease-in-out infinite;
+    animation-delay: 1.2s;
+  }
+}
+
 /* Mobile Performance Optimizations */
 @media (max-width: 768px) {
-  /* Disable heavy backdrop-blur */
+  /* Disable backdrop-blur on mobile: expensive over animated/WebGL layers */
   .glass,
   .glass-card {
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
+    background-color: hsl(var(--background) / 0.88) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
   /* Reduce glow effects */
-  .glow-text {
-    text-shadow: 0 0 10px hsl(var(--primary) / 0.4) !important;
+  .glow-text,
+  .glow-text-mobile,
+  .glow-text-luxury,
+  .glow-text-luxury-mobile {
+    text-shadow: 0 0 8px hsl(var(--primary) / 0.25) !important;
   }
 
   .glow-border {
@@ -518,7 +586,11 @@
 
   /* Simplify hover effects */
   .hover-glow-intense:hover {
-    text-shadow: 0 0 15px hsl(var(--primary) / 0.5) !important;
+    text-shadow: none !important;
+  }
+
+  .hero-grid-overlay {
+    animation: none !important;
   }
 
   /* Reduce premium card effects */
@@ -541,3 +613,197 @@
     transform: scale(1.02) !important;
   }
 }
+
+/* Custom cursor — hide native cursor when active (desktop only) */
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor [role="button"],
+  html.has-custom-cursor input,
+  html.has-custom-cursor textarea,
+  html.has-custom-cursor select,
+  html.has-custom-cursor label {
+    cursor: none !important;
+  }
+}
+
+/* Hero kinetic layers */
+@keyframes hero-grid-drift {
+  from { background-position: 0 0; }
+  to { background-position: 60px 60px; }
+}
+
+/* ============================================== */
+/* Navbar pill capsule — "shiny" glass            */
+/* Inspired by buildcleanslate.com header         */
+/* ============================================== */
+.navbar-pill {
+  position: relative;
+  border-radius: 9999px;
+  background: hsl(var(--background) / 0.25);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid hsl(var(--foreground) / 0.08);
+  box-shadow:
+    0 1px 0 hsl(var(--foreground) / 0.05) inset,
+    0 4px 14px -8px hsl(0 0% 0% / 0.3);
+  overflow: hidden;
+}
+
+.light .navbar-pill {
+  background: hsl(0 0% 100% / 0.35);
+  border-color: hsl(0 0% 0% / 0.06);
+  box-shadow:
+    0 1px 0 hsl(0 0% 100% / 0.9) inset,
+    0 6px 20px -10px hsl(0 0% 0% / 0.12),
+    0 2px 4px -1px hsl(0 0% 0% / 0.05);
+}
+
+/* Shiny sweep across the pill */
+@keyframes navbar-pill-shine {
+  0%   { transform: translateX(-120%) skewX(-20deg); }
+  60%  { transform: translateX(220%) skewX(-20deg); }
+  100% { transform: translateX(220%) skewX(-20deg); }
+}
+.navbar-pill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    hsl(var(--foreground) / 0.12) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  animation: navbar-pill-shine 10s ease-in-out infinite;
+}
+.light .navbar-pill::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    hsl(0 0% 100% / 0.9) 50%,
+    transparent 100%
+  );
+}
+
+/* ============================================== */
+/* Rotating conic outline glow (mobile menu)      */
+/* ============================================== */
+@property --menu-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes menu-glow-spin {
+  to { --menu-angle: 360deg; }
+}
+.menu-rotating-glow {
+  position: relative;
+  isolation: isolate;
+}
+.menu-rotating-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--menu-angle),
+    transparent 0deg,
+    hsl(0 0% 100%) 40deg,
+    hsl(0 0% 100%) 60deg,
+    transparent 130deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: menu-glow-spin 5s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+/* Fallback when @property unsupported — static soft outline */
+@supports not (background: conic-gradient(from 0deg, red, blue)) {
+  .menu-rotating-glow::before { display: none; }
+}
+
+/* Trusted badge — yellow/blue/white rotating shine outline */
+.badge-rotating-shine {
+  position: relative;
+  isolation: isolate;
+}
+.badge-rotating-shine::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--menu-angle),
+    transparent 0deg,
+    hsl(45 100% 60%) 30deg,
+    hsl(0 0% 100%) 50deg,
+    hsl(210 100% 65%) 70deg,
+    transparent 130deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: menu-glow-spin 5s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+.badge-shine-sweep::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(110deg, transparent 35%, hsl(0 0% 100% / 0.35) 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: badge-sweep 3.8s ease-in-out infinite;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+@keyframes badge-sweep {
+  0%   { transform: translateX(-100%); }
+  60%  { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+@supports not (background: conic-gradient(from 0deg, red, blue)) {
+  .badge-rotating-shine::before { display: none; }
+}
+
+@keyframes hero-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes scroll-line {
+  0%, 100% { transform: scaleY(0.4); opacity: 0.5; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+.animate-scroll-line {
+  animation: scroll-line 2.2s ease-in-out infinite;
+}
+.hero-grid-overlay {
+  background-image: linear-gradient(hsl(var(--primary)) 1px, transparent 1px),
+                    linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: hero-grid-drift 40s linear infinite;
+  mask-image: radial-gradient(ellipse at center, black, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black, transparent 75%);
+}
+.hero-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+

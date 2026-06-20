@@ -9,10 +9,47 @@ import Index from "./pages/Index";
 import Showcase from "./pages/Showcase";
 import About from "./pages/About";
 import Products from "./pages/Products";
+import ProductAIProductStudio from "./pages/ProductAIProductStudio";
+import ProductAIModelStudio from "./pages/ProductAIModelStudio";
 import NotFound from "./pages/NotFound";
-import MusicPlayer from "./components/MusicPlayer";
+import MobileBottomNav from "./components/MobileBottomNav";
+import SmoothScroll from "./components/SmoothScroll";
+import { useEffect, lazy, Suspense } from "react";
+import { installGlobalClickSound } from "@/lib/sound";
+
+const MusicPlayer = lazy(() => import("./components/MusicPlayer"));
+const CustomCursor = lazy(() => import("./components/CustomCursor"));
+const PageTransition = lazy(() => import("./components/PageTransition"));
 
 const queryClient = new QueryClient();
+
+const AppInner = () => {
+  useEffect(() => {
+    installGlobalClickSound();
+  }, []);
+  return (
+    <>
+      <SmoothScroll />
+      <Suspense fallback={null}>
+        <CustomCursor />
+        <PageTransition />
+      </Suspense>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/showcase" element={<Showcase />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/ai-product-studio" element={<ProductAIProductStudio />} />
+        <Route path="/products/ai-model-studio" element={<ProductAIModelStudio />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Suspense fallback={null}>
+        <MusicPlayer />
+      </Suspense>
+      <MobileBottomNav />
+    </>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -22,15 +59,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/showcase" element={<Showcase />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/products" element={<Products />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <MusicPlayer />
+            <AppInner />
           </BrowserRouter>
         </TooltipProvider>
       </MusicProvider>

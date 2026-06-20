@@ -92,7 +92,7 @@ const About = () => {
     title: "Precision Focused",
     description: "Whether it's pixel-perfect CSS or analyzing market charts."
   }];
-  return <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+  return <div className="min-h-dvh bg-background text-foreground overflow-x-hidden">
       <Navbar />
 
       {/* Hero Section with Spline */}
@@ -142,7 +142,7 @@ const About = () => {
               className="relative"
             >
               <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
-                <img src={workingImage} alt="Elfan working" className="w-full h-full object-cover" />
+                <img src={workingImage} alt="Elfan working" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
               </div>
               
@@ -194,7 +194,7 @@ const About = () => {
                 viewport={{ once: true }} 
                 className="relative aspect-video overflow-hidden rounded-xl mt-8"
               >
-                <img src={profileImage} alt="Elfan Tinar" className="w-full h-full object-cover" />
+                <img src={profileImage} alt="Elfan Tinar" loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-primary/10" />
               </motion.div>
             </motion.div>

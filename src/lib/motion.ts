@@ -1,0 +1,59 @@
+import type { Variants } from "framer-motion";
+
+/** Standard fade-up entry used across section content. */
+export const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+  },
+};
+
+/** Slightly larger travel for cards / grid items. */
+export const fadeUpLg: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+  },
+};
+
+/** Container that staggers its children's entry. */
+export const staggerContainer = (stagger = 0.08): Variants => ({
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: stagger },
+  },
+});
+
+/** Plain fade-in (no Y travel). */
+export const fadeIn: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] },
+  },
+};
+
+/** Reverse fade-up (entry from above). */
+export const fadeDown: Variants = {
+  hidden: { opacity: 0, y: -10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] },
+  },
+};
+
+/**
+ * Inline fade-up factory for hero/landing entry sequences where each block
+ * needs its own delay. Use directly on `initial`/`animate`/`transition` props.
+ */
+export const fadeUpDelay = (delay = 0, duration = 0.6) => ({
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration, delay, ease: [0.4, 0, 0.2, 1] as const },
+});

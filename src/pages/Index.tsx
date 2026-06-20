@@ -2,10 +2,12 @@ import { lazy, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
+import ScrollProgress from "@/components/ScrollProgress";
 
 // Lazy load below-the-fold components
 const Features = lazy(() => import("@/components/Features"));
 const Pricing = lazy(() => import("@/components/Pricing"));
+const CountdownBanner = lazy(() => import("@/components/CountdownBanner"));
 const CurvedLoop = lazy(() => import("@/components/CurvedLoop"));
 const FAQ = lazy(() => import("@/components/FAQ"));
 const Footer = lazy(() => import("@/components/Footer"));
@@ -19,12 +21,16 @@ const SectionLoader = () => (
 
 const Index = () => {
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <main className="min-h-dvh bg-background text-foreground overflow-x-hidden">
+      <ScrollProgress />
       <Navbar />
       <Hero />
       <Marquee />
       <Suspense fallback={<SectionLoader />}>
         <Features />
+      </Suspense>
+      <Suspense fallback={<SectionLoader />}>
+        <CountdownBanner />
       </Suspense>
       <Suspense fallback={<SectionLoader />}>
         <Pricing />

@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Instagram, Mail } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { scrollToId } from "@/lib/scroll";
+import { FOOTER_QUICK_LINKS, type NavLinkItem } from "@/lib/nav";
 const AnimatedBrandText = ({
   text,
   className,
@@ -52,33 +53,11 @@ const AnimatedBrandText = ({
     </motion.span>;
 };
 interface FooterProps {
-  customQuickLinks?: Array<{
-    name: string;
-    href: string;
-  }>;
+  customQuickLinks?: NavLinkItem[];
 }
 
 const Footer = ({ customQuickLinks }: FooterProps = {}) => {
-  const location = useLocation();
-  
-  const defaultQuickLinks = [{
-    name: "Home",
-    href: "/"
-  }, {
-    name: "About",
-    href: "/about"
-  }, {
-    name: "Portofolio",
-    href: "/showcase"
-  }, {
-    name: "Pricing",
-    href: "/#pricing"
-  }, {
-    name: "Contact",
-    href: "/about#contact"
-  }];
-
-  const quickLinks = customQuickLinks || defaultQuickLinks;
+  const quickLinks = customQuickLinks ?? FOOTER_QUICK_LINKS;
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith('#')) {
@@ -104,7 +83,11 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
         }} className="space-y-4">
             <h2 className="font-syne text-2xl md:text-3xl font-extrabold uppercase tracking-tight flex flex-col">
               <AnimatedBrandText text="SITE BY" className="text-foreground" />
-              <AnimatedBrandText text="KRICKEL" className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent" delay={0.4} />
+              <AnimatedBrandText
+                text="KRICKEL"
+                className="text-[hsl(38_75%_38%)] dark:text-transparent dark:bg-gradient-to-r dark:from-amber-300 dark:via-yellow-400 dark:to-amber-300 dark:bg-clip-text"
+                delay={0.4}
+              />
             </h2>
             <p className="font-mono text-sm text-muted-foreground max-w-xs">
               Creative Agency. Graphic & Web Design for Clothing Brands & any business ready to stand out.
@@ -167,15 +150,15 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
               Get in Touch
             </h3>
             <div className="space-y-3">
-              <a href="mailto:contact@sitebykrickel.com" className="flex items-center gap-3 font-mono text-sm text-muted-foreground hover:text-foreground transition-colors group">
+              <a href="mailto:contact@sitebykrickel.com" aria-label="Email contact@sitebykrickel.com" className="flex items-center gap-3 font-mono text-sm text-muted-foreground hover:text-foreground transition-colors group">
                 <div className="w-10 h-10 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
-                  <Mail size={16} />
+                  <Mail size={16} aria-hidden="true" />
                 </div>
                 <span>contact@sitebykrickel.com</span>
               </a>
-              <a href="https://www.instagram.com/krickel.sync/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 font-mono text-sm text-muted-foreground hover:text-foreground transition-colors group">
+              <a href="https://www.instagram.com/krickel.sync/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @krickel.sync (opens in new tab)" className="flex items-center gap-3 font-mono text-sm text-muted-foreground hover:text-foreground transition-colors group">
                 <div className="w-10 h-10 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
-                  <Instagram size={16} />
+                  <Instagram size={16} aria-hidden="true" />
                 </div>
                 <span>@krickel.sync</span>
               </a>

@@ -32,7 +32,7 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-6"
+      className="relative min-h-dvh flex flex-col items-center justify-center px-4 md:px-6"
     >
       {/* Beams Background */}
       <div className="absolute inset-0 z-0 pointer-events-none bg-background overflow-hidden">
