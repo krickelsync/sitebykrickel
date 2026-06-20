@@ -3,14 +3,26 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/products/ProductCard";
 
-const products: Array<{
-  title: string;
-  description: string;
-  price: number;
-  originalPrice: number;
-  image: string;
-  href: string;
-}> = [];
+const products = [
+  {
+    title: "AI Product Studio",
+    description:
+      "Generate clean, catalog-ready product visuals without traditional photoshoots.",
+    price: 70,
+    originalPrice: 100,
+    image: "/placeholder.svg",
+    href: "/products/ai-product-studio",
+  },
+  {
+    title: "AI Model Studio",
+    description:
+      "Create campaign and lookbook visuals using AI-generated fashion models.",
+    price: 70,
+    originalPrice: 100,
+    image: "/placeholder.svg",
+    href: "/products/ai-model-studio",
+  },
+];
 
 const Products = () => {
   return (
