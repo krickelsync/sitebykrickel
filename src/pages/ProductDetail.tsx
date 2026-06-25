@@ -17,11 +17,15 @@ const ProductDetail = () => {
   const [showStickyCTA, setShowStickyCTA] = useState(false);
 
   useEffect(() => {
+    setShowStickyCTA(false);
+    window.scrollTo({ top: 0, behavior: "auto" });
     const onScroll = () => setShowStickyCTA(window.scrollY > 480);
-    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      setShowStickyCTA(false);
+    };
+  }, [slug]);
 
   if (loading) {
     return (
