@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, ShoppingBag, Sparkles, Play, RefreshCw, Infinity as InfinityIcon, Zap, Check } from "lucide-react";
+import { ArrowLeft, ShoppingBag, Sparkles, Play, RefreshCw, Infinity as InfinityIcon, Zap, Star } from "lucide-react";
 import Footer from "@/components/Footer";
 import PayPalProvider from "@/components/PayPalProvider";
 import CheckoutModal from "@/components/products/CheckoutModal";
