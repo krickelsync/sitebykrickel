@@ -1,5 +1,4 @@
 import { lazy, Suspense } from "react";
-import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -23,7 +22,7 @@ const Index = () => {
   return (
     <main className="min-h-dvh bg-background text-foreground overflow-x-hidden">
       <ScrollProgress />
-      <Navbar />
+
       <Hero />
       <Marquee />
       <Suspense fallback={<SectionLoader />}>

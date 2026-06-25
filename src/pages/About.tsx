@@ -2,7 +2,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Palette, Code, Brain, TrendingUp, Lightbulb, RefreshCw, Target } from "lucide-react";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SkillBar from "@/components/SkillBar";
 import ExpertiseCard from "@/components/ExpertiseCard";
@@ -93,7 +92,7 @@ const About = () => {
     description: "Whether it's pixel-perfect CSS or analyzing market charts."
   }];
   return <div className="min-h-dvh bg-background text-foreground overflow-x-hidden">
-      <Navbar />
+
 
       {/* Hero Section with Spline */}
       <section className="relative flex flex-col">
