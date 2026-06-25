@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, ShoppingBag, Sparkles, Play, RefreshCw, Infinity as InfinityIcon, Zap, Check } from "lucide-react";
+import { ArrowLeft, ShoppingBag, Sparkles, Play, RefreshCw, Infinity as InfinityIcon, Zap, Star } from "lucide-react";
 import Footer from "@/components/Footer";
 import PayPalProvider from "@/components/PayPalProvider";
 import CheckoutModal from "@/components/products/CheckoutModal";
@@ -165,10 +165,16 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="space-y-3"
+        className="space-y-3 lg:sticky lg:top-28"
       >
-        <div className="relative aspect-square rounded-3xl overflow-hidden glass-card p-2">
-          <div className="w-full h-full rounded-2xl overflow-hidden bg-secondary/40 grid place-items-center">
+        <div className="relative aspect-square rounded-sm overflow-hidden border border-border bg-card/40">
+          <span aria-hidden className="absolute top-3 left-3 z-10 text-[10px] font-mono tracking-widest text-muted-foreground/70">
+            SYS_REV_02 // COMP_01
+          </span>
+          <span aria-hidden className="absolute bottom-3 right-3 z-10 text-[10px] font-mono tracking-widest text-muted-foreground/70">
+            SCALE_1.0_PRO
+          </span>
+          <div className="w-full h-full bg-secondary/40 grid place-items-center">
             {active && (
               <motion.img
                 key={active}
@@ -199,48 +205,69 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         transition={{ duration: 0.5, delay: 0.1 }}
         className="lg:pt-2"
       >
-        <span className="inline-flex items-center gap-2 px-3 py-1.5 mb-5 text-[11px] font-mono uppercase tracking-widest bg-primary/10 text-primary border border-primary/30 rounded-full">
-          <Sparkles className="w-3.5 h-3.5" /> Just released
-        </span>
+        {/* Meta row: badge + rating */}
+        <div className="flex flex-wrap items-center gap-3 mb-5">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-widest bg-primary/10 text-primary border border-primary/30 rounded-sm">
+            <Sparkles className="w-3 h-3" /> Just released
+          </span>
+          <div className="inline-flex items-center gap-1.5">
+            <div className="flex text-primary" aria-label="Rated 4.9 out of 5">
+              {[0, 1, 2, 3, 4].map((i) => (
+                <Star key={i} className="w-3.5 h-3.5 fill-current" />
+              ))}
+            </div>
+            <span className="text-xs font-mono font-bold">4.9</span>
+            <a href="#reviews" className="text-xs font-mono text-muted-foreground hover:text-primary transition-colors">
+              (200 reviews)
+            </a>
+          </div>
+        </div>
 
-        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[0.95] mb-5">
+        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight leading-[0.9] mb-4">
           {product.title}
         </h1>
 
         {product.tagline && (
-          <p className="text-lg md:text-xl text-foreground/90 mb-4 font-display">{product.tagline}</p>
+          <p className="text-base md:text-lg text-primary font-bold mb-5 border-l-2 border-primary pl-3 font-display">
+            {product.tagline}
+          </p>
         )}
         {product.description && (
-          <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-8 font-mono">
+          <p className="text-sm text-muted-foreground leading-relaxed mb-8 font-mono max-w-xl">
             {product.description}
           </p>
         )}
 
         {/* License card */}
-        <div className="mb-5">
-          <p className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground mb-2">
-            Choose your license type
+        <div className="mb-6">
+          <p className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">
+            Choose Your License
           </p>
-          <div className="relative rounded-2xl border-2 border-primary/60 bg-primary/[0.04] p-5 flex items-center justify-between gap-4 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 pointer-events-none" />
-            <div className="relative flex items-center gap-3">
-              <span className="w-6 h-6 rounded-full bg-primary text-primary-foreground grid place-items-center">
-                <Check className="w-4 h-4" strokeWidth={3} />
+          <div className="relative rounded-sm border-2 border-primary bg-primary/[0.06] p-5 flex items-center justify-between gap-4 overflow-hidden">
+            <div aria-hidden className="absolute top-0 right-0 w-16 h-16 bg-primary/10 rotate-45 translate-x-8 -translate-y-8 pointer-events-none" />
+            <div className="relative flex items-center gap-4 min-w-0">
+              <span className="w-5 h-5 shrink-0 rounded-full border-2 border-primary grid place-items-center">
+                <span className="w-2.5 h-2.5 rounded-full bg-primary" />
               </span>
-              <span className="font-display font-bold text-lg">Lifetime</span>
+              <div className="min-w-0">
+                <span className="block font-display font-bold text-base md:text-lg leading-tight">Lifetime License</span>
+                <span className="block text-[10px] font-mono uppercase tracking-widest text-muted-foreground mt-0.5">
+                  Free updates · Unlimited dev
+                </span>
+              </div>
             </div>
-            <div className="relative flex items-center gap-3">
+            <div className="relative text-right shrink-0">
               {hasDiscount && (
-                <span className="text-base text-muted-foreground line-through font-mono">
+                <span className="block text-[11px] text-muted-foreground line-through font-mono">
                   ${product.original_price}
                 </span>
               )}
-              <span className="text-2xl md:text-3xl font-bold font-mono text-primary">
+              <span className="block text-xl md:text-2xl font-bold font-mono text-primary leading-none">
                 ${product.price}
               </span>
               {hasDiscount && (
-                <span className="text-[10px] font-mono font-bold px-2 py-1 rounded-full bg-destructive/15 text-destructive">
-                  -{discountPct}%
+                <span className="inline-block mt-1 text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-sm bg-destructive/15 text-destructive border border-destructive/30">
+                  -{discountPct}% OFF
                 </span>
               )}
             </div>
@@ -250,7 +277,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         {/* CTA */}
         <button
           onClick={onBuy}
-          className="group relative w-full inline-flex items-center justify-center gap-2 px-8 py-5 rounded-2xl bg-gradient-to-r from-primary via-primary to-accent text-primary-foreground font-display font-bold uppercase tracking-wider text-base shadow-[0_10px_40px_-10px_hsl(var(--primary)/0.6)] hover:shadow-[0_15px_50px_-10px_hsl(var(--primary)/0.8)] transition-all"
+          className="group relative w-full inline-flex items-center justify-center gap-2 px-8 py-5 rounded-sm bg-primary text-primary-foreground font-display font-extrabold uppercase tracking-[0.2em] text-sm shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_45px_-5px_hsl(var(--primary)/0.9)] hover:bg-primary/90 active:scale-[0.99] transition-all"
         >
           <ShoppingBag className="w-5 h-5" />
           <span>Add to cart</span>
@@ -259,13 +286,13 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
 
         <a
           href="#demo"
-          className="mt-3 w-full inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl border border-border bg-card/40 backdrop-blur font-display font-bold uppercase tracking-wider text-sm hover:bg-card/70 transition"
+          className="mt-3 w-full inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm border border-border bg-card/40 backdrop-blur font-display font-bold uppercase tracking-[0.2em] text-xs hover:border-primary/50 hover:bg-card/70 transition"
         >
-          <Play className="w-4 h-4 fill-current" /> View Demo
+          <Play className="w-4 h-4 fill-current" /> View Live Demo
         </a>
 
         {/* Trust badges */}
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="mt-8 pt-6 border-t border-border grid grid-cols-3 gap-3">
           <TrustBadge icon={<RefreshCw className="w-4 h-4" />} title="Free updates" desc="Every update, on the house." />
           <TrustBadge icon={<InfinityIcon className="w-4 h-4" />} title="No subscription" desc="Pay once, lifetime access." />
           <TrustBadge icon={<Zap className="w-4 h-4" />} title="Instant delivery" desc="Download right after purchase." />
@@ -299,12 +326,13 @@ function Thumb({ src, active, onClick }: { src: string; active: boolean; onClick
 
 function TrustBadge({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
   return (
-    <div className="rounded-xl border border-border bg-card/40 backdrop-blur p-3">
-      <div className="flex items-center gap-2 text-primary mb-1">
+    <div className="rounded-sm border border-border bg-card/30 backdrop-blur p-3 space-y-1.5">
+      <div className="flex items-center gap-1.5 text-primary">
+        <span aria-hidden className="w-1 h-1 rounded-full bg-primary shrink-0" />
         {icon}
-        <span className="text-[11px] font-mono uppercase tracking-widest text-foreground font-bold">{title}</span>
+        <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-foreground font-bold truncate">{title}</span>
       </div>
-      <p className="text-xs text-muted-foreground leading-snug">{desc}</p>
+      <p className="text-[10px] sm:text-[11px] text-muted-foreground leading-snug font-mono">{desc}</p>
     </div>
   );
 }
