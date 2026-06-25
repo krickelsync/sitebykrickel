@@ -177,14 +177,14 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         transition={{ duration: 0.5 }}
         className="space-y-3 md:sticky md:top-28"
       >
-        <div className="relative aspect-square rounded-2xl overflow-hidden border border-border/60 bg-card/40">
+        <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-border/60 bg-card/40 isolate">
           <span aria-hidden className="hidden md:block absolute top-3 left-3 z-10 text-[10px] font-mono tracking-widest text-muted-foreground/70">
             SYS_REV_02 // COMP_01
           </span>
           <span aria-hidden className="hidden md:block absolute bottom-3 right-3 z-10 text-[10px] font-mono tracking-widest text-muted-foreground/70">
             SCALE_1.0_PRO
           </span>
-          <div className="w-full h-full bg-secondary/40 grid place-items-center">
+          <div className="absolute inset-0 bg-secondary/40 overflow-hidden">
             {active && (
               <motion.img
                 key={active}
@@ -193,14 +193,15 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
                 transition={{ duration: 0.35 }}
                 src={active}
                 alt={product.title}
-                className="w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover object-center"
+                loading="eager"
               />
             )}
           </div>
         </div>
 
         {allImages.length > 1 && (
-          <div className="grid grid-cols-6 gap-2">
+          <div className="grid grid-cols-6 gap-2 w-full">
             {allImages.map((img, i) => (
               <Thumb key={img + i} src={img} active={img === activeRaw} onClick={() => setActiveRaw(img)} />
             ))}
@@ -328,7 +329,8 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
           )}
         </div>
 
-        {/* CTA */}
+        {/* CTA stack */}
+        <div className="flex flex-col gap-2.5">
         <button
           onClick={onBuy}
           className="group relative w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-primary text-primary-foreground font-display font-extrabold uppercase tracking-[0.18em] shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_45px_-5px_hsl(var(--primary)/0.9)] hover:bg-primary/90 active:scale-[0.99] transition-all"
@@ -341,11 +343,12 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
 
         <a
           href="#demo"
-          className="mt-2.5 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl border border-border bg-card/40 backdrop-blur font-display font-bold uppercase tracking-[0.18em] hover:border-primary/50 hover:bg-card/70 transition"
+          className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl border border-border bg-card/40 backdrop-blur font-display font-bold uppercase tracking-[0.18em] hover:border-primary/50 hover:bg-card/70 transition"
           style={{ fontSize: "clamp(0.6875rem, 0.62rem + 0.25vw, 0.8125rem)" }}
         >
           <Play className="w-3.5 h-3.5 fill-current" /> View Live Demo
         </a>
+        </div>
 
         <div className="mt-7 pt-6 border-t border-border/60 grid grid-cols-3 gap-3">
           <TrustBadge icon={<RefreshCw className="w-4 h-4" />} title="Free updates" desc="Every update, on the house." />
