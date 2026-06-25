@@ -1,5 +1,16 @@
+import { lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import type { LandingBlock } from "@/hooks/useProducts";
+
+const AnimatedHero = lazy(() => import("./landing/AnimatedHero"));
+const MarqueeBlock = lazy(() => import("./landing/MarqueeBlock"));
+const VelocityTextBlock = lazy(() => import("./landing/VelocityTextBlock"));
+const ShowcaseGrid = lazy(() => import("./landing/ShowcaseGrid"));
+const ReviewsWall = lazy(() => import("./landing/ReviewsWall"));
+const StatsStrip = lazy(() => import("./landing/StatsStrip"));
+const BigText = lazy(() => import("./landing/BigText"));
+const BeforeAfterBlock = lazy(() => import("./landing/BeforeAfterBlock"));
+const CtaBanner = lazy(() => import("./landing/CtaBanner"));
 
 interface Props {
   blocks: LandingBlock[];
@@ -17,7 +28,7 @@ const LandingBlocks = ({ blocks }: Props) => {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
         >
-          {renderBlock(block)}
+          <Suspense fallback={<div className="h-32" />}>{renderBlock(block)}</Suspense>
         </motion.section>
       ))}
     </div>
@@ -104,6 +115,24 @@ function renderBlock(block: LandingBlock) {
           ))}
         </div>
       );
+    case "animated_hero":
+      return <AnimatedHero {...block} />;
+    case "marquee":
+      return <MarqueeBlock {...block} />;
+    case "velocity_text":
+      return <VelocityTextBlock {...block} />;
+    case "showcase_grid":
+      return <ShowcaseGrid {...block} />;
+    case "reviews_wall":
+      return <ReviewsWall {...block} />;
+    case "stats_strip":
+      return <StatsStrip {...block} />;
+    case "big_text":
+      return <BigText {...block} />;
+    case "before_after":
+      return <BeforeAfterBlock {...block} />;
+    case "cta_banner":
+      return <CtaBanner {...block} />;
     default:
       return null;
   }
