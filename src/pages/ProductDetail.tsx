@@ -7,12 +7,21 @@ import PayPalProvider from "@/components/PayPalProvider";
 import CheckoutModal from "@/components/products/CheckoutModal";
 import LandingBlocks from "@/components/products/LandingBlocks";
 import { useProduct, useProducts, useResolvedImage, resolveImageUrl, type Product } from "@/hooks/useProducts";
+import { AnimatePresence } from "framer-motion";
 
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const { product, loading } = useProduct(slug);
   const { products: allProducts } = useProducts();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [showStickyCTA, setShowStickyCTA] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShowStickyCTA(window.scrollY > 480);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   if (loading) {
     return (
@@ -86,6 +95,43 @@ const ProductDetail = () => {
           productName={product.title}
           price={product.price}
         />
+
+        {/* Mobile sticky glass CTA */}
+        <AnimatePresence>
+          {product && showStickyCTA && (
+            <motion.div
+              key="sticky-cta"
+              initial={{ y: 80, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 80, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 320, damping: 30 }}
+              className="md:hidden fixed left-3 right-3 bottom-[5.25rem] z-40"
+            >
+              <div className="navbar-pill menu-rotating-glow rounded-2xl px-3 py-2.5 flex items-center gap-3">
+                <div className="flex flex-col leading-tight min-w-0 flex-1 pl-1">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground truncate">
+                    {product.title}
+                  </span>
+                  <span className="font-mono font-bold text-base text-primary">
+                    ${product.price}
+                    {product.original_price && product.original_price > product.price && (
+                      <span className="ml-2 text-[11px] text-muted-foreground line-through font-normal">
+                        ${product.original_price}
+                      </span>
+                    )}
+                  </span>
+                </div>
+                <button
+                  onClick={() => setCheckoutOpen(true)}
+                  className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-primary via-primary to-accent text-primary-foreground font-display font-bold uppercase tracking-wider text-xs shadow-[0_6px_24px_-8px_hsl(var(--primary)/0.7)]"
+                >
+                  <ShoppingBag className="w-4 h-4" />
+                  Add to cart
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </PayPalProvider>
   );
