@@ -105,7 +105,7 @@ const ProductDetail = () => {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 80, opacity: 0 }}
               transition={{ type: "spring", stiffness: 320, damping: 30 }}
-              className="md:hidden fixed left-3 right-3 bottom-[5.25rem] z-40"
+              className="md:hidden fixed left-3 right-3 bottom-3 z-40"
             >
               <div className="navbar-pill menu-rotating-glow rounded-2xl px-3 py-2.5 flex items-center gap-3">
                 <div className="flex flex-col leading-tight min-w-0 flex-1 pl-1">

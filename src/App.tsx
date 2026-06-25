@@ -33,6 +33,7 @@ const AppInner = () => {
   }, []);
   const location = useLocation();
   const hideChrome = location.pathname.startsWith("/admin");
+  const hideMobileNav = hideChrome || /^\/products\/[^/]+$/.test(location.pathname);
   return (
     <>
       <SmoothScroll />
@@ -55,7 +56,7 @@ const AppInner = () => {
       <Suspense fallback={null}>
         <MusicPlayer />
       </Suspense>
-      {!hideChrome && <MobileBottomNav />}
+      {!hideMobileNav && <MobileBottomNav />}
     </>
   );
 };
