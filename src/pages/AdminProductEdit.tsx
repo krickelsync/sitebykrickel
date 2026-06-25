@@ -123,6 +123,15 @@ const AdminProductEdit = () => {
       features: { type: "features", items: [] },
       video: { type: "video", url: "" },
       faq: { type: "faq", items: [] },
+      animated_hero: { type: "animated_hero", title: "", subtitle: "", badge: "", eyebrow: "", ctaLabel: "", ctaHref: "", bgVariant: "grid" },
+      marquee: { type: "marquee", items: [], speed: 30, direction: "left" },
+      velocity_text: { type: "velocity_text", rows: [{ text: "", velocity: -2 }] },
+      showcase_grid: { type: "showcase_grid", items: [], columns: 3 },
+      reviews_wall: { type: "reviews_wall", columns: [[]] },
+      stats_strip: { type: "stats_strip", items: [] },
+      big_text: { type: "big_text", lines: [""], align: "center" },
+      before_after: { type: "before_after", beforeImage: "", afterImage: "", beforeLabel: "BEFORE", afterLabel: "AFTER" },
+      cta_banner: { type: "cta_banner", title: "", subtitle: "", ctaLabel: "", ctaHref: "", bgVariant: "glow" },
     };
     setForm((f) => ({ ...f, landing_content: [...f.landing_content, defaults[type]] }));
   };
@@ -232,7 +241,11 @@ const AdminProductEdit = () => {
           <div className="flex justify-between items-center flex-wrap gap-2">
             <h2 className="font-display font-bold">Landing page blocks</h2>
             <div className="flex flex-wrap gap-1">
-              {(["hero", "text", "image", "gallery", "features", "video", "faq"] as const).map((t) => (
+              {([
+                "animated_hero", "big_text", "marquee", "velocity_text", "showcase_grid",
+                "reviews_wall", "stats_strip", "before_after", "cta_banner",
+                "hero", "text", "image", "gallery", "features", "video", "faq",
+              ] as const).map((t) => (
                 <button key={t} onClick={() => addBlock(t)} className="px-2 py-1 rounded bg-secondary text-xs font-mono">
                   <Plus className="w-3 h-3 inline" /> {t}
                 </button>
