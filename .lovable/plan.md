@@ -1,90 +1,74 @@
-# Product Store + Admin Panel Realtime
 
-Tujuan: `/products` jadi katalog produk digital ala buildcleanslate. User klik produk → langsung halaman detail dengan tombol **Buy Now (PayPal)** di atas, landing page panjang di bawahnya. Lo (admin) bisa kelola produk realtime dari dashboard di web sendiri, tanpa edit code via Lovable.
+# Migrate Static Landings → Admin-Editable Blocks
 
----
-
-## 1. Database (Lovable Cloud)
-
-Tabel baru di backend:
-
-**`products`**
-- `id` (uuid), `slug` (unique), `title`, `tagline`, `description` (long text/markdown), `price`, `original_price`, `cover_image`, `gallery` (text[]), `features` (jsonb), `landing_content` (jsonb — blocks: hero, image, text, video, faq, dst), `is_published` (bool), `sort_order`, `created_at`, `updated_at`.
-
-**`user_roles`** + enum `app_role('admin','user')` + function `has_role()` (pola standar, anti-recursive RLS).
-
-**`orders`** (optional, recommended)
-- `id`, `product_id`, `buyer_email`, `paypal_order_id`, `amount`, `status`, `created_at`.
-
-**RLS**
-- `products`: SELECT public untuk `is_published=true`; INSERT/UPDATE/DELETE hanya `has_role(auth.uid(),'admin')`.
-- `user_roles`: SELECT untuk authenticated, write service_role saja.
-- `orders`: insert via edge function service_role.
-
-**Storage bucket** `product-images` (public read, admin write) untuk upload foto.
+Tujuan: dua halaman static (`ProductAIProductStudio`, `ProductAIModelStudio`) dipecah jadi block components yang lengkap dengan animasi & background efek, dan **semuanya bisa diatur dari `/admin/products/:id`**.
 
 ---
 
-## 2. Auth
+## 1. Block components baru (di `src/components/products/landing/`)
 
-- Email+password + Google login.
-- Lo daftar sekali → gw insert row `user_roles` (admin) untuk user_id lo via SQL.
-- Tidak ada signup admin publik.
+Tiap block = komponen React standalone yang baca data dari JSON, animasi & background tetap original.
 
----
+| Block type | Isi (admin fields) | Visual |
+|---|---|---|
+| `animated_hero` | eyebrow, title, subtitle, badge, ctaLabel, bgVariant (grid/prism/noise) | Headline animasi word-rotate, grid drift bg, scroll parallax |
+| `marquee` | items[], speed, direction | ProductMarquee infinite scroll |
+| `velocity_text` | text, color | ProductVelocityText scroll-reactive |
+| `showcase_grid` | items[{image, caption}] | Grid bento dengan hover lift + caption |
+| `before_after` | beforeImage, afterImage, label | BeforeAfterSlider |
+| `reviews_wall` | columns[][{name, initials, rating, content, avatarColor}] | 2-3 kolom auto-scroll vertikal, animasi loop |
+| `stats_strip` | items[{value, label}] | Counter-up on scroll |
+| `big_text` | lines[], emphasisColor | Huge display text masked, fade-in stagger |
+| `cta_banner` | title, subtitle, ctaLabel, bgVariant | Glass card + glow pulse |
 
-## 3. Halaman Frontend
+Block lama (hero/text/image/gallery/features/video/faq) tetap jalan.
 
-```
-/products              → grid katalog (dynamic dari DB)
-/products/:slug        → halaman produk:
-                          - Atas: gambar + harga + PayPal Buy Now (CheckoutModal existing)
-                          - Bawah: landing page panjang di-render dari landing_content blocks
-                            (hero, features, before/after, FAQ, testimonial, dst)
-/admin/login           → login form
-/admin                 → dashboard (protected, admin-only)
-  - List produk + toggle publish, reorder
-  - Create/Edit produk: form + block editor untuk landing_content
-  - Upload gambar (drag-drop ke storage)
-  - Orders log (read-only)
-```
+## 2. Update `LandingBlocks.tsx`
 
-Realtime: pakai `supabase.channel().on('postgres_changes', ...)` di `/products` & `/products/:slug` supaya update di admin langsung muncul tanpa refresh.
+Tambah switch case untuk tiap type baru, lazy-import komponen biar bundle gak gede. Wrap masing-masing dengan `motion.section` + `whileInView` (sudah ada).
 
----
+## 3. Update `useProducts.ts`
 
-## 4. Landing Page Block Renderer
+Tambah type union untuk block baru di `LandingBlock`.
 
-`landing_content` disimpan sebagai array block JSON, contoh:
-```json
-[
-  {"type":"hero","title":"...","image":"..."},
-  {"type":"features","items":[...]},
-  {"type":"gallery","images":[...]},
-  {"type":"text","markdown":"..."},
-  {"type":"faq","items":[...]}
-]
-```
-Komponen `<LandingBlocks blocks={...} />` map tiap type ke komponen React. Admin tinggal add/remove/reorder block di dashboard — gak perlu touch code.
+## 4. Update `AdminProductEdit.tsx`
 
----
+- Tambah button "+ <type>" untuk tiap block baru
+- `BlockEditor` switch case baru: form sederhana per type
+  - Array items: tombol add/remove/reorder
+  - Image fields: input URL + upload (reuse `handleUpload` logic, output ke `cover_image` storage)
+- Default factory di `addBlock()` lengkap untuk tiap type
 
-## 5. PayPal Flow (sudah ada)
+## 5. Migrasi data 2 produk existing
 
-`CheckoutModal` existing dipakai ulang, tinggal pass `productName` + `price` dari row DB. Setelah `onApprove`, edge function `record-order` insert ke `orders` + (opsional) kirim email lisensi via Resend.
+SQL update `landing_content` untuk `ai-product-studio` & `ai-model-studio` — translate semua section static jadi array block JSON yang setara visual.
 
----
+## 6. Hapus override route
 
-## 6. Yang gw butuh dari lo
+Hapus route specific `/products/ai-product-studio` & `/products/ai-model-studio` di `App.tsx` + delete file:
+- `src/pages/ProductAIProductStudio.tsx`
+- `src/pages/ProductAIModelStudio.tsx`
 
-1. Konfirmasi mau gw mulai → gw bikin migration tabel + RLS + storage bucket + admin pages.
-2. Email lo (buat di-set sebagai admin pertama).
-3. Setelah backend jadi: lo set PayPal Client ID via secret (`VITE_PAYPAL_CLIENT_ID`).
+Semua produk sekarang lewat satu route dinamis `/products/:slug` → render via `LandingBlocks`.
+
+## 7. Animasi & background global
+
+Background effects (grid drift, noise, prism glow) jadi opsi `bgVariant` per block — toggle dari admin via dropdown. CSS keyframe sudah ada di `index.css`.
 
 ---
 
-## Catatan teknis (buat gw inget)
+## Technical Details
 
-- Edit code di Lovable tetap dibutuhin sekali untuk bikin sistem. Setelah live, semua CRUD produk via `/admin` — gak nyentuh code lagi.
-- Block editor versi pertama: form sederhana (tambah block, pilih type, isi field). Bukan WYSIWYG drag-drop full Webflow-style — itu scope gede; kalau mau ditingkatin nanti tinggal upgrade komponen editor.
-- Realtime publication enable via `ALTER PUBLICATION supabase_realtime ADD TABLE public.products;`.
+- Lazy-load berat block (reviews_wall, marquee) via `React.lazy` di LandingBlocks
+- `BlockEditor` di-split jadi file per type kalau >300 baris (`src/components/admin/blocks/*.tsx`)
+- Asset existing (portfolio images) tetap dipake — admin tinggal paste URL hasil upload atau path storage
+- Migrasi SQL via tool `supabase--insert` (UPDATE jsonb), bukan migration
+
+## Yang lo dapet
+- 2 halaman lama balik 100% visually + animasi
+- Lo bisa ubah headline, gambar, reviews, marquee text, dst dari `/admin` realtime tanpa nyentuh code
+- Produk baru cukup tambah block-block ini → instant landing premium
+
+---
+
+Approve buat gw mulai garap?
