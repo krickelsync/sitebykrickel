@@ -326,12 +326,13 @@ function Thumb({ src, active, onClick }: { src: string; active: boolean; onClick
 
 function TrustBadge({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
   return (
-    <div className="rounded-xl border border-border bg-card/40 backdrop-blur p-3">
-      <div className="flex items-center gap-2 text-primary mb-1">
+    <div className="rounded-sm border border-border bg-card/30 backdrop-blur p-3 space-y-1.5">
+      <div className="flex items-center gap-1.5 text-primary">
+        <span aria-hidden className="w-1 h-1 rounded-full bg-primary shrink-0" />
         {icon}
-        <span className="text-[11px] font-mono uppercase tracking-widest text-foreground font-bold">{title}</span>
+        <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-foreground font-bold truncate">{title}</span>
       </div>
-      <p className="text-xs text-muted-foreground leading-snug">{desc}</p>
+      <p className="text-[10px] sm:text-[11px] text-muted-foreground leading-snug font-mono">{desc}</p>
     </div>
   );
 }
