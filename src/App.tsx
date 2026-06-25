@@ -19,8 +19,6 @@ const MusicPlayer = lazy(() => import("./components/MusicPlayer"));
 const CustomCursor = lazy(() => import("./components/CustomCursor"));
 const PageTransition = lazy(() => import("./components/PageTransition"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
-const ProductAIProductStudio = lazy(() => import("./pages/ProductAIProductStudio"));
-const ProductAIModelStudio = lazy(() => import("./pages/ProductAIModelStudio"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminProductEdit = lazy(() => import("./pages/AdminProductEdit"));
@@ -43,8 +41,6 @@ const AppInner = () => {
         <Route path="/showcase" element={<Showcase />} />
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/products/ai-product-studio" element={<Suspense fallback={null}><ProductAIProductStudio /></Suspense>} />
-        <Route path="/products/ai-model-studio" element={<Suspense fallback={null}><ProductAIModelStudio /></Suspense>} />
         <Route path="/products/:slug" element={<Suspense fallback={null}><ProductDetail /></Suspense>} />
         <Route path="/admin/login" element={<Suspense fallback={null}><AdminLogin /></Suspense>} />
         <Route path="/admin" element={<Suspense fallback={null}><Admin /></Suspense>} />
