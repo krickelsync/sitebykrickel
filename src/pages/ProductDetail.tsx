@@ -165,10 +165,16 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="space-y-3"
+        className="space-y-3 lg:sticky lg:top-28"
       >
-        <div className="relative aspect-square rounded-3xl overflow-hidden glass-card p-2">
-          <div className="w-full h-full rounded-2xl overflow-hidden bg-secondary/40 grid place-items-center">
+        <div className="relative aspect-square rounded-sm overflow-hidden border border-border bg-card/40">
+          <span aria-hidden className="absolute top-3 left-3 z-10 text-[10px] font-mono tracking-widest text-muted-foreground/70">
+            SYS_REV_02 // COMP_01
+          </span>
+          <span aria-hidden className="absolute bottom-3 right-3 z-10 text-[10px] font-mono tracking-widest text-muted-foreground/70">
+            SCALE_1.0_PRO
+          </span>
+          <div className="w-full h-full bg-secondary/40 grid place-items-center">
             {active && (
               <motion.img
                 key={active}
