@@ -8,7 +8,16 @@ export type LandingBlock =
   | { type: "gallery"; images: string[] }
   | { type: "features"; items: { title: string; description?: string }[] }
   | { type: "video"; url: string }
-  | { type: "faq"; items: { q: string; a: string }[] };
+  | { type: "faq"; items: { q: string; a: string }[] }
+  | { type: "animated_hero"; eyebrow?: string; title: string; subtitle?: string; badge?: string; ctaLabel?: string; ctaHref?: string; bgVariant?: "grid" | "prism" | "noise" | "none" }
+  | { type: "marquee"; items: string[]; speed?: number; direction?: "left" | "right"; color?: string }
+  | { type: "velocity_text"; rows: { text: string; velocity?: number; color?: string }[] }
+  | { type: "showcase_grid"; items: { image: string; caption?: string }[]; columns?: 2 | 3 | 4 }
+  | { type: "reviews_wall"; columns: { name: string; initials?: string; rating?: number; content: string; avatarColor?: string }[][] }
+  | { type: "stats_strip"; items: { value: string; label: string }[] }
+  | { type: "big_text"; lines: string[]; emphasisColor?: string; align?: "left" | "center" | "right" }
+  | { type: "before_after"; beforeImage: string; afterImage: string; beforeLabel?: string; afterLabel?: string; title?: string }
+  | { type: "cta_banner"; title: string; subtitle?: string; ctaLabel?: string; ctaHref?: string; bgVariant?: "glow" | "grid" | "none" };
 
 export interface Product {
   id: string;
