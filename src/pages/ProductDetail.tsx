@@ -78,7 +78,13 @@ const ProductDetail = () => {
               <ArrowLeft className="w-4 h-4" /> All products
             </Link>
 
-            <ProductHero product={product} onBuy={() => setCheckoutOpen(true)} />
+            <div className="relative rounded-3xl border border-border/60 bg-gradient-to-br from-card/60 via-card/30 to-background/40 backdrop-blur-xl p-5 md:p-8 lg:p-10 overflow-hidden">
+              <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.15] hero-grid-overlay" />
+              <div aria-hidden className="pointer-events-none absolute -top-32 -right-32 w-96 h-96 rounded-full bg-primary/20 blur-3xl" />
+              <div className="relative">
+                <ProductHero product={product} onBuy={() => setCheckoutOpen(true)} />
+              </div>
+            </div>
 
             {related.length > 0 && (
               <RelatedProducts items={related} />
@@ -159,7 +165,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
     : 0;
 
   return (
-    <section className="grid lg:grid-cols-[1.1fr_1fr] gap-8 lg:gap-14 items-start">
+    <section className="grid lg:grid-cols-[1.1fr_1fr] gap-6 lg:gap-10 items-start">
       {/* Gallery */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -167,7 +173,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         transition={{ duration: 0.5 }}
         className="space-y-3 lg:sticky lg:top-28"
       >
-        <div className="relative aspect-square rounded-sm overflow-hidden border border-border bg-card/40">
+        <div className="relative aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden border border-border/60 bg-card/40">
           <span aria-hidden className="absolute top-3 left-3 z-10 text-[10px] font-mono tracking-widest text-muted-foreground/70">
             SYS_REV_02 // COMP_01
           </span>
@@ -190,7 +196,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         </div>
 
         {allImages.length > 1 && (
-          <div className="grid grid-cols-6 sm:grid-cols-8 gap-2">
+          <div className="grid grid-cols-6 sm:grid-cols-8 gap-1.5">
             {allImages.map((img, i) => (
               <Thumb key={img + i} src={img} active={img === activeRaw} onClick={() => setActiveRaw(img)} />
             ))}
@@ -206,8 +212,8 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         className="lg:pt-2"
       >
         {/* Meta row: badge + rating */}
-        <div className="flex flex-wrap items-center gap-3 mb-5">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-widest bg-primary/10 text-primary border border-primary/30 rounded-sm">
+        <div className="flex flex-wrap items-center gap-3 mb-4">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-widest bg-primary/10 text-primary border border-primary/30 rounded-full">
             <Sparkles className="w-3 h-3" /> Just released
           </span>
           <div className="inline-flex items-center gap-1.5">
@@ -223,76 +229,74 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
           </div>
         </div>
 
-        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight leading-[0.9] mb-4">
+        <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight leading-[0.95] mb-3">
           {product.title}
         </h1>
 
         {product.tagline && (
-          <p className="text-base md:text-lg text-primary font-bold mb-5 border-l-2 border-primary pl-3 font-display">
+          <p className="text-sm md:text-base text-primary font-bold mb-4 border-l-2 border-primary pl-3 font-display">
             {product.tagline}
           </p>
         )}
         {product.description && (
-          <p className="text-sm text-muted-foreground leading-relaxed mb-8 font-mono max-w-xl">
+          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed mb-6 font-mono max-w-xl">
             {product.description}
           </p>
         )}
 
         {/* License card */}
-        <div className="mb-6">
-          <p className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-muted-foreground mb-3">
+        <div className="mb-5">
+          <p className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-muted-foreground mb-2.5">
             Choose Your License
           </p>
-          <div className="relative rounded-sm border-2 border-primary bg-primary/[0.06] p-5 flex items-center justify-between gap-4 overflow-hidden">
-            <div aria-hidden className="absolute top-0 right-0 w-16 h-16 bg-primary/10 rotate-45 translate-x-8 -translate-y-8 pointer-events-none" />
-            <div className="relative flex items-center gap-4 min-w-0">
+          <div className="relative rounded-full border-2 border-primary bg-primary/[0.06] py-3 pl-4 pr-5 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3 min-w-0">
               <span className="w-5 h-5 shrink-0 rounded-full border-2 border-primary grid place-items-center">
                 <span className="w-2.5 h-2.5 rounded-full bg-primary" />
               </span>
               <div className="min-w-0">
-                <span className="block font-display font-bold text-base md:text-lg leading-tight">Lifetime License</span>
-                <span className="block text-[10px] font-mono uppercase tracking-widest text-muted-foreground mt-0.5">
+                <span className="block font-display font-bold text-sm md:text-base leading-tight">Lifetime License</span>
+                <span className="block text-[10px] font-mono uppercase tracking-widest text-muted-foreground mt-0.5 truncate">
                   Free updates · Unlimited dev
                 </span>
               </div>
             </div>
-            <div className="relative text-right shrink-0">
+            <div className="text-right shrink-0">
               {hasDiscount && (
                 <span className="block text-[11px] text-muted-foreground line-through font-mono">
                   ${product.original_price}
                 </span>
               )}
-              <span className="block text-xl md:text-2xl font-bold font-mono text-primary leading-none">
+              <span className="block text-lg md:text-xl font-bold font-mono text-primary leading-none">
                 ${product.price}
               </span>
-              {hasDiscount && (
-                <span className="inline-block mt-1 text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-sm bg-destructive/15 text-destructive border border-destructive/30">
-                  -{discountPct}% OFF
-                </span>
-              )}
             </div>
           </div>
+          {hasDiscount && (
+            <span className="inline-block mt-2 text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-destructive/15 text-destructive border border-destructive/30">
+              -{discountPct}% OFF
+            </span>
+          )}
         </div>
 
         {/* CTA */}
         <button
           onClick={onBuy}
-          className="group relative w-full inline-flex items-center justify-center gap-2 px-8 py-5 rounded-sm bg-primary text-primary-foreground font-display font-extrabold uppercase tracking-[0.2em] text-sm shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_45px_-5px_hsl(var(--primary)/0.9)] hover:bg-primary/90 active:scale-[0.99] transition-all"
+          className="group relative w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-primary text-primary-foreground font-display font-extrabold uppercase tracking-[0.2em] text-xs md:text-sm shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_45px_-5px_hsl(var(--primary)/0.9)] hover:bg-primary/90 active:scale-[0.99] transition-all"
         >
-          <ShoppingBag className="w-5 h-5" />
+          <ShoppingBag className="w-4 h-4" />
           <span>Add to cart</span>
           <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
         </button>
 
         <a
           href="#demo"
-          className="mt-3 w-full inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm border border-border bg-card/40 backdrop-blur font-display font-bold uppercase tracking-[0.2em] text-xs hover:border-primary/50 hover:bg-card/70 transition"
+          className="mt-2.5 w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-border bg-card/40 backdrop-blur font-display font-bold uppercase tracking-[0.2em] text-[11px] hover:border-primary/50 hover:bg-card/70 transition"
         >
-          <Play className="w-4 h-4 fill-current" /> View Live Demo
+          <Play className="w-3.5 h-3.5 fill-current" /> View Live Demo
         </a>
 
-        {/* Trust badges */}
-        <div className="mt-8 pt-6 border-t border-border grid grid-cols-3 gap-3">
+        <div className="mt-6 pt-5 border-t border-border/60 grid grid-cols-3 gap-2">
           <TrustBadge icon={<RefreshCw className="w-4 h-4" />} title="Free updates" desc="Every update, on the house." />
           <TrustBadge icon={<InfinityIcon className="w-4 h-4" />} title="No subscription" desc="Pay once, lifetime access." />
           <TrustBadge icon={<Zap className="w-4 h-4" />} title="Instant delivery" desc="Download right after purchase." />
