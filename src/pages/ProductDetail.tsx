@@ -78,13 +78,7 @@ const ProductDetail = () => {
               <ArrowLeft className="w-4 h-4" /> All products
             </Link>
 
-            <div className="relative rounded-3xl border border-border/60 bg-gradient-to-br from-card/60 via-card/30 to-background/40 backdrop-blur-xl p-5 md:p-8 lg:p-10 overflow-hidden">
-              <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.15] hero-grid-overlay" />
-              <div aria-hidden className="pointer-events-none absolute -top-32 -right-32 w-96 h-96 rounded-full bg-primary/20 blur-3xl" />
-              <div className="relative">
-                <ProductHero product={product} onBuy={() => setCheckoutOpen(true)} />
-              </div>
-            </div>
+            <ProductHero product={product} onBuy={() => setCheckoutOpen(true)} />
 
             {related.length > 0 && (
               <RelatedProducts items={related} />
@@ -174,10 +168,10 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         className="space-y-3 lg:sticky lg:top-28"
       >
         <div className="relative aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden border border-border/60 bg-card/40">
-          <span aria-hidden className="absolute top-3 left-3 z-10 text-[10px] font-mono tracking-widest text-muted-foreground/70">
+          <span aria-hidden className="hidden md:block absolute top-3 left-3 z-10 text-[10px] font-mono tracking-widest text-muted-foreground/70">
             SYS_REV_02 // COMP_01
           </span>
-          <span aria-hidden className="absolute bottom-3 right-3 z-10 text-[10px] font-mono tracking-widest text-muted-foreground/70">
+          <span aria-hidden className="hidden md:block absolute bottom-3 right-3 z-10 text-[10px] font-mono tracking-widest text-muted-foreground/70">
             SCALE_1.0_PRO
           </span>
           <div className="w-full h-full bg-secondary/40 grid place-items-center">
