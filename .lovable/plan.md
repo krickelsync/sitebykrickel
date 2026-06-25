@@ -1,80 +1,90 @@
-# Build Plan — Garap Pelan-Pelan, Pastiin Smua Work
+# Product Store + Admin Panel Realtime
 
-Garapan dibagi jadi **4 fase**. Tiap task selesai → verify via screenshot/console sebelum lanjut. Dark mode tetep matrix neon, light mode tetep Gallery White.
-
----
-
-## FASE 1 — Countdown & Trust (½ hari)
-
-**Task 1.1 — Countdown Timer**
-- Komponen `<CountdownBanner />` di atas Hero atau di Pricing.
-- Target: end of month (auto-reset tiap bulan). Format `DD : HH : MM : SS`.
-- Copy: "PROMO BULAN INI BERAKHIR DALAM" + sub "Harga naik Rp500K setelah timer habis."
-- Style: hairline border, mono digits (JetBrains), accent neon/blue per theme.
+Tujuan: `/products` jadi katalog produk digital ala buildcleanslate. User klik produk → langsung halaman detail dengan tombol **Buy Now (PayPal)** di atas, landing page panjang di bawahnya. Lo (admin) bisa kelola produk realtime dari dashboard di web sendiri, tanpa edit code via Lovable.
 
 ---
 
-## FASE 2 — Wow Factor (1–2 hari)
+## 1. Database (Lovable Cloud)
 
-**Task 2.1 — Custom Cursor**
-- Dot + ring follower, blend-mode difference. Hover-grow di link/button. Disable di touch device.
+Tabel baru di backend:
 
-**Task 2.2 — Page Transition (Matrix wipe)**
-- Overlay full-screen waktu route change, karakter katakana jatuh 400ms, lalu fade out. Pakai `framer-motion` + `AnimatePresence` di `App.tsx`.
+**`products`**
+- `id` (uuid), `slug` (unique), `title`, `tagline`, `description` (long text/markdown), `price`, `original_price`, `cover_image`, `gallery` (text[]), `features` (jsonb), `landing_content` (jsonb — blocks: hero, image, text, video, faq, dst), `is_published` (bool), `sort_order`, `created_at`, `updated_at`.
 
-**Task 2.3 — Hero Video Background**
-- Looping muted video (low-bitrate webm) di belakang Hero, overlay gelap 60%. Fallback ke Prism shader yg udah ada kalau `prefers-reduced-motion` atau mobile.
+**`user_roles`** + enum `app_role('admin','user')` + function `has_role()` (pola standar, anti-recursive RLS).
 
-**Task 2.4 — Scroll-snap Pricing Showcase**
-- Section baru: 3 paket sebagai full-viewport snap cards, scroll horizontal di desktop / vertical di mobile.
+**`orders`** (optional, recommended)
+- `id`, `product_id`, `buyer_email`, `paypal_order_id`, `amount`, `status`, `created_at`.
 
-**Task 2.5 — Interactive 3D Product**
-- `react-three-fiber` rotating model (re-use .glb logo or generated sneaker) di section "Apa yang kamu dapat". Drag to rotate.
+**RLS**
+- `products`: SELECT public untuk `is_published=true`; INSERT/UPDATE/DELETE hanya `has_role(auth.uid(),'admin')`.
+- `user_roles`: SELECT untuk authenticated, write service_role saja.
+- `orders`: insert via edge function service_role.
 
----
-
-## FASE 3 — Functional / Backend (2 hari)
-
-**Task 3.1 — Contact Form → Lovable Cloud**
-- Table `leads (id, name, email, whatsapp, package, message, created_at)` dgn RLS (insert public, select admin only) + GRANT.
-- Form di `/contact` atau modal CTA. Validasi zod + react-hook-form. Toast sukses. Email notif lewat Resend (RESEND_API_KEY udah ada) via edge function `send-lead-notification`.
-
-**Task 3.2 — Admin Dashboard `/admin`**
-- Auth (Lovable Cloud, email+password + Google).
-- `user_roles` table + `has_role()` (pattern wajib).
-- Page list leads (table view), filter by status, mark as contacted.
-
-**Task 3.3 — Stripe Checkout**
-- Pakai `payments--recommend_payment_provider` dulu → enable Stripe seamless.
-- Edge function `create-checkout` (per paket: STARTER/PRO/ULTRA) → redirect Stripe Checkout → success page.
+**Storage bucket** `product-images` (public read, admin write) untuk upload foto.
 
 ---
 
-## FASE 4 — Polish (½ hari)
+## 2. Auth
 
-**Task 4.1 — Mobile Bottom Nav**
-- Fixed bottom bar mobile only (`md:hidden`): Home / Pricing / Work / Contact. Active state pakai accent color. Hide saat scroll down, show saat scroll up.
-
-**Task 4.2 — UI Sounds**
-- Subtle clicks (button), whoosh (page transition), success (form submit). File MP3 kecil di `/public/sfx/`.
-- Toggle mute di navbar (persist localStorage). Respect `prefers-reduced-motion` → default mute.
+- Email+password + Google login.
+- Lo daftar sekali → gw insert row `user_roles` (admin) untuk user_id lo via SQL.
+- Tidak ada signup admin publik.
 
 ---
 
-## Execution Rules
-- Satu task = satu batch edit + screenshot verify.
-- Dark mode unchanged kecuali ada element baru.
-- No hardcoded colors; pakai semantic tokens.
-- Tiap fase selesai → lapor user, baru lanjut fase berikut.
-- Total estimasi: ~4 hari kerja.
+## 3. Halaman Frontend
+
+```
+/products              → grid katalog (dynamic dari DB)
+/products/:slug        → halaman produk:
+                          - Atas: gambar + harga + PayPal Buy Now (CheckoutModal existing)
+                          - Bawah: landing page panjang di-render dari landing_content blocks
+                            (hero, features, before/after, FAQ, testimonial, dst)
+/admin/login           → login form
+/admin                 → dashboard (protected, admin-only)
+  - List produk + toggle publish, reorder
+  - Create/Edit produk: form + block editor untuk landing_content
+  - Upload gambar (drag-drop ke storage)
+  - Orders log (read-only)
+```
+
+Realtime: pakai `supabase.channel().on('postgres_changes', ...)` di `/products` & `/products/:slug` supaya update di admin langsung muncul tanpa refresh.
 
 ---
 
-## Order of Work
-1. Task 1.1 Countdown
-2. Task 4.1 Mobile bottom nav (quick win, dipake di semua test berikutnya)
-3. Task 2.1 → 2.2 → 2.3 → 2.4 → 2.5
-4. Task 3.1 → 3.2 → 3.3
-5. Task 4.2 Sound design (terakhir biar ga ganggu dev)
+## 4. Landing Page Block Renderer
 
-Approve plan → gw mulai dari Task 1.1.
+`landing_content` disimpan sebagai array block JSON, contoh:
+```json
+[
+  {"type":"hero","title":"...","image":"..."},
+  {"type":"features","items":[...]},
+  {"type":"gallery","images":[...]},
+  {"type":"text","markdown":"..."},
+  {"type":"faq","items":[...]}
+]
+```
+Komponen `<LandingBlocks blocks={...} />` map tiap type ke komponen React. Admin tinggal add/remove/reorder block di dashboard — gak perlu touch code.
+
+---
+
+## 5. PayPal Flow (sudah ada)
+
+`CheckoutModal` existing dipakai ulang, tinggal pass `productName` + `price` dari row DB. Setelah `onApprove`, edge function `record-order` insert ke `orders` + (opsional) kirim email lisensi via Resend.
+
+---
+
+## 6. Yang gw butuh dari lo
+
+1. Konfirmasi mau gw mulai → gw bikin migration tabel + RLS + storage bucket + admin pages.
+2. Email lo (buat di-set sebagai admin pertama).
+3. Setelah backend jadi: lo set PayPal Client ID via secret (`VITE_PAYPAL_CLIENT_ID`).
+
+---
+
+## Catatan teknis (buat gw inget)
+
+- Edit code di Lovable tetap dibutuhin sekali untuk bikin sistem. Setelah live, semua CRUD produk via `/admin` — gak nyentuh code lagi.
+- Block editor versi pertama: form sederhana (tambah block, pilih type, isi field). Bukan WYSIWYG drag-drop full Webflow-style — itu scope gede; kalau mau ditingkatin nanti tinggal upgrade komponen editor.
+- Realtime publication enable via `ALTER PUBLICATION supabase_realtime ADD TABLE public.products;`.

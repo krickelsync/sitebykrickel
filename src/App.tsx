@@ -9,8 +9,6 @@ import Index from "./pages/Index";
 import Showcase from "./pages/Showcase";
 import About from "./pages/About";
 import Products from "./pages/Products";
-import ProductAIProductStudio from "./pages/ProductAIProductStudio";
-import ProductAIModelStudio from "./pages/ProductAIModelStudio";
 import NotFound from "./pages/NotFound";
 import MobileBottomNav from "./components/MobileBottomNav";
 import SmoothScroll from "./components/SmoothScroll";
@@ -20,6 +18,10 @@ import { installGlobalClickSound } from "@/lib/sound";
 const MusicPlayer = lazy(() => import("./components/MusicPlayer"));
 const CustomCursor = lazy(() => import("./components/CustomCursor"));
 const PageTransition = lazy(() => import("./components/PageTransition"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const Admin = lazy(() => import("./pages/Admin"));
+const AdminProductEdit = lazy(() => import("./pages/AdminProductEdit"));
 
 const queryClient = new QueryClient();
 
@@ -39,8 +41,10 @@ const AppInner = () => {
         <Route path="/showcase" element={<Showcase />} />
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />} />
-        <Route path="/products/ai-product-studio" element={<ProductAIProductStudio />} />
-        <Route path="/products/ai-model-studio" element={<ProductAIModelStudio />} />
+        <Route path="/products/:slug" element={<Suspense fallback={null}><ProductDetail /></Suspense>} />
+        <Route path="/admin/login" element={<Suspense fallback={null}><AdminLogin /></Suspense>} />
+        <Route path="/admin" element={<Suspense fallback={null}><Admin /></Suspense>} />
+        <Route path="/admin/products/:id" element={<Suspense fallback={null}><AdminProductEdit /></Suspense>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Suspense fallback={null}>
