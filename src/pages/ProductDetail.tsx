@@ -2,7 +2,6 @@ import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, ShoppingBag } from "lucide-react";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PayPalProvider from "@/components/PayPalProvider";
 import CheckoutModal from "@/components/products/CheckoutModal";
@@ -18,7 +17,7 @@ const ProductDetail = () => {
   if (loading) {
     return (
       <div className="min-h-dvh bg-background">
-        <Navbar />
+
         <div className="container mx-auto px-4 pt-32 pb-20">
           <div className="animate-pulse space-y-6">
             <div className="h-8 w-48 bg-secondary/50 rounded" />
@@ -39,7 +38,7 @@ const ProductDetail = () => {
   if (!product) {
     return (
       <div className="min-h-dvh bg-background">
-        <Navbar />
+
         <div className="container mx-auto px-4 pt-32 pb-20 text-center">
           <h1 className="font-display text-3xl font-bold mb-4">Product not found</h1>
           <Link to="/products" className="text-primary font-mono">← Back to products</Link>
@@ -53,7 +52,7 @@ const ProductDetail = () => {
   return (
     <PayPalProvider>
       <div className="min-h-dvh bg-background">
-        <Navbar />
+
 
         <main className="pt-28 pb-20">
           <div className="container mx-auto px-4">

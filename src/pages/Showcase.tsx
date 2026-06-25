@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DesignBentoGrid from "@/components/DesignBentoGrid";
 import { useDesignPortfolio } from "@/hooks/useDesignPortfolio";
@@ -238,7 +237,7 @@ const Showcase = () => {
 
   return (
     <div className="min-h-dvh bg-background overflow-x-hidden">
-      <Navbar />
+
       
       {/* Hero Section */}
       <section className="pt-16 pb-4 px-4">

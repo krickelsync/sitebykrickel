@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/products/ProductCard";
 import { useProducts, useResolvedImage, type Product } from "@/hooks/useProducts";
@@ -23,7 +22,7 @@ const Products = () => {
   const { products, loading } = useProducts();
   return (
     <div className="min-h-dvh bg-background">
-      <Navbar />
+
 
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-4">
