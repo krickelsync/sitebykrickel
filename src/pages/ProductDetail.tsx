@@ -78,7 +78,17 @@ const ProductDetail = () => {
               <ArrowLeft className="w-4 h-4" /> All products
             </Link>
 
-            <ProductHero product={product} onBuy={() => setCheckoutOpen(true)} />
+            <div className="relative rounded-3xl border border-border/60 overflow-hidden p-4 sm:p-6 lg:p-10">
+              {/* Prism ambient bg (like AnimatedHero) */}
+              <div aria-hidden className="pointer-events-none absolute inset-0 -z-0">
+                <div className="absolute -top-32 -left-32 w-[28rem] h-[28rem] rounded-full bg-primary/30 blur-3xl animate-pulse-glow" />
+                <div className="absolute -bottom-32 -right-32 w-[28rem] h-[28rem] rounded-full bg-accent/30 blur-3xl animate-pulse-glow" />
+                <div className="absolute inset-0 hero-grid-overlay opacity-30" />
+              </div>
+              <div className="relative z-10">
+                <ProductHero product={product} onBuy={() => setCheckoutOpen(true)} />
+              </div>
+            </div>
 
             {related.length > 0 && (
               <RelatedProducts items={related} />
@@ -243,7 +253,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
           <p className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-muted-foreground mb-2.5">
             Choose Your License
           </p>
-          <div className="relative rounded-full border-2 border-primary bg-primary/[0.06] py-3 pl-4 pr-5 flex items-center justify-between gap-4">
+          <div className="relative rounded-2xl border-2 border-primary bg-primary/[0.06] py-3 pl-4 pr-5 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 min-w-0">
               <span className="w-5 h-5 shrink-0 rounded-full border-2 border-primary grid place-items-center">
                 <span className="w-2.5 h-2.5 rounded-full bg-primary" />
@@ -276,7 +286,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         {/* CTA */}
         <button
           onClick={onBuy}
-          className="group relative w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-primary text-primary-foreground font-display font-extrabold uppercase tracking-[0.2em] text-xs md:text-sm shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_45px_-5px_hsl(var(--primary)/0.9)] hover:bg-primary/90 active:scale-[0.99] transition-all"
+          className="group relative w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-primary text-primary-foreground font-display font-extrabold uppercase tracking-[0.2em] text-xs md:text-sm shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_45px_-5px_hsl(var(--primary)/0.9)] hover:bg-primary/90 active:scale-[0.99] transition-all"
         >
           <ShoppingBag className="w-4 h-4" />
           <span>Add to cart</span>
@@ -285,7 +295,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
 
         <a
           href="#demo"
-          className="mt-2.5 w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-border bg-card/40 backdrop-blur font-display font-bold uppercase tracking-[0.2em] text-[11px] hover:border-primary/50 hover:bg-card/70 transition"
+          className="mt-2.5 w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl border border-border bg-card/40 backdrop-blur font-display font-bold uppercase tracking-[0.2em] text-[11px] hover:border-primary/50 hover:bg-card/70 transition"
         >
           <Play className="w-3.5 h-3.5 fill-current" /> View Live Demo
         </a>
