@@ -12,7 +12,9 @@ import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
 import MobileBottomNav from "./components/MobileBottomNav";
 import SmoothScroll from "./components/SmoothScroll";
+import Navbar from "./components/Navbar";
 import { useEffect, lazy, Suspense } from "react";
+import { useLocation } from "react-router-dom";
 import { installGlobalClickSound } from "@/lib/sound";
 
 const MusicPlayer = lazy(() => import("./components/MusicPlayer"));
@@ -29,6 +31,8 @@ const AppInner = () => {
   useEffect(() => {
     installGlobalClickSound();
   }, []);
+  const location = useLocation();
+  const hideChrome = location.pathname.startsWith("/admin");
   return (
     <>
       <SmoothScroll />
@@ -36,6 +40,7 @@ const AppInner = () => {
         <CustomCursor />
         <PageTransition />
       </Suspense>
+      {!hideChrome && <Navbar />}
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/showcase" element={<Showcase />} />
@@ -50,7 +55,7 @@ const AppInner = () => {
       <Suspense fallback={null}>
         <MusicPlayer />
       </Suspense>
-      <MobileBottomNav />
+      {!hideChrome && <MobileBottomNav />}
     </>
   );
 };
