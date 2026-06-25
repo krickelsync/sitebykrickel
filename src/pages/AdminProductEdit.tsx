@@ -346,6 +346,155 @@ const BlockEditor = ({ block, onChange }: { block: LandingBlock; onChange: (p: a
             className="px-3 py-1 rounded bg-secondary text-xs font-mono">+ Add Q&amp;A</button>
         </div>
       );
+    case "animated_hero":
+      return (
+        <div className="space-y-2">
+          <input className={inputCls} placeholder="Eyebrow" value={block.eyebrow ?? ""} onChange={(e) => onChange({ eyebrow: e.target.value })} />
+          <input className={inputCls} placeholder="Badge (small pill)" value={block.badge ?? ""} onChange={(e) => onChange({ badge: e.target.value })} />
+          <textarea rows={2} className={inputCls} placeholder="Title (use new line for multi-line)" value={block.title} onChange={(e) => onChange({ title: e.target.value })} />
+          <textarea rows={2} className={inputCls} placeholder="Subtitle" value={block.subtitle ?? ""} onChange={(e) => onChange({ subtitle: e.target.value })} />
+          <div className="grid grid-cols-2 gap-2">
+            <input className={inputCls} placeholder="CTA label" value={block.ctaLabel ?? ""} onChange={(e) => onChange({ ctaLabel: e.target.value })} />
+            <input className={inputCls} placeholder="CTA href" value={block.ctaHref ?? ""} onChange={(e) => onChange({ ctaHref: e.target.value })} />
+          </div>
+          <select className={inputCls} value={block.bgVariant ?? "grid"} onChange={(e) => onChange({ bgVariant: e.target.value })}>
+            <option value="grid">Background: Grid drift</option>
+            <option value="prism">Background: Prism glow</option>
+            <option value="noise">Background: Noise grain</option>
+            <option value="none">Background: None</option>
+          </select>
+        </div>
+      );
+    case "marquee":
+      return (
+        <div className="space-y-2">
+          <textarea rows={4} className={inputCls} placeholder="One item per line"
+            value={block.items.join("\n")}
+            onChange={(e) => onChange({ items: e.target.value.split("\n").map((s) => s.trim()).filter(Boolean) })} />
+          <div className="grid grid-cols-3 gap-2">
+            <input type="number" className={inputCls} placeholder="Speed (sec)" value={block.speed ?? 30} onChange={(e) => onChange({ speed: Number(e.target.value) })} />
+            <select className={inputCls} value={block.direction ?? "left"} onChange={(e) => onChange({ direction: e.target.value })}>
+              <option value="left">← Left</option>
+              <option value="right">Right →</option>
+            </select>
+            <input className={inputCls} placeholder="Color (#hex)" value={block.color ?? ""} onChange={(e) => onChange({ color: e.target.value })} />
+          </div>
+        </div>
+      );
+    case "velocity_text":
+      return (
+        <div className="space-y-2">
+          {block.rows.map((r, i) => (
+            <div key={i} className="grid grid-cols-[2fr_80px_100px_auto] gap-2">
+              <input className={inputCls} placeholder="Text" value={r.text} onChange={(e) => onChange({ rows: block.rows.map((x, idx) => idx === i ? { ...x, text: e.target.value } : x) })} />
+              <input type="number" className={inputCls} placeholder="Velocity" value={r.velocity ?? -2} onChange={(e) => onChange({ rows: block.rows.map((x, idx) => idx === i ? { ...x, velocity: Number(e.target.value) } : x) })} />
+              <input className={inputCls} placeholder="Color" value={r.color ?? ""} onChange={(e) => onChange({ rows: block.rows.map((x, idx) => idx === i ? { ...x, color: e.target.value } : x) })} />
+              <button onClick={() => onChange({ rows: block.rows.filter((_, idx) => idx !== i) })} className="p-2 rounded bg-secondary"><Trash2 className="w-3 h-3 text-destructive" /></button>
+            </div>
+          ))}
+          <button onClick={() => onChange({ rows: [...block.rows, { text: "", velocity: 2 }] })} className="px-3 py-1 rounded bg-secondary text-xs font-mono">+ Add row</button>
+        </div>
+      );
+    case "showcase_grid":
+      return (
+        <div className="space-y-2">
+          <select className={inputCls} value={block.columns ?? 3} onChange={(e) => onChange({ columns: Number(e.target.value) })}>
+            <option value={2}>2 columns</option>
+            <option value={3}>3 columns</option>
+            <option value={4}>4 columns</option>
+          </select>
+          {block.items.map((it, i) => (
+            <div key={i} className="grid grid-cols-[2fr_2fr_auto] gap-2">
+              <input className={inputCls} placeholder="Image URL" value={it.image} onChange={(e) => onChange({ items: block.items.map((x, idx) => idx === i ? { ...x, image: e.target.value } : x) })} />
+              <input className={inputCls} placeholder="Caption" value={it.caption ?? ""} onChange={(e) => onChange({ items: block.items.map((x, idx) => idx === i ? { ...x, caption: e.target.value } : x) })} />
+              <button onClick={() => onChange({ items: block.items.filter((_, idx) => idx !== i) })} className="p-2 rounded bg-secondary"><Trash2 className="w-3 h-3 text-destructive" /></button>
+            </div>
+          ))}
+          <button onClick={() => onChange({ items: [...block.items, { image: "", caption: "" }] })} className="px-3 py-1 rounded bg-secondary text-xs font-mono">+ Add image</button>
+        </div>
+      );
+    case "reviews_wall":
+      return (
+        <div className="space-y-3">
+          {block.columns.map((col, ci) => (
+            <div key={ci} className="border border-border/50 rounded p-2 space-y-2">
+              <p className="text-xs font-mono text-muted-foreground">Column {ci + 1}</p>
+              {col.map((r, i) => (
+                <div key={i} className="space-y-1 bg-secondary/30 p-2 rounded">
+                  <div className="grid grid-cols-3 gap-1">
+                    <input className={inputCls} placeholder="Name" value={r.name} onChange={(e) => onChange({ columns: block.columns.map((c, cidx) => cidx === ci ? c.map((x, idx) => idx === i ? { ...x, name: e.target.value } : x) : c) })} />
+                    <input type="number" min={1} max={5} className={inputCls} placeholder="Rating" value={r.rating ?? 5} onChange={(e) => onChange({ columns: block.columns.map((c, cidx) => cidx === ci ? c.map((x, idx) => idx === i ? { ...x, rating: Number(e.target.value) } : x) : c) })} />
+                    <input className={inputCls} placeholder="Avatar color (tw class)" value={r.avatarColor ?? ""} onChange={(e) => onChange({ columns: block.columns.map((c, cidx) => cidx === ci ? c.map((x, idx) => idx === i ? { ...x, avatarColor: e.target.value } : x) : c) })} />
+                  </div>
+                  <textarea rows={2} className={inputCls} placeholder="Content" value={r.content} onChange={(e) => onChange({ columns: block.columns.map((c, cidx) => cidx === ci ? c.map((x, idx) => idx === i ? { ...x, content: e.target.value } : x) : c) })} />
+                  <button onClick={() => onChange({ columns: block.columns.map((c, cidx) => cidx === ci ? c.filter((_, idx) => idx !== i) : c) })} className="text-xs text-destructive font-mono">Remove review</button>
+                </div>
+              ))}
+              <button onClick={() => onChange({ columns: block.columns.map((c, cidx) => cidx === ci ? [...c, { name: "", content: "", rating: 5 }] : c) })} className="px-2 py-1 rounded bg-secondary text-xs font-mono">+ Add review</button>
+            </div>
+          ))}
+          <div className="flex gap-2">
+            <button onClick={() => onChange({ columns: [...block.columns, []] })} className="px-3 py-1 rounded bg-secondary text-xs font-mono">+ Add column</button>
+            {block.columns.length > 1 && (
+              <button onClick={() => onChange({ columns: block.columns.slice(0, -1) })} className="px-3 py-1 rounded bg-secondary text-xs font-mono">- Remove last column</button>
+            )}
+          </div>
+        </div>
+      );
+    case "stats_strip":
+      return (
+        <div className="space-y-2">
+          {block.items.map((it, i) => (
+            <div key={i} className="grid grid-cols-[1fr_2fr_auto] gap-2">
+              <input className={inputCls} placeholder="Value (e.g. 500+)" value={it.value} onChange={(e) => onChange({ items: block.items.map((x, idx) => idx === i ? { ...x, value: e.target.value } : x) })} />
+              <input className={inputCls} placeholder="Label" value={it.label} onChange={(e) => onChange({ items: block.items.map((x, idx) => idx === i ? { ...x, label: e.target.value } : x) })} />
+              <button onClick={() => onChange({ items: block.items.filter((_, idx) => idx !== i) })} className="p-2 rounded bg-secondary"><Trash2 className="w-3 h-3 text-destructive" /></button>
+            </div>
+          ))}
+          <button onClick={() => onChange({ items: [...block.items, { value: "", label: "" }] })} className="px-3 py-1 rounded bg-secondary text-xs font-mono">+ Add stat</button>
+        </div>
+      );
+    case "big_text":
+      return (
+        <div className="space-y-2">
+          <select className={inputCls} value={block.align ?? "center"} onChange={(e) => onChange({ align: e.target.value })}>
+            <option value="left">Align left</option>
+            <option value="center">Align center</option>
+            <option value="right">Align right</option>
+          </select>
+          <input className={inputCls} placeholder="Emphasis color (#hex) — apply to lines starting with *" value={block.emphasisColor ?? ""} onChange={(e) => onChange({ emphasisColor: e.target.value })} />
+          <textarea rows={5} className={inputCls} placeholder="One line per row. Prefix with * for emphasis color." value={block.lines.join("\n")}
+            onChange={(e) => onChange({ lines: e.target.value.split("\n") })} />
+        </div>
+      );
+    case "before_after":
+      return (
+        <div className="space-y-2">
+          <input className={inputCls} placeholder="Title (optional)" value={block.title ?? ""} onChange={(e) => onChange({ title: e.target.value })} />
+          <div className="grid grid-cols-2 gap-2">
+            <input className={inputCls} placeholder="Before image URL" value={block.beforeImage} onChange={(e) => onChange({ beforeImage: e.target.value })} />
+            <input className={inputCls} placeholder="After image URL" value={block.afterImage} onChange={(e) => onChange({ afterImage: e.target.value })} />
+            <input className={inputCls} placeholder="Before label" value={block.beforeLabel ?? "BEFORE"} onChange={(e) => onChange({ beforeLabel: e.target.value })} />
+            <input className={inputCls} placeholder="After label" value={block.afterLabel ?? "AFTER"} onChange={(e) => onChange({ afterLabel: e.target.value })} />
+          </div>
+        </div>
+      );
+    case "cta_banner":
+      return (
+        <div className="space-y-2">
+          <input className={inputCls} placeholder="Title" value={block.title} onChange={(e) => onChange({ title: e.target.value })} />
+          <textarea rows={2} className={inputCls} placeholder="Subtitle" value={block.subtitle ?? ""} onChange={(e) => onChange({ subtitle: e.target.value })} />
+          <div className="grid grid-cols-2 gap-2">
+            <input className={inputCls} placeholder="CTA label" value={block.ctaLabel ?? ""} onChange={(e) => onChange({ ctaLabel: e.target.value })} />
+            <input className={inputCls} placeholder="CTA href" value={block.ctaHref ?? ""} onChange={(e) => onChange({ ctaHref: e.target.value })} />
+          </div>
+          <select className={inputCls} value={block.bgVariant ?? "glow"} onChange={(e) => onChange({ bgVariant: e.target.value })}>
+            <option value="glow">Background: Glow</option>
+            <option value="grid">Background: Grid</option>
+            <option value="none">Background: None</option>
+          </select>
+        </div>
+      );
     default:
       return null;
   }
