@@ -29,7 +29,7 @@ export const typography = {
   display:
     "text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.92] tracking-[-0.035em]",
   h1:
-    "text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] leading-[0.95] tracking-[-0.03em]",
+    "text-[1.75rem] sm:text-3xl md:text-4xl lg:text-[2.75rem] leading-[0.95] tracking-[-0.03em]",
   h2: "text-2xl md:text-3xl lg:text-4xl leading-[1.05] tracking-[-0.02em]",
   h3: "text-xl md:text-2xl leading-tight tracking-tight",
   tagline:

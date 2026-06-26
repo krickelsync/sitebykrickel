@@ -240,6 +240,11 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         <div className="mb-5">
           <Eyebrow as="p" className="block mb-2.5">License</Eyebrow>
           <div className="relative rounded-2xl border-2 border-primary bg-primary/[0.06] py-3.5 pl-4 pr-5 flex items-center justify-between gap-4">
+            {hasDiscount && (
+              <span className="absolute -top-2.5 left-4 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-destructive text-destructive-foreground shadow-sm">
+                -{discountPct}% OFF
+              </span>
+            )}
             <div className="flex items-center gap-3 min-w-0">
               <span className="w-4 h-4 shrink-0 rounded-full border-2 border-primary grid place-items-center">
                 <span className="w-2 h-2 rounded-full bg-primary" />
@@ -260,11 +265,6 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
               <Price as="span">${product.price}</Price>
             </div>
           </div>
-          {hasDiscount && (
-            <span className="inline-block mt-2 text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-destructive/15 text-destructive border border-destructive/30">
-              -{discountPct}% OFF
-            </span>
-          )}
         </div>
 
         {/* CTA stack */}
