@@ -8,7 +8,7 @@ import CheckoutModal from "@/components/products/CheckoutModal";
 import LandingBlocks from "@/components/products/LandingBlocks";
 import { useProduct, useProducts, useResolvedImage, resolveImageUrl, type Product } from "@/hooks/useProducts";
 import { AnimatePresence } from "framer-motion";
-import { H1, Tagline, Body, Eyebrow, Meta, Price } from "@/components/ui/typography";
+import { H1, H2, Tagline, Body, Eyebrow, Meta, Price, spacing } from "@/components/ui/typography";
 
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -91,12 +91,10 @@ const ProductDetail = () => {
               </div>
             </div>
 
-            {related.length > 0 && (
-              <RelatedProducts items={related} />
-            )}
+            {related.length > 0 && <RelatedProducts items={related} />}
 
             {/* Landing content below */}
-            <div className="mt-24">
+            <div className={spacing.section}>
               <LandingBlocks blocks={product.landing_content} />
             </div>
           </div>
@@ -337,9 +335,9 @@ function TrustBadge({ icon, title, desc }: { icon: React.ReactNode; title: strin
 
 function RelatedProducts({ items }: { items: Product[] }) {
   return (
-    <section className="mt-24">
-      <h2 className="font-display text-xl font-bold uppercase tracking-wider mb-5">You might also like</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    <section className={spacing.section}>
+      <H2 className={`text-xl ${spacing.headingGap}`}>You might also like</H2>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 ${spacing.gridGap}`}>
         {items.map((p) => (
           <RelatedCard key={p.id} product={p} />
         ))}
