@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/products/ProductCard";
 import { useProducts, useResolvedImage, type Product } from "@/hooks/useProducts";
+import { H1, Body, Eyebrow, spacing } from "@/components/ui/typography";
 
 const ProductCardWrapper = ({ product, index }: { product: Product; index: number }) => {
   const image = useResolvedImage(product.cover_image);
@@ -24,30 +25,29 @@ const Products = () => {
     <div className="min-h-dvh bg-background">
 
 
-      <main className="pt-32 pb-20">
+      <main className={`pt-32 ${spacing.sectionY}`}>
         <div className="container mx-auto px-4">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto mb-16"
+            className={`text-center max-w-3xl mx-auto ${spacing.headingGap} md:mb-16`}
           >
-            <motion.span
+            <Eyebrow
+              as={motion.span}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="inline-block px-4 py-1.5 mb-6 text-xs font-mono uppercase tracking-wider bg-primary/10 text-primary rounded-full"
+              className="inline-block px-4 py-1.5 mb-6 bg-primary/10 text-primary border border-primary/30 rounded-full"
             >
               Digital Products
-            </motion.span>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Products & Tools
-            </h1>
-            <p className="text-lg text-muted-foreground font-mono">
+            </Eyebrow>
+            <H1 className="mb-5">Products & Tools</H1>
+            <Body className="max-w-xl mx-auto">
               Internal AI systems we use to create catalog and campaign visuals
               for brands.
-            </p>
+            </Body>
           </motion.div>
 
           {/* Products Grid */}
@@ -58,7 +58,7 @@ const Products = () => {
               New products coming soon.
             </p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className={`grid grid-cols-1 md:grid-cols-2 ${spacing.gridGap} max-w-4xl mx-auto`}>
               {products.map((product, index) => (
                 <ProductCardWrapper key={product.id} product={product} index={index} />
               ))}
