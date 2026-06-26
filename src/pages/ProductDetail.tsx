@@ -178,12 +178,6 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         className="space-y-3 md:sticky md:top-28"
       >
         <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-border/60 bg-card/40 isolate">
-          <span aria-hidden className="hidden md:block absolute top-3 left-3 z-10 text-[10px] font-mono tracking-widest text-muted-foreground/70">
-            SYS_REV_02 // COMP_01
-          </span>
-          <span aria-hidden className="hidden md:block absolute bottom-3 right-3 z-10 text-[10px] font-mono tracking-widest text-muted-foreground/70">
-            SCALE_1.0_PRO
-          </span>
           <div className="absolute inset-0 bg-secondary/40 overflow-hidden">
             {active && (
               <motion.img
@@ -216,115 +210,71 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         transition={{ duration: 0.5, delay: 0.1 }}
         className="md:pt-2"
       >
-        {/* Meta row: badge + rating */}
-        <div className="flex flex-wrap items-center gap-3 mb-5">
-          <span
-            className="inline-flex items-center gap-1.5 px-3 py-1 font-mono font-bold uppercase tracking-[0.18em] bg-primary/10 text-primary border border-primary/30 rounded-full"
-            style={{ fontSize: "clamp(0.625rem, 0.55rem + 0.3vw, 0.75rem)" }}
-          >
+        {/* Meta row */}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] md:text-[11px] font-mono font-bold uppercase tracking-[0.18em] bg-primary/10 text-primary border border-primary/30 rounded-full">
             <Sparkles className="w-3 h-3" /> Just released
           </span>
-          <div className="inline-flex items-center gap-1.5">
+          <div className="inline-flex items-center gap-1.5 text-[12px] md:text-[13px]">
             <div className="flex text-primary" aria-label="Rated 4.9 out of 5">
               {[0, 1, 2, 3, 4].map((i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-current" />
+                <Star key={i} className="w-3 h-3 fill-current" />
               ))}
             </div>
-            <span className="font-mono font-bold" style={{ fontSize: "clamp(0.6875rem, 0.6rem + 0.3vw, 0.8125rem)" }}>4.9</span>
-            <a
-              href="#reviews"
-              className="font-mono text-muted-foreground hover:text-primary transition-colors"
-              style={{ fontSize: "clamp(0.6875rem, 0.6rem + 0.3vw, 0.8125rem)" }}
-            >
-              (200 reviews)
+            <span className="font-mono font-semibold">4.9</span>
+            <a href="#reviews" className="font-mono text-muted-foreground hover:text-primary transition-colors">
+              (200)
             </a>
           </div>
         </div>
 
-        <h1
-          className="font-display font-black uppercase tracking-[-0.02em] mb-4 break-words"
-          style={{
-            fontSize: "clamp(1.75rem, 1.1rem + 2.6vw, 3rem)",
-            lineHeight: 1.05,
-            letterSpacing: "-0.025em",
-          }}
-        >
+        <h1 className="font-display font-black uppercase mb-5 break-words text-3xl md:text-5xl lg:text-[3.25rem] leading-[0.95] tracking-[-0.03em]">
           {product.title}
         </h1>
 
         {product.tagline && (
-          <p
-            className="text-primary font-semibold mb-4 border-l-2 border-primary pl-3 font-display"
-            style={{
-              fontSize: "clamp(0.875rem, 0.8rem + 0.3vw, 1rem)",
-              lineHeight: 1.4,
-            }}
-          >
+          <p className="text-primary/90 font-display italic mb-4 text-sm md:text-base leading-snug max-w-lg">
             {product.tagline}
           </p>
         )}
         {product.description && (
-          <p
-            className="text-muted-foreground mb-6 font-mono max-w-xl"
-            style={{
-              fontSize: "clamp(0.8125rem, 0.76rem + 0.2vw, 0.875rem)",
-              lineHeight: 1.7,
-            }}
-          >
+          <p className="text-muted-foreground mb-7 font-mono max-w-md text-[12px] md:text-[13px] leading-[1.75] tracking-wide">
             {product.description}
           </p>
         )}
 
         {/* License card */}
         <div className="mb-5">
-          <p
-            className="font-mono font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2.5"
-            style={{ fontSize: "clamp(0.625rem, 0.58rem + 0.2vw, 0.75rem)" }}
-          >
-            Choose Your License
+          <p className="text-[10px] md:text-[11px] font-mono font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2.5">
+            License
           </p>
           <div className="relative rounded-2xl border-2 border-primary bg-primary/[0.06] py-3.5 pl-4 pr-5 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 min-w-0">
-              <span className="w-5 h-5 shrink-0 rounded-full border-2 border-primary grid place-items-center">
-                <span className="w-2.5 h-2.5 rounded-full bg-primary" />
+              <span className="w-4 h-4 shrink-0 rounded-full border-2 border-primary grid place-items-center">
+                <span className="w-2 h-2 rounded-full bg-primary" />
               </span>
               <div className="min-w-0">
-                <span
-                  className="block font-display font-bold leading-tight"
-                  style={{ fontSize: "clamp(0.875rem, 0.8rem + 0.3vw, 1.0625rem)" }}
-                >
+                <span className="block font-display font-bold leading-tight text-sm md:text-base">
                   Lifetime License
                 </span>
-                <span
-                  className="block font-mono uppercase tracking-[0.15em] text-muted-foreground mt-1 truncate"
-                  style={{ fontSize: "clamp(0.625rem, 0.58rem + 0.2vw, 0.75rem)" }}
-                >
+                <span className="block font-mono text-muted-foreground mt-0.5 truncate text-[11px]">
                   Free updates · Unlimited dev
                 </span>
               </div>
             </div>
-            <div className="text-right shrink-0">
+            <div className="text-right shrink-0 flex items-baseline gap-2">
               {hasDiscount && (
-                <span
-                  className="block text-muted-foreground line-through font-mono leading-none mb-1"
-                  style={{ fontSize: "clamp(0.6875rem, 0.62rem + 0.2vw, 0.8125rem)" }}
-                >
+                <span className="text-muted-foreground line-through font-mono text-[11px] md:text-xs">
                   ${product.original_price}
                 </span>
               )}
-              <span
-                className="block font-bold font-mono text-primary leading-none"
-                style={{ fontSize: "clamp(1.125rem, 0.95rem + 0.7vw, 1.5rem)" }}
-              >
+              <span className="font-bold font-mono text-primary text-lg md:text-xl leading-none">
                 ${product.price}
               </span>
             </div>
           </div>
           {hasDiscount && (
-            <span
-              className="inline-block mt-2 font-mono font-bold px-2 py-0.5 rounded-full bg-destructive/15 text-destructive border border-destructive/30"
-              style={{ fontSize: "clamp(0.5625rem, 0.52rem + 0.15vw, 0.6875rem)" }}
-            >
+            <span className="inline-block mt-2 text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-destructive/15 text-destructive border border-destructive/30">
               -{discountPct}% OFF
             </span>
           )}
@@ -334,8 +284,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         <div className="flex flex-col gap-2.5">
         <button
           onClick={onBuy}
-          className="group relative w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-primary text-primary-foreground font-display font-extrabold uppercase tracking-[0.18em] shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_45px_-5px_hsl(var(--primary)/0.9)] hover:bg-primary/90 active:scale-[0.99] transition-all"
-          style={{ fontSize: "clamp(0.75rem, 0.68rem + 0.3vw, 0.9375rem)" }}
+          className="group relative w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-primary text-primary-foreground font-display font-extrabold uppercase tracking-[0.18em] text-xs md:text-sm shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_45px_-5px_hsl(var(--primary)/0.9)] hover:bg-primary/90 active:scale-[0.99] transition-all"
         >
           <ShoppingBag className="w-4 h-4" />
           <span>Add to cart</span>
@@ -344,8 +293,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
 
         <a
           href="#demo"
-          className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl border border-border bg-card/40 backdrop-blur font-display font-bold uppercase tracking-[0.18em] hover:border-primary/50 hover:bg-card/70 transition"
-          style={{ fontSize: "clamp(0.6875rem, 0.62rem + 0.25vw, 0.8125rem)" }}
+          className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl border border-border bg-card/40 backdrop-blur font-display font-bold uppercase tracking-[0.18em] text-[11px] md:text-xs hover:border-primary/50 hover:bg-card/70 transition"
         >
           <Play className="w-3.5 h-3.5 fill-current" /> View Live Demo
         </a>
