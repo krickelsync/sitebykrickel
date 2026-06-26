@@ -61,7 +61,7 @@ function VelocityRow({ children, baseVelocity, className }: VelocityRowProps) {
 
 const ProductVelocityText = () => {
   return (
-    <section className="py-12 overflow-hidden bg-background">
+    <section className={`${spacing.sectionY} overflow-hidden bg-background`}>
       <VelocityRow baseVelocity={-2} className="text-foreground/20">
         {"TRUSTED BY 500+ BRANDS ✦ STUDIO QUALITY RESULTS ✦ INSTANT GENERATION ✦ "}
       </VelocityRow>
