@@ -1,3 +1,4 @@
+import { spacing } from "@/components/ui/typography";
 import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity, useAnimationFrame } from "framer-motion";
 import { wrap } from "@popmotion/popcorn";

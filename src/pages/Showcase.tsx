@@ -1,3 +1,4 @@
+import { spacing } from "@/components/ui/typography";
 import Footer from "@/components/Footer";
 import DesignBentoGrid from "@/components/DesignBentoGrid";
 import { useDesignPortfolio } from "@/hooks/useDesignPortfolio";
