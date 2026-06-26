@@ -168,13 +168,13 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
     : 0;
 
   return (
-    <section className="grid md:grid-cols-[1.05fr_1fr] gap-8 md:gap-10 lg:gap-14 items-start">
+    <section className="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-8 md:gap-10 lg:gap-14 items-start">
       {/* Gallery */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="space-y-3 md:sticky md:top-28"
+        className="space-y-3 min-w-0 lg:sticky lg:top-28"
       >
         <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-border/60 bg-card/40 isolate">
           <div className="absolute inset-0 bg-secondary/40 overflow-hidden">
@@ -207,7 +207,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="md:pt-2"
+        className="min-w-0 lg:pt-2"
       >
         {/* Meta row */}
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6">
