@@ -49,17 +49,23 @@ function normalize(row: any): Product {
 export function useProducts(opts: { includeUnpublished?: boolean } = {}) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
       let q = supabase.from("products").select("*").order("sort_order").order("created_at");
       if (!opts.includeUnpublished) q = q.eq("is_published", true);
-      const { data } = await q;
-      if (!cancelled) {
+      const { data, error } = await q;
+      if (cancelled) return;
+      if (error) {
+        console.error("useProducts: load failed", error);
+        setError(error as unknown as Error);
+      } else {
+        setError(null);
         setProducts((data ?? []).map(normalize));
-        setLoading(false);
       }
+      setLoading(false);
     };
     load();
     const ch = supabase
@@ -72,22 +78,28 @@ export function useProducts(opts: { includeUnpublished?: boolean } = {}) {
     };
   }, [opts.includeUnpublished]);
 
-  return { products, loading };
+  return { products, loading, error };
 }
 
 export function useProduct(slug: string | undefined) {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     if (!slug) return;
     let cancelled = false;
     const load = async () => {
-      const { data } = await supabase.from("products").select("*").eq("slug", slug).maybeSingle();
-      if (!cancelled) {
+      const { data, error } = await supabase.from("products").select("*").eq("slug", slug).maybeSingle();
+      if (cancelled) return;
+      if (error) {
+        console.error("useProduct: load failed", error);
+        setError(error as unknown as Error);
+      } else {
+        setError(null);
         setProduct(data ? normalize(data) : null);
-        setLoading(false);
       }
+      setLoading(false);
     };
     load();
     const ch = supabase
@@ -100,7 +112,7 @@ export function useProduct(slug: string | undefined) {
     };
   }, [slug]);
 
-  return { product, loading };
+  return { product, loading, error };
 }
 
 /** Resolve cover_image: external URL passes through; storage path → signed URL. */
