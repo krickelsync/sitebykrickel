@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import type { LandingBlock } from "@/hooks/useProducts";
+import { H2, BodyLg, spacing } from "@/components/ui/typography";
 
 const AnimatedHero = lazy(() => import("./landing/AnimatedHero"));
 const MarqueeBlock = lazy(() => import("./landing/MarqueeBlock"));
@@ -19,7 +20,7 @@ interface Props {
 const LandingBlocks = ({ blocks }: Props) => {
   if (!blocks?.length) return null;
   return (
-    <div className="space-y-20">
+    <div className="space-y-16 md:space-y-24">
       {blocks.map((block, i) => (
         <motion.section
           key={i}
@@ -41,14 +42,10 @@ function renderBlock(block: LandingBlock) {
       return (
         <div className="text-center max-w-3xl mx-auto">
           {block.image && (
-            <img src={block.image} alt="" className="w-full rounded-2xl mb-8" loading="lazy" />
+            <img src={block.image} alt="" className={`w-full rounded-2xl ${spacing.headingGap}`} loading="lazy" />
           )}
-          {block.title && (
-            <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">{block.title}</h2>
-          )}
-          {block.subtitle && (
-            <p className="text-lg text-muted-foreground font-mono">{block.subtitle}</p>
-          )}
+          {block.title && <H2 className="mb-4">{block.title}</H2>}
+          {block.subtitle && <BodyLg>{block.subtitle}</BodyLg>}
         </div>
       );
     case "text":
