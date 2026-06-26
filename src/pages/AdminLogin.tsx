@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth, useIsAdmin } from "@/hooks/useAuth";
 import { toast } from "sonner";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const isAdmin = useIsAdmin(user?.id);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user) navigate("/admin", { replace: true });
-  }, [user, navigate]);
+    // Only auto-redirect admins. Non-admins stay here so they can sign out
+    // and try a different account instead of bouncing in a loop.
+    if (user && isAdmin) navigate("/admin", { replace: true });
+  }, [user, isAdmin, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

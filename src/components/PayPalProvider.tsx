@@ -6,8 +6,16 @@ interface PayPalProviderProps {
 }
 
 const PayPalProvider = ({ children }: PayPalProviderProps) => {
-  // Use sandbox client ID for testing - replace with production client ID
-  const clientId = import.meta.env.VITE_PAYPAL_CLIENT_ID || "sb";
+  const envClientId = import.meta.env.VITE_PAYPAL_CLIENT_ID as string | undefined;
+  if (!envClientId && import.meta.env.PROD) {
+    // Surface this loudly in production logs so a missing key isn't silently
+    // turning real checkouts into sandbox "sb" test payments.
+    // eslint-disable-next-line no-console
+    console.error(
+      "[PayPal] VITE_PAYPAL_CLIENT_ID is not set — checkout is running in PayPal sandbox mode."
+    );
+  }
+  const clientId = envClientId || "sb";
 
   return (
     <PayPalScriptProvider

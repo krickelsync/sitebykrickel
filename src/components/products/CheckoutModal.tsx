@@ -2,6 +2,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ShoppingBag } from "lucide-react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { toast } from "sonner";
+import { useEffect, useRef } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -9,6 +11,7 @@ interface CheckoutModalProps {
   productName: string;
   price: number;
   isBundle?: boolean;
+  productId?: string;
 }
 
 const CheckoutModal = ({
@@ -17,7 +20,29 @@ const CheckoutModal = ({
   productName,
   price,
   isBundle = false,
+  productId,
 }: CheckoutModalProps) => {
+  const titleId = "checkout-modal-title";
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    // focus close button for keyboard users
+    const t = setTimeout(() => closeBtnRef.current?.focus(), 50);
+    // lock scroll
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      clearTimeout(t);
+      document.body.style.overflow = prev;
+    };
+  }, [isOpen, onClose]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -38,6 +63,9 @@ const CheckoutModal = ({
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={titleId}
           >
             <div className="w-full max-w-md glass-card p-6">
               {/* Header */}
@@ -46,9 +74,12 @@ const CheckoutModal = ({
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                     <ShoppingBag className="w-5 h-5 text-primary" />
                   </div>
-                  <h2 className="font-display text-xl font-bold">Checkout</h2>
+                  <h2 id={titleId} className="font-display text-xl font-bold">Checkout</h2>
                 </div>
                 <button
+                  ref={closeBtnRef}
+                  type="button"
+                  aria-label="Close checkout"
                   onClick={onClose}
                   className="p-2 hover:bg-secondary rounded-lg transition-colors"
                 >
@@ -104,8 +135,27 @@ const CheckoutModal = ({
                   onApprove={async (data, actions) => {
                     if (actions.order) {
                       const details = await actions.order.capture();
+                      const payer = details.payer;
+                      const buyer_name = [payer?.name?.given_name, payer?.name?.surname]
+                        .filter(Boolean)
+                        .join(" ") || null;
+                      // Persist a record of the sale (RLS allows anon INSERT only).
+                      try {
+                        await supabase.from("orders").insert({
+                          product_id: productId ?? null,
+                          product_title: productName,
+                          buyer_email: payer?.email_address ?? null,
+                          buyer_name,
+                          paypal_order_id: details.id ?? data.orderID,
+                          amount: price,
+                          currency: "USD",
+                          status: details.status ?? "COMPLETED",
+                        });
+                      } catch (err) {
+                        console.error("Failed to record order:", err);
+                      }
                       toast.success(
-                        `Payment successful! Thank you, ${details.payer?.name?.given_name || "Customer"}!`
+                        `Payment successful! Thank you, ${payer?.name?.given_name || "Customer"}!`
                       );
                       onClose();
                     }
