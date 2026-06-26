@@ -34,15 +34,16 @@ const Products = () => {
             transition={{ duration: 0.6 }}
             className={`text-center max-w-3xl mx-auto ${spacing.headingGap} md:mb-16`}
           >
-            <Eyebrow
-              as={motion.span}
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="inline-block px-4 py-1.5 mb-6 bg-primary/10 text-primary border border-primary/30 rounded-full"
+              className="mb-6"
             >
-              Digital Products
-            </Eyebrow>
+              <Eyebrow className="inline-block px-4 py-1.5 bg-primary/10 text-primary border border-primary/30 rounded-full">
+                Digital Products
+              </Eyebrow>
+            </motion.div>
             <H1 className="mb-5">Products & Tools</H1>
             <Body className="max-w-xl mx-auto">
               Internal AI systems we use to create catalog and campaign visuals
