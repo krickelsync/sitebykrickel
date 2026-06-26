@@ -8,6 +8,7 @@ import CheckoutModal from "@/components/products/CheckoutModal";
 import LandingBlocks from "@/components/products/LandingBlocks";
 import { useProduct, useProducts, useResolvedImage, resolveImageUrl, type Product } from "@/hooks/useProducts";
 import { AnimatePresence } from "framer-motion";
+import { H1, Tagline, Body, Eyebrow, Meta, Price } from "@/components/ui/typography";
 
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -228,26 +229,18 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
           </div>
         </div>
 
-        <h1 className="font-display font-black uppercase mb-5 break-words text-3xl md:text-5xl lg:text-[3.25rem] leading-[0.95] tracking-[-0.03em]">
-          {product.title}
-        </h1>
+        <H1 className="mb-5">{product.title}</H1>
 
         {product.tagline && (
-          <p className="text-primary/90 font-display italic mb-4 text-sm md:text-base leading-snug max-w-lg">
-            {product.tagline}
-          </p>
+          <Tagline className="mb-4 max-w-lg">{product.tagline}</Tagline>
         )}
         {product.description && (
-          <p className="text-muted-foreground mb-7 font-mono max-w-md text-[12px] md:text-[13px] leading-[1.75] tracking-wide">
-            {product.description}
-          </p>
+          <Body className="mb-7 max-w-md">{product.description}</Body>
         )}
 
         {/* License card */}
         <div className="mb-5">
-          <p className="text-[10px] md:text-[11px] font-mono font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-2.5">
-            License
-          </p>
+          <Eyebrow as="p" className="block mb-2.5">License</Eyebrow>
           <div className="relative rounded-2xl border-2 border-primary bg-primary/[0.06] py-3.5 pl-4 pr-5 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 min-w-0">
               <span className="w-4 h-4 shrink-0 rounded-full border-2 border-primary grid place-items-center">
@@ -257,20 +250,16 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
                 <span className="block font-display font-bold leading-tight text-sm md:text-base">
                   Lifetime License
                 </span>
-                <span className="block font-mono text-muted-foreground mt-0.5 truncate text-[11px]">
+                <Meta as="span" className="block mt-0.5 truncate text-[11px]">
                   Free updates · Unlimited dev
-                </span>
+                </Meta>
               </div>
             </div>
             <div className="text-right shrink-0 flex items-baseline gap-2">
               {hasDiscount && (
-                <span className="text-muted-foreground line-through font-mono text-[11px] md:text-xs">
-                  ${product.original_price}
-                </span>
+                <Meta as="span" className="line-through">${product.original_price}</Meta>
               )}
-              <span className="font-bold font-mono text-primary text-lg md:text-xl leading-none">
-                ${product.price}
-              </span>
+              <Price as="span">${product.price}</Price>
             </div>
           </div>
           {hasDiscount && (
