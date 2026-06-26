@@ -67,17 +67,17 @@ function renderBlock(block: LandingBlock) {
       );
     case "gallery":
       return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6 max-w-5xl mx-auto">
           {block.images.map((src, idx) => (
-            <img key={idx} src={src} alt="" className="w-full aspect-square object-cover rounded-xl" loading="lazy" />
+            <img key={idx} src={src} alt="" className="w-full aspect-square object-cover rounded-xl min-w-0" loading="lazy" />
           ))}
         </div>
       );
     case "features":
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 max-w-5xl mx-auto">
           {block.items.map((it, idx) => (
-            <div key={idx} className="glass-card p-6">
+            <div key={idx} className="glass-card p-6 min-w-0">
               <h3 className="font-display font-bold text-lg mb-2">{it.title}</h3>
               {it.description && (
                 <p className="text-sm text-muted-foreground">{it.description}</p>
