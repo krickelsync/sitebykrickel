@@ -105,8 +105,12 @@ export const spacing = {
   section: "mt-16 md:mt-24",
   /** Vertical padding for full-width sections. */
   sectionY: "py-12 md:py-20",
+  /** Larger vertical padding for hero / editorial sections. */
+  sectionYLg: "py-20 md:py-32",
   /** Gap between a section heading and its content. */
   headingGap: "mb-6 md:mb-8",
+  /** Larger heading gap for hero blocks. */
+  headingGapLg: "mb-12 md:mb-16",
   /** Gap between stacked blocks inside a section. */
   blockGap: "space-y-5 md:space-y-7",
   /** Tight gap (label → value, eyebrow → title). */

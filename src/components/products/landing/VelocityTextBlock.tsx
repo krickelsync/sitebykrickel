@@ -1,3 +1,4 @@
+import { spacing } from "@/components/ui/typography";
 import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity, useAnimationFrame } from "framer-motion";
 import { wrap } from "@popmotion/popcorn";
@@ -41,7 +42,7 @@ interface Props {
 const VelocityTextBlock = ({ rows }: Props) => {
   if (!rows?.length) return null;
   return (
-    <section className="py-12 overflow-hidden">
+    <section className={`${spacing.sectionY} overflow-hidden`}>
       {rows.map((r, i) => (
         <Row key={i} text={r.text} baseVelocity={r.velocity ?? (i % 2 === 0 ? -2 : 2)} color={r.color} className={r.color ? undefined : "text-foreground/20"} />
       ))}

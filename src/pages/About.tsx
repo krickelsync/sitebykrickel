@@ -10,6 +10,7 @@ import AnimatedText from "@/components/AnimatedText";
 import ContactForm from "@/components/ContactForm";
 import profileImage from "@/assets/elfan-profile.jpg";
 import workingImage from "@/assets/elfan-working.jpg";
+import { spacing } from "@/components/ui/typography";
 
 const About = () => {
   const bioSectionRef = useRef<HTMLDivElement>(null);
@@ -128,7 +129,7 @@ const About = () => {
       </section>
 
       {/* Bio Section */}
-      <section ref={bioSectionRef} className="py-20 md:py-32">
+      <section ref={bioSectionRef} className={spacing.sectionYLg}>
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             {/* Photo with Parallax */}
@@ -202,7 +203,7 @@ const About = () => {
       </section>
 
       {/* Skills Section */}
-      <section className="py-20 md:py-32 bg-muted/5">
+      <section className={`${spacing.sectionYLg} bg-muted/5`}>
         <div className="container mx-auto px-4">
           <motion.div initial={{
           opacity: 0,
@@ -214,7 +215,7 @@ const About = () => {
           duration: 0.6
         }} viewport={{
           once: true
-        }} className="text-center mb-16">
+        }} className={`text-center ${spacing.headingGapLg}`}>
             <span className="font-mono text-xs text-primary tracking-widest uppercase">
               // Skills & Expertise
             </span>
@@ -266,7 +267,7 @@ const About = () => {
       </section>
 
       {/* Specialized Expertise */}
-      <section className="py-20 md:py-32">
+      <section className={spacing.sectionYLg}>
         <div className="container mx-auto px-4">
           <motion.div initial={{
           opacity: 0,
@@ -278,7 +279,7 @@ const About = () => {
           duration: 0.6
         }} viewport={{
           once: true
-        }} className="text-center mb-16">
+        }} className={`text-center ${spacing.headingGapLg}`}>
             <span className="font-mono text-xs text-primary tracking-widest uppercase">
               // Specialized Expertise
             </span>
@@ -294,7 +295,7 @@ const About = () => {
       </section>
 
       {/* Why Choose Me */}
-      <section className="py-20 md:py-32 bg-muted/5">
+      <section className={`${spacing.sectionYLg} bg-muted/5`}>
         <div className="container mx-auto px-4">
           <motion.div initial={{
           opacity: 0,
@@ -306,7 +307,7 @@ const About = () => {
           duration: 0.6
         }} viewport={{
           once: true
-        }} className="text-center mb-16">
+        }} className={`text-center ${spacing.headingGapLg}`}>
             <span className="font-mono text-xs text-primary tracking-widest uppercase">
               // Soft Skills
             </span>
@@ -322,7 +323,7 @@ const About = () => {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 md:py-32 relative">
+      <section id="contact" className={`${spacing.sectionYLg} relative`}>
         {/* Subtle gradient background */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
         
@@ -332,7 +333,7 @@ const About = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className={`text-center ${spacing.headingGapLg}`}
           >
             <span className="font-mono text-xs text-primary tracking-widest uppercase">
               // Let's Connect

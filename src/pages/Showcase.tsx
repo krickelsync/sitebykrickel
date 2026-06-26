@@ -1,3 +1,4 @@
+import { spacing } from "@/components/ui/typography";
 import Footer from "@/components/Footer";
 import DesignBentoGrid from "@/components/DesignBentoGrid";
 import { useDesignPortfolio } from "@/hooks/useDesignPortfolio";
@@ -302,7 +303,7 @@ const Showcase = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-center py-16"
+              className={`text-center ${spacing.sectionY}`}
             >
               <p className="font-mono text-muted-foreground">
                 No templates in this category yet. Coming soon!
@@ -313,7 +314,7 @@ const Showcase = () => {
       </section>
 
       {/* Design Portfolio Section */}
-      <section className="py-16 px-4 border-t border-border">
+      <section className={`${spacing.sectionY} px-4 border-t border-border`}>
         <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
