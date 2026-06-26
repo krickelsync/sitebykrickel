@@ -107,11 +107,12 @@ const ProductDetail = () => {
           onClose={() => setCheckoutOpen(false)}
           productName={product.title}
           price={product.price}
+          productId={product.id}
         />
 
         {/* Mobile sticky glass CTA */}
         <AnimatePresence>
-          {product && showStickyCTA && (
+          {showStickyCTA && (
             <motion.div
               key="sticky-cta"
               initial={{ y: 80, opacity: 0 }}
@@ -214,16 +215,14 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] md:text-[11px] font-mono font-bold uppercase tracking-[0.18em] bg-primary/10 text-primary border border-primary/30 rounded-full">
             <Sparkles className="w-3 h-3" /> Just released
           </span>
-          <div className="inline-flex items-center gap-1.5 text-[12px] md:text-[13px]">
-            <div className="flex text-primary" aria-label="Rated 4.9 out of 5">
+          <div className="inline-flex items-center gap-1.5 text-[12px] md:text-[13px]" aria-label="Rated 4.9 out of 5">
+            <div className="flex text-primary">
               {[0, 1, 2, 3, 4].map((i) => (
                 <Star key={i} className="w-3 h-3 fill-current" />
               ))}
             </div>
             <span className="font-mono font-semibold">4.9</span>
-            <a href="#reviews" className="font-mono text-muted-foreground hover:text-primary transition-colors">
-              (200)
-            </a>
+            <span className="font-mono text-muted-foreground">(200)</span>
           </div>
         </div>
 
@@ -278,12 +277,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
           <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
         </button>
 
-        <a
-          href="#demo"
-          className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl border border-border bg-card/40 backdrop-blur font-display font-bold uppercase tracking-[0.18em] text-[11px] md:text-xs hover:border-primary/50 hover:bg-card/70 transition"
-        >
-          <Play className="w-3.5 h-3.5 fill-current" /> View Live Demo
-        </a>
+        {/* Live demo button removed until a real demo URL exists per product. */}
         </div>
 
         <div className="mt-7 pt-6 border-t border-border/60 grid grid-cols-3 gap-3">
