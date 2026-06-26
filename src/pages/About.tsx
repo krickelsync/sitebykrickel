@@ -10,6 +10,7 @@ import AnimatedText from "@/components/AnimatedText";
 import ContactForm from "@/components/ContactForm";
 import profileImage from "@/assets/elfan-profile.jpg";
 import workingImage from "@/assets/elfan-working.jpg";
+import { spacing } from "@/components/ui/typography";
 
 const About = () => {
   const bioSectionRef = useRef<HTMLDivElement>(null);
