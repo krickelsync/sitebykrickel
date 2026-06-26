@@ -6,7 +6,6 @@ import ScrollProgress from "@/components/ScrollProgress";
 // Lazy load below-the-fold components
 const Features = lazy(() => import("@/components/Features"));
 const Pricing = lazy(() => import("@/components/Pricing"));
-const CountdownBanner = lazy(() => import("@/components/CountdownBanner"));
 const CurvedLoop = lazy(() => import("@/components/CurvedLoop"));
 const FAQ = lazy(() => import("@/components/FAQ"));
 const Footer = lazy(() => import("@/components/Footer"));
@@ -27,9 +26,6 @@ const Index = () => {
       <Marquee />
       <Suspense fallback={<SectionLoader />}>
         <Features />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <CountdownBanner />
       </Suspense>
       <Suspense fallback={<SectionLoader />}>
         <Pricing />

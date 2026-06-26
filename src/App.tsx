@@ -18,8 +18,6 @@ import { useLocation } from "react-router-dom";
 import { installGlobalClickSound } from "@/lib/sound";
 
 const MusicPlayer = lazy(() => import("./components/MusicPlayer"));
-const CustomCursor = lazy(() => import("./components/CustomCursor"));
-const PageTransition = lazy(() => import("./components/PageTransition"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const Admin = lazy(() => import("./pages/Admin"));
@@ -37,10 +35,6 @@ const AppInner = () => {
   return (
     <>
       <SmoothScroll />
-      <Suspense fallback={null}>
-        <CustomCursor />
-        <PageTransition />
-      </Suspense>
       {!hideChrome && <Navbar />}
       <Routes>
         <Route path="/" element={<Index />} />
