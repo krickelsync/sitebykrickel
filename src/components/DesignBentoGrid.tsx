@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import DesignCard from "./DesignCard";
 import type { DesignItem } from "@/hooks/useDesignPortfolio";
 
 interface DesignBentoGridProps {
@@ -45,11 +44,27 @@ const DesignBentoGrid = ({ designs, isLoading }: DesignBentoGridProps) => {
       <div className="bento-grid">
         <AnimatePresence mode="popLayout">
           {designs.map((design) => (
-            <DesignCard
+            <motion.button
               key={design.id}
-              design={design}
+              layout
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
               onClick={() => setSelectedDesign(design)}
-            />
+              className="group relative overflow-hidden rounded-xl glass-card text-left"
+            >
+              <img
+                src={design.image_url}
+                alt={design.title}
+                loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-background/90 to-transparent">
+                <p className="font-mono text-xs uppercase tracking-wider text-foreground">
+                  {design.title}
+                </p>
+              </div>
+            </motion.button>
           ))}
         </AnimatePresence>
       </div>
