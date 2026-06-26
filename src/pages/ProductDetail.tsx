@@ -244,8 +244,9 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         <h1
           className="font-display font-black uppercase tracking-[-0.02em] mb-4 break-words"
           style={{
-            fontSize: "clamp(1.875rem, 1.2rem + 3.2vw, 3.5rem)",
-            lineHeight: "clamp(1, 0.98 + 0.05vw, 1.05)",
+            fontSize: "clamp(1.75rem, 1.1rem + 2.6vw, 3rem)",
+            lineHeight: 1.05,
+            letterSpacing: "-0.025em",
           }}
         >
           {product.title}
@@ -253,10 +254,10 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
 
         {product.tagline && (
           <p
-            className="text-primary font-bold mb-5 border-l-2 border-primary pl-3 font-display"
+            className="text-primary font-semibold mb-4 border-l-2 border-primary pl-3 font-display"
             style={{
-              fontSize: "clamp(0.875rem, 0.78rem + 0.4vw, 1.125rem)",
-              lineHeight: 1.35,
+              fontSize: "clamp(0.875rem, 0.8rem + 0.3vw, 1rem)",
+              lineHeight: 1.4,
             }}
           >
             {product.tagline}
@@ -266,8 +267,8 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
           <p
             className="text-muted-foreground mb-6 font-mono max-w-xl"
             style={{
-              fontSize: "clamp(0.8125rem, 0.74rem + 0.3vw, 0.9375rem)",
-              lineHeight: 1.65,
+              fontSize: "clamp(0.8125rem, 0.76rem + 0.2vw, 0.875rem)",
+              lineHeight: 1.7,
             }}
           >
             {product.description}
