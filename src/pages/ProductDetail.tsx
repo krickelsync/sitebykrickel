@@ -197,7 +197,14 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         {allImages.length > 1 && (
           <div className="grid grid-cols-6 gap-2 w-full">
             {allImages.map((img, i) => (
-              <Thumb key={img + i} src={img} active={img === activeRaw} onClick={() => setActiveRaw(img)} />
+              <Thumb
+                key={img + i}
+                src={img}
+                active={img === activeRaw}
+                onClick={() => setActiveRaw(img)}
+                index={i}
+                total={allImages.length}
+              />
             ))}
           </div>
         )}
