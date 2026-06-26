@@ -46,8 +46,20 @@ const AdminProductEdit = () => {
   }, [user, authLoading, navigate]);
 
   useEffect(() => {
+    // Bounce non-admins out of the editor (after the role check resolves).
+    if (isAdmin === false) navigate("/admin", { replace: true });
+  }, [isAdmin, navigate]);
+
+  useEffect(() => {
     if (isNew) return;
-    supabase.from("products").select("*").eq("id", id).maybeSingle().then(({ data }) => {
+    let cancelled = false;
+    supabase.from("products").select("*").eq("id", id).maybeSingle().then(({ data, error }) => {
+      if (cancelled) return;
+      if (error) {
+        toast.error(error.message);
+        setLoading(false);
+        return;
+      }
       if (data) {
         setForm({
           slug: data.slug,
@@ -65,6 +77,9 @@ const AdminProductEdit = () => {
       }
       setLoading(false);
     });
+    return () => {
+      cancelled = true;
+    };
   }, [id, isNew]);
 
   useEffect(() => {
@@ -75,7 +90,7 @@ const AdminProductEdit = () => {
     return <div className="min-h-dvh bg-background flex items-center justify-center font-mono text-sm">Loading…</div>;
   }
   if (!isAdmin) {
-    navigate("/admin");
+    // Redirect is handled by the effect above; render nothing in the meantime.
     return null;
   }
 
