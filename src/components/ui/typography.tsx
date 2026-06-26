@@ -94,3 +94,23 @@ export function Price<T extends ElementType = "span">({ as, className, children,
   const Tag = (as ?? "span") as ElementType;
   return <Tag className={cn(typography.price, className)} {...rest}>{children}</Tag>;
 }
+
+/**
+ * Spacing system — consistent vertical rhythm across sections.
+ * Use these instead of ad-hoc `mb-*` / `py-*` so mobile and desktop
+ * stay balanced without feeling crowded.
+ */
+export const spacing = {
+  /** Gap between major page sections (Hero → Related → Landing). */
+  section: "mt-16 md:mt-24",
+  /** Vertical padding for full-width sections. */
+  sectionY: "py-12 md:py-20",
+  /** Gap between a section heading and its content. */
+  headingGap: "mb-6 md:mb-8",
+  /** Gap between stacked blocks inside a section. */
+  blockGap: "space-y-5 md:space-y-7",
+  /** Tight gap (label → value, eyebrow → title). */
+  tight: "space-y-2",
+  /** Grid / flex gaps. */
+  gridGap: "gap-5 md:gap-7",
+} as const;
