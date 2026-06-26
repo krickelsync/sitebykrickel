@@ -290,7 +290,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
   );
 }
 
-function Thumb({ src, active, onClick }: { src: string; active: boolean; onClick: () => void }) {
+function Thumb({ src, active, onClick, index, total }: { src: string; active: boolean; onClick: () => void; index?: number; total?: number }) {
   const [url, setUrl] = useState<string | null>(null);
   useEffect(() => {
     let cancelled = false;
@@ -302,7 +302,9 @@ function Thumb({ src, active, onClick }: { src: string; active: boolean; onClick
   return (
     <button
       onClick={onClick}
-      aria-label="Show image"
+      type="button"
+      aria-label={index != null && total != null ? `Show image ${index + 1} of ${total}` : "Show image"}
+      aria-pressed={active}
       className={`relative aspect-square rounded-lg overflow-hidden border-2 transition ${
         active ? "border-primary shadow-[0_0_0_3px_hsl(var(--primary)/0.2)]" : "border-border/60 hover:border-primary/50"
       }`}
