@@ -1,0 +1,1 @@
+CREATE POLICY "Anyone can record an order" ON public.orders FOR INSERT TO anon, authenticated WITH CHECK (true);
