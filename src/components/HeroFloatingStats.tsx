@@ -20,26 +20,8 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   const SALES_FROM = 90000;
   const SALES_TO = 130000;
   const SALES_TREND_TO = 130;
-  const [salesP, setSalesP] = useState(0); // 0..1
-  useEffect(() => {
-    if (reduce) { setSalesP(1); return; }
-    let cancelled = false;
-    let ctrl: ReturnType<typeof animate> | undefined;
-    const loop = () => {
-      setSalesP(0);
-      ctrl = animate(0, 1, {
-        duration: 3.2,
-        ease: [0.22, 1, 0.36, 1], // smooth ease-out-quart, no overshoot
-        onUpdate: (v) => { if (!cancelled) setSalesP(v); },
-        onComplete: () => { if (!cancelled) setTimeout(loop, 1600); },
-      });
-    };
-    loop();
-    return () => { cancelled = true; ctrl?.stop(); };
-  }, [reduce]);
-  const sales = Math.round(SALES_FROM + (SALES_TO - SALES_FROM) * salesP);
-  const salesTrend = Math.round(SALES_TREND_TO * salesP);
-  const salesChartWidth = reduce ? 120 : Math.max(0, Math.min(120, 120 * salesP));
+  const salesProgress = useMotionValue(reduce ? 1 : 0);
+  const [salesDisplay, setSalesDisplay] = useState({ sales: SALES_FROM, trend: 0 });
   // Sharp zigzag points — overall trending up, angular (kaku), full-width.
   const ZIG_PTS: [number, number][] = [
     [0, 38], [14, 28], [24, 33], [38, 22], [50, 27],
@@ -56,32 +38,105 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
     }
     return ZIG_PTS[ZIG_PTS.length - 1];
   };
-  const [salesDotX, salesDotY] = getZigXY(salesP);
 
-  // Conversion: 0% → 18.4% with trend 0% → 92%; bar width tracks trend.
-  const CONV_TO = 18.4;
-  const CONV_TREND_TO = 92;
-  const [convP, setConvP] = useState(0);
   useEffect(() => {
-    if (reduce) { setConvP(1); return; }
+    const commit = (p: number) => {
+      setSalesDisplay({
+        sales: Math.round(SALES_FROM + (SALES_TO - SALES_FROM) * p),
+        trend: Math.round(SALES_TREND_TO * p),
+      });
+    };
+    if (reduce) {
+      salesProgress.set(1);
+      commit(1);
+      return;
+    }
     let cancelled = false;
+    let lastCommit = 0;
     let ctrl: ReturnType<typeof animate> | undefined;
     const loop = () => {
-      setConvP(0);
-      ctrl = animate(0, 1, {
-        duration: 3.0,
-        ease: [0.22, 1, 0.36, 1],
-        onUpdate: (v) => { if (!cancelled) setConvP(v); },
-        onComplete: () => { if (!cancelled) setTimeout(loop, 1600); },
+      salesProgress.set(0);
+      commit(0);
+      ctrl = animate(salesProgress, 1, {
+        duration: 3.2,
+        ease: [0.22, 1, 0.36, 1], // smooth ease-out-quart, no overshoot
+        onUpdate: (v) => {
+          if (cancelled) return;
+          const now = performance.now();
+          if (now - lastCommit > 90) {
+            lastCommit = now;
+            commit(v);
+          }
+        },
+        onComplete: () => {
+          if (!cancelled) {
+            commit(1);
+            setTimeout(loop, 1600);
+          }
+        },
       });
     };
     loop();
     return () => { cancelled = true; ctrl?.stop(); };
-  }, [reduce]);
-  const conv = CONV_TO * convP;
-  const convTrend = Math.round(CONV_TREND_TO * convP);
+  }, [reduce, salesProgress]);
+  const sales = salesDisplay.sales;
+  const salesTrend = salesDisplay.trend;
+  const salesChartWidth = useTransform(salesProgress, (p) => Math.max(0, Math.min(120, 120 * p)));
+  const salesDotX = useTransform(salesProgress, (p) => getZigXY(p)[0]);
+  const salesDotY = useTransform(salesProgress, (p) => getZigXY(p)[1]);
+  const trail1X = useTransform(salesProgress, (p) => getZigXY(Math.max(0, p - 0.04))[0]);
+  const trail1Y = useTransform(salesProgress, (p) => getZigXY(Math.max(0, p - 0.04))[1]);
+  const trail2X = useTransform(salesProgress, (p) => getZigXY(Math.max(0, p - 0.08))[0]);
+  const trail2Y = useTransform(salesProgress, (p) => getZigXY(Math.max(0, p - 0.08))[1]);
+  const trail3X = useTransform(salesProgress, (p) => getZigXY(Math.max(0, p - 0.12))[0]);
+  const trail3Y = useTransform(salesProgress, (p) => getZigXY(Math.max(0, p - 0.12))[1]);
+
+  // Conversion: 0% → 18.4% with trend 0% → 92%; bar width tracks trend.
+  const CONV_TO = 18.4;
+  const CONV_TREND_TO = 92;
+  const convProgress = useMotionValue(reduce ? 1 : 0);
+  const [convDisplay, setConvDisplay] = useState({ conv: 0, trend: 0 });
+  useEffect(() => {
+    const commit = (p: number) => {
+      setConvDisplay({ conv: CONV_TO * p, trend: Math.round(CONV_TREND_TO * p) });
+    };
+    if (reduce) {
+      convProgress.set(1);
+      commit(1);
+      return;
+    }
+    let cancelled = false;
+    let lastCommit = 0;
+    let ctrl: ReturnType<typeof animate> | undefined;
+    const loop = () => {
+      convProgress.set(0);
+      commit(0);
+      ctrl = animate(convProgress, 1, {
+        duration: 3.0,
+        ease: [0.22, 1, 0.36, 1],
+        onUpdate: (v) => {
+          if (cancelled) return;
+          const now = performance.now();
+          if (now - lastCommit > 90) {
+            lastCommit = now;
+            commit(v);
+          }
+        },
+        onComplete: () => {
+          if (!cancelled) {
+            commit(1);
+            setTimeout(loop, 1600);
+          }
+        },
+      });
+    };
+    loop();
+    return () => { cancelled = true; ctrl?.stop(); };
+  }, [reduce, convProgress]);
+  const conv = convDisplay.conv;
+  const convTrend = convDisplay.trend;
   // Bar fill is proportional to current trend value (max = CONV_TREND_TO%).
-  const barWidth = `${convTrend}%`;
+  const barWidth = useTransform(convProgress, (p) => `${Math.max(0, Math.min(CONV_TREND_TO, CONV_TREND_TO * p))}%`);
 
   // ---- Mouse tilt deltas, added on top of baseline tilt ----
   const tiltDX = useSpring(useTransform(my, (v) => (reduce ? 0 : v * -6)), { stiffness: 120, damping: 16 });
@@ -98,11 +153,10 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   const brY = useTransform(my, (v) => (reduce ? 0 : v * -10));
 
   const cardBase =
-    "pointer-events-none rounded-2xl border border-white/10 px-3 py-2.5 sm:px-4 sm:py-3 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] will-change-transform";
+    "pointer-events-none rounded-2xl border border-white/10 px-3 py-2.5 sm:px-4 sm:py-3 md:backdrop-blur-md shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] will-change-transform";
   const cardStyle = {
     background:
       "linear-gradient(135deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.02))",
-    WebkitBackdropFilter: "blur(18px) saturate(160%)",
   } as const;
   const accent = "hsl(75 95% 60%)"; // lime/yellow-green from refs
 
@@ -211,7 +265,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                   </feMerge>
                 </filter>
                 <clipPath id="salesRevealClip">
-                  <rect
+                  <motion.rect
                     x="0"
                     y="0"
                     width={salesChartWidth}
@@ -254,16 +308,11 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                   opacity="0.7"
                 />
                 {/* Trail comet — 3 static circles behind the head dot, no extra animation */}
-                {[
-                  { off: 0.04, r: 1.5, op: 0.45 },
-                  { off: 0.08, r: 1.2, op: 0.25 },
-                  { off: 0.12, r: 1.0, op: 0.12 },
-                ].map((t, i) => {
-                  const [tx, ty] = getZigXY(Math.max(0, salesP - t.off));
-                  return <circle key={i} cx={tx} cy={ty} r={t.r} fill={accent} opacity={t.op} />;
-                })}
+                <motion.circle cx={trail1X} cy={trail1Y} r="1.5" fill={accent} opacity="0.45" />
+                <motion.circle cx={trail2X} cy={trail2Y} r="1.2" fill={accent} opacity="0.25" />
+                <motion.circle cx={trail3X} cy={trail3Y} r="1" fill={accent} opacity="0.12" />
                 {/* Static glow halo behind the head dot */}
-                <circle cx={salesDotX} cy={salesDotY} r="4" fill={accent} opacity="0.22" />
+                <motion.circle cx={salesDotX} cy={salesDotY} r="4" fill={accent} opacity="0.22" />
                 <motion.circle
                   cx={salesDotX}
                   cy={salesDotY}
@@ -315,7 +364,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
             aria-valuenow={convTrend}
             aria-label="Conversion trend"
           >
-            <div
+            <motion.div
               className="h-full rounded-full"
               style={{
                 width: barWidth,

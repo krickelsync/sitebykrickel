@@ -13,7 +13,9 @@ import HeroFloatingStats from "./HeroFloatingStats";
 const Prism = lazy(() => import("./Prism"));
 
 const Hero = () => {
-  const [prismScale, setPrismScale] = useState(typeof window !== 'undefined' && window.innerWidth < 768 ? 1.8 : 3);
+  const getIsMobile = () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
+  const [isMobile, setIsMobile] = useState(getIsMobile);
+  const [prismScale, setPrismScale] = useState(getIsMobile() ? 1.8 : 3);
   const rotatingWords = ["CLOTHING BRAND", "STREETWEAR", "DROPSHIPPER", "BARBERSHOP"];
   const [wordIndex, setWordIndex] = useState(0);
   useEffect(() => {
@@ -23,6 +25,7 @@ const Hero = () => {
   const magneticRef = useMagnetic<HTMLAnchorElement>(0.25);
   const sectionRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
+  const useStaticPrism = isMobile || reduce;
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -36,7 +39,9 @@ const Hero = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setPrismScale(window.innerWidth < 768 ? 1.8 : 3);
+      const mobile = getIsMobile();
+      setIsMobile(mobile);
+      setPrismScale(mobile ? 1.8 : 3);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -45,22 +50,27 @@ const Hero = () => {
   return <section ref={sectionRef} aria-labelledby="hero-heading" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20 pb-24">
       {/* Prism Background Effect - z-index 0 */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 pointer-events-none bg-background">
-        <Suspense fallback={<div className="w-full h-full bg-gradient-to-br from-primary/10 via-background to-background" />}>
-          <Prism 
-            animationType="rotate"
-            timeScale={0.5}
-            height={4}
-            baseWidth={5}
-            scale={prismScale}
-            hueShift={0}
-            colorFrequency={1}
-            noise={0}
-            glow={1}
-            bloom={1}
-            offset={{ x: 0, y: 0 }}
-            suspendWhenOffscreen={true}
-          />
-        </Suspense>
+        {useStaticPrism ? (
+          <div className="hero-prism-fallback h-full w-full" />
+        ) : (
+          <Suspense fallback={<div className="hero-prism-fallback h-full w-full" />}>
+            <Prism 
+              animationType="rotate"
+              timeScale={0.35}
+              height={4}
+              baseWidth={5}
+              scale={prismScale}
+              hueShift={0}
+              colorFrequency={1}
+              noise={0}
+              glow={0.85}
+              bloom={0.75}
+              offset={{ x: 0, y: 0 }}
+              suspendWhenOffscreen={true}
+              frameRate={24}
+            />
+          </Suspense>
+        )}
         {/* Fade overlay at the bottom */}
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent z-[1]" />
       </motion.div>
@@ -203,12 +213,9 @@ const Hero = () => {
       </div>
 
       {/* Animated radial pulse — mobile only */}
-      <motion.div
+      <div
         aria-hidden
         className="md:hidden absolute inset-0 z-[2] pointer-events-none"
-        initial={{ opacity: 0.4 }}
-        animate={{ opacity: [0.4, 0.7, 0.4] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         style={{
           background:
             "radial-gradient(ellipse 60% 40% at 50% 35%, hsl(var(--primary) / 0.18), transparent 70%)",
