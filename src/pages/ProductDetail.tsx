@@ -277,9 +277,9 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         <div className="flex flex-col gap-2.5">
         <button
           onClick={onBuy}
-          className="group relative w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-primary text-primary-foreground font-display font-extrabold uppercase tracking-[0.18em] text-xs md:text-sm shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_45px_-5px_hsl(var(--primary)/0.9)] hover:bg-primary/90 active:scale-[0.99] transition-all"
+          className="group relative w-full inline-flex items-center justify-center gap-2 px-5 py-3 md:py-3.5 rounded-2xl bg-primary text-primary-foreground font-display font-extrabold uppercase tracking-[0.14em] md:tracking-[0.18em] text-[11px] md:text-sm shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_45px_-5px_hsl(var(--primary)/0.9)] hover:bg-primary/90 active:scale-[0.99] transition-all"
         >
-          <ShoppingBag className="w-4 h-4" />
+          <ShoppingBag className="w-3.5 h-3.5 md:w-4 md:h-4" />
           <span>Add to cart</span>
           <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
         </button>
