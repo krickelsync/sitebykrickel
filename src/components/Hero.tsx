@@ -71,12 +71,12 @@ const Hero = () => {
       </motion.div>
 
       {/* Dark Overlay for text readability - z-index 1 */}
-      <div className="absolute inset-0 z-[1] bg-background/50 pointer-events-none" />
+      <div className="absolute inset-0 z-[1] bg-background/25 pointer-events-none" />
 
-      {/* Kinetic grid overlay — desktop only (expensive on mobile GPU) */}
+      {/* Kinetic grid overlay — visible on all devices */}
       <div
         aria-hidden
-        className="absolute inset-0 z-[2] pointer-events-none opacity-[0.08] hero-grid-overlay hidden md:block"
+        className="absolute inset-0 z-[2] pointer-events-none opacity-[0.18] md:opacity-[0.22] hero-grid-overlay"
       />
       {/* Grain noise — desktop only */}
       <div aria-hidden className="absolute inset-0 z-[2] pointer-events-none opacity-[0.06] hero-noise mix-blend-overlay hidden md:block" />
