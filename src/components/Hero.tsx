@@ -19,7 +19,7 @@ const Hero = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [inView, setInView] = useState(true);
   const [reactorStage, setReactorStage] = useState<"idle" | "connect" | "transfer" | "activate" | "orbit">("idle");
-  const cardsRevealed = reactorStage === "transfer" || reactorStage === "activate" || reactorStage === "orbit";
+  const cardsRevealed = reactorStage !== "idle";
   const magneticRef = useMagnetic<HTMLAnchorElement>(0.25);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -70,10 +70,9 @@ const Hero = () => {
   }, []);
 
   useEffect(() => {
-    if (reactorStage === "connect") {
-      loadHeroFloatingStats();
-    }
-  }, [reactorStage]);
+    // Pre-warm cards immediately so they pop instantly when reactor connects
+    loadHeroFloatingStats();
+  }, []);
 
   return <section ref={sectionRef} aria-labelledby="hero-heading" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-0 pb-16 md:pt-14 md:pb-24">
       {/* Liquid Chrome Background - z-index 0 (pure CSS, zero GPU) */}
