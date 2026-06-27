@@ -378,7 +378,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
       </div>
 
       {/* BOTTOM LEFT — FULLY RESPONSIVE */}
-      <div className="absolute bottom-[8%] sm:bottom-[28%] md:bottom-[26%] left-1 sm:left-3 lg:left-6 scale-[0.6] sm:scale-[0.75] md:scale-90 lg:scale-100 origin-bottom-left">
+      <div className="absolute bottom-[22%] sm:bottom-[28%] md:bottom-[26%] left-1 sm:left-3 lg:left-6 scale-[0.6] sm:scale-[0.75] md:scale-90 lg:scale-100 origin-bottom-left">
       <motion.div
         style={{ x: blX, y: blY }}
         initial={{ opacity: 0, y: 20 }}
@@ -408,7 +408,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
       </div>
 
       {/* BOTTOM RIGHT — FAST LOADING SPEED */}
-      <div className="absolute bottom-[8%] sm:bottom-[28%] md:bottom-[26%] right-1 sm:right-3 lg:right-6 scale-[0.6] sm:scale-[0.75] md:scale-90 lg:scale-100 origin-bottom-right">
+      <div className="absolute bottom-[22%] sm:bottom-[28%] md:bottom-[26%] right-1 sm:right-3 lg:right-6 scale-[0.6] sm:scale-[0.75] md:scale-90 lg:scale-100 origin-bottom-right">
       <motion.div
         style={{ x: brX, y: brY }}
         initial={{ opacity: 0, y: 20 }}
