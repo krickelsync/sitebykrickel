@@ -101,7 +101,7 @@ const ProductDetail = () => {
                 <div className="absolute inset-0 hero-grid-overlay opacity-30" />
               </div>
               <div className="relative z-10">
-                <ProductHero product={product} onBuy={() => setCheckoutOpen(true)} />
+               <ProductHero product={product} onBuy={handleAddToCart} />
               </div>
             </div>
 
