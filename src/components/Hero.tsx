@@ -62,7 +62,7 @@ const Hero = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return <section ref={sectionRef} aria-labelledby="hero-heading" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-12 pb-20 md:pt-14 md:pb-24">
+  return <section ref={sectionRef} aria-labelledby="hero-heading" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-4 pb-20 md:pt-14 md:pb-24">
       {/* Liquid Chrome Background - z-index 0 (pure CSS, zero GPU) */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 pointer-events-none bg-background">
         <div className="hero-prism-fallback h-full w-full overflow-hidden" />
@@ -129,7 +129,7 @@ const Hero = () => {
               <span>FOR</span>
             </span>
             <span
-              className="relative flex items-center justify-center text-center glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense text-[clamp(1.2rem,6vw,4.5rem)] leading-[1.05] whitespace-nowrap h-[1.2em] overflow-hidden px-3 sm:px-0"
+              className="relative flex items-center justify-center text-center glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense text-[clamp(1.2rem,6vw,4.5rem)] leading-[1.05] whitespace-nowrap h-[1.4em] overflow-visible"
               style={{ color: "hsl(45 100% 58%)" }}
             >
               <AnimatePresence mode="wait">
