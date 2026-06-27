@@ -77,11 +77,11 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
       scrollToId(hash);
     }
   };
-  return <footer className="relative overflow-hidden border-t border-muted pt-10 md:pt-12">
+  return <footer className="relative overflow-hidden border-t border-muted pt-8 md:pt-10">
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
       <div aria-hidden className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 h-64 w-[80%] rounded-full bg-primary/10 blur-3xl" />
       <div className="container px-4 relative">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-12 mb-8 md:mb-12 items-start">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8 mb-5 md:mb-7 items-start">
           {/* Brand Column */}
           <motion.div initial={{
           opacity: 0,
@@ -93,7 +93,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
           once: true
         }} transition={{
           duration: 0.6
-          }} className="hidden md:flex space-y-2 md:space-y-4 flex-col">
+          }} className="hidden md:flex space-y-2 md:space-y-3 flex-col">
             <h2 className="font-syne text-sm md:text-3xl font-extrabold uppercase tracking-tight flex flex-col leading-[0.95]">
               <AnimatedBrandText text="SITE BY" className="text-foreground" />
               <AnimatedBrandText
@@ -119,26 +119,26 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
         }} transition={{
           duration: 0.6,
           delay: 0.1
-          }} className="space-y-2 md:space-y-4">
+          }} className="space-y-2 md:space-y-3">
             <h3 className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-primary">
               Quick Links
             </h3>
-            <ul className="space-y-1 md:space-y-2">
+            <ul className="space-y-0.5 md:space-y-1">
               {quickLinks.map(link => <li key={link.name}>
                   {link.href.startsWith("/") && !link.href.includes("#") ? (
-                    <Link to={link.href} className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[32px] md:min-h-[36px] items-center">
+                    <Link to={link.href} className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[28px] md:min-h-[30px] items-center">
                       {link.name}
                     </Link>
                   ) : link.href.startsWith("#") ? (
                     <a
                       href={link.href}
                       onClick={(e) => handleNavClick(e, link.href)}
-                      className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer inline-flex min-h-[32px] md:min-h-[36px] items-center"
+                      className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer inline-flex min-h-[28px] md:min-h-[30px] items-center"
                     >
                       {link.name}
                     </a>
                   ) : (
-                    <a href={link.href} className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[32px] md:min-h-[36px] items-center">
+                    <a href={link.href} className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[28px] md:min-h-[30px] items-center">
                       {link.name}
                     </a>
                   )}
@@ -158,11 +158,11 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
         }} transition={{
           duration: 0.6,
           delay: 0.2
-          }} className="space-y-2 md:space-y-4">
+          }} className="space-y-2 md:space-y-3">
             <h3 className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-primary">
               Get in Touch
             </h3>
-            <div className="space-y-2 md:space-y-3">
+            <div className="space-y-1.5 md:space-y-2">
               <a href="mailto:contact@sitebykrickel.com" aria-label="Email contact@sitebykrickel.com" className="flex items-center gap-2 md:gap-3 font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors group break-all">
                 <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
                   <Mail size={14} className="md:hidden" aria-hidden="true" />
@@ -191,7 +191,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
       }} transition={{
         duration: 0.6,
         delay: 0.3
-      }} className="pt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-2 relative z-10">
+      }} className="pt-4 md:pt-5 border-t border-muted/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-1.5 relative z-10">
           <p className="font-mono text-[10px] md:text-xs text-muted-foreground">
             © 2025 SITEBYKRICKEL. ALL RIGHTS RESERVED.
           </p>
@@ -205,7 +205,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
       <div
         ref={wordmarkRef}
         aria-hidden
-        className="relative mt-6 overflow-hidden select-none px-4"
+        className="relative mt-2 md:mt-3 overflow-hidden select-none px-4 max-h-[26vw] md:max-h-[12vw]"
       >
         <motion.div
           style={
@@ -213,7 +213,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
               ? undefined
               : { y: wordmarkY, scale: wordmarkScale, filter: wordmarkFilter }
           }
-          className="translate-y-[35%] md:translate-y-[40%] will-change-transform"
+          className="translate-y-[22%] md:translate-y-[28%] will-change-transform"
         >
           <h2
             className="font-syne font-extrabold uppercase tracking-tighter text-center leading-[0.8] text-transparent bg-clip-text bg-gradient-to-b from-foreground/90 via-foreground/40 to-transparent dark:from-amber-200 dark:via-amber-400/40 dark:to-transparent"
