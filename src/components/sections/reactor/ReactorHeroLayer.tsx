@@ -135,7 +135,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          className="absolute left-[30px] top-1/2 -translate-y-1/2 sm:left-[36px] md:left-[38px]"
+          className="absolute left-[23%] top-1/2 -translate-x-1/2 -translate-y-1/2"
         >
           <div className="relative flex h-11 w-11 items-center justify-center rounded-full border border-[hsl(140_60%_35%)]/45 bg-[hsl(140_45%_8%/0.76)] shadow-[0_0_24px_hsl(140_80%_45%/0.22)] backdrop-blur sm:h-12 sm:w-12 md:h-[52px] md:w-[52px]">
             <img
@@ -158,7 +158,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
         </motion.div>
 
         <motion.div
-          className="absolute left-[278px] top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 sm:left-[278px] md:left-[278px]"
+          className="absolute left-[73%] top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
         >
           <button
             type="button"
