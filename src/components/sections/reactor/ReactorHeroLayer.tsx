@@ -60,17 +60,12 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
   };
 
   return (
-    <div className="relative z-20 mx-auto mb-3 flex w-full justify-center md:mb-4">
+    <div className="relative z-20 mx-auto -mt-2 mb-1 flex w-full justify-center md:-mt-4 md:mb-2">
       <motion.div
         animate={controls}
-        className="relative h-[92px] w-[280px] select-none sm:h-[106px] sm:w-[340px] md:h-[112px] md:w-[380px]"
+        className="relative h-[78px] w-[240px] select-none sm:h-[88px] sm:w-[290px] md:h-[96px] md:w-[320px]"
         style={{ perspective: 900 }}
       >
-        <div
-          aria-hidden
-          className="absolute inset-0 rounded-[999px] border border-white/10 bg-background/30 shadow-[0_18px_70px_rgba(0,0,0,0.35)] backdrop-blur-md"
-        />
-
         <svg
           aria-hidden
           viewBox="0 0 380 112"
