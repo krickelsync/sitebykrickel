@@ -26,7 +26,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   const brY = useTransform(my, (v) => (reduce ? 0 : v * -12));
 
   const cardBase =
-    "absolute z-[4] pointer-events-none rounded-2xl border border-white/10 px-4 py-3 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] will-change-transform";
+    "pointer-events-none rounded-2xl border border-white/10 px-4 py-3 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] will-change-transform";
   const cardStyle = {
     background:
       "linear-gradient(135deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.02))",
