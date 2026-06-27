@@ -22,7 +22,8 @@ type Props<T extends ElementType> = {
   children: ReactNode;
 } & Omit<HTMLAttributes<HTMLElement>, "className" | "children">;
 
-const baseDisplay = "font-display font-black uppercase break-words";
+// Syne maxes at 800 — use font-extrabold (800) for display, font-bold (700) for headings.
+const baseDisplay = "font-display font-extrabold uppercase break-words";
 const baseHeading = "font-display font-bold uppercase";
 
 export const typography = {
@@ -33,11 +34,11 @@ export const typography = {
   h2: "text-lg sm:text-xl md:text-3xl lg:text-4xl leading-[1.1] tracking-[-0.02em]",
   h3: "text-base md:text-2xl leading-tight tracking-tight",
   tagline:
-    "font-display italic text-[12px] md:text-base leading-snug text-primary/90",
+    "font-sans italic font-medium text-[12px] md:text-base leading-snug text-primary/90",
   body:
-    "font-mono text-[11px] md:text-[13px] leading-[1.7] tracking-wide text-muted-foreground",
+    "font-sans text-[13px] md:text-[15px] leading-[1.65] text-muted-foreground",
   bodyLg:
-    "font-mono text-[12px] md:text-sm leading-[1.7] tracking-wide text-muted-foreground",
+    "font-sans text-[14px] md:text-base leading-[1.65] text-muted-foreground",
   eyebrow:
     "font-mono font-semibold uppercase text-[9px] md:text-[11px] tracking-[0.2em] text-muted-foreground",
   meta:
