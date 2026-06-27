@@ -96,7 +96,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           </div>
 
           {/* CTA + theme pill */}
-          <div className="hidden md:flex items-center gap-2 navbar-pill menu-rotating-glow h-12 px-2">
+          <div className="hidden md:flex items-center gap-2 navbar-pill menu-rotating-glow h-12 px-2 justify-self-end">
             <ThemeToggle />
             <CartButton />
             {onCtaClick ? (
@@ -118,7 +118,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           </div>
 
           {/* Mobile trigger pill */}
-          <div className="relative flex md:hidden items-center">
+          <div className="relative flex md:hidden items-center justify-self-end">
             <div className="flex items-center gap-1 navbar-pill menu-rotating-glow h-12 px-2">
               <ThemeToggle />
               <CartButton />
