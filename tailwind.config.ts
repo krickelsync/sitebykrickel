@@ -14,9 +14,14 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Syne", "sans-serif"],
-        syne: ["Syne", "sans-serif"],
-        mono: ["Space Mono", "monospace"],
+        // Display / headings — bold geometric, used for hero + section titles.
+        display: ['"Syne"', "system-ui", "sans-serif"],
+        syne: ['"Syne"', "system-ui", "sans-serif"],
+        // Body / UI — humanist sans, default for paragraphs, buttons, nav, forms.
+        sans: ['"Plus Jakarta Sans"', "system-ui", "-apple-system", "sans-serif"],
+        body: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"],
+        // Mono — labels, eyebrows, prices, technical meta.
+        mono: ['"JetBrains Mono"', "ui-monospace", "SFMono-Regular", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
