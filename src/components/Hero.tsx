@@ -88,7 +88,7 @@ const Hero = () => {
         />
       </div>
       <motion.div style={{ y: headlineY, opacity: contentOpacity }} className="container relative z-10 px-4">
-        <div className="max-w-5xl mx-auto text-center">
+        <div className="max-w-[min(92vw,74rem)] mx-auto text-center">
           {/* Eyebrow */}
           <motion.div {...fadeUpDelay(0.2)} className="mb-8">
             <span
@@ -112,14 +112,14 @@ const Hero = () => {
           <motion.h1
             {...fadeUpDelay(0.3, 0.8)}
             id="hero-heading"
-            className="font-syne text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold uppercase leading-[0.9] sm:leading-[0.85] tracking-tighter mb-8 text-center"
+            className="font-syne text-[clamp(2.1rem,7vw,4.9rem)] font-extrabold uppercase leading-[0.92] tracking-normal mb-7 text-center"
           >
-            <span className="block hover-lift text-center">
+            <span className="flex items-center justify-center whitespace-nowrap hover-lift text-center">
               THEMES<span className="hidden sm:inline"> FOR</span>
               <span className="block sm:hidden">FOR</span>
             </span>
             <span
-              className="flex items-center justify-center text-center glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense text-[1.65rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] sm:leading-[0.85] break-words min-h-[1.1em] overflow-hidden"
+              className="flex items-center justify-center text-center glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense text-[clamp(1.65rem,6.2vw,4.5rem)] leading-[0.94] break-words min-h-[1.08em] overflow-hidden"
               style={{ color: "hsl(45 100% 58%)" }}
             >
               <AnimatePresence mode="wait">
