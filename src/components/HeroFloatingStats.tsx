@@ -16,15 +16,20 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   const reduce = useReducedMotion();
 
   // ---- Looping animated counters ----
+  // Total sales: ~5x previous range (was ~28k → now ~142k)
   const [sales, setSales] = useState(0);
+  const [salesTrend, setSalesTrend] = useState(120);
   const salesRef = useRef(0);
   useEffect(() => {
-    if (reduce) { setSales(28420); return; }
+    if (reduce) { setSales(142100); setSalesTrend(120); return; }
     let cancelled = false;
     let controls: ReturnType<typeof animate> | undefined;
     const loop = () => {
-      const from = salesRef.current || 26000;
-      const target = 27800 + Math.floor(Math.random() * 1800);
+      const from = salesRef.current || 130000;
+      const target = 139000 + Math.floor(Math.random() * 9000);
+      // Trend % scales with target (5x previous 24% baseline)
+      const trendTarget = Math.round(((target - 115000) / 115000) * 100 * 5);
+      setSalesTrend(trendTarget);
       controls = animate(from, target, {
         duration: 2.4,
         ease: "easeInOut",
@@ -39,14 +44,18 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
     return () => { cancelled = true; controls?.stop(); };
   }, [reduce]);
 
-  const [conv, setConv] = useState(3.68);
-  const convRef = useRef(3.68);
+  // Conversion: ~5x previous (was ~3.68% → now ~18.4%)
+  const [conv, setConv] = useState(18.4);
+  const [convTrend, setConvTrend] = useState(90);
+  const convRef = useRef(18.4);
   useEffect(() => {
     if (reduce) return;
     let cancelled = false;
     let controls: ReturnType<typeof animate> | undefined;
     const loop = () => {
-      const target = 3.4 + Math.random() * 0.6;
+      const target = 17 + Math.random() * 3; // 17–20%
+      // Trend % proportional to value (5x previous 18% baseline)
+      setConvTrend(Math.round((target / 3.7) * 18));
       controls = animate(convRef.current, target, {
         duration: 2.2,
         ease: "easeInOut",
@@ -60,6 +69,9 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
     loop();
     return () => { cancelled = true; controls?.stop(); };
   }, [reduce]);
+
+  // Bar width follows conv value (17–20% → 75–95% bar fill)
+  const barWidth = `${Math.min(95, Math.max(20, ((conv - 5) / 20) * 100))}%`;
 
   // ---- Mouse tilt deltas, added on top of baseline tilt ----
   const tiltDX = useSpring(useTransform(my, (v) => (reduce ? 0 : v * -6)), { stiffness: 120, damping: 16 });
@@ -150,7 +162,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                 ${sales.toLocaleString("en-US")}
               </span>
               <span className="font-mono text-[10px] flex items-center gap-0.5" style={{ color: accent }}>
-                <TrendingUp size={10} /> 24%
+                <TrendingUp size={10} /> {salesTrend}%
               </span>
             </div>
             {/* Continuously scrolling waveform (seamless loop) */}
@@ -236,14 +248,13 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           <div className="flex items-baseline gap-2 mb-2">
             <span className="font-syne text-2xl font-bold text-white tabular-nums">{conv.toFixed(2)}%</span>
             <span className="font-mono text-[10px] flex items-center gap-0.5" style={{ color: accent }}>
-              <TrendingUp size={10} /> 18%
+              <TrendingUp size={10} /> {convTrend}%
             </span>
           </div>
           <div className="h-1.5 w-32 rounded-full bg-white/10 overflow-hidden">
             <motion.div
-              initial={{ width: "30%" }}
-              animate={reduce ? { width: "72%" } : { width: ["30%", "85%", "55%", "78%", "30%"] }}
-              transition={reduce ? { duration: 0 } : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              animate={{ width: barWidth }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
               className="h-full rounded-full"
               style={{ background: `linear-gradient(90deg, ${accent}, hsl(45 100% 60%))` }}
             />
