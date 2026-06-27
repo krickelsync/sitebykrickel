@@ -45,11 +45,11 @@ const Hero = () => {
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  const mobileHeroLift = isMobile ? 18 : 0;
+  const mobileHeroLift = isMobile ? -42 : 0;
   const headlineY = useTransform(
     scrollYProgress,
     [0, 1],
-    reduce ? [mobileHeroLift, mobileHeroLift] : [mobileHeroLift, isMobile ? -48 : -120]
+    reduce ? [mobileHeroLift, mobileHeroLift] : [mobileHeroLift, isMobile ? -108 : -120]
   );
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.6, 0]);
   const bgY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 80]);
