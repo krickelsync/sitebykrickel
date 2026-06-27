@@ -46,6 +46,10 @@ function normalize(row: any): Product {
   };
 }
 
+// Module-level cache so repeat visits paint instantly while we refresh in background.
+const listCache: Record<string, Product[]> = {};
+const productCache: Record<string, Product> = {};
+
 export function useProducts(opts: { includeUnpublished?: boolean } = {}) {
   const cacheKey = opts.includeUnpublished ? "all" : "published";
   const [products, setProducts] = useState<Product[]>(() => listCache[cacheKey] ?? []);
