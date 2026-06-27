@@ -42,13 +42,13 @@ const CostComparison = () => {
 
         <div className="rounded-2xl border border-border/60 bg-card/40 backdrop-blur-sm overflow-hidden shadow-[0_0_60px_-30px_hsl(var(--primary)/0.3)]">
           <ul className="divide-y divide-border/40">
-            {rows.map(({ icon: Icon, gradient, name, desc, price }) => (
+            {rows.map(({ icon, name, desc, price }) => (
               <li
                 key={name}
                 className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-4 md:py-5"
               >
                 <img
-                  src={Icon}
+                  src={icon}
                   alt={name}
                   loading="lazy"
                   className="shrink-0 w-10 h-10 md:w-11 md:h-11 rounded-xl object-cover shadow-md"
