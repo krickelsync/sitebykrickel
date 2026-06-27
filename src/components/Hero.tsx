@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Eye } from "lucide-react";
-import { lazy, Suspense, useState, useEffect, useRef } from "react";
+import { lazy, Suspense, useState, useEffect, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { scrollToId } from "@/lib/scroll";
 import { useMagnetic } from "@/hooks/useMagnetic";
@@ -16,14 +16,31 @@ const Hero = () => {
   const getIsMobile = () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
   const [isMobile, setIsMobile] = useState(getIsMobile);
   const [prismScale, setPrismScale] = useState(getIsMobile() ? 1.8 : 3);
-  const rotatingWords = ["CLOTHING BRAND", "STREETWEAR", "DROPSHIPPER", "BARBERSHOP"];
+  const rotatingWords = useMemo(() => ["CLOTHING BRAND", "STREETWEAR", "DROPSHIPPER", "BARBERSHOP"], []);
   const [wordIndex, setWordIndex] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setWordIndex((i) => (i + 1) % rotatingWords.length), 2500);
-    return () => clearInterval(id);
-  }, []);
+  const [inView, setInView] = useState(true);
   const magneticRef = useMagnetic<HTMLAnchorElement>(0.25);
   const sectionRef = useRef<HTMLElement>(null);
+
+  // Pause expensive work when hero scrolls out of view
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Word rotator only ticks while hero is on-screen
+  useEffect(() => {
+    if (!inView) return;
+    const id = setInterval(() => setWordIndex((i) => (i + 1) % rotatingWords.length), 2500);
+    return () => clearInterval(id);
+  }, [inView, rotatingWords.length]);
+
   const reduce = useReducedMotion();
   const useStaticPrism = isMobile || reduce;
   const { scrollYProgress } = useScroll({
@@ -34,8 +51,8 @@ const Hero = () => {
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.6, 0]);
   const bgY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 80]);
 
-  // Interactive mouse parallax — drives layered depth in the hero
-  const { x: mx, y: my } = useMouseParallax(sectionRef);
+  // Interactive mouse parallax — only listens while hero is visible
+  const { x: mx, y: my } = useMouseParallax(sectionRef, inView);
 
   useEffect(() => {
     const handleResize = () => {
