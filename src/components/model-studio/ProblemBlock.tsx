@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ShoppingBag, Palette } from "lucide-react";
+import { ShoppingCart, Palette } from "lucide-react";
 
 interface ProblemCardProps {
   badge: string;
@@ -87,7 +87,7 @@ const ProblemBlock = () => {
   const problemCards = [
     {
       badge: "For Clothing Brand Owners",
-      icon: <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4" />,
+      icon: <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />,
       problemStatement: "Built for new clothing brand owners with limited budgets.",
       bullets: [
         "Product is ready, photos aren't",
