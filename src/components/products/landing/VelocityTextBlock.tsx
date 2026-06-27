@@ -42,7 +42,9 @@ interface Props {
 const VelocityTextBlock = ({ rows }: Props) => {
   if (!rows?.length) return null;
   return (
-    <section className={`${spacing.sectionY} overflow-hidden`}>
+    <section
+      className={`${spacing.sectionY} overflow-hidden relative left-1/2 right-1/2 -mx-[50vw] w-screen`}
+    >
       {rows.map((r, i) => (
         <Row key={i} text={r.text} baseVelocity={r.velocity ?? (i % 2 === 0 ? -2 : 2)} color={r.color} className={r.color ? undefined : "text-foreground/20"} />
       ))}
