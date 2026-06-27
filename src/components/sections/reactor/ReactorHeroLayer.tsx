@@ -43,11 +43,17 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
     return () => clearInterval(id);
   }, [stage, reduce, lowPower]);
 
-  const activateReactor = useCallback(() => {
+  useEffect(() => {
+    if (stage !== "idle") return;
+    const id = window.setTimeout(runSequence, 450);
+    return () => window.clearTimeout(id);
+  }, [runSequence, stage]);
+
+  useEffect(() => {
+    if (stage !== "activate") return;
     setBurst((b) => b + 1);
     controls.start({ x: [0, -2, 2, -1, 0], transition: { duration: 0.4 } });
-    if (stage === "idle") runSequence();
-  }, [controls, runSequence, stage]);
+  }, [controls, stage]);
 
   return (
     <div className="relative z-20 mx-auto mb-1 flex w-full justify-center">
@@ -150,11 +156,9 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
         <motion.div
           className="absolute left-[72.857%] top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
         >
-          <button
-            type="button"
-            onClick={activateReactor}
-            aria-label="Activate theme reactor"
-            className="relative block cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          <div
+            aria-hidden="true"
+            className="relative block"
           >
             {stage === "activate" && (
               <motion.div
@@ -201,7 +205,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
                 </div>
               )}
             </motion.div>
-          </button>
+          </div>
 
           {stage === "orbit" && REACTOR_FEATURES.map((item, i) => {
             const angle = (i / REACTOR_FEATURES.length) * 360;
