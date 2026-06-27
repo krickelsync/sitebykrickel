@@ -1,10 +1,8 @@
 import { motion, useAnimation, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import chromeBag from "@/assets/chrome-bag.png.asset.json";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { useLowPower } from "@/hooks/useLowPower";
-import { REACTOR_FEATURES, type ReactorFeature } from "./features";
-import FeatureCard from "./FeatureCard";
+import { REACTOR_FEATURES } from "./features";
 
 type Stage = "idle" | "connect" | "transfer" | "activate" | "orbit";
 
@@ -15,10 +13,8 @@ interface Props {
 const ReactorHeroLayer = ({ onStageChange }: Props) => {
   const reduce = useReducedMotion();
   const lowPower = useLowPower();
-  const isMobile = useIsMobile();
   const [stage, setStage] = useState<Stage>("idle");
   const [burst, setBurst] = useState(0);
-  const [active, setActive] = useState<ReactorFeature | null>(null);
   const controls = useAnimation();
   const timers = useRef<number[]>([]);
 
@@ -34,7 +30,6 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
     const t2 = window.setTimeout(() => setStage("activate"), 1050 * speed);
     const t3 = window.setTimeout(() => {
       setStage("orbit");
-      setActive(REACTOR_FEATURES[0]);
     }, 1450 * speed);
     timers.current = [t1, t2, t3];
   }, [stage]);
@@ -54,21 +49,16 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
     if (stage === "idle") runSequence();
   }, [controls, runSequence, stage]);
 
-  const onFeatureClick = (f: ReactorFeature) => {
-    if (stage !== "orbit") return;
-    setActive((cur) => (cur?.key === f.key ? null : f));
-  };
-
   return (
     <div className="relative z-20 mx-auto mb-1 flex w-full justify-center">
       <motion.div
         animate={controls}
-        className="relative h-[64px] w-[220px] select-none sm:h-[72px] sm:w-[260px] md:h-[80px] md:w-[280px]"
+        className="relative h-[74px] w-[260px] select-none sm:h-[78px] sm:w-[274px] md:h-[80px] md:w-[280px]"
         style={{ perspective: 900 }}
       >
         <svg
           aria-hidden
-          viewBox="0 0 220 64"
+          viewBox="0 0 280 80"
           className="pointer-events-none absolute inset-0 h-full w-full"
           preserveAspectRatio="none"
         >
@@ -84,9 +74,9 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             </filter>
           </defs>
           <motion.path
-            d="M 50 32 C 90 14, 130 50, 170 32"
+            d="M 68 40 C 108 22, 164 58, 204 40"
             stroke="hsl(var(--foreground) / 0.18)"
-            strokeWidth="8"
+            strokeWidth="7"
             strokeLinecap="round"
             fill="none"
             initial={false}
@@ -94,7 +84,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             transition={{ duration: reduce || lowPower ? 0.25 : 0.65, ease: "easeInOut" }}
           />
           <motion.path
-            d="M 50 32 C 90 14, 130 50, 170 32"
+            d="M 68 40 C 108 22, 164 58, 204 40"
             stroke="url(#rhlCableStroke)"
             strokeWidth="3"
             strokeLinecap="round"
@@ -106,9 +96,9 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           />
           {stage !== "idle" && (
             <>
-              <motion.circle cx="50" cy="32" r="3.5" fill="hsl(140 80% 55%)" filter="url(#rhlCableGlow)"
+              <motion.circle cx="68" cy="40" r="3.5" fill="hsl(140 80% 55%)" filter="url(#rhlCableGlow)"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} />
-              <motion.circle cx="170" cy="32" r="4.5" fill="hsl(45 100% 65%)" filter="url(#rhlCableGlow)"
+              <motion.circle cx="204" cy="40" r="4.5" fill="hsl(45 100% 65%)" filter="url(#rhlCableGlow)"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: stage === "connect" ? 0 : 1, scale: stage === "connect" ? 0 : 1 }}
                 transition={{ duration: 0.25 }} />
@@ -124,7 +114,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
               animate={{ opacity: [0, 1, 1, 0] }}
               transition={{ duration: 1.2, ease: "easeInOut" }}
               style={{
-                offsetPath: "path('M 50 32 C 90 14, 130 50, 170 32')",
+                offsetPath: "path('M 68 40 C 108 22, 164 58, 204 40')",
                 animation: "reactor-pulse-travel 1.2s ease-in-out",
               } as React.CSSProperties}
             />
@@ -135,21 +125,21 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          className="absolute left-[23%] top-1/2 -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-[24.285%] top-1/2 -translate-x-1/2 -translate-y-1/2"
         >
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-full border border-[hsl(140_60%_35%)]/45 bg-[hsl(140_45%_8%/0.76)] shadow-[0_0_18px_hsl(140_80%_45%/0.22)] backdrop-blur sm:h-10 sm:w-10 md:h-11 md:w-11">
+          <div className="relative flex h-8 w-8 items-center justify-center sm:h-9 sm:w-9 md:h-10 md:w-10">
             <img
               src="https://cdn.simpleicons.org/shopify/95BF47"
               alt="Shopify"
-              className="h-5 w-5 sm:h-6 sm:w-6 object-contain"
+              className="h-6 w-6 object-contain drop-shadow-[0_0_14px_hsl(140_80%_45%/0.45)] sm:h-7 sm:w-7 md:h-8 md:w-8"
               loading="lazy"
               decoding="async"
             />
             {stage !== "idle" && (
               <motion.div
                 aria-hidden
-                className="absolute inset-0 rounded-full"
-                style={{ boxShadow: "0 0 34px hsl(140 80% 50% / 0.55)" }}
+                className="absolute inset-0"
+                style={{ filter: "drop-shadow(0 0 16px hsl(140 80% 50% / 0.7))" }}
                 animate={{ opacity: [0.35, 0.8, 0.35] }}
                 transition={{ duration: 1.8, repeat: Infinity }}
               />
@@ -158,7 +148,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
         </motion.div>
 
         <motion.div
-          className="absolute left-[73%] top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-[72.857%] top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
         >
           <button
             type="button"
@@ -213,18 +203,17 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             </motion.div>
           </button>
 
-          {!isMobile && stage === "orbit" && REACTOR_FEATURES.map((item, i) => {
+          {stage === "orbit" && REACTOR_FEATURES.map((item, i) => {
             const angle = (i / REACTOR_FEATURES.length) * 360;
-            const radius = i % 2 === 0 ? 62 : 78;
+            const radius = i % 2 === 0 ? 52 : 66;
             const duration = i % 2 === 0 ? 22 : 30;
             const { Icon } = item;
-            const isActive = active?.key === item.key;
             return (
               <motion.div
                 key={item.key}
-                className="absolute left-1/2 top-1/2"
+                className="pointer-events-none absolute left-1/2 top-1/2"
                 initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 + (burst ? 0.12 : 0) }}
+                animate={{ opacity: 1, scale: 1 + (burst ? 0.08 : 0) }}
                 transition={{ delay: 0.12 * i, duration: 0.5 }}
                 style={{ transformOrigin: "0 0" }}
               >
@@ -234,23 +223,12 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
                   style={{ transformOrigin: "0 0" }}
                 >
                   <div style={{ transform: `rotate(${angle}deg) translate(${radius}px) rotate(-${angle}deg)` }}>
-                    <button
-                      type="button"
-                      onClick={() => onFeatureClick(item)}
-                      aria-label={`Show ${item.title}`}
-                      className={`-translate-x-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border transition ${
-                        isActive
-                          ? "border-primary bg-primary/20"
-                          : "border-white/10 bg-background/40 hover:border-primary/60 hover:bg-primary/10"
-                      }`}
-                      style={{ backdropFilter: "blur(8px)" }}
-                    >
-                      <Icon
-                        className="h-4 w-4 text-primary"
-                        strokeWidth={1.25}
-                        style={{ filter: "drop-shadow(0 0 6px hsl(45 100% 60% / 0.7))" }}
-                      />
-                    </button>
+                    <Icon
+                      aria-hidden="true"
+                      className="h-4 w-4 -translate-x-1/2 -translate-y-1/2 text-primary sm:h-[18px] sm:w-[18px]"
+                      strokeWidth={1.35}
+                      style={{ filter: "drop-shadow(0 0 8px hsl(45 100% 60% / 0.75))" }}
+                    />
                   </div>
                 </motion.div>
               </motion.div>
@@ -258,32 +236,6 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           })}
         </motion.div>
       </motion.div>
-
-      {isMobile && stage === "orbit" && (
-        <div className="absolute left-1/2 top-full z-30 mt-2 flex -translate-x-1/2 items-center gap-2">
-          {REACTOR_FEATURES.map((item) => {
-            const { Icon } = item;
-            const isActive = active?.key === item.key;
-            return (
-              <button
-                key={item.key}
-                type="button"
-                onClick={() => onFeatureClick(item)}
-                aria-label={`Show ${item.title}`}
-                className={`flex h-8 w-8 items-center justify-center rounded-full border backdrop-blur transition ${
-                  isActive
-                    ? "border-primary bg-primary/20"
-                    : "border-white/10 bg-background/60"
-                }`}
-              >
-                <Icon className="h-4 w-4 text-primary" strokeWidth={1.25} />
-              </button>
-            );
-          })}
-        </div>
-      )}
-
-      <FeatureCard feature={active} isMobile={isMobile} onClose={() => setActive(null)} />
     </div>
   );
 };
