@@ -65,7 +65,10 @@ const Hero = () => {
   return <section ref={sectionRef} aria-labelledby="hero-heading" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20 pb-24">
       {/* Liquid Chrome Background - z-index 0 (pure CSS, zero GPU) */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 pointer-events-none bg-background">
-        <div className="hero-prism-fallback h-full w-full overflow-hidden" />
+        <div className="hero-prism-fallback h-full w-full overflow-hidden">
+          <div className="chrome-conic" aria-hidden />
+          <div className="chrome-streak" aria-hidden />
+        </div>
         {/* Fade overlay at the bottom */}
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent z-[1]" />
       </motion.div>
