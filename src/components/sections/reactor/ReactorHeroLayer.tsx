@@ -60,15 +60,15 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
   };
 
   return (
-    <div className="relative z-20 mx-auto -mt-2 mb-1 flex w-full justify-center md:-mt-4 md:mb-2">
+    <div className="relative z-20 mx-auto mb-1 flex w-full justify-center">
       <motion.div
         animate={controls}
-        className="relative h-[78px] w-[240px] select-none sm:h-[88px] sm:w-[290px] md:h-[96px] md:w-[320px]"
+        className="relative h-[64px] w-[220px] select-none sm:h-[72px] sm:w-[260px] md:h-[80px] md:w-[280px]"
         style={{ perspective: 900 }}
       >
         <svg
           aria-hidden
-          viewBox="0 0 380 112"
+          viewBox="0 0 220 64"
           className="pointer-events-none absolute inset-0 h-full w-full"
           preserveAspectRatio="none"
         >
@@ -84,7 +84,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             </filter>
           </defs>
           <motion.path
-            d="M 88 56 C 128 36, 174 76, 214 56 C 238 44, 258 50, 278 56"
+            d="M 50 32 C 90 14, 130 50, 170 32"
             stroke="hsl(var(--foreground) / 0.18)"
             strokeWidth="8"
             strokeLinecap="round"
@@ -94,7 +94,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             transition={{ duration: reduce || lowPower ? 0.25 : 0.65, ease: "easeInOut" }}
           />
           <motion.path
-            d="M 88 56 C 128 36, 174 76, 214 56 C 238 44, 258 50, 278 56"
+            d="M 50 32 C 90 14, 130 50, 170 32"
             stroke="url(#rhlCableStroke)"
             strokeWidth="3"
             strokeLinecap="round"
@@ -106,9 +106,9 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           />
           {stage !== "idle" && (
             <>
-              <motion.circle cx="88" cy="56" r="4" fill="hsl(140 80% 55%)" filter="url(#rhlCableGlow)"
+              <motion.circle cx="50" cy="32" r="3.5" fill="hsl(140 80% 55%)" filter="url(#rhlCableGlow)"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} />
-              <motion.circle cx="278" cy="56" r="5" fill="hsl(45 100% 65%)" filter="url(#rhlCableGlow)"
+              <motion.circle cx="170" cy="32" r="4.5" fill="hsl(45 100% 65%)" filter="url(#rhlCableGlow)"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: stage === "connect" ? 0 : 1, scale: stage === "connect" ? 0 : 1 }}
                 transition={{ duration: 0.25 }} />
@@ -117,14 +117,14 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           {stage === "orbit" && (
             <motion.circle
               key={pulseTick}
-              r="6"
+              r="5"
               fill="hsl(45 100% 65%)"
               filter="url(#rhlCableGlow)"
               initial={{ opacity: 0 }}
               animate={{ opacity: [0, 1, 1, 0] }}
               transition={{ duration: 1.2, ease: "easeInOut" }}
               style={{
-                offsetPath: "path('M 88 56 C 128 36, 174 76, 214 56 C 238 44, 258 50, 278 56')",
+                offsetPath: "path('M 50 32 C 90 14, 130 50, 170 32')",
                 animation: "reactor-pulse-travel 1.2s ease-in-out",
               } as React.CSSProperties}
             />
@@ -137,11 +137,11 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           transition={{ duration: 0.6 }}
           className="absolute left-[23%] top-1/2 -translate-x-1/2 -translate-y-1/2"
         >
-          <div className="relative flex h-11 w-11 items-center justify-center rounded-full border border-[hsl(140_60%_35%)]/45 bg-[hsl(140_45%_8%/0.76)] shadow-[0_0_24px_hsl(140_80%_45%/0.22)] backdrop-blur sm:h-12 sm:w-12 md:h-[52px] md:w-[52px]">
+          <div className="relative flex h-9 w-9 items-center justify-center rounded-full border border-[hsl(140_60%_35%)]/45 bg-[hsl(140_45%_8%/0.76)] shadow-[0_0_18px_hsl(140_80%_45%/0.22)] backdrop-blur sm:h-10 sm:w-10 md:h-11 md:w-11">
             <img
               src="https://cdn.simpleicons.org/shopify/95BF47"
               alt="Shopify"
-              className="h-6 w-6 sm:h-7 sm:w-7 object-contain"
+              className="h-5 w-5 sm:h-6 sm:w-6 object-contain"
               loading="lazy"
               decoding="async"
             />
@@ -196,7 +196,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
                   : { scale: 1, y: 0 }
               }
               transition={{ duration: 0.45 }}
-              className="relative h-[58px] w-[58px] sm:h-[68px] sm:w-[68px] md:h-[76px] md:w-[76px]"
+              className="relative h-[48px] w-[48px] sm:h-[56px] sm:w-[56px] md:h-[60px] md:w-[60px]"
             >
               <img
                 src={chromeBag.url}
