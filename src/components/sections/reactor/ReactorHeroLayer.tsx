@@ -28,7 +28,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
     timers.current = [];
     setStage("connect");
     const speed = reduce || lowPower ? 0.55 : 1;
-    const t1 = window.setTimeout(() => setStage("transfer"), 520 * speed);
+    const t1 = window.setTimeout(() => setStage("transfer"), 420 * speed);
     const t2 = window.setTimeout(() => setStage("activate"), 1050 * speed);
     const t3 = window.setTimeout(() => {
       setStage("orbit");
