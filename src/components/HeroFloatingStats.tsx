@@ -40,15 +40,15 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   const sales = Math.round(SALES_FROM + (SALES_TO - SALES_FROM) * salesP);
   const salesTrend = Math.round(SALES_TREND_TO * salesP);
   const salesChartWidth = reduce ? 120 : Math.max(0, Math.min(120, 120 * salesP));
-  // Sharp zigzag points — overall trending up, angular (kaku), not wavy.
+  // Sharp zigzag points — overall trending up, angular (kaku), full-width.
   const ZIG_PTS: [number, number][] = [
-    [8, 36], [20, 28], [28, 32], [40, 22], [50, 26],
-    [62, 16], [72, 20], [84, 12], [96, 15], [112, 6],
+    [0, 38], [14, 28], [24, 33], [38, 22], [50, 27],
+    [62, 15], [74, 20], [88, 10], [100, 14], [120, 4],
   ];
   const ZIG_PATH = ZIG_PTS.map((p, i) => `${i === 0 ? "M" : "L"}${p[0]},${p[1]}`).join(" ");
-  const ZIG_AREA = `${ZIG_PATH} L112,39 L8,39 Z`;
+  const ZIG_AREA = `${ZIG_PATH} L120,44 L0,44 Z`;
   const getZigXY = (p: number): [number, number] => {
-    const x = 8 + 104 * p;
+    const x = 120 * p;
     for (let i = 0; i < ZIG_PTS.length - 1; i++) {
       const [x1, y1] = ZIG_PTS[i];
       const [x2, y2] = ZIG_PTS[i + 1];
@@ -220,11 +220,11 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                 </clipPath>
               </defs>
               {[12, 22, 32].map((y) => (
-                <line key={y} x1="8" x2="112" y1={y} y2={y} stroke="hsl(0 0% 100% / 0.06)" strokeWidth="0.5" />
+                <line key={y} x1="0" x2="120" y1={y} y2={y} stroke="hsl(0 0% 100% / 0.06)" strokeWidth="0.5" />
               ))}
               {/* Static milestone tick marks — zero runtime cost */}
-              {[40, 70, 100].map((x) => (
-                <line key={x} x1={x} x2={x} y1="6" y2="38" stroke="hsl(0 0% 100% / 0.07)" strokeWidth="0.5" strokeDasharray="1 2" />
+              {[30, 60, 90].map((x) => (
+                <line key={x} x1={x} x2={x} y1="2" y2="42" stroke="hsl(0 0% 100% / 0.07)" strokeWidth="0.5" strokeDasharray="1 2" />
               ))}
               <g clipPath="url(#salesRevealClip)">
                 <motion.path
