@@ -7,8 +7,9 @@ import { useMagnetic } from "@/hooks/useMagnetic";
 import { useMouseParallax } from "@/hooks/useMouseParallax";
 import { useLowPower } from "@/hooks/useLowPower";
 import { fadeUpDelay } from "@/lib/motion";
-// Lazy-load floating stats so they never block first paint
-const HeroFloatingStats = lazy(() => import("./HeroFloatingStats"));
+// Lazy-load floating stats, but warm it up as soon as the reactor starts so the pop feels instant.
+const loadHeroFloatingStats = () => import("./HeroFloatingStats");
+const HeroFloatingStats = lazy(loadHeroFloatingStats);
 const ReactorHeroLayer = lazy(() => import("./sections/reactor/ReactorHeroLayer"));
 
 const Hero = () => {
@@ -18,7 +19,7 @@ const Hero = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [inView, setInView] = useState(true);
   const [reactorStage, setReactorStage] = useState<"idle" | "connect" | "transfer" | "activate" | "orbit">("idle");
-  const cardsRevealed = reactorStage === "activate" || reactorStage === "orbit";
+  const cardsRevealed = reactorStage === "transfer" || reactorStage === "activate" || reactorStage === "orbit";
   const magneticRef = useMagnetic<HTMLAnchorElement>(0.25);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -67,6 +68,12 @@ const Hero = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    if (reactorStage === "connect") {
+      loadHeroFloatingStats();
+    }
+  }, [reactorStage]);
 
   return <section ref={sectionRef} aria-labelledby="hero-heading" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-0 pb-16 md:pt-14 md:pb-24">
       {/* Liquid Chrome Background - z-index 0 (pure CSS, zero GPU) */}
@@ -203,10 +210,10 @@ const Hero = () => {
         {cardsRevealed && (
           <motion.div
             key="hero-stats"
-            initial={{ opacity: 0, scale: 0.6, filter: "blur(12px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            initial={{ opacity: 0, scale: 0.72, y: 18, filter: "blur(10px)" }}
+            animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, scale: 0.8, filter: "blur(8px)" }}
-            transition={{ type: "spring", stiffness: 220, damping: 22 }}
+            transition={{ type: "spring", stiffness: 420, damping: 24, mass: 0.7 }}
             className="absolute inset-0 z-[4] pointer-events-none"
           >
             <Suspense fallback={null}>
