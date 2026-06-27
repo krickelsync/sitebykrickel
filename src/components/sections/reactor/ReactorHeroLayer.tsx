@@ -202,7 +202,21 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
                 loading="lazy"
                 decoding="async"
               />
-              {/* shine effect removed per design */}
+              {stage !== "idle" && !reduce && !lowPower && (
+                <>
+                  {[0, 0.9, 1.8].map((delay, i) => (
+                    <motion.span
+                      key={i}
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 rounded-full border border-primary/60"
+                      initial={{ scale: 0.7, opacity: 0.55 }}
+                      animate={{ scale: 2.1, opacity: 0 }}
+                      transition={{ duration: 2.7, delay, repeat: Infinity, ease: "easeOut" }}
+                      style={{ boxShadow: "0 0 18px hsl(45 100% 60% / 0.45)" }}
+                    />
+                  ))}
+                </>
+              )}
             </motion.div>
           </div>
 
