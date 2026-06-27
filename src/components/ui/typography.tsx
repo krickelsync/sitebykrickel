@@ -27,22 +27,22 @@ const baseHeading = "font-display font-bold uppercase";
 
 export const typography = {
   display:
-    "text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.92] tracking-[-0.035em]",
+    "text-[1.875rem] sm:text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-[-0.035em]",
   h1:
-    "text-[1.75rem] sm:text-3xl md:text-4xl lg:text-[2.75rem] leading-[0.95] tracking-[-0.03em]",
-  h2: "text-2xl md:text-3xl lg:text-4xl leading-[1.05] tracking-[-0.02em]",
-  h3: "text-xl md:text-2xl leading-tight tracking-tight",
+    "text-[1.375rem] sm:text-2xl md:text-4xl lg:text-[2.75rem] leading-[1] tracking-[-0.03em]",
+  h2: "text-lg sm:text-xl md:text-3xl lg:text-4xl leading-[1.1] tracking-[-0.02em]",
+  h3: "text-base md:text-2xl leading-tight tracking-tight",
   tagline:
-    "font-display italic text-sm md:text-base leading-snug text-primary/90",
+    "font-display italic text-[12px] md:text-base leading-snug text-primary/90",
   body:
-    "font-mono text-[12px] md:text-[13px] leading-[1.75] tracking-wide text-muted-foreground",
+    "font-mono text-[11px] md:text-[13px] leading-[1.7] tracking-wide text-muted-foreground",
   bodyLg:
-    "font-mono text-[13px] md:text-sm leading-[1.7] tracking-wide text-muted-foreground",
+    "font-mono text-[12px] md:text-sm leading-[1.7] tracking-wide text-muted-foreground",
   eyebrow:
-    "font-mono font-semibold uppercase text-[10px] md:text-[11px] tracking-[0.2em] text-muted-foreground",
+    "font-mono font-semibold uppercase text-[9px] md:text-[11px] tracking-[0.2em] text-muted-foreground",
   meta:
-    "font-mono text-[11px] md:text-xs tracking-wide text-muted-foreground",
-  price: "font-mono font-bold text-primary text-lg md:text-xl leading-none",
+    "font-mono text-[10px] md:text-xs tracking-wide text-muted-foreground",
+  price: "font-mono font-bold text-primary text-base md:text-xl leading-none",
 } as const;
 
 export function Display<T extends ElementType = "h1">({ as, className, children, ...rest }: Props<T>) {
