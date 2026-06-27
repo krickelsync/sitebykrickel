@@ -116,18 +116,14 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
                 transition={{ duration: 0.25 }} />
             </>
           )}
-          {stage === "orbit" && (
-            <motion.circle
-              key={pulseTick}
-              r="5"
+          {(stage === "transfer" || stage === "activate" || stage === "orbit") && !reduce && !lowPower && (
+            <circle
+              r="4.5"
               fill="hsl(45 100% 65%)"
               filter="url(#rhlCableGlow)"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 1, 1, 0] }}
-              transition={{ duration: 1.2, ease: "easeInOut" }}
               style={{
                 offsetPath: "path('M 86 40 C 122 24, 150 58, 174 40')",
-                animation: "reactor-pulse-travel 1.2s ease-in-out",
+                animation: "reactor-pulse-travel 1.6s linear infinite",
               } as React.CSSProperties}
             />
           )}
@@ -137,7 +133,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          className="absolute left-[58px] top-[32px] -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-[48px] top-[24px] -translate-x-1/2 -translate-y-1/2"
         >
           <div className="relative flex h-10 w-10 items-center justify-center">
             <img
@@ -205,11 +201,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
                 loading="lazy"
                 decoding="async"
               />
-              {stage !== "idle" && (
-                <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl">
-                  <div className="reactor-shine absolute -inset-y-4 -left-1/2 w-1/2 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-                </div>
-              )}
+              {/* shine effect removed per design */}
             </motion.div>
           </div>
 
