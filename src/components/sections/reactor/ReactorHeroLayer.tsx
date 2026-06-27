@@ -86,7 +86,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             </filter>
           </defs>
           <motion.path
-            d="M 88 40 C 124 22, 150 58, 174 40"
+            d="M 92 44 C 126 26, 150 58, 174 40"
             stroke="hsl(var(--foreground) / 0.18)"
             strokeWidth="7"
             strokeLinecap="round"
@@ -96,7 +96,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             transition={{ duration: reduce || lowPower ? 0.25 : 0.65, ease: "easeInOut" }}
           />
           <motion.path
-            d="M 88 40 C 124 22, 150 58, 174 40"
+            d="M 92 44 C 126 26, 150 58, 174 40"
             stroke="url(#rhlCableStroke)"
             strokeWidth="3"
             strokeLinecap="round"
@@ -108,7 +108,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           />
           {stage !== "idle" && (
             <>
-              <motion.circle cx="88" cy="40" r="3" fill="hsl(140 80% 55%)" filter="url(#rhlCableGlow)"
+              <motion.circle cx="92" cy="44" r="3" fill="hsl(140 80% 55%)" filter="url(#rhlCableGlow)"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} />
               <motion.circle cx="174" cy="40" r="4.5" fill="hsl(45 100% 65%)" filter="url(#rhlCableGlow)"
                 initial={{ opacity: 0, scale: 0 }}
@@ -126,7 +126,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
               animate={{ opacity: [0, 1, 1, 0] }}
               transition={{ duration: 1.2, ease: "easeInOut" }}
               style={{
-                offsetPath: "path('M 88 40 C 124 22, 150 58, 174 40')",
+                offsetPath: "path('M 92 44 C 126 26, 150 58, 174 40')",
                 animation: "reactor-pulse-travel 1.2s ease-in-out",
               } as React.CSSProperties}
             />
@@ -137,7 +137,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          className="absolute left-[68px] top-[40px] -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-[66px] top-[44px] -translate-x-1/2 -translate-y-1/2"
         >
           <div className="relative flex h-10 w-10 items-center justify-center">
             <img
