@@ -9,7 +9,7 @@ const problems = [
 ];
 
 const ProblemSection = () => (
-  <section className="py-24 md:py-32 border-t border-border">
+  <section className="py-14 md:py-32 border-t border-border">
     <div className="container px-4 max-w-4xl">
       <SectionHeader
         eyebrow="THE PROBLEM"
@@ -31,7 +31,7 @@ const ProblemSection = () => (
             <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-destructive/15 text-destructive">
               <X className="w-3 h-3" strokeWidth={3} />
             </span>
-            <span className="font-mono text-sm md:text-base text-muted-foreground">
+            <span className="font-mono text-xs md:text-base text-muted-foreground">
               {p}
             </span>
           </li>
@@ -40,7 +40,7 @@ const ProblemSection = () => (
           <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
             <Check className="w-3 h-3" strokeWidth={3} />
           </span>
-          <span className="font-mono text-sm md:text-base text-foreground">
+          <span className="font-mono text-xs md:text-base text-foreground">
             <span className="text-primary font-semibold">SitebyKrickel</span> → high-performance Shopify themes for clothing brands that refuse to look generic
           </span>
         </li>

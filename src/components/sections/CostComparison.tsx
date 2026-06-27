@@ -28,14 +28,14 @@ const rows: Row[] = [
 
 const CostComparison = () => {
   return (
-    <section className="relative py-20 md:py-28 px-4 md:px-8 border-t border-border/40">
+    <section className="relative py-14 md:py-28 px-4 md:px-8 border-t border-border/40">
       <div className="max-w-4xl mx-auto">
         <SectionHeader
           eyebrow="Cost Breakdown"
           title="Better, faster"
           accent="& cheaper. Period."
         />
-        <p className="text-center -mt-10 mb-12 max-w-2xl mx-auto text-sm md:text-base text-muted-foreground">
+        <p className="text-center -mt-6 md:-mt-10 mb-8 md:mb-12 max-w-2xl mx-auto text-xs md:text-base text-muted-foreground">
           Every extra app eats speed and money. SYNC gives you everything in
           one streamlined, cost-saving solution.
         </p>
@@ -45,23 +45,23 @@ const CostComparison = () => {
             {rows.map(({ icon, name, desc, price }) => (
               <li
                 key={name}
-                className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-4 md:py-5"
+                className="flex items-center gap-3 md:gap-4 px-3 md:px-6 py-3 md:py-5"
               >
                 <img
                   src={icon}
                   alt={name}
                   loading="lazy"
-                  className="shrink-0 w-10 h-10 md:w-11 md:h-11 rounded-xl object-cover shadow-md"
+                  className="shrink-0 w-8 h-8 md:w-11 md:h-11 rounded-xl object-cover shadow-md"
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="font-syne font-bold text-sm md:text-base leading-tight truncate">
+                  <p className="font-syne font-bold text-[11px] md:text-base leading-tight truncate">
                     {name}
                   </p>
-                  <p className="text-xs md:text-sm text-muted-foreground truncate">
+                  <p className="text-[10px] md:text-sm text-muted-foreground truncate">
                     {desc}
                   </p>
                 </div>
-                <span className="shrink-0 font-mono text-sm md:text-base text-foreground/90 tabular-nums">
+                <span className="shrink-0 font-mono text-[11px] md:text-base text-foreground/90 tabular-nums">
                   {price}
                 </span>
               </li>

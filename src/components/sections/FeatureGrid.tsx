@@ -21,7 +21,7 @@ const features = [
 ];
 
 const FeatureGrid = () => (
-  <section id="features" className="py-24 md:py-32 border-t border-border">
+  <section id="features" className="py-14 md:py-32 border-t border-border">
     <div className="container px-4">
       <SectionHeader
         eyebrow="EVERYTHING INCLUDED"
@@ -38,10 +38,10 @@ const FeatureGrid = () => (
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.03 }}
-              className="glass-card p-4 md:p-5 flex flex-col gap-2 hover:border-primary/30 transition-colors"
+              className="glass-card p-3 md:p-5 flex flex-col gap-1.5 md:gap-2 hover:border-primary/30 transition-colors"
             >
-              <Icon className="w-5 h-5 text-primary" aria-hidden />
-              <span className="font-mono text-xs md:text-sm text-foreground">{f.label}</span>
+              <Icon className="w-4 h-4 md:w-5 md:h-5 text-primary" aria-hidden />
+              <span className="font-mono text-[10px] leading-snug md:text-sm text-foreground">{f.label}</span>
             </motion.div>
           );
         })}

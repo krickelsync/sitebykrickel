@@ -70,7 +70,7 @@ const Pricing = () => {
   const price = 98 + (removeWatermark ? 50 : 0) + (installSetup ? 50 : 0);
 
   return (
-    <section id="pricing" className="py-24 md:py-32">
+    <section id="pricing" className="py-14 md:py-32">
       <div className="container px-4">
         <VelocityText />
 
