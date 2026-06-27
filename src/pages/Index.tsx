@@ -28,7 +28,6 @@ const Index = () => {
   return (
     <main className="min-h-dvh bg-background text-foreground overflow-x-hidden">
       <ScrollProgress />
-      <AnnouncementBar />
       <Hero />
       <Marquee />
       <Suspense fallback={<SectionLoader />}>
