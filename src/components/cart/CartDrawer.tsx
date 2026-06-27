@@ -22,7 +22,7 @@ const CartDrawer = () => {
     <Sheet open={isOpen} onOpenChange={(o) => (o ? null : handleClose())}>
       <SheetContent
         side="right"
-        className="!fixed !right-3 !top-[4.25rem] sm:!right-6 !h-[calc(100svh-5.5rem)] !w-[22rem] max-w-[calc(100vw-1.5rem)] !inset-y-auto !bottom-auto !left-auto navbar-pill menu-rotating-glow !rounded-2xl !border-0 p-0 shadow-2xl flex flex-col data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-top-2 data-[state=open]:slide-in-from-top-2"
+        className="!top-[4.25rem] !bottom-auto !right-3 sm:!right-6 !left-auto !h-[calc(100svh-5.5rem)] !w-[22rem] !max-w-[calc(100vw-1.5rem)] navbar-pill menu-rotating-glow !rounded-2xl !border-0 !p-0 !shadow-2xl flex flex-col z-[60]"
       >
        <div className="flex flex-col h-full px-4 pt-4 pb-3">
         <SheetHeader>
