@@ -291,20 +291,22 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           style={{ perspective: 900 }}
         >
           <motion.div
-            className={`${cardBase} text-center`}
+            className={`${cardBase} flex items-center gap-3`}
             style={{ ...cardStyle, rotateX: brRX, rotateY: brRY, transformStyle: "preserve-3d" }}
             whileHover={reduce ? {} : { scale: 1.04 }}
           >
           <motion.div
             animate={reduce ? {} : { scale: [1, 1.15, 1], filter: ["drop-shadow(0 0 0px " + accent + ")", "drop-shadow(0 0 12px " + accent + ")", "drop-shadow(0 0 0px " + accent + ")"] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="mx-auto mb-1.5"
-            style={{ color: accent }}
+            className="grid place-items-center w-9 h-9 rounded-lg border shrink-0"
+            style={{ color: accent, borderColor: accent }}
           >
-            <Zap size={22} fill={accent} />
+            <Zap size={16} fill={accent} />
           </motion.div>
-          <div className="font-syne text-[11px] font-bold uppercase text-white leading-tight">Fast Loading</div>
-          <div className="font-syne text-[11px] font-bold uppercase text-white leading-tight">Speed</div>
+          <div>
+            <div className="font-syne text-sm font-bold uppercase text-white leading-none">Fast Loading</div>
+            <div className="font-syne text-sm font-bold uppercase text-white leading-tight">Speed</div>
+          </div>
           </motion.div>
         </motion.div>
       </motion.div>
