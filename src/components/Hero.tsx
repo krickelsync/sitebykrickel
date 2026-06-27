@@ -98,7 +98,10 @@ const Hero = () => {
               THEMES<span className="hidden sm:inline"> FOR</span>
               <span className="block sm:hidden">FOR</span>
             </span>
-            <span className="block glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense min-h-[1em] text-[1.65rem] sm:text-inherit break-words">
+            <span
+              className="block glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense min-h-[1em] text-[1.65rem] sm:text-inherit break-words"
+              style={{ color: "hsl(45 100% 58%)" }}
+            >
               <AnimatePresence mode="wait">
                 <motion.span
                   key={rotatingWords[wordIndex]}
