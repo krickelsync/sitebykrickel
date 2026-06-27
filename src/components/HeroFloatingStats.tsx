@@ -48,7 +48,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 0.8 }}
-        className="absolute top-[14%] left-2 sm:left-[4%] lg:left-[6%] scale-[0.62] sm:scale-75 md:scale-90 lg:scale-100 origin-top-left"
+        className="absolute top-[12%] left-1 sm:left-3 lg:left-6 scale-[0.45] sm:scale-[0.6] md:scale-75 lg:scale-90 xl:scale-100 origin-top-left"
       >
         <motion.div
           animate={reduce ? {} : { y: [0, -10, 0] }}
@@ -85,7 +85,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.0, duration: 0.8 }}
-        className="absolute top-[12%] right-2 sm:right-[4%] lg:right-[6%] scale-[0.62] sm:scale-75 md:scale-90 lg:scale-100 origin-top-right"
+        className="absolute top-[12%] right-1 sm:right-3 lg:right-6 scale-[0.45] sm:scale-[0.6] md:scale-75 lg:scale-90 xl:scale-100 origin-top-right"
       >
         <motion.div
           animate={reduce ? {} : { y: [0, 12, 0] }}
@@ -120,7 +120,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute bottom-[28%] sm:bottom-[24%] left-2 sm:left-[4%] lg:left-[6%] scale-[0.65] sm:scale-75 md:scale-90 lg:scale-100 origin-bottom-left"
+        className="absolute bottom-[30%] sm:bottom-[26%] left-1 sm:left-3 lg:left-6 scale-[0.5] sm:scale-[0.65] md:scale-75 lg:scale-90 xl:scale-100 origin-bottom-left"
       >
         <motion.div
           animate={reduce ? {} : { y: [0, -8, 0] }}
@@ -144,7 +144,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.4, duration: 0.8 }}
-        className="absolute bottom-[28%] sm:bottom-[24%] right-2 sm:right-[4%] lg:right-[6%] scale-[0.65] sm:scale-75 md:scale-90 lg:scale-100 origin-bottom-right"
+        className="absolute bottom-[30%] sm:bottom-[26%] right-1 sm:right-3 lg:right-6 scale-[0.5] sm:scale-[0.65] md:scale-75 lg:scale-90 xl:scale-100 origin-bottom-right"
       >
         <motion.div
           animate={reduce ? {} : { y: [0, 10, 0] }}
