@@ -112,14 +112,14 @@ const Hero = () => {
           <motion.h1
             {...fadeUpDelay(0.3, 0.8)}
             id="hero-heading"
-            className="font-syne text-[clamp(1.85rem,8.4vw,4.9rem)] font-extrabold uppercase leading-[0.92] tracking-normal mb-7 text-center px-2 sm:px-0"
+            className="font-syne text-[clamp(1.55rem,7.2vw,4.9rem)] font-extrabold uppercase leading-[0.92] tracking-normal mb-7 text-center px-2 sm:px-0"
           >
             <span className="flex items-center justify-center whitespace-nowrap hover-lift text-center">
               THEMES<span className="hidden sm:inline"> FOR</span>
               <span className="sm:hidden ml-2">FOR</span>
             </span>
             <span
-              className="flex items-center justify-center text-center glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense text-[clamp(1.45rem,7.4vw,4.5rem)] leading-[0.94] break-words min-h-[1.08em] overflow-hidden"
+              className="flex items-center justify-center text-center glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense text-[clamp(1.2rem,6vw,4.5rem)] leading-[1.05] break-words min-h-[1.15em] overflow-visible px-3 sm:px-0"
               style={{ color: "hsl(45 100% 58%)" }}
             >
               <AnimatePresence mode="wait">
@@ -152,7 +152,7 @@ const Hero = () => {
           {/* CTA Buttons */}
           <motion.div
             {...fadeUpDelay(0.7)}
-            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 max-w-sm sm:max-w-none mx-auto"
+            className="flex flex-row items-center justify-center gap-3 sm:gap-4"
           >
             <a
               ref={magneticRef}
@@ -162,15 +162,15 @@ const Hero = () => {
                 e.preventDefault();
                 scrollToId('pricing');
               }}
-              className="group relative inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground w-full sm:w-auto h-14 sm:h-auto px-8 sm:py-4 font-mono text-sm font-bold uppercase tracking-wider overflow-hidden hover:glow-box cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background will-change-transform"
+              className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 bg-primary text-primary-foreground px-4 py-2.5 sm:px-8 sm:py-4 font-mono text-[11px] sm:text-sm font-bold uppercase tracking-wider overflow-hidden hover:glow-box cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background will-change-transform"
             >
               <span className="relative z-10">View Packages</span>
-              <ArrowRight size={18} aria-hidden="true" className="relative z-10 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight aria-hidden="true" className="relative z-10 group-hover:translate-x-1 transition-transform w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
               <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             </a>
 
-            <Link to="/showcase" aria-label="View showcase" className="group inline-flex items-center justify-center gap-3 w-full sm:w-auto h-14 sm:h-auto px-8 sm:py-4 font-mono text-sm uppercase tracking-wider border border-muted hover:border-foreground transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background">
-              <Eye size={18} aria-hidden="true" className="group-hover:scale-110 transition-transform" />
+            <Link to="/showcase" aria-label="View showcase" className="group inline-flex items-center justify-center gap-2 sm:gap-3 px-4 py-2.5 sm:px-8 sm:py-4 font-mono text-[11px] sm:text-sm uppercase tracking-wider border border-muted hover:border-foreground transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background">
+              <Eye aria-hidden="true" className="group-hover:scale-110 transition-transform w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
               <span>SHOWCASE</span>
             </Link>
           </motion.div>
