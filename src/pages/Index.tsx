@@ -9,6 +9,7 @@ const ProblemSection = lazy(() => import("@/components/sections/ProblemSection")
 const FeatureGrid = lazy(() => import("@/components/sections/FeatureGrid"));
 const MobileFirstSection = lazy(() => import("@/components/sections/MobileFirstSection"));
 const CustomizationSection = lazy(() => import("@/components/sections/CustomizationSection"));
+const CostComparison = lazy(() => import("@/components/sections/CostComparison"));
 const ServicesAddon = lazy(() => import("@/components/sections/ServicesAddon"));
 const FinalCTA = lazy(() => import("@/components/sections/FinalCTA"));
 const Pricing = lazy(() => import("@/components/Pricing"));
@@ -41,6 +42,9 @@ const Index = () => {
       </Suspense>
       <Suspense fallback={<SectionLoader />}>
         <CustomizationSection />
+      </Suspense>
+      <Suspense fallback={<SectionLoader />}>
+        <CostComparison />
       </Suspense>
       <Suspense fallback={<SectionLoader />}>
         <Pricing />
