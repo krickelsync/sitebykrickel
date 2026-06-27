@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ShoppingBag } from "lucide-react";
+import { X, ShoppingCart } from "lucide-react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { toast } from "sonner";
 import { useEffect, useRef } from "react";
@@ -72,7 +72,7 @@ const CheckoutModal = ({
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <ShoppingBag className="w-5 h-5 text-primary" />
+                    <ShoppingCart className="w-5 h-5 text-primary" />
                   </div>
                   <h2 id={titleId} className="font-display text-xl font-bold">Checkout</h2>
                 </div>

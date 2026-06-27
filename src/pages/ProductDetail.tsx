@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, ShoppingBag, Sparkles, RefreshCw, Infinity as InfinityIcon, Zap, Star } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Sparkles, RefreshCw, Infinity as InfinityIcon, Zap, Star } from "lucide-react";
 import Footer from "@/components/Footer";
 import PayPalProvider from "@/components/PayPalProvider";
 import CheckoutModal from "@/components/products/CheckoutModal";
@@ -139,7 +139,7 @@ const ProductDetail = () => {
                   onClick={() => setCheckoutOpen(true)}
                   className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-primary via-primary to-accent text-primary-foreground font-display font-bold uppercase tracking-wider text-xs shadow-[0_6px_24px_-8px_hsl(var(--primary)/0.7)]"
                 >
-                  <ShoppingBag className="w-4 h-4" />
+                  <ShoppingCart className="w-4 h-4" />
                   Add to cart
                 </button>
               </div>
@@ -293,7 +293,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
           onClick={onBuy}
           className={`group relative w-full inline-flex items-center justify-center gap-2 px-5 py-3 md:py-3.5 rounded-2xl bg-primary text-primary-foreground font-display font-extrabold uppercase tracking-[0.14em] md:tracking-[0.18em] ${textSize.ui} shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_45px_-5px_hsl(var(--primary)/0.9)] hover:bg-primary/90 active:scale-[0.99] transition-all`}
         >
-          <ShoppingBag className="w-3.5 h-3.5 md:w-4 md:h-4" />
+          <ShoppingCart className="w-3.5 h-3.5 md:w-4 md:h-4" />
           <span>Add to cart</span>
           <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
         </button>
