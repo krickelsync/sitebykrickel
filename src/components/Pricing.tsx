@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { fadeIn } from "@/lib/motion";
 import { useContactScroll } from "@/hooks/useContactScroll";
 import shopifyBadge from "@/assets/shopify-badge.png.asset.json";
+import { typography, textSize } from "@/components/ui/typography";
 
 type FeatureItem = { label: string; value?: string };
 type FeatureGroup = { category: string; items: FeatureItem[] };
@@ -101,13 +102,13 @@ const Pricing = () => {
             {/* Header row — chip + price, flat HeroUI style */}
             <div className="relative flex items-start justify-between gap-4 pb-6 mb-6 border-b border-border">
               <div>
-                <span className="inline-block px-2 py-0.5 rounded-md border border-border font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <span className={`inline-block px-2 py-0.5 rounded-md border border-border ${typography.eyebrow}`}>
                   Premium
                 </span>
-                <h3 className="mt-3 font-syne font-bold text-xl text-foreground">
+                <h3 className={`mt-3 font-syne font-bold text-foreground ${typography.h3}`}>
                   SYNC Theme
                 </h3>
-                <p className="font-mono text-[11px] text-muted-foreground mt-1">
+                <p className={`${typography.meta} mt-1`}>
                   Lifetime license · VIP support
                 </p>
               </div>
@@ -117,11 +118,11 @@ const Pricing = () => {
                   initial={{ opacity: 0, y: -2 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="font-syne font-bold text-4xl md:text-5xl text-foreground leading-none"
+                  className={typography.price}
                 >
                   ${price}
                 </motion.div>
-                <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest mt-1 inline-block">
+                <span className={`${typography.eyebrow} mt-1 inline-block`}>
                   one-time
                 </span>
               </div>
@@ -160,14 +161,14 @@ const Pricing = () => {
                 >
                   <div className="flex flex-col min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono font-medium text-sm text-foreground">
+                      <span className={`font-mono font-medium text-foreground ${textSize.ui}`}>
                         {t.label}
                       </span>
-                      <span className="font-mono text-[10px] text-muted-foreground">
+                      <span className={typography.eyebrow}>
                         {t.price}
                       </span>
                     </div>
-                    <span className="font-mono text-[11px] text-muted-foreground mt-0.5 truncate">
+                    <span className={`${typography.meta} mt-0.5 truncate`}>
                       {t.hint}
                     </span>
                   </div>
@@ -191,12 +192,12 @@ const Pricing = () => {
             <div className="relative flex-1 space-y-6 mb-8">
               {FEATURE_GROUPS.map((group) => (
                 <div key={group.category}>
-                  <h4 className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.25em] mb-3">
+                  <h4 className={`${typography.eyebrow} mb-3`}>
                     — {group.category}
                   </h4>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
                     {group.items.map((item) => (
-                      <li key={item.label} className="flex items-baseline gap-2 text-[13px] leading-snug">
+                      <li key={item.label} className={`flex items-baseline gap-2 leading-snug ${textSize.ui}`}>
                         <span className="text-muted-foreground/50 font-mono">·</span>
                         <span className="font-mono text-muted-foreground">
                           {item.label}
@@ -214,7 +215,7 @@ const Pricing = () => {
             <a
               href="/about#contact"
               onClick={handleContactClick}
-              className="relative group inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-foreground text-background font-mono font-medium text-sm overflow-hidden transition-colors hover:bg-foreground/90"
+              className={`relative group inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-foreground text-background font-mono font-medium overflow-hidden transition-colors hover:bg-foreground/90 ${textSize.ui}`}
             >
               Get SYNC — ${price}
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
@@ -227,7 +228,7 @@ const Pricing = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="font-mono text-[11px] text-muted-foreground text-center mt-6"
+          className={`${typography.meta} text-center mt-6`}
         >
           Secure payment · Setup starts within 24 hours
         </motion.p>
