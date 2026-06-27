@@ -8,9 +8,6 @@ import { MusicProvider } from "./contexts/MusicContext";
 import { CartProvider } from "./contexts/CartContext";
 import CartDrawer from "./components/cart/CartDrawer";
 import Index from "./pages/Index";
-import Showcase from "./pages/Showcase";
-import About from "./pages/About";
-import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
 import MobileBottomNav from "./components/MobileBottomNav";
 import SmoothScroll from "./components/SmoothScroll";
@@ -20,13 +17,25 @@ import { useLocation } from "react-router-dom";
 import { installGlobalClickSound } from "@/lib/sound";
 
 const MusicPlayer = lazy(() => import("./components/MusicPlayer"));
+const Showcase = lazy(() => import("./pages/Showcase"));
+const About = lazy(() => import("./pages/About"));
+const Products = lazy(() => import("./pages/Products"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminProductEdit = lazy(() => import("./pages/AdminProductEdit"));
 const StyleGuide = lazy(() => import("./pages/StyleGuide"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60_000,
+      gcTime: 5 * 60_000,
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 const AppInner = () => {
   useEffect(() => {
@@ -39,18 +48,20 @@ const AppInner = () => {
     <>
       <SmoothScroll />
       {!hideChrome && <Navbar />}
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/showcase" element={<Showcase />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/products/:slug" element={<Suspense fallback={null}><ProductDetail /></Suspense>} />
-        <Route path="/style-guide" element={<Suspense fallback={null}><StyleGuide /></Suspense>} />
-        <Route path="/admin/login" element={<Suspense fallback={null}><AdminLogin /></Suspense>} />
-        <Route path="/admin" element={<Suspense fallback={null}><Admin /></Suspense>} />
-        <Route path="/admin/products/:id" element={<Suspense fallback={null}><AdminProductEdit /></Suspense>} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/showcase" element={<Showcase />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:slug" element={<ProductDetail />} />
+          <Route path="/style-guide" element={<StyleGuide />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/products/:id" element={<AdminProductEdit />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
       <Suspense fallback={null}>
         <MusicPlayer />
       </Suspense>
