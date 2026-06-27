@@ -254,7 +254,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
       </div>
 
       {/* BOTTOM LEFT — FULLY RESPONSIVE */}
-      <div className="absolute bottom-[30%] sm:bottom-[26%] left-1 sm:left-3 lg:left-6 scale-[0.5] sm:scale-[0.65] md:scale-75 lg:scale-90 xl:scale-100 origin-bottom-left">
+      <div className="absolute bottom-[32%] sm:bottom-[28%] md:bottom-[26%] left-1 sm:left-3 lg:left-6 scale-[0.6] sm:scale-[0.75] md:scale-90 lg:scale-100 origin-bottom-left">
       <motion.div
         style={{ x: blX, y: blY }}
         initial={{ opacity: 0, y: 20 }}
@@ -267,7 +267,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           style={{ perspective: 900 }}
         >
           <motion.div
-            className={`${cardBase} flex flex-col items-start gap-3 w-[120px]`}
+            className={`${cardBase} flex flex-col items-start gap-2.5 w-[110px] sm:w-[120px]`}
             style={{ ...cardStyle, rotateX: blRX, rotateY: blRY, transformStyle: "preserve-3d" }}
             whileHover={reduce ? {} : { scale: 1.04 }}
           >
@@ -284,7 +284,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
       </div>
 
       {/* BOTTOM RIGHT — FAST LOADING SPEED */}
-      <div className="absolute bottom-[30%] sm:bottom-[26%] right-1 sm:right-3 lg:right-6 scale-[0.5] sm:scale-[0.65] md:scale-75 lg:scale-90 xl:scale-100 origin-bottom-right">
+      <div className="absolute bottom-[32%] sm:bottom-[28%] md:bottom-[26%] right-1 sm:right-3 lg:right-6 scale-[0.6] sm:scale-[0.75] md:scale-90 lg:scale-100 origin-bottom-right">
       <motion.div
         style={{ x: brX, y: brY }}
         initial={{ opacity: 0, y: 20 }}
@@ -297,7 +297,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           style={{ perspective: 900 }}
         >
           <motion.div
-            className={`${cardBase} flex flex-col items-start gap-3 w-[120px]`}
+            className={`${cardBase} flex flex-col items-start gap-2.5 w-[110px] sm:w-[120px]`}
             style={{ ...cardStyle, rotateX: brRX, rotateY: brRY, transformStyle: "preserve-3d" }}
             whileHover={reduce ? {} : { scale: 1.04 }}
           >
