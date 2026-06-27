@@ -191,9 +191,9 @@ const Hero = () => {
         </div>
       </motion.div>
 
-      {/* Floating glass stat cards — revealed by the reactor click */}
+      {/* Floating glass stat cards — parallax-only assets */}
       <Suspense fallback={null}>
-        <HeroFloatingStats mx={mx} my={my} active={reactorStage === "orbit"} />
+        <HeroFloatingStats mx={mx} my={my} />
       </Suspense>
 
       {/* Tilted bottom marquee ribbon — lifted above mobile bottom nav */}

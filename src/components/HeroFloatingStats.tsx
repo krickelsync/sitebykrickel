@@ -5,7 +5,6 @@ import { Smartphone, Zap, TrendingUp } from "lucide-react";
 interface Props {
   mx: MotionValue<number>;
   my: MotionValue<number>;
-  active?: boolean;
 }
 
 /**
@@ -13,7 +12,7 @@ interface Props {
  * FULLY RESPONSIVE, FAST LOADING SPEED. Mouse parallax is applied ONLY
  * to these assets (per design spec).
  */
-const HeroFloatingStats = ({ mx, my, active = false }: Props) => {
+const HeroFloatingStats = ({ mx, my }: Props) => {
   const reduce = useReducedMotion();
 
   // ---- Synced looping counters (single progress driver per card) ----
@@ -47,11 +46,6 @@ const HeroFloatingStats = ({ mx, my, active = false }: Props) => {
         trend: Math.round(SALES_TREND_TO * p),
       });
     };
-    if (!active) {
-      salesProgress.set(0);
-      commit(0);
-      return;
-    }
     if (reduce) {
       salesProgress.set(1);
       commit(1);
@@ -84,7 +78,7 @@ const HeroFloatingStats = ({ mx, my, active = false }: Props) => {
     };
     loop();
     return () => { cancelled = true; ctrl?.stop(); };
-  }, [active, reduce, salesProgress]);
+  }, [reduce, salesProgress]);
   const sales = salesDisplay.sales;
   const salesTrend = salesDisplay.trend;
   const salesChartWidth = useTransform(salesProgress, (p) => Math.max(0, Math.min(120, 120 * p)));
@@ -106,11 +100,6 @@ const HeroFloatingStats = ({ mx, my, active = false }: Props) => {
     const commit = (p: number) => {
       setConvDisplay({ conv: CONV_TO * p, trend: Math.round(CONV_TREND_TO * p) });
     };
-    if (!active) {
-      convProgress.set(0);
-      commit(0);
-      return;
-    }
     if (reduce) {
       convProgress.set(1);
       commit(1);
@@ -143,7 +132,7 @@ const HeroFloatingStats = ({ mx, my, active = false }: Props) => {
     };
     loop();
     return () => { cancelled = true; ctrl?.stop(); };
-  }, [active, reduce, convProgress]);
+  }, [reduce, convProgress]);
   const conv = convDisplay.conv;
   const convTrend = convDisplay.trend;
   // Bar fill is proportional to current trend value (max = CONV_TREND_TO%).
@@ -194,10 +183,6 @@ const HeroFloatingStats = ({ mx, my, active = false }: Props) => {
   const blRY = useTransform(tiltDY, (v) => pose.bl.ry + v);
   const brRX = useTransform(tiltDX, (v) => pose.br.rx + v);
   const brRY = useTransform(tiltDY, (v) => pose.br.ry + v);
-
-  if (!active) {
-    return <div aria-hidden className="absolute inset-0 z-[3] pointer-events-none" />;
-  }
 
   return (
     <div aria-hidden className="absolute inset-0 z-[3] pointer-events-none">
