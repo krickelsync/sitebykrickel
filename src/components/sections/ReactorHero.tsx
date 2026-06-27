@@ -1,15 +1,6 @@
 import { motion, useAnimation, useMotionValue, useTransform, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState, useCallback } from "react";
-import {
-  ShoppingCart,
-  LayoutGrid,
-  Smartphone,
-  Settings2,
-  Zap,
-  BarChart3,
-  Box,
-  Package,
-} from "lucide-react";
+import { ShoppingCart, Smartphone, Zap, Box, Package } from "lucide-react";
 import chromeBag from "@/assets/chrome-bag.png.asset.json";
 
 /**
@@ -19,11 +10,8 @@ import chromeBag from "@/assets/chrome-bag.png.asset.json";
 const ORBIT_ICONS = [
   { Icon: ShoppingCart, label: "Cart" },
   { Icon: Package, label: "Product" },
-  { Icon: LayoutGrid, label: "Collection" },
   { Icon: Smartphone, label: "Mobile" },
-  { Icon: Settings2, label: "Customize" },
   { Icon: Zap, label: "Speed" },
-  { Icon: BarChart3, label: "Analytics" },
   { Icon: Box, label: "3D" },
 ] as const;
 
@@ -52,23 +40,15 @@ const ReactorHero = () => {
 
   const onLeave = useCallback(() => { mx.set(0); my.set(0); }, [mx, my]);
 
-  // Reveal sequence on in-view
-  useEffect(() => {
-    if (reduce) { setStage("orbit"); return; }
-    const el = sectionRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting || stage !== "idle") return;
-      const t1 = setTimeout(() => setStage("connect"), 400);
-      const t2 = setTimeout(() => setStage("transfer"), 1500);
-      const t3 = setTimeout(() => setStage("activate"), 2500);
-      const t4 = setTimeout(() => setStage("orbit"), 3200);
-      io.disconnect();
-      return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
-    }, { threshold: 0.3 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, [reduce, stage]);
+  // Click-triggered sequence (no autoplay)
+  const runSequence = useCallback(() => {
+    if (stage !== "idle" && stage !== "orbit") return;
+    setStage("connect");
+    const t1 = setTimeout(() => setStage("transfer"), 1100);
+    const t2 = setTimeout(() => setStage("activate"), 2000);
+    const t3 = setTimeout(() => setStage("orbit"), 2700);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, [stage]);
 
   // Subtle repeating pulse during orbit
   const [pulseTick, setPulseTick] = useState(0);
@@ -78,10 +58,15 @@ const ReactorHero = () => {
     return () => clearInterval(id);
   }, [stage, reduce]);
 
-  const triggerBurst = () => {
+  const onStageClick = () => {
     setBurst((b) => b + 1);
-    controls.start({ x: [0, -4, 4, -2, 0], transition: { duration: 0.4 } });
+    controls.start({ x: [0, -3, 3, -2, 0], transition: { duration: 0.4 } });
+    if (stage === "idle") runSequence();
   };
+
+  useEffect(() => {
+    if (reduce) setStage("orbit");
+  }, [reduce]);
 
   return (
     <section
@@ -89,14 +74,13 @@ const ReactorHero = () => {
       aria-label="SYNC reactor showcase"
       className="relative w-full overflow-hidden py-20 md:py-28 bg-background"
     >
-      {/* Ambient grid + glow */}
-      <div aria-hidden className="absolute inset-0 hero-grid-overlay opacity-[0.12] pointer-events-none" />
+      {/* Ambient glow only — grid removed for cleaner luxury feel */}
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] max-w-[800px] max-h-[800px] rounded-full"
           style={{
-            background: "radial-gradient(circle, hsl(45 100% 55% / 0.10) 0%, transparent 60%)",
-            filter: "blur(40px)",
+            background: "radial-gradient(circle, hsl(45 100% 55% / 0.08) 0%, transparent 65%)",
+            filter: "blur(60px)",
           }}
         />
       </div>
@@ -115,22 +99,22 @@ const ReactorHero = () => {
           ref={stageRef}
           onMouseMove={onMove}
           onMouseLeave={onLeave}
-          onClick={triggerBurst}
+          onClick={onStageClick}
           animate={controls}
-          className="relative mx-auto h-[420px] sm:h-[500px] md:h-[600px] w-full max-w-5xl select-none"
+          className="relative mx-auto h-[420px] sm:h-[500px] md:h-[600px] w-full max-w-5xl select-none cursor-pointer"
           style={{ perspective: 1200 }}
         >
-          {/* Orbit rings */}
-          {(stage === "orbit" || stage === "activate") && (
+          {/* Orbit rings — only after activation */}
+          {stage === "orbit" && (
             <>
               {[1, 1.35, 1.7].map((s, i) => (
                 <motion.div
                   key={i}
                   aria-hidden
-                  initial={{ opacity: 0, scale: 0.6 }}
-                  animate={{ opacity: 0.15, scale: s }}
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  animate={{ opacity: 0.08, scale: s }}
                   transition={{ duration: 0.8, delay: i * 0.1 }}
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/30"
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/40"
                   style={{ width: 260, height: 260 }}
                 />
               ))}
@@ -181,6 +165,17 @@ const ReactorHero = () => {
               animate={{ pathLength: stage === "idle" || stage === "connect" ? 0 : 1 }}
               transition={{ duration: 0.9, ease: "easeInOut" }}
             />
+            {/* Connector nodes at both ends */}
+            {stage !== "idle" && (
+              <>
+                <motion.circle cx="200" cy="300" r="6" fill="hsl(140 80% 55%)" filter="url(#cableGlow)"
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} />
+                <motion.circle cx="650" cy="300" r="7" fill="hsl(45 100% 65%)" filter="url(#cableGlow)"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: stage === "connect" ? 0 : 1, scale: stage === "connect" ? 0 : 1 }}
+                  transition={{ duration: 0.3, delay: 0.1 }} />
+              </>
+            )}
             {/* Repeating pulse traveling along cable */}
             {(stage === "orbit") && (
               <motion.circle
@@ -206,7 +201,7 @@ const ReactorHero = () => {
             transition={{ duration: 0.6 }}
             className="absolute left-[8%] sm:left-[12%] top-1/2 -translate-y-1/2 z-10"
           >
-            <div className="relative flex items-center justify-center w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-[#0b1f12] border border-[hsl(140_60%_35%)]/50 shadow-[0_0_30px_hsl(140_80%_45%/0.35)]">
+            <div className="relative flex items-center justify-center w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-[#0b1f12]/60 backdrop-blur border border-[hsl(140_60%_35%)]/40 shadow-[0_0_30px_hsl(140_80%_45%/0.25)]">
               <svg viewBox="0 0 109 124" className="w-7 h-7 sm:w-10 sm:h-10" aria-hidden>
                 <path
                   fill="#95BF47"
@@ -215,7 +210,7 @@ const ReactorHero = () => {
               </svg>
               <motion.div
                 aria-hidden
-                className="absolute inset-0 rounded-2xl"
+                className="absolute inset-0 rounded-full"
                 style={{ boxShadow: "0 0 40px hsl(140 80% 50% / 0.6)" }}
                 animate={{ opacity: [0.4, 0.8, 0.4] }}
                 transition={{ duration: 2.4, repeat: Infinity }}
@@ -231,7 +226,7 @@ const ReactorHero = () => {
           >
             <div className="relative">
               {/* shockwave */}
-              {(stage === "activate" || stage === "orbit") && (
+              {stage === "activate" && (
                 <motion.div
                   key={`shock-${burst}`}
                   aria-hidden
@@ -254,8 +249,18 @@ const ReactorHero = () => {
                 }}
               />
               <motion.div
-                animate={stage === "activate" ? { scale: [1, 1.08, 1] } : { scale: 1 }}
-                transition={{ duration: 0.6 }}
+                animate={
+                  stage === "activate"
+                    ? { scale: [1, 1.08, 1], y: 0 }
+                    : stage === "idle"
+                    ? { scale: 1, y: [0, -6, 0] }
+                    : { scale: 1, y: 0 }
+                }
+                transition={
+                  stage === "idle"
+                    ? { duration: 4, repeat: Infinity, ease: "easeInOut" }
+                    : { duration: 0.6 }
+                }
                 className="relative w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72"
               >
                 <img
@@ -275,11 +280,11 @@ const ReactorHero = () => {
                 </div>
               </motion.div>
 
-              {/* Orbiting feature icons */}
+              {/* Orbiting feature icons — clean line icons, no boxes */}
               {stage === "orbit" && ORBIT_ICONS.map((item, i) => {
                 const angle = (i / ORBIT_ICONS.length) * 360;
-                const radius = i % 2 === 0 ? 130 : 170;
-                const duration = i % 2 === 0 ? 18 : 26;
+                const radius = i % 2 === 0 ? 150 : 190;
+                const duration = i % 2 === 0 ? 22 : 30;
                 const { Icon } = item;
                 return (
                   <motion.div
@@ -287,8 +292,8 @@ const ReactorHero = () => {
                     aria-hidden
                     className="absolute left-1/2 top-1/2"
                     initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 + (burst ? 0.15 : 0) }}
-                    transition={{ delay: 0.05 * i, duration: 0.4 }}
+                    animate={{ opacity: 1, scale: 1 + (burst ? 0.12 : 0) }}
+                    transition={{ delay: 0.12 * i, duration: 0.5 }}
                     style={{ transformOrigin: "0 0" }}
                   >
                     <motion.div
@@ -302,9 +307,16 @@ const ReactorHero = () => {
                         <motion.div
                           animate={{ y: [0, -4, 0] }}
                           transition={{ duration: 3 + i * 0.2, repeat: Infinity, ease: "easeInOut" }}
-                          className="-translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-card/80 backdrop-blur border border-primary/30 shadow-[0_0_20px_hsl(45_100%_55%/0.25)]"
+                          className="-translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full"
+                          style={{
+                            background: "radial-gradient(circle, hsl(45 100% 55% / 0.08), transparent 70%)",
+                          }}
                         >
-                          <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" strokeWidth={1.5} />
+                          <Icon
+                            className="w-5 h-5 sm:w-6 sm:h-6 text-primary"
+                            strokeWidth={1.25}
+                            style={{ filter: "drop-shadow(0 0 6px hsl(45 100% 60% / 0.7))" }}
+                          />
                         </motion.div>
                       </div>
                     </motion.div>
@@ -315,9 +327,16 @@ const ReactorHero = () => {
           </motion.div>
         </motion.div>
 
-        <p className="text-center font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground/70 mt-8">
-          Click the reactor · move your cursor
-        </p>
+        {stage === "idle" && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.5 }}
+            transition={{ delay: 0.6 }}
+            className="text-center font-mono text-[9px] uppercase tracking-[0.35em] text-muted-foreground/60 mt-6"
+          >
+            Click to activate theme engine
+          </motion.p>
+        )}
       </div>
     </section>
   );
