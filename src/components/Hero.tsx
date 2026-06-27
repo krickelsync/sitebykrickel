@@ -92,7 +92,7 @@ const Hero = () => {
           <motion.h1
             {...fadeUpDelay(0.3, 0.8)}
             id="hero-heading"
-            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold uppercase leading-[0.9] tracking-tight mb-8"
+            className="font-syne text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold uppercase leading-[0.85] tracking-tighter mb-8"
           >
             <span className="block hover-lift">THEMES FOR</span>
             <span className="block glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense min-h-[1em]">
