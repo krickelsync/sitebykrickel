@@ -81,7 +81,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
       <div aria-hidden className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 h-64 w-[80%] rounded-full bg-primary/10 blur-3xl" />
       <div className="container px-4 relative">
-        <div className="grid grid-cols-3 gap-4 md:gap-12 mb-8 md:mb-12 items-start">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-12 mb-8 md:mb-12 items-start">
           {/* Brand Column */}
           <motion.div initial={{
           opacity: 0,
@@ -93,7 +93,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
           once: true
         }} transition={{
           duration: 0.6
-          }} className="space-y-2 md:space-y-4">
+          }} className="hidden md:flex space-y-2 md:space-y-4 flex-col">
             <h2 className="font-syne text-sm md:text-3xl font-extrabold uppercase tracking-tight flex flex-col leading-[0.95]">
               <AnimatedBrandText text="SITE BY" className="text-foreground" />
               <AnimatedBrandText
@@ -120,25 +120,25 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
           duration: 0.6,
           delay: 0.1
           }} className="space-y-2 md:space-y-4">
-            <h3 className="font-mono text-[9px] md:text-xs uppercase tracking-widest text-primary">
+            <h3 className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-primary">
               Quick Links
             </h3>
-            <ul className="space-y-0.5 md:space-y-2">
+            <ul className="space-y-1 md:space-y-2">
               {quickLinks.map(link => <li key={link.name}>
                   {link.href.startsWith("/") && !link.href.includes("#") ? (
-                    <Link to={link.href} className="font-mono text-[10px] md:text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[28px] md:min-h-[36px] items-center">
+                    <Link to={link.href} className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[32px] md:min-h-[36px] items-center">
                       {link.name}
                     </Link>
                   ) : link.href.startsWith("#") ? (
                     <a
                       href={link.href}
                       onClick={(e) => handleNavClick(e, link.href)}
-                      className="font-mono text-[10px] md:text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer inline-flex min-h-[28px] md:min-h-[36px] items-center"
+                      className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer inline-flex min-h-[32px] md:min-h-[36px] items-center"
                     >
                       {link.name}
                     </a>
                   ) : (
-                    <a href={link.href} className="font-mono text-[10px] md:text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[28px] md:min-h-[36px] items-center">
+                    <a href={link.href} className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[32px] md:min-h-[36px] items-center">
                       {link.name}
                     </a>
                   )}
@@ -159,20 +159,20 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
           duration: 0.6,
           delay: 0.2
           }} className="space-y-2 md:space-y-4">
-            <h3 className="font-mono text-[9px] md:text-xs uppercase tracking-widest text-primary">
+            <h3 className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-primary">
               Get in Touch
             </h3>
             <div className="space-y-2 md:space-y-3">
-              <a href="mailto:contact@sitebykrickel.com" aria-label="Email contact@sitebykrickel.com" className="flex items-center gap-2 md:gap-3 font-mono text-[10px] md:text-sm text-muted-foreground hover:text-foreground transition-colors group break-all">
-                <div className="w-7 h-7 md:w-10 md:h-10 shrink-0 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
-                  <Mail size={12} className="md:hidden" aria-hidden="true" />
+              <a href="mailto:contact@sitebykrickel.com" aria-label="Email contact@sitebykrickel.com" className="flex items-center gap-2 md:gap-3 font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors group break-all">
+                <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
+                  <Mail size={14} className="md:hidden" aria-hidden="true" />
                   <Mail size={16} className="hidden md:block" aria-hidden="true" />
                 </div>
                 <span>contact@sitebykrickel.com</span>
               </a>
-              <a href="https://www.instagram.com/krickel.sync/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @krickel.sync (opens in new tab)" className="flex items-center gap-2 md:gap-3 font-mono text-[10px] md:text-sm text-muted-foreground hover:text-foreground transition-colors group">
-                <div className="w-7 h-7 md:w-10 md:h-10 shrink-0 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
-                  <Instagram size={12} className="md:hidden" aria-hidden="true" />
+              <a href="https://www.instagram.com/krickel.sync/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @krickel.sync (opens in new tab)" className="flex items-center gap-2 md:gap-3 font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors group">
+                <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
+                  <Instagram size={14} className="md:hidden" aria-hidden="true" />
                   <Instagram size={16} className="hidden md:block" aria-hidden="true" />
                 </div>
                 <span>@krickel.sync</span>
