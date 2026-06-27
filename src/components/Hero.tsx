@@ -7,6 +7,7 @@ import { useMagnetic } from "@/hooks/useMagnetic";
 import { useMouseParallax } from "@/hooks/useMouseParallax";
 import { fadeUpDelay } from "@/lib/motion";
 import shopifyBadge from "@/assets/shopify-badge.png";
+import HeroFloatingStats from "./HeroFloatingStats";
 
 // Lazy load heavy Prism component
 const Prism = lazy(() => import("./Prism"));
@@ -106,6 +107,7 @@ const Hero = () => {
         />
       </motion.div>
       <motion.div style={{ y: headlineY, opacity: contentOpacity }} className="container relative z-10 px-4">
+        <HeroFloatingStats mx={mx} my={my} />
         <div className="max-w-5xl mx-auto text-center">
           {/* Eyebrow */}
           <motion.div {...fadeUpDelay(0.2)} style={{ x: badgePX, y: badgePY }} className="mb-8">
