@@ -1,5 +1,5 @@
 import { motion, useTransform, useReducedMotion, useMotionValue, useSpring, animate, type MotionValue } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Smartphone, Zap, TrendingUp } from "lucide-react";
 
 interface Props {
@@ -17,42 +17,48 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
 
   // ---- Looping animated counters ----
   const [sales, setSales] = useState(0);
+  const salesRef = useRef(0);
   useEffect(() => {
     if (reduce) { setSales(28420); return; }
     let cancelled = false;
+    let controls: ReturnType<typeof animate> | undefined;
     const loop = () => {
-      // Pick a fresh target each cycle so the number keeps "living"
+      const from = salesRef.current || 26000;
       const target = 27800 + Math.floor(Math.random() * 1800);
-      const controls = animate(sales || 26000, target, {
+      controls = animate(from, target, {
         duration: 2.4,
         ease: "easeInOut",
-        onUpdate: (v) => !cancelled && setSales(Math.round(v)),
-        onComplete: () => !cancelled && setTimeout(loop, 900),
+        onUpdate: (v) => {
+          salesRef.current = v;
+          if (!cancelled) setSales(Math.round(v));
+        },
+        onComplete: () => { if (!cancelled) setTimeout(loop, 900); },
       });
-      return controls;
     };
-    const c = loop();
-    return () => { cancelled = true; c?.stop(); };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    loop();
+    return () => { cancelled = true; controls?.stop(); };
   }, [reduce]);
 
   const [conv, setConv] = useState(3.68);
+  const convRef = useRef(3.68);
   useEffect(() => {
     if (reduce) return;
     let cancelled = false;
+    let controls: ReturnType<typeof animate> | undefined;
     const loop = () => {
       const target = 3.4 + Math.random() * 0.6;
-      const controls = animate(conv, target, {
+      controls = animate(convRef.current, target, {
         duration: 2.2,
         ease: "easeInOut",
-        onUpdate: (v) => !cancelled && setConv(v),
-        onComplete: () => !cancelled && setTimeout(loop, 700),
+        onUpdate: (v) => {
+          convRef.current = v;
+          if (!cancelled) setConv(v);
+        },
+        onComplete: () => { if (!cancelled) setTimeout(loop, 700); },
       });
-      return controls;
     };
-    const c = loop();
-    return () => { cancelled = true; c?.stop(); };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    loop();
+    return () => { cancelled = true; controls?.stop(); };
   }, [reduce]);
 
   // ---- Mouse tilt deltas, added on top of baseline tilt ----
