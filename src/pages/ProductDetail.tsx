@@ -9,6 +9,7 @@ import LandingBlocks from "@/components/products/LandingBlocks";
 import { useProduct, useProducts, useResolvedImage, resolveImageUrl, type Product } from "@/hooks/useProducts";
 import { AnimatePresence } from "framer-motion";
 import { H1, H2, Tagline, Body, Eyebrow, Meta, Price, spacing, textSize } from "@/components/ui/typography";
+import { useCart } from "@/contexts/CartContext";
 
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -16,6 +17,19 @@ const ProductDetail = () => {
   const { products: allProducts } = useProducts();
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [showStickyCTA, setShowStickyCTA] = useState(false);
+  const { add, open: openCart } = useCart();
+
+  const handleAddToCart = () => {
+    if (!product) return;
+    add({
+      id: product.id,
+      slug: product.slug,
+      title: product.title,
+      price: product.price,
+      image: product.cover_image,
+    });
+    openCart();
+  };
 
   useEffect(() => {
     setShowStickyCTA(false);
@@ -87,7 +101,7 @@ const ProductDetail = () => {
                 <div className="absolute inset-0 hero-grid-overlay opacity-30" />
               </div>
               <div className="relative z-10">
-                <ProductHero product={product} onBuy={() => setCheckoutOpen(true)} />
+               <ProductHero product={product} onBuy={handleAddToCart} />
               </div>
             </div>
 
@@ -135,8 +149,8 @@ const ProductDetail = () => {
                     )}
                   </span>
                 </div>
-                <button
-                  onClick={() => setCheckoutOpen(true)}
+                 <button
+                  onClick={handleAddToCart}
                   className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-primary via-primary to-accent text-primary-foreground font-display font-bold uppercase tracking-wider text-xs shadow-[0_6px_24px_-8px_hsl(var(--primary)/0.7)]"
                 >
                   <ShoppingCart className="w-4 h-4" />

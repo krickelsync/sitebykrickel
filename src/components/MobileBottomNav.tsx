@@ -4,6 +4,8 @@ import { Home, Tag, Briefcase, Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { scrollToId } from "@/lib/scroll";
 import { useMusicPlayer } from "@/contexts/MusicContext";
+import { useCart } from "@/contexts/CartContext";
+import { ShoppingCart } from "lucide-react";
 
 const items = [
   { name: "Home", href: "/", icon: Home },
@@ -17,6 +19,7 @@ const MobileBottomNav = () => {
   const [visible, setVisible] = useState(true);
   const lastY = useRef(0);
   const { isPlaying, togglePlay } = useMusicPlayer();
+  const { count, open: openCart } = useCart();
 
   useEffect(() => {
     const onScroll = () => {
@@ -99,6 +102,21 @@ const MobileBottomNav = () => {
             <span className="text-[9px] font-mono uppercase tracking-wider">
               {isPlaying ? "Pause" : "Music"}
             </span>
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={openCart}
+            aria-label={`Open cart (${count} item${count === 1 ? "" : "s"})`}
+            className="relative flex flex-col items-center justify-center gap-0.5 px-2.5 py-1 rounded-full text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ShoppingCart className="w-4 h-4" />
+            {count > 0 && (
+              <span className="absolute top-0 right-0 min-w-[14px] h-[14px] px-0.5 rounded-full bg-primary text-primary-foreground text-[8px] font-mono font-bold inline-flex items-center justify-center">
+                {count > 9 ? "9+" : count}
+              </span>
+            )}
+            <span className="text-[9px] font-mono uppercase tracking-wider">Cart</span>
           </button>
         </li>
       </ul>

@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { MusicProvider } from "./contexts/MusicContext";
+import { CartProvider } from "./contexts/CartContext";
+import CartDrawer from "./components/cart/CartDrawer";
 import Index from "./pages/Index";
 import Showcase from "./pages/Showcase";
 import About from "./pages/About";
@@ -52,6 +54,7 @@ const AppInner = () => {
       <Suspense fallback={null}>
         <MusicPlayer />
       </Suspense>
+      {!hideChrome && <CartDrawer />}
       {!hideMobileNav && <MobileBottomNav />}
     </>
   );
@@ -61,6 +64,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
       <MusicProvider>
+       <CartProvider>
         <TooltipProvider>
           <Toaster />
           <Sonner />
@@ -68,6 +72,7 @@ const App = () => (
             <AppInner />
           </BrowserRouter>
         </TooltipProvider>
+       </CartProvider>
       </MusicProvider>
     </ThemeProvider>
   </QueryClientProvider>
