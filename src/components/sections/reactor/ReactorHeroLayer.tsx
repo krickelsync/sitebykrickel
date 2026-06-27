@@ -137,13 +137,14 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           transition={{ duration: 0.6 }}
           className="absolute left-[30px] top-1/2 -translate-y-1/2 sm:left-[36px] md:left-[38px]"
         >
-          <div className="relative flex h-12 w-12 items-center justify-center rounded-full border border-[hsl(140_60%_35%)]/45 bg-[hsl(140_45%_8%/0.76)] shadow-[0_0_24px_hsl(140_80%_45%/0.22)] backdrop-blur sm:h-14 sm:w-14 md:h-15 md:w-15">
-            <svg viewBox="0 0 109 124" className="h-6 w-6 sm:h-7 sm:w-7" aria-hidden>
-              <path
-                fill="#95BF47"
-                d="M74.7 14.8c-.1-.5-.5-.8-.9-.8-.4 0-7.7-.6-7.7-.6s-5.1-5-5.6-5.6c-.6-.6-1.7-.4-2.1-.3-.1 0-1.1.4-2.9.9-1.7-4.9-4.6-9.4-9.9-9.4h-.5c-1.5-2-3.4-2.9-5-2.9C28.3.6 22.4 16 18.6 28L8.5 31.2c-3.1 1-3.2 1.1-3.6 4l-9.6 74.6 71.4 13.4 39-8.5C105.6 114.8 74.8 15.3 74.7 14.8z"
-              />
-            </svg>
+          <div className="relative flex h-11 w-11 items-center justify-center rounded-full border border-[hsl(140_60%_35%)]/45 bg-[hsl(140_45%_8%/0.76)] shadow-[0_0_24px_hsl(140_80%_45%/0.22)] backdrop-blur sm:h-12 sm:w-12 md:h-[52px] md:w-[52px]">
+            <img
+              src="https://cdn.simpleicons.org/shopify/95BF47"
+              alt="Shopify"
+              className="h-6 w-6 sm:h-7 sm:w-7 object-contain"
+              loading="lazy"
+              decoding="async"
+            />
             {stage !== "idle" && (
               <motion.div
                 aria-hidden
