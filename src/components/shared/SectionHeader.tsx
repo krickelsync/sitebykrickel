@@ -35,7 +35,7 @@ const SectionHeader = ({
       <span className="inline-block px-4 py-2 glass-card font-mono text-[10px] md:text-xs text-primary tracking-widest mb-6">
         {eyebrow}
       </span>
-      <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight">
+      <h2 className="font-syne font-extrabold uppercase text-3xl md:text-4xl lg:text-5xl leading-[0.9] tracking-tighter">
         {title}
         {accent && (
           <>
