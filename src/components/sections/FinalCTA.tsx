@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 const FinalCTA = () => (
-  <section className="py-14 md:py-32 border-t border-border">
-    <div className="container px-4 max-w-4xl text-center">
+  <section className="py-20 md:py-28 border-t border-border">
+    <div className="container mx-auto px-6 md:px-8 max-w-4xl text-center">
       <motion.h2
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}

@@ -21,8 +21,8 @@ const features = [
 ];
 
 const FeatureGrid = () => (
-  <section id="features" className="py-14 md:py-32 border-t border-border">
-    <div className="container px-4">
+  <section id="features" className="py-20 md:py-28 border-t border-border">
+    <div className="container mx-auto px-6 md:px-8">
       <SectionHeader
         eyebrow="EVERYTHING INCLUDED"
         title="EVERYTHING YOU NEED TO"
