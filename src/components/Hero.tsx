@@ -11,6 +11,7 @@ import shopifyBadge from "@/assets/shopify-badge.png";
 
 // Lazy-load floating stats so they never block first paint
 const HeroFloatingStats = lazy(() => import("./HeroFloatingStats"));
+const ReactorHeroLayer = lazy(() => import("./sections/reactor/ReactorHeroLayer"));
 
 const Hero = () => {
   const getIsMobile = () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
@@ -18,6 +19,7 @@ const Hero = () => {
   const rotatingWords = useMemo(() => ["CLOTHING BRAND", "STREETWEAR", "DROPSHIPPER", "BARBERSHOP"], []);
   const [wordIndex, setWordIndex] = useState(0);
   const [inView, setInView] = useState(true);
+  const [reactorStage, setReactorStage] = useState<string>("idle");
   const magneticRef = useMagnetic<HTMLAnchorElement>(0.25);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -92,7 +94,20 @@ const Hero = () => {
           }}
         />
       </div>
-      <motion.div style={{ y: headlineY, opacity: contentOpacity }} className="container relative z-10 px-5 sm:px-4">
+
+      {/* Reactor visual layer (between background and headline) */}
+      <Suspense fallback={null}>
+        <ReactorHeroLayer onStageChange={setReactorStage} />
+      </Suspense>
+
+      <motion.div
+        style={{ y: headlineY, opacity: contentOpacity }}
+        className="container relative z-10 px-5 sm:px-4 transition-opacity duration-500"
+      >
+        <div
+          className="transition-opacity duration-500"
+          style={{ opacity: reactorStage === "orbit" ? 0.7 : 1 }}
+        >
         <div className="max-w-[min(92vw,74rem)] mx-auto text-center">
           {/* Eyebrow */}
           <motion.div {...fadeUpDelay(0.2)} className="mb-8">
@@ -174,6 +189,7 @@ const Hero = () => {
               <span>SHOWCASE</span>
             </Link>
           </motion.div>
+        </div>
         </div>
       </motion.div>
 
