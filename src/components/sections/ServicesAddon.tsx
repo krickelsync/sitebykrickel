@@ -23,7 +23,7 @@ const ServicesAddon = () => {
           Buy the theme and let us set it up for you. Perfect for founders who want a launch-ready store
           without touching the backend.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-3 gap-2.5 md:gap-6 max-w-5xl mx-auto">
           {services.map((s, i) => {
             const Icon = s.icon;
             return (
@@ -33,21 +33,21 @@ const ServicesAddon = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="glass-card p-4 md:p-8 flex flex-col"
+                className="glass-card p-3 md:p-8 flex flex-col"
               >
-                <Icon className="w-5 h-5 md:w-6 md:h-6 text-primary mb-3 md:mb-4" aria-hidden />
-                <h3 className="font-syne font-bold uppercase text-sm md:text-xl tracking-tight mb-2">
+                <Icon className="w-4 h-4 md:w-6 md:h-6 text-primary mb-2 md:mb-4" aria-hidden />
+                <h3 className="font-syne font-bold uppercase text-[11px] md:text-xl leading-tight tracking-tight mb-1.5 md:mb-2">
                   {s.name}
                 </h3>
-                <p className="font-mono text-[11px] md:text-sm text-muted-foreground leading-relaxed flex-1">
+                <p className="font-mono text-[10px] md:text-sm text-muted-foreground leading-relaxed flex-1">
                   {s.desc}
                 </p>
                 <a
                   href="/about#contact"
                   onClick={onClick}
-                  className="mt-4 md:mt-6 inline-flex items-center gap-2 font-mono text-[10px] md:text-xs uppercase tracking-widest text-primary hover:gap-3 transition-all"
+                  className="mt-3 md:mt-6 inline-flex items-center gap-1.5 font-mono text-[9px] md:text-xs uppercase tracking-widest text-primary hover:gap-3 transition-all"
                 >
-                  Get in touch <ArrowRight className="w-3.5 h-3.5" />
+                  Get in touch <ArrowRight className="w-3 h-3 md:w-3.5 md:h-3.5" />
                 </a>
               </motion.div>
             );
