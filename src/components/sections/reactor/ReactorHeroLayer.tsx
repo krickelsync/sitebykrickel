@@ -60,17 +60,12 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
   };
 
   return (
-    <div className="relative z-20 mx-auto mb-3 flex w-full justify-center md:mb-4">
+    <div className="relative z-20 mx-auto -mt-2 mb-1 flex w-full justify-center md:-mt-4 md:mb-2">
       <motion.div
         animate={controls}
-        className="relative h-[92px] w-[280px] select-none sm:h-[106px] sm:w-[340px] md:h-[112px] md:w-[380px]"
+        className="relative h-[78px] w-[240px] select-none sm:h-[88px] sm:w-[290px] md:h-[96px] md:w-[320px]"
         style={{ perspective: 900 }}
       >
-        <div
-          aria-hidden
-          className="absolute inset-0 rounded-[999px] border border-white/10 bg-background/30 shadow-[0_18px_70px_rgba(0,0,0,0.35)] backdrop-blur-md"
-        />
-
         <svg
           aria-hidden
           viewBox="0 0 380 112"
@@ -140,15 +135,16 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          className="absolute left-[30px] top-1/2 -translate-y-1/2 sm:left-[36px] md:left-[38px]"
+          className="absolute left-[23%] top-1/2 -translate-x-1/2 -translate-y-1/2"
         >
-          <div className="relative flex h-12 w-12 items-center justify-center rounded-full border border-[hsl(140_60%_35%)]/45 bg-[hsl(140_45%_8%/0.76)] shadow-[0_0_24px_hsl(140_80%_45%/0.22)] backdrop-blur sm:h-14 sm:w-14 md:h-15 md:w-15">
-            <svg viewBox="0 0 109 124" className="h-6 w-6 sm:h-7 sm:w-7" aria-hidden>
-              <path
-                fill="#95BF47"
-                d="M74.7 14.8c-.1-.5-.5-.8-.9-.8-.4 0-7.7-.6-7.7-.6s-5.1-5-5.6-5.6c-.6-.6-1.7-.4-2.1-.3-.1 0-1.1.4-2.9.9-1.7-4.9-4.6-9.4-9.9-9.4h-.5c-1.5-2-3.4-2.9-5-2.9C28.3.6 22.4 16 18.6 28L8.5 31.2c-3.1 1-3.2 1.1-3.6 4l-9.6 74.6 71.4 13.4 39-8.5C105.6 114.8 74.8 15.3 74.7 14.8z"
-              />
-            </svg>
+          <div className="relative flex h-11 w-11 items-center justify-center rounded-full border border-[hsl(140_60%_35%)]/45 bg-[hsl(140_45%_8%/0.76)] shadow-[0_0_24px_hsl(140_80%_45%/0.22)] backdrop-blur sm:h-12 sm:w-12 md:h-[52px] md:w-[52px]">
+            <img
+              src="https://cdn.simpleicons.org/shopify/95BF47"
+              alt="Shopify"
+              className="h-6 w-6 sm:h-7 sm:w-7 object-contain"
+              loading="lazy"
+              decoding="async"
+            />
             {stage !== "idle" && (
               <motion.div
                 aria-hidden
@@ -162,7 +158,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
         </motion.div>
 
         <motion.div
-          className="absolute left-[278px] top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 sm:left-[278px] md:left-[278px]"
+          className="absolute left-[73%] top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
         >
           <button
             type="button"
@@ -200,7 +196,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
                   : { scale: 1, y: 0 }
               }
               transition={{ duration: 0.45 }}
-              className="relative h-[70px] w-[70px] sm:h-[82px] sm:w-[82px] md:h-[88px] md:w-[88px]"
+              className="relative h-[58px] w-[58px] sm:h-[68px] sm:w-[68px] md:h-[76px] md:w-[76px]"
             >
               <img
                 src={chromeBag.url}

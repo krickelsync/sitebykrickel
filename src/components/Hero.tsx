@@ -127,12 +127,12 @@ const Hero = () => {
             id="hero-heading"
             className="font-syne text-[clamp(1.55rem,7.2vw,4.9rem)] font-extrabold uppercase leading-[0.92] tracking-normal mb-7 text-center px-2 sm:px-0"
           >
-            <span className="flex items-center justify-center whitespace-nowrap hover-lift text-center">
-              THEMES<span className="hidden sm:inline"> FOR</span>
-              <span className="sm:hidden ml-2">FOR</span>
+            <span className="flex items-center justify-center gap-3 whitespace-nowrap hover-lift text-center">
+              <span>THEMES</span>
+              <span>FOR</span>
             </span>
             <span
-              className="flex items-center justify-center text-center glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense text-[clamp(1.2rem,6vw,4.5rem)] leading-[1.05] break-words min-h-[1.15em] overflow-visible px-3 sm:px-0"
+              className="relative flex items-center justify-center text-center glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense text-[clamp(1.2rem,6vw,4.5rem)] leading-[1.05] whitespace-nowrap h-[1.2em] overflow-hidden px-3 sm:px-0"
               style={{ color: "hsl(45 100% 58%)" }}
             >
               <AnimatePresence mode="wait">
@@ -142,7 +142,7 @@ const Hero = () => {
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="inline-block"
+                  className="absolute inset-0 flex items-center justify-center"
                 >
                   {rotatingWords[wordIndex]}
                 </motion.span>
