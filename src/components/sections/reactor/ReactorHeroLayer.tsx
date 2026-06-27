@@ -86,7 +86,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             </filter>
           </defs>
           <motion.path
-            d="M 86 40 C 122 22, 150 58, 174 40"
+            d="M 88 40 C 124 22, 150 58, 174 40"
             stroke="hsl(var(--foreground) / 0.18)"
             strokeWidth="7"
             strokeLinecap="round"
@@ -96,7 +96,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             transition={{ duration: reduce || lowPower ? 0.25 : 0.65, ease: "easeInOut" }}
           />
           <motion.path
-            d="M 86 40 C 122 22, 150 58, 174 40"
+            d="M 88 40 C 124 22, 150 58, 174 40"
             stroke="url(#rhlCableStroke)"
             strokeWidth="3"
             strokeLinecap="round"
@@ -108,7 +108,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           />
           {stage !== "idle" && (
             <>
-              <motion.circle cx="86" cy="40" r="3.5" fill="hsl(140 80% 55%)" filter="url(#rhlCableGlow)"
+              <motion.circle cx="88" cy="40" r="3" fill="hsl(140 80% 55%)" filter="url(#rhlCableGlow)"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} />
               <motion.circle cx="174" cy="40" r="4.5" fill="hsl(45 100% 65%)" filter="url(#rhlCableGlow)"
                 initial={{ opacity: 0, scale: 0 }}
@@ -126,7 +126,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
               animate={{ opacity: [0, 1, 1, 0] }}
               transition={{ duration: 1.2, ease: "easeInOut" }}
               style={{
-                offsetPath: "path('M 86 40 C 122 22, 150 58, 174 40')",
+                offsetPath: "path('M 88 40 C 124 22, 150 58, 174 40')",
                 animation: "reactor-pulse-travel 1.2s ease-in-out",
               } as React.CSSProperties}
             />
