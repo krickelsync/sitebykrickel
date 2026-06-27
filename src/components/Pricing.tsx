@@ -2,7 +2,7 @@ import VelocityText from "./VelocityText";
 import SectionHeader from "./shared/SectionHeader";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Check, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { fadeIn } from "@/lib/motion";
 import { useContactScroll } from "@/hooks/useContactScroll";
 import shopifyBadge from "@/assets/shopify-badge.png.asset.json";
@@ -82,68 +82,66 @@ const Pricing = () => {
           accentTone="gold"
         />
 
-        <div className="max-w-lg mx-auto">
+        <div className="max-w-xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative overflow-hidden rounded-2xl border border-border/60 p-6 md:p-8 flex flex-col hover:border-primary/40 transition-colors duration-500 shadow-2xl"
+            className="relative overflow-hidden rounded-xl border border-border bg-card p-6 md:p-10 flex flex-col transition-colors duration-300 hover:border-foreground/30"
           >
-            {/* Background — same prism style as STUDIO-GRADE product hero */}
-            <div className="absolute inset-0 z-0 rounded-2xl overflow-hidden pointer-events-none bg-background/40">
-              <div className="absolute -top-24 -left-24 w-[28rem] h-[28rem] bg-primary/40 rounded-full blur-3xl animate-pulse-glow" aria-hidden />
-              <div className="absolute -bottom-24 -right-24 w-[28rem] h-[28rem] bg-accent/40 rounded-full blur-3xl animate-pulse-glow" aria-hidden />
-              <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(hsl(var(--foreground))_1px,transparent_1px),linear-gradient(90deg,hsl(var(--foreground))_1px,transparent_1px)] bg-[size:32px_32px]" />
-            </div>
+            {/* Watermark logo — bottom-right corner, very subtle */}
+            <img
+              src={shopifyBadge.url}
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none select-none absolute bottom-4 right-4 h-20 md:h-24 w-auto opacity-[0.06]"
+            />
 
-            <span className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary text-primary-foreground font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] shadow-lg">
-              <Sparkles className="w-3 h-3" /> Most Popular
-            </span>
-
-            <div className="relative z-10 text-center pb-5 mb-5 border-b border-border/50">
-              {/* Giant custom Shopify logo to the right of price */}
-              <img
-                src={shopifyBadge.url}
-                alt=""
-                aria-hidden="true"
-                className="pointer-events-none select-none absolute -right-4 md:-right-8 top-1/2 -translate-y-1/2 h-44 md:h-64 w-auto opacity-60 drop-shadow-[0_10px_30px_hsl(var(--primary)/0.6)]"
-              />
-              <span className="font-mono text-[10px] md:text-xs text-primary uppercase tracking-[0.2em]">
-                SYNC Premium Theme
-              </span>
-              <div className="mt-2 flex items-baseline justify-center gap-1">
-                <motion.span
+            {/* Header row — chip + price, flat HeroUI style */}
+            <div className="relative flex items-start justify-between gap-4 pb-6 mb-6 border-b border-border">
+              <div>
+                <span className="inline-block px-2 py-0.5 rounded-md border border-border font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Premium
+                </span>
+                <h3 className="mt-3 font-syne font-bold text-xl text-foreground">
+                  SYNC Theme
+                </h3>
+                <p className="font-mono text-[11px] text-muted-foreground mt-1">
+                  Lifetime license · VIP support
+                </p>
+              </div>
+              <div className="text-right shrink-0">
+                <motion.div
                   key={price}
-                  initial={{ opacity: 0, y: -4 }}
+                  initial={{ opacity: 0, y: -2 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="font-syne font-bold text-5xl md:text-6xl bg-gradient-to-b from-foreground to-primary bg-clip-text text-transparent"
+                  transition={{ duration: 0.2 }}
+                  className="font-syne font-bold text-4xl md:text-5xl text-foreground leading-none"
                 >
                   ${price}
-                </motion.span>
-                <span className="font-mono text-xs text-muted-foreground">
-                  / one-time
+                </motion.div>
+                <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest mt-1 inline-block">
+                  one-time
                 </span>
               </div>
-              <p className="font-mono text-[10px] md:text-xs text-muted-foreground mt-2 uppercase tracking-widest">
-                Lifetime License • VIP Support
-              </p>
             </div>
 
-            {/* Compact watermark toggle */}
-            <div className="relative space-y-2 mb-6">
+            {/* Inline add-on toggles — Stripe-style row */}
+            <div className="relative space-y-px mb-6 border border-border rounded-lg overflow-hidden">
               {[
                 {
                   label: "Remove Watermark",
-                  hint: "+$50 • Removes \"Powered by SitebyKrickel\" on footer",
+                  hint: "Hide \"Powered by SitebyKrickel\" in footer",
+                  price: "+$50",
                   value: removeWatermark,
                   set: setRemoveWatermark,
                   aria: "Toggle remove footer watermark",
                 },
                 {
                   label: "Install & Setup",
-                  hint: "+$50 done-for-you",
+                  hint: "Done-for-you Shopify installation",
+                  price: "+$50",
                   value: installSetup,
                   set: setInstallSetup,
                   aria: "Toggle install and setup add-on",
@@ -156,28 +154,31 @@ const Pricing = () => {
                   aria-checked={t.value}
                   aria-label={t.aria}
                   onClick={() => t.set((v) => !v)}
-                  className={`w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg border text-left transition-colors ${
-                    t.value
-                      ? "border-primary/50 bg-primary/5"
-                      : "border-border/60 bg-background/40 hover:border-border"
+                  className={`w-full flex items-center justify-between gap-3 px-4 py-3 text-left transition-colors border-b border-border last:border-b-0 ${
+                    t.value ? "bg-foreground/[0.03]" : "hover:bg-foreground/[0.02]"
                   }`}
                 >
-                  <div className="flex flex-col">
-                    <span className="font-mono text-[11px] uppercase tracking-widest text-foreground">
-                      {t.label}
-                    </span>
-                    <span className="font-mono text-[9px] text-muted-foreground">
+                  <div className="flex flex-col min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="font-sans font-medium text-sm text-foreground">
+                        {t.label}
+                      </span>
+                      <span className="font-mono text-[10px] text-muted-foreground">
+                        {t.price}
+                      </span>
+                    </div>
+                    <span className="font-mono text-[11px] text-muted-foreground mt-0.5 truncate">
                       {t.hint}
                     </span>
                   </div>
                   <span
                     aria-hidden="true"
                     className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors ${
-                      t.value ? "bg-primary" : "bg-muted"
+                      t.value ? "bg-foreground" : "bg-muted"
                     }`}
                   >
                     <span
-                      className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-background shadow transition-transform ${
+                      className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-background transition-transform ${
                         t.value ? "translate-x-4" : "translate-x-0"
                       }`}
                     />
@@ -186,25 +187,21 @@ const Pricing = () => {
               ))}
             </div>
 
-            <div className="relative flex-1 space-y-5 mb-6">
+            {/* Feature groups — flat dash-prefixed list, 2-col on desktop */}
+            <div className="relative flex-1 space-y-6 mb-8">
               {FEATURE_GROUPS.map((group) => (
                 <div key={group.category}>
-                  <h4 className="font-mono text-[10px] md:text-[11px] text-primary uppercase tracking-[0.2em] mb-2">
-                    {group.category}
+                  <h4 className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.25em] mb-3">
+                    — {group.category}
                   </h4>
-                  <ul className="space-y-1.5">
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
                     {group.items.map((item) => (
-                      <li key={item.label} className="flex items-start gap-2.5">
-                        <Check className="mt-0.5 w-3.5 h-3.5 shrink-0 text-primary" strokeWidth={3} />
-                        <span className="font-mono text-xs md:text-sm text-muted-foreground">
+                      <li key={item.label} className="flex items-baseline gap-2 text-[13px] leading-snug">
+                        <span className="text-muted-foreground/50 font-mono">·</span>
+                        <span className="font-sans text-muted-foreground">
                           {item.label}
                           {item.value && (
-                            <>
-                              :{" "}
-                              <span className="text-foreground font-semibold">
-                                {item.value}
-                              </span>
-                            </>
+                            <span className="text-foreground"> — {item.value}</span>
                           )}
                         </span>
                       </li>
@@ -217,13 +214,10 @@ const Pricing = () => {
             <a
               href="/about#contact"
               onClick={handleContactClick}
-              className="relative group inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-primary text-primary-foreground font-mono text-xs uppercase tracking-widest overflow-hidden hover:glow-box transition-all"
+              className="relative group inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-foreground text-background font-sans font-medium text-sm overflow-hidden transition-colors hover:bg-foreground/90"
             >
-              <span className="relative z-10 inline-flex items-center gap-2">
-                Get SYNC — ${price}
-                <ArrowRight className="w-4 h-4" />
-              </span>
-              <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              Get SYNC — ${price}
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
             </a>
           </motion.div>
         </div>
@@ -233,9 +227,9 @@ const Pricing = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="font-mono text-xs text-muted-foreground text-center mt-8"
+          className="font-mono text-[11px] text-muted-foreground text-center mt-6"
         >
-          Secure payment • Setup starts within 24 hours
+          Secure payment · Setup starts within 24 hours
         </motion.p>
       </div>
     </section>
