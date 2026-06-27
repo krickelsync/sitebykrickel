@@ -15,16 +15,44 @@ interface Props {
 const HeroFloatingStats = ({ mx, my }: Props) => {
   const reduce = useReducedMotion();
 
-  // ---- Animated counter for Total Sales ----
+  // ---- Looping animated counters ----
   const [sales, setSales] = useState(0);
   useEffect(() => {
     if (reduce) { setSales(28420); return; }
-    const controls = animate(0, 28420, {
-      duration: 2.2,
-      ease: "easeOut",
-      onUpdate: (v) => setSales(Math.round(v)),
-    });
-    return () => controls.stop();
+    let cancelled = false;
+    const loop = () => {
+      // Pick a fresh target each cycle so the number keeps "living"
+      const target = 27800 + Math.floor(Math.random() * 1800);
+      const controls = animate(sales || 26000, target, {
+        duration: 2.4,
+        ease: "easeInOut",
+        onUpdate: (v) => !cancelled && setSales(Math.round(v)),
+        onComplete: () => !cancelled && setTimeout(loop, 900),
+      });
+      return controls;
+    };
+    const c = loop();
+    return () => { cancelled = true; c?.stop(); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reduce]);
+
+  const [conv, setConv] = useState(3.68);
+  useEffect(() => {
+    if (reduce) return;
+    let cancelled = false;
+    const loop = () => {
+      const target = 3.4 + Math.random() * 0.6;
+      const controls = animate(conv, target, {
+        duration: 2.2,
+        ease: "easeInOut",
+        onUpdate: (v) => !cancelled && setConv(v),
+        onComplete: () => !cancelled && setTimeout(loop, 700),
+      });
+      return controls;
+    };
+    const c = loop();
+    return () => { cancelled = true; c?.stop(); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reduce]);
 
   // ---- Mouse tilt deltas, added on top of baseline tilt ----
@@ -119,7 +147,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                 <TrendingUp size={10} /> 24%
               </span>
             </div>
-            {/* animated looping sparkline */}
+            {/* Continuously scrolling waveform (seamless loop) */}
             <svg viewBox="0 0 100 36" className="relative mt-2 w-full h-12" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="spark1" x1="0" x2="0" y1="0" y2="1">
@@ -130,41 +158,46 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                   <stop offset="0%" stopColor={accent} stopOpacity="0.4" />
                   <stop offset="100%" stopColor={accent} stopOpacity="1" />
                 </linearGradient>
+                <clipPath id="spark1Clip">
+                  <rect x="0" y="0" width="100" height="36" />
+                </clipPath>
               </defs>
-              {/* baseline grid */}
               {[8, 18, 28].map((y) => (
                 <line key={y} x1="0" x2="100" y1={y} y2={y} stroke="hsl(0 0% 100% / 0.06)" strokeWidth="0.4" />
               ))}
-              <motion.path
-                d="M0,28 L12,22 L24,26 L36,14 L48,18 L60,10 L72,14 L84,6 L100,2 L100,36 L0,36 Z"
-                fill="url(#spark1)"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.2, duration: 0.8 }}
-              />
-              <motion.path
-                d="M0,28 L12,22 L24,26 L36,14 L48,18 L60,10 L72,14 L84,6 L100,2"
-                fill="none"
-                stroke="url(#spark1Line)"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0 }}
-                animate={reduce ? { pathLength: 1 } : { pathLength: [0, 1, 1, 0] }}
-                transition={reduce ? { duration: 0 } : { duration: 4.5, repeat: Infinity, ease: "easeInOut", times: [0, 0.45, 0.85, 1] }}
-              />
-              {/* moving dot at end */}
+              {/* Two tiled copies that scroll seamlessly */}
+              <motion.g
+                clipPath="url(#spark1Clip)"
+                animate={reduce ? {} : { x: [0, -100] }}
+                transition={reduce ? {} : { duration: 6, repeat: Infinity, ease: "linear" }}
+              >
+                {[0, 100].map((dx) => (
+                  <g key={dx} transform={`translate(${dx} 0)`}>
+                    <path
+                      d="M0,28 L12,22 L24,26 L36,14 L48,18 L60,10 L72,14 L84,6 L100,2 L100,36 L0,36 Z"
+                      fill="url(#spark1)"
+                    />
+                    <path
+                      d="M0,28 L12,22 L24,26 L36,14 L48,18 L60,10 L72,14 L84,6 L100,2"
+                      fill="none"
+                      stroke="url(#spark1Line)"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </g>
+                ))}
+              </motion.g>
+              {/* Pulsing dot at the leading edge */}
               {!reduce && (
                 <motion.circle
+                  cx="100"
+                  cy="2"
                   r="1.8"
                   fill={accent}
-                  initial={{ cx: 0, cy: 28 }}
-                  animate={{
-                    cx: [0, 12, 24, 36, 48, 60, 72, 84, 100],
-                    cy: [28, 22, 26, 14, 18, 10, 14, 6, 2],
-                  }}
-                  transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-                  style={{ filter: `drop-shadow(0 0 4px ${accent})` }}
+                  animate={{ r: [1.8, 2.6, 1.8], opacity: [1, 0.6, 1] }}
+                  transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+                  style={{ filter: `drop-shadow(0 0 5px ${accent})` }}
                 />
               )}
             </svg>
@@ -195,16 +228,16 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
             Conversion Rate
           </div>
           <div className="flex items-baseline gap-2 mb-2">
-            <span className="font-syne text-2xl font-bold text-white">3.68%</span>
+            <span className="font-syne text-2xl font-bold text-white tabular-nums">{conv.toFixed(2)}%</span>
             <span className="font-mono text-[10px] flex items-center gap-0.5" style={{ color: accent }}>
               <TrendingUp size={10} /> 18%
             </span>
           </div>
           <div className="h-1.5 w-32 rounded-full bg-white/10 overflow-hidden">
             <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: "72%" }}
-              transition={{ delay: 1.4, duration: 1.2, ease: "easeOut" }}
+              initial={{ width: "30%" }}
+              animate={reduce ? { width: "72%" } : { width: ["30%", "85%", "55%", "78%", "30%"] }}
+              transition={reduce ? { duration: 0 } : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
               className="h-full rounded-full"
               style={{ background: `linear-gradient(90deg, ${accent}, hsl(45 100% 60%))` }}
             />
@@ -258,20 +291,22 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           style={{ perspective: 900 }}
         >
           <motion.div
-            className={`${cardBase} text-center`}
+            className={`${cardBase} flex items-center gap-3`}
             style={{ ...cardStyle, rotateX: brRX, rotateY: brRY, transformStyle: "preserve-3d" }}
             whileHover={reduce ? {} : { scale: 1.04 }}
           >
           <motion.div
             animate={reduce ? {} : { scale: [1, 1.15, 1], filter: ["drop-shadow(0 0 0px " + accent + ")", "drop-shadow(0 0 12px " + accent + ")", "drop-shadow(0 0 0px " + accent + ")"] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="mx-auto mb-1.5"
-            style={{ color: accent }}
+            className="grid place-items-center w-9 h-9 rounded-lg border shrink-0"
+            style={{ color: accent, borderColor: accent }}
           >
-            <Zap size={22} fill={accent} />
+            <Zap size={16} fill={accent} />
           </motion.div>
-          <div className="font-syne text-[11px] font-bold uppercase text-white leading-tight">Fast Loading</div>
-          <div className="font-syne text-[11px] font-bold uppercase text-white leading-tight">Speed</div>
+          <div>
+            <div className="font-syne text-sm font-bold uppercase text-white leading-none">Fast Loading</div>
+            <div className="font-syne text-sm font-bold uppercase text-white leading-tight">Speed</div>
+          </div>
           </motion.div>
         </motion.div>
       </motion.div>
