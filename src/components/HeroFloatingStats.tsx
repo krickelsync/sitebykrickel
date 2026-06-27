@@ -40,8 +40,15 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   const sales = Math.round(SALES_FROM + (SALES_TO - SALES_FROM) * salesP);
   const salesTrend = Math.round(SALES_TREND_TO * salesP);
   const salesChartWidth = reduce ? 120 : Math.max(0, Math.min(120, 120 * salesP));
-  const salesDotX = 8 + 104 * salesP;
-  const salesDotY = 34 - 26 * salesP;
+  // Wavy upward path samples (x: 8→112, y values for matching path below)
+  const waveX = [8, 18, 28, 38, 48, 58, 68, 78, 88, 98, 112];
+  const waveY = [34, 30, 33, 27, 30, 23, 26, 18, 22, 13, 8];
+  const _segs = waveX.length - 1;
+  const _f = salesP * _segs;
+  const _i = Math.min(_segs - 1, Math.floor(_f));
+  const _t = _f - _i;
+  const salesDotX = waveX[_i] + (waveX[_i + 1] - waveX[_i]) * _t;
+  const salesDotY = waveY[_i] + (waveY[_i + 1] - waveY[_i]) * _t;
 
   // Conversion: 0% → 18.4% with trend 0% → 92%; bar width tracks trend.
   const CONV_TO = 18.4;
