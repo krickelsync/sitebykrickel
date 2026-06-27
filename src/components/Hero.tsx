@@ -46,7 +46,12 @@ const Hero = () => {
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  const headlineY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -120]);
+  const mobileHeroLift = isMobile ? -54 : 0;
+  const headlineY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    reduce ? [mobileHeroLift, mobileHeroLift] : [mobileHeroLift, isMobile ? -132 : -120]
+  );
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.6, 0]);
   const bgY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 80]);
 
@@ -62,7 +67,7 @@ const Hero = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return <section ref={sectionRef} aria-labelledby="hero-heading" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-4 pb-20 md:pt-14 md:pb-24">
+  return <section ref={sectionRef} aria-labelledby="hero-heading" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-0 pb-16 md:pt-14 md:pb-24">
       {/* Liquid Chrome Background - z-index 0 (pure CSS, zero GPU) */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 pointer-events-none bg-background">
         <div className="hero-prism-fallback h-full w-full overflow-hidden" />
@@ -101,7 +106,7 @@ const Hero = () => {
           className="transition-opacity duration-500"
           style={{ opacity: reactorStage === "orbit" ? 0.7 : 1 }}
         >
-        <div className="max-w-[min(92vw,74rem)] mx-auto text-center">
+        <div className="max-w-[min(92vw,74rem)] mx-auto -mt-8 text-center sm:-mt-10 md:mt-0">
           {/* Eyebrow */}
           <motion.div {...fadeUpDelay(0.2)} className="mb-6">
             <Suspense fallback={null}>
