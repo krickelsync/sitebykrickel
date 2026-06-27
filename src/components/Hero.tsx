@@ -45,11 +45,11 @@ const Hero = () => {
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  const mobileHeroLift = isMobile ? -104 : 0;
+  const mobileHeroLift = isMobile ? -148 : 0;
   const headlineY = useTransform(
     scrollYProgress,
     [0, 1],
-    reduce ? [mobileHeroLift, mobileHeroLift] : [mobileHeroLift, isMobile ? -172 : -120]
+    reduce ? [mobileHeroLift, mobileHeroLift] : [mobileHeroLift, isMobile ? -212 : -120]
   );
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.6, 0]);
   const bgY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 80]);
@@ -102,7 +102,7 @@ const Hero = () => {
         className="container relative z-10 px-5 sm:px-4 transition-opacity duration-500"
       >
         <div className="transition-opacity duration-500">
-        <div className="max-w-[min(92vw,74rem)] mx-auto -mt-12 text-center sm:-mt-10 md:mt-0">
+        <div className="max-w-[min(92vw,74rem)] mx-auto -mt-14 text-center sm:-mt-10 md:mt-0">
           {/* Eyebrow */}
           <motion.div {...fadeUpDelay(0.2)} className="mb-6">
             <Suspense fallback={null}>
