@@ -10,6 +10,7 @@ import CartButton from "./cart/CartButton";
 import { scrollToId } from "@/lib/scroll";
 import { PRIMARY_NAV, type NavLinkItem } from "@/lib/nav";
 import { useHashScroll } from "@/hooks/useHashScroll";
+import { textSize } from "@/components/ui/typography";
 
 interface NavbarProps {
   customLinks?: NavLinkItem[];
@@ -102,7 +103,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
             {onCtaClick ? (
               <button
                 onClick={onCtaClick}
-                className="cta-shiny rounded-full bg-foreground text-background px-5 py-2 font-mono text-sm whitespace-nowrap hover:opacity-90 transition-all duration-300 cursor-pointer"
+                className={`cta-shiny rounded-full bg-foreground text-background px-5 py-2 font-mono whitespace-nowrap hover:opacity-90 transition-all duration-300 cursor-pointer ${textSize.ui}`}
               >
                 <span className="relative z-10">{finalCtaText}</span>
               </button>
@@ -110,7 +111,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
               <a
                 href={finalCtaHref}
                 onClick={(e) => handleNavClick(e, finalCtaHref)}
-                className="cta-shiny rounded-full bg-foreground text-background px-5 py-2 font-mono text-sm whitespace-nowrap hover:opacity-90 transition-all duration-300 cursor-pointer"
+                className={`cta-shiny rounded-full bg-foreground text-background px-5 py-2 font-mono whitespace-nowrap hover:opacity-90 transition-all duration-300 cursor-pointer ${textSize.ui}`}
               >
                 <span className="relative z-10">{finalCtaText}</span>
               </a>
