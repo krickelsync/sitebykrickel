@@ -58,11 +58,13 @@ const ReviewsWall = ({ columns }: Props) => {
       ? "grid-cols-1"
       : columns.length === 2
       ? "grid-cols-2"
-      : "grid-cols-3";
+      : "grid-cols-2 md:grid-cols-3";
   return (
     <div className={`grid ${gridCls} gap-2 md:gap-4 max-w-6xl mx-auto`}>
       {columns.map((col, i) => (
-        <Column key={i} reviews={col} direction={i % 2 === 0 ? "up" : "down"} />
+        <div key={i} className={i === 2 ? "hidden md:block" : ""}>
+          <Column reviews={col} direction={i % 2 === 0 ? "up" : "down"} />
+        </div>
       ))}
     </div>
   );
