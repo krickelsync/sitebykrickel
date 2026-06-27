@@ -188,12 +188,11 @@ const ReactorHero = () => {
                 r="6"
                 fill="hsl(45 100% 65%)"
                 filter="url(#cableGlow)"
-                initial={{ offsetDistance: "0%" as any, opacity: 0 }}
+                initial={{ opacity: 0 }}
                 animate={{ opacity: [0, 1, 1, 0] }}
                 transition={{ duration: 1.4, ease: "easeInOut" }}
                 style={{
                   offsetPath: "path('M 200 300 C 350 200, 500 400, 650 300')",
-                  // @ts-expect-error animated offset
                   animation: "reactor-pulse-travel 1.4s ease-in-out",
                 } as React.CSSProperties}
               />
