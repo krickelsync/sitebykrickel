@@ -83,7 +83,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   const brY = useTransform(my, (v) => (reduce ? 0 : v * -10));
 
   const cardBase =
-    "pointer-events-none rounded-2xl border border-white/10 px-4 py-3 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] will-change-transform";
+    "pointer-events-none rounded-2xl border border-white/10 px-3 py-2.5 sm:px-4 sm:py-3 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] will-change-transform";
   const cardStyle = {
     background:
       "linear-gradient(135deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.02))",
@@ -138,7 +138,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
               transformStyle: "preserve-3d",
             }}
             whileHover={reduce ? {} : { scale: 1.04 }}
-            className={`${cardBase} pointer-events-auto relative overflow-hidden w-[200px]`}
+            className={`${cardBase} pointer-events-auto relative overflow-hidden w-[170px] sm:w-[190px] lg:w-[200px]`}
           >
             {/* subtle sheen */}
             <div
@@ -161,7 +161,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
               </span>
             </div>
             {/* Rising sales chart — rebuilt as a contained left-to-right reveal (no scrolling overflow). */}
-            <svg viewBox="0 0 120 44" className="relative mt-3 w-full h-12 block" preserveAspectRatio="none">
+            <svg viewBox="0 0 120 44" className="relative mt-2 sm:mt-3 w-full h-10 sm:h-12 block overflow-visible" preserveAspectRatio="xMidYMid meet">
               <defs>
                 <linearGradient id="salesArea" x1="0" x2="0" y1="0" y2="1">
                   <stop offset="0%" stopColor={accent} stopOpacity="0.55" />
