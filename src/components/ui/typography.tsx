@@ -27,23 +27,28 @@ const baseDisplay = "font-display font-extrabold uppercase break-words";
 const baseHeading = "font-display font-bold uppercase";
 
 export const typography = {
+  // Fluid type — clamp(min, preferred, max). Mobile stays readable while
+  // desktop scales up smoothly without breakpoint jumps.
   display:
-    "text-[1.875rem] sm:text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-[-0.035em]",
+    "text-[clamp(2rem,5.5vw,4.75rem)] leading-[0.95] tracking-[-0.035em]",
   h1:
-    "text-[1.375rem] sm:text-2xl md:text-4xl lg:text-[2.75rem] leading-[1] tracking-[-0.03em]",
-  h2: "text-lg sm:text-xl md:text-3xl lg:text-4xl leading-[1.1] tracking-[-0.02em]",
-  h3: "text-base md:text-2xl leading-tight tracking-tight",
+    "text-[clamp(1.5rem,3.6vw,2.75rem)] leading-[1] tracking-[-0.03em]",
+  h2:
+    "text-[clamp(1.25rem,2.8vw,2.25rem)] leading-[1.1] tracking-[-0.02em]",
+  h3:
+    "text-[clamp(1.0625rem,1.9vw,1.5rem)] leading-tight tracking-tight",
   tagline:
-    "font-sans italic font-medium text-[12px] md:text-base leading-snug text-primary/90",
+    "font-sans italic font-medium text-[clamp(0.8125rem,1.1vw,1rem)] leading-snug text-primary/90",
   body:
-    "font-sans text-[13px] md:text-[15px] leading-[1.65] text-muted-foreground",
+    "font-sans text-[clamp(0.875rem,1.05vw,0.9375rem)] leading-[1.65] text-muted-foreground",
   bodyLg:
-    "font-sans text-[14px] md:text-base leading-[1.65] text-muted-foreground",
+    "font-sans text-[clamp(0.9375rem,1.15vw,1rem)] leading-[1.65] text-muted-foreground",
   eyebrow:
-    "font-sans font-semibold uppercase text-[9px] md:text-[11px] tracking-[0.2em] text-muted-foreground",
+    "font-sans font-semibold uppercase text-[clamp(0.625rem,0.8vw,0.6875rem)] tracking-[0.2em] text-muted-foreground",
   meta:
-    "font-sans text-[10px] md:text-xs tracking-wide text-muted-foreground",
-  price: "font-sans font-bold text-primary text-base md:text-xl leading-none",
+    "font-sans text-[clamp(0.6875rem,0.85vw,0.75rem)] tracking-wide text-muted-foreground",
+  price:
+    "font-sans font-bold text-primary text-[clamp(1rem,1.6vw,1.25rem)] leading-none",
 } as const;
 
 /**
@@ -53,13 +58,13 @@ export const typography = {
  */
 export const textSize = {
   /** Micro UI labels: pill badges, trust row, eyebrow chips. */
-  micro: "text-[10px] md:text-[11px]",
+  micro: "text-[clamp(0.625rem,0.78vw,0.6875rem)]",
   /** Small UI text: rating count, line-through price, captions. */
-  small: "text-[11px] md:text-[12px]",
+  small: "text-[clamp(0.6875rem,0.9vw,0.75rem)]",
   /** Default UI text: button labels, secondary copy. */
-  ui: "text-[12px] md:text-sm",
+  ui: "text-[clamp(0.8125rem,1vw,0.875rem)]",
   /** Prominent inline numerics / lead labels. */
-  lead: "text-[13px] md:text-base",
+  lead: "text-[clamp(0.875rem,1.1vw,1rem)]",
 } as const;
 
 export function Display<T extends ElementType = "h1">({ as, className, children, ...rest }: Props<T>) {

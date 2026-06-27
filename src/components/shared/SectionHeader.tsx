@@ -32,10 +32,10 @@ const SectionHeader = ({
       viewport={{ once: true }}
       className={cn("text-center mb-10 md:mb-16", className)}
     >
-      <span className="inline-block px-3 py-1.5 md:px-4 md:py-2 glass-card font-mono text-[9px] md:text-xs text-primary tracking-widest mb-4 md:mb-6">
+      <span className="inline-block px-3 py-1.5 md:px-4 md:py-2 glass-card font-mono text-[clamp(0.625rem,0.85vw,0.75rem)] text-primary tracking-widest mb-4 md:mb-6">
         {eyebrow}
       </span>
-      <h2 className="font-syne font-extrabold uppercase text-xl sm:text-2xl md:text-4xl lg:text-5xl leading-[0.95] tracking-tight md:tracking-tighter">
+      <h2 className="font-syne font-extrabold uppercase text-[clamp(1.5rem,4vw,3rem)] leading-[0.95] tracking-tight md:tracking-tighter">
         {title}
         {accent && (
           <>
