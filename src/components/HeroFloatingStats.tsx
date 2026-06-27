@@ -1,4 +1,5 @@
-import { motion, useTransform, useReducedMotion, type MotionValue } from "framer-motion";
+import { motion, useTransform, useReducedMotion, useMotionValue, useSpring, animate, type MotionValue } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Smartphone, Zap, TrendingUp } from "lucide-react";
 
 interface Props {
@@ -13,6 +14,22 @@ interface Props {
  */
 const HeroFloatingStats = ({ mx, my }: Props) => {
   const reduce = useReducedMotion();
+
+  // ---- Animated counter for Total Sales ----
+  const [sales, setSales] = useState(0);
+  useEffect(() => {
+    if (reduce) { setSales(28420); return; }
+    const controls = animate(0, 28420, {
+      duration: 2.2,
+      ease: "easeOut",
+      onUpdate: (v) => setSales(Math.round(v)),
+    });
+    return () => controls.stop();
+  }, [reduce]);
+
+  // ---- Tilt interaction for Total Sales card ----
+  const tiltX = useSpring(useTransform(my, (v) => (reduce ? 0 : v * -10)), { stiffness: 120, damping: 14 });
+  const tiltY = useSpring(useTransform(mx, (v) => (reduce ? 0 : v * 14)), { stiffness: 120, damping: 14 });
 
   // depth factors per card (some move more, some less → 3D layering)
   // kept conservative so cards never drift off-screen
@@ -53,29 +70,83 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         <motion.div
           animate={reduce ? {} : { y: [0, -10, 0] }}
           transition={floatTransition(0)}
-          className={cardBase}
-          style={cardStyle}
+          style={{ perspective: 800 }}
         >
-          <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/60 mb-1">
-            Total Sales
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="font-syne text-2xl font-bold text-white">$28,420</span>
-            <span className="font-mono text-[10px] flex items-center gap-0.5" style={{ color: accent }}>
-              <TrendingUp size={10} /> 24%
-            </span>
-          </div>
-          {/* sparkline */}
-          <svg viewBox="0 0 100 30" className="mt-2 w-32 h-8">
-            <defs>
-              <linearGradient id="spark1" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0%" stopColor={accent} stopOpacity="0.4" />
-                <stop offset="100%" stopColor={accent} stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <path d="M0,22 L15,18 L30,24 L45,12 L60,16 L75,6 L100,2 L100,30 L0,30 Z" fill="url(#spark1)" />
-            <path d="M0,22 L15,18 L30,24 L45,12 L60,16 L75,6 L100,2" fill="none" stroke={accent} strokeWidth="1.5" />
-          </svg>
+          <motion.div
+            style={{ ...cardStyle, rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }}
+            whileHover={reduce ? {} : { scale: 1.04 }}
+            className={`${cardBase} pointer-events-auto relative overflow-hidden w-[200px]`}
+          >
+            {/* subtle sheen */}
+            <div
+              aria-hidden
+              className="absolute inset-0 opacity-40 mix-blend-overlay"
+              style={{
+                background:
+                  "radial-gradient(120% 80% at 20% 0%, hsl(0 0% 100% / 0.18), transparent 60%)",
+              }}
+            />
+            <div className="relative font-mono text-[9px] uppercase tracking-[0.22em] text-white/60 mb-1">
+              Total Sales
+            </div>
+            <div className="relative flex items-baseline gap-2">
+              <span className="font-syne text-2xl font-bold text-white tabular-nums">
+                ${sales.toLocaleString("en-US")}
+              </span>
+              <span className="font-mono text-[10px] flex items-center gap-0.5" style={{ color: accent }}>
+                <TrendingUp size={10} /> 24%
+              </span>
+            </div>
+            {/* animated looping sparkline */}
+            <svg viewBox="0 0 100 36" className="relative mt-2 w-full h-12" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="spark1" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stopColor={accent} stopOpacity="0.55" />
+                  <stop offset="100%" stopColor={accent} stopOpacity="0" />
+                </linearGradient>
+                <linearGradient id="spark1Line" x1="0" x2="1" y1="0" y2="0">
+                  <stop offset="0%" stopColor={accent} stopOpacity="0.4" />
+                  <stop offset="100%" stopColor={accent} stopOpacity="1" />
+                </linearGradient>
+              </defs>
+              {/* baseline grid */}
+              {[8, 18, 28].map((y) => (
+                <line key={y} x1="0" x2="100" y1={y} y2={y} stroke="hsl(0 0% 100% / 0.06)" strokeWidth="0.4" />
+              ))}
+              <motion.path
+                d="M0,28 L12,22 L24,26 L36,14 L48,18 L60,10 L72,14 L84,6 L100,2 L100,36 L0,36 Z"
+                fill="url(#spark1)"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.2, duration: 0.8 }}
+              />
+              <motion.path
+                d="M0,28 L12,22 L24,26 L36,14 L48,18 L60,10 L72,14 L84,6 L100,2"
+                fill="none"
+                stroke="url(#spark1Line)"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={{ pathLength: 0 }}
+                animate={reduce ? { pathLength: 1 } : { pathLength: [0, 1, 1, 0] }}
+                transition={reduce ? { duration: 0 } : { duration: 4.5, repeat: Infinity, ease: "easeInOut", times: [0, 0.45, 0.85, 1] }}
+              />
+              {/* moving dot at end */}
+              {!reduce && (
+                <motion.circle
+                  r="1.8"
+                  fill={accent}
+                  initial={{ cx: 0, cy: 28 }}
+                  animate={{
+                    cx: [0, 12, 24, 36, 48, 60, 72, 84, 100],
+                    cy: [28, 22, 26, 14, 18, 10, 14, 6, 2],
+                  }}
+                  transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+                  style={{ filter: `drop-shadow(0 0 4px ${accent})` }}
+                />
+              )}
+            </svg>
+          </motion.div>
         </motion.div>
       </motion.div>
       </div>
