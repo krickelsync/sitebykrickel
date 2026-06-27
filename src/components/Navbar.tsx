@@ -80,7 +80,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           </Link>
 
           {/* Desktop / tablet nav pill */}
-          <div className="hidden md:flex items-center gap-1 navbar-pill menu-rotating-glow h-12 px-1.5 justify-self-center">
+          <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-1 navbar-pill menu-rotating-glow h-12 px-1.5">
             {navLinks.map((link) => (
               <NavLink
                 key={link.name}
