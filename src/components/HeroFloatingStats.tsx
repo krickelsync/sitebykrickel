@@ -27,20 +27,19 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
     return () => controls.stop();
   }, [reduce]);
 
-  // ---- Tilt interaction for Total Sales card ----
-  const tiltX = useSpring(useTransform(my, (v) => (reduce ? 0 : v * -10)), { stiffness: 120, damping: 14 });
-  const tiltY = useSpring(useTransform(mx, (v) => (reduce ? 0 : v * 14)), { stiffness: 120, damping: 14 });
+  // ---- Mouse tilt deltas, added on top of baseline tilt ----
+  const tiltDX = useSpring(useTransform(my, (v) => (reduce ? 0 : v * -6)), { stiffness: 120, damping: 16 });
+  const tiltDY = useSpring(useTransform(mx, (v) => (reduce ? 0 : v * 8)), { stiffness: 120, damping: 16 });
 
   // depth factors per card (some move more, some less → 3D layering)
-  // kept conservative so cards never drift off-screen
-  const tlX = useTransform(mx, (v) => (reduce ? 0 : v * 18));
-  const tlY = useTransform(my, (v) => (reduce ? 0 : v * 14));
-  const trX = useTransform(mx, (v) => (reduce ? 0 : v * -14));
-  const trY = useTransform(my, (v) => (reduce ? 0 : v * 12));
-  const blX = useTransform(mx, (v) => (reduce ? 0 : v * 12));
-  const blY = useTransform(my, (v) => (reduce ? 0 : v * -14));
-  const brX = useTransform(mx, (v) => (reduce ? 0 : v * -16));
-  const brY = useTransform(my, (v) => (reduce ? 0 : v * -12));
+  const tlX = useTransform(mx, (v) => (reduce ? 0 : v * 14));
+  const tlY = useTransform(my, (v) => (reduce ? 0 : v * 10));
+  const trX = useTransform(mx, (v) => (reduce ? 0 : v * -12));
+  const trY = useTransform(my, (v) => (reduce ? 0 : v * 10));
+  const blX = useTransform(mx, (v) => (reduce ? 0 : v * 10));
+  const blY = useTransform(my, (v) => (reduce ? 0 : v * -12));
+  const brX = useTransform(mx, (v) => (reduce ? 0 : v * -14));
+  const brY = useTransform(my, (v) => (reduce ? 0 : v * -10));
 
   const cardBase =
     "pointer-events-none rounded-2xl border border-white/10 px-4 py-3 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] will-change-transform";
@@ -57,6 +56,24 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
     ease: "easeInOut" as const,
   });
 
+  // Baseline tilt poses — cards already look "parallaxed" without mouse input
+  const pose = {
+    tl: { rx: 14, ry: -22, rz: -6 },
+    tr: { rx: 14, ry: 22, rz: 6 },
+    bl: { rx: -12, ry: -20, rz: -5 },
+    br: { rx: -12, ry: 20, rz: 5 },
+  };
+
+  // Combined rotateX/Y MotionValues per card (baseline + mouse delta)
+  const tlRX = useTransform(tiltDX, (v) => pose.tl.rx + v);
+  const tlRY = useTransform(tiltDY, (v) => pose.tl.ry + v);
+  const trRX = useTransform(tiltDX, (v) => pose.tr.rx + v);
+  const trRY = useTransform(tiltDY, (v) => pose.tr.ry + v);
+  const blRX = useTransform(tiltDX, (v) => pose.bl.rx + v);
+  const blRY = useTransform(tiltDY, (v) => pose.bl.ry + v);
+  const brRX = useTransform(tiltDX, (v) => pose.br.rx + v);
+  const brRY = useTransform(tiltDY, (v) => pose.br.ry + v);
+
   return (
     <div aria-hidden className="absolute inset-0 z-[3] pointer-events-none">
       {/* TOP LEFT — TOTAL SALES */}
@@ -68,12 +85,17 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         transition={{ delay: 0.8, duration: 0.8 }}
       >
         <motion.div
-          animate={reduce ? {} : { y: [0, -10, 0] }}
+          animate={reduce ? {} : { y: [0, -10, 0], rotateZ: [pose.tl.rz, pose.tl.rz - 1.5, pose.tl.rz] }}
           transition={floatTransition(0)}
-          style={{ perspective: 800 }}
+          style={{ perspective: 900 }}
         >
           <motion.div
-            style={{ ...cardStyle, rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }}
+            style={{
+              ...cardStyle,
+              rotateX: tlRX,
+              rotateY: tlRY,
+              transformStyle: "preserve-3d",
+            }}
             whileHover={reduce ? {} : { scale: 1.04 }}
             className={`${cardBase} pointer-events-auto relative overflow-hidden w-[200px]`}
           >
@@ -160,11 +182,15 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         transition={{ delay: 1.0, duration: 0.8 }}
       >
         <motion.div
-          animate={reduce ? {} : { y: [0, 12, 0] }}
+          animate={reduce ? {} : { y: [0, 12, 0], rotateZ: [pose.tr.rz, pose.tr.rz + 1.5, pose.tr.rz] }}
           transition={floatTransition(1)}
-          className={cardBase}
-          style={cardStyle}
+          style={{ perspective: 900 }}
         >
+          <motion.div
+            className={cardBase}
+            style={{ ...cardStyle, rotateX: trRX, rotateY: trRY, transformStyle: "preserve-3d" }}
+            whileHover={reduce ? {} : { scale: 1.04 }}
+          >
           <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/60 mb-1">
             Conversion Rate
           </div>
@@ -183,6 +209,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
               style={{ background: `linear-gradient(90deg, ${accent}, hsl(45 100% 60%))` }}
             />
           </div>
+          </motion.div>
         </motion.div>
       </motion.div>
       </div>
@@ -196,11 +223,15 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         transition={{ delay: 1.2, duration: 0.8 }}
       >
         <motion.div
-          animate={reduce ? {} : { y: [0, -8, 0] }}
+          animate={reduce ? {} : { y: [0, -8, 0], rotateZ: [pose.bl.rz, pose.bl.rz - 1.5, pose.bl.rz] }}
           transition={floatTransition(0.5)}
-          className={`${cardBase} flex items-center gap-3`}
-          style={cardStyle}
+          style={{ perspective: 900 }}
         >
+          <motion.div
+            className={`${cardBase} flex items-center gap-3`}
+            style={{ ...cardStyle, rotateX: blRX, rotateY: blRY, transformStyle: "preserve-3d" }}
+            whileHover={reduce ? {} : { scale: 1.04 }}
+          >
           <div className="grid place-items-center w-9 h-9 rounded-lg border" style={{ borderColor: accent, color: accent }}>
             <Smartphone size={16} />
           </div>
@@ -208,6 +239,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
             <div className="font-syne text-sm font-bold uppercase text-white leading-none">Fully</div>
             <div className="font-syne text-sm font-bold uppercase text-white leading-tight">Responsive</div>
           </div>
+          </motion.div>
         </motion.div>
       </motion.div>
       </div>
@@ -221,11 +253,15 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         transition={{ delay: 1.4, duration: 0.8 }}
       >
         <motion.div
-          animate={reduce ? {} : { y: [0, 10, 0] }}
+          animate={reduce ? {} : { y: [0, 10, 0], rotateZ: [pose.br.rz, pose.br.rz + 1.5, pose.br.rz] }}
           transition={floatTransition(1.5)}
-          className={`${cardBase} text-center`}
-          style={cardStyle}
+          style={{ perspective: 900 }}
         >
+          <motion.div
+            className={`${cardBase} text-center`}
+            style={{ ...cardStyle, rotateX: brRX, rotateY: brRY, transformStyle: "preserve-3d" }}
+            whileHover={reduce ? {} : { scale: 1.04 }}
+          >
           <motion.div
             animate={reduce ? {} : { scale: [1, 1.15, 1], filter: ["drop-shadow(0 0 0px " + accent + ")", "drop-shadow(0 0 12px " + accent + ")", "drop-shadow(0 0 0px " + accent + ")"] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -236,6 +272,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           </motion.div>
           <div className="font-syne text-[11px] font-bold uppercase text-white leading-tight">Fast Loading</div>
           <div className="font-syne text-[11px] font-bold uppercase text-white leading-tight">Speed</div>
+          </motion.div>
         </motion.div>
       </motion.div>
       </div>
