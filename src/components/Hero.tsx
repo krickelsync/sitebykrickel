@@ -17,7 +17,6 @@ const Hero = () => {
   const rotatingWords = useMemo(() => ["CLOTHING BRAND", "STREETWEAR", "DROPSHIPPER", "BARBERSHOP"], []);
   const [wordIndex, setWordIndex] = useState(0);
   const [inView, setInView] = useState(true);
-  const [reactorStage, setReactorStage] = useState<string>("idle");
   const magneticRef = useMagnetic<HTMLAnchorElement>(0.25);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -107,7 +106,7 @@ const Hero = () => {
           {/* Eyebrow */}
           <motion.div {...fadeUpDelay(0.2)} className="mb-6">
             <Suspense fallback={null}>
-              <ReactorHeroLayer onStageChange={setReactorStage} />
+              <ReactorHeroLayer />
             </Suspense>
             <span
               className="badge-rotating-shine badge-shine-sweep hero-trust-badge relative inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono text-[9.5px] md:text-[11px] text-foreground/90 tracking-[0.16em] uppercase overflow-hidden border border-white/10"
