@@ -119,7 +119,7 @@ const Hero = () => {
               <span className="block sm:hidden">FOR</span>
             </span>
             <span
-              className="block text-center glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense min-h-[1em] text-[1.65rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] sm:leading-[0.85] break-words"
+              className="flex items-center justify-center text-center glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense text-[1.65rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] sm:leading-[0.85] break-words min-h-[1.1em] overflow-hidden"
               style={{ color: "hsl(45 100% 58%)" }}
             >
               <AnimatePresence mode="wait">
