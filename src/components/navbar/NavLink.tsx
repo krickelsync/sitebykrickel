@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { textSize } from "@/components/ui/typography";
 
 interface NavLinkProps {
   href: string;
@@ -24,8 +25,8 @@ const NavLink = ({
 }: NavLinkProps) => {
   const baseClass =
     variant === "desktop"
-      ? "font-mono text-xs lg:text-sm px-2 lg:px-3 py-1.5 rounded-full transition-all duration-300 whitespace-nowrap"
-      : "font-mono text-xs px-3 py-1.5 rounded-full transition-colors block text-center";
+      ? `font-mono ${textSize.ui} px-2 lg:px-3 py-1.5 rounded-full transition-all duration-300 whitespace-nowrap`
+      : `font-mono ${textSize.ui} px-3 py-1.5 rounded-full transition-colors block text-center`;
 
   const activeClass =
     variant === "desktop"
