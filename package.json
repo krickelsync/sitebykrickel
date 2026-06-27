@@ -11,6 +11,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/jetbrains-mono": "^5.2.8",
+    "@fontsource/plus-jakarta-sans": "^5.2.8",
+    "@fontsource/syne": "^5.2.7",
     "@hookform/resolvers": "^3.10.0",
     "@paypal/react-paypal-js": "^8.9.2",
     "@popmotion/popcorn": "^0.4.4",
