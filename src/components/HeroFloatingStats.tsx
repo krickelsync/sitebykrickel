@@ -5,6 +5,7 @@ import { Smartphone, Zap, TrendingUp } from "lucide-react";
 interface Props {
   mx: MotionValue<number>;
   my: MotionValue<number>;
+  active?: boolean;
 }
 
 /**
@@ -12,7 +13,7 @@ interface Props {
  * FULLY RESPONSIVE, FAST LOADING SPEED. Mouse parallax is applied ONLY
  * to these assets (per design spec).
  */
-const HeroFloatingStats = ({ mx, my }: Props) => {
+const HeroFloatingStats = ({ mx, my, active = false }: Props) => {
   const reduce = useReducedMotion();
 
   // ---- Synced looping counters (single progress driver per card) ----
@@ -46,6 +47,11 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         trend: Math.round(SALES_TREND_TO * p),
       });
     };
+    if (!active) {
+      salesProgress.set(0);
+      commit(0);
+      return;
+    }
     if (reduce) {
       salesProgress.set(1);
       commit(1);
@@ -78,7 +84,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
     };
     loop();
     return () => { cancelled = true; ctrl?.stop(); };
-  }, [reduce, salesProgress]);
+  }, [active, reduce, salesProgress]);
   const sales = salesDisplay.sales;
   const salesTrend = salesDisplay.trend;
   const salesChartWidth = useTransform(salesProgress, (p) => Math.max(0, Math.min(120, 120 * p)));
@@ -100,6 +106,11 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
     const commit = (p: number) => {
       setConvDisplay({ conv: CONV_TO * p, trend: Math.round(CONV_TREND_TO * p) });
     };
+    if (!active) {
+      convProgress.set(0);
+      commit(0);
+      return;
+    }
     if (reduce) {
       convProgress.set(1);
       commit(1);
@@ -132,7 +143,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
     };
     loop();
     return () => { cancelled = true; ctrl?.stop(); };
-  }, [reduce, convProgress]);
+  }, [active, reduce, convProgress]);
   const conv = convDisplay.conv;
   const convTrend = convDisplay.trend;
   // Bar fill is proportional to current trend value (max = CONV_TREND_TO%).
@@ -184,8 +195,70 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   const brRX = useTransform(tiltDX, (v) => pose.br.rx + v);
   const brRY = useTransform(tiltDY, (v) => pose.br.ry + v);
 
+  if (!active) {
+    return <div aria-hidden className="absolute inset-0 z-[3] pointer-events-none" />;
+  }
+
+  const cablePathClass = "drop-shadow-[0_0_8px_hsl(45_100%_60%/0.55)]";
+  const cableTransition = (delay: number) => ({
+    duration: reduce ? 0.25 : 0.8,
+    delay,
+    ease: [0.22, 1, 0.36, 1] as const,
+  });
+
   return (
     <div aria-hidden className="absolute inset-0 z-[3] pointer-events-none">
+      <svg
+        aria-hidden
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        className="absolute inset-0 h-full w-full overflow-visible opacity-90"
+      >
+        <defs>
+          <linearGradient id="heroStatsCable" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stopColor="hsl(45 100% 62% / 0.08)" />
+            <stop offset="45%" stopColor="hsl(45 100% 62% / 0.62)" />
+            <stop offset="100%" stopColor="hsl(210 100% 72% / 0.5)" />
+          </linearGradient>
+          <filter id="heroStatsCableGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="0.55" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        {[
+          "M50 30 C40 20 24 13 8 15",
+          "M50 30 C60 20 76 13 92 15",
+          "M50 30 C39 46 23 61 8 74",
+          "M50 30 C61 46 77 61 92 74",
+        ].map((d, i) => (
+          <motion.path
+            key={d}
+            d={d}
+            fill="none"
+            stroke="url(#heroStatsCable)"
+            strokeWidth="0.28"
+            strokeLinecap="round"
+            strokeDasharray="0.8 1.15"
+            filter="url(#heroStatsCableGlow)"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={cableTransition(0.08 + i * 0.1)}
+            className={cablePathClass}
+          />
+        ))}
+        <motion.circle
+          cx="50"
+          cy="30"
+          r="0.8"
+          fill="hsl(45 100% 62% / 0.9)"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: [0.45, 1, 0.45], scale: 1 }}
+          transition={{ duration: reduce ? 0.25 : 1.8, repeat: reduce ? 0 : Infinity, ease: "easeInOut" }}
+        />
+      </svg>
       {/* TOP LEFT — TOTAL SALES */}
       <div className="absolute top-[10%] left-2 sm:left-3 lg:left-6 scale-[0.62] sm:scale-[0.6] md:scale-75 lg:scale-90 xl:scale-100 origin-top-left">
       <motion.div
