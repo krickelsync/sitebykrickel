@@ -2,7 +2,6 @@ import { lazy, Suspense } from "react";
 import Hero from "@/components/Hero";
 import Marquee from "@/components/Marquee";
 import ScrollProgress from "@/components/ScrollProgress";
-import AnnouncementBar from "@/components/sections/AnnouncementBar";
 
 // Lazy load below-the-fold components
 const ProblemSection = lazy(() => import("@/components/sections/ProblemSection"));
