@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 import { scrollToId } from "@/lib/scroll";
 import { useMagnetic } from "@/hooks/useMagnetic";
 import { useMouseParallax } from "@/hooks/useMouseParallax";
+import { useLowPower } from "@/hooks/useLowPower";
 import { fadeUpDelay } from "@/lib/motion";
 import shopifyBadge from "@/assets/shopify-badge.png";
-import HeroFloatingStats from "./HeroFloatingStats";
 
-// Lazy load heavy Prism component
+// Lazy-load heavy view layers so they never block first paint
 const Prism = lazy(() => import("./Prism"));
+const HeroFloatingStats = lazy(() => import("./HeroFloatingStats"));
 
 const Hero = () => {
   const getIsMobile = () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
@@ -42,7 +43,8 @@ const Hero = () => {
   }, [inView, rotatingWords.length]);
 
   const reduce = useReducedMotion();
-  const useStaticPrism = isMobile || reduce;
+  const lowPower = useLowPower();
+  const useStaticPrism = isMobile || reduce || lowPower;
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -51,8 +53,8 @@ const Hero = () => {
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.6, 0]);
   const bgY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 80]);
 
-  // Interactive mouse parallax — only listens while hero is visible
-  const { x: mx, y: my } = useMouseParallax(sectionRef, inView);
+  // Interactive mouse parallax — only listens while hero is visible and not low-power
+  const { x: mx, y: my } = useMouseParallax(sectionRef, inView && !lowPower);
 
   useEffect(() => {
     const handleResize = () => {
@@ -95,13 +97,13 @@ const Hero = () => {
       {/* Dark Overlay for text readability - z-index 1 */}
       <div className="absolute inset-0 z-[1] bg-background/50 pointer-events-none" />
 
-      {/* Kinetic grid overlay */}
+      {/* Kinetic grid overlay — desktop only (expensive on mobile GPU) */}
       <div
         aria-hidden
-        className="absolute inset-0 z-[2] pointer-events-none opacity-[0.08] hero-grid-overlay"
+        className="absolute inset-0 z-[2] pointer-events-none opacity-[0.08] hero-grid-overlay hidden md:block"
       />
-      {/* Grain noise */}
-      <div aria-hidden className="absolute inset-0 z-[2] pointer-events-none opacity-[0.06] hero-noise mix-blend-overlay" />
+      {/* Grain noise — desktop only */}
+      <div aria-hidden className="absolute inset-0 z-[2] pointer-events-none opacity-[0.06] hero-noise mix-blend-overlay hidden md:block" />
 
       {/* Static ambient glow */}
       <div aria-hidden className="absolute inset-0 z-[2] pointer-events-none hidden md:block">
@@ -119,12 +121,7 @@ const Hero = () => {
           {/* Eyebrow */}
           <motion.div {...fadeUpDelay(0.2)} className="mb-8">
             <span
-              className="badge-rotating-shine badge-shine-sweep relative inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono text-[9.5px] md:text-[11px] text-foreground/90 tracking-[0.16em] uppercase overflow-hidden border border-white/10"
-              style={{
-                background: "linear-gradient(135deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.02))",
-                backdropFilter: "blur(16px) saturate(160%)",
-                WebkitBackdropFilter: "blur(16px) saturate(160%)",
-              }}
+              className="badge-rotating-shine badge-shine-sweep hero-trust-badge relative inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono text-[9.5px] md:text-[11px] text-foreground/90 tracking-[0.16em] uppercase overflow-hidden border border-white/10"
             >
               <img src={shopifyBadge} alt="Shopify" className="relative z-[3] w-3.5 h-3.5 md:w-4 md:h-4 shrink-0 object-contain" />
               <span className="relative z-[3] whitespace-nowrap">
@@ -205,7 +202,9 @@ const Hero = () => {
       </motion.div>
 
       {/* Floating glass stat cards — parallax-only assets */}
-      <HeroFloatingStats mx={mx} my={my} />
+      <Suspense fallback={null}>
+        <HeroFloatingStats mx={mx} my={my} />
+      </Suspense>
 
       {/* Tilted bottom marquee ribbon — lifted above mobile bottom nav */}
       <div
@@ -213,7 +212,13 @@ const Hero = () => {
         className="absolute bottom-28 md:bottom-20 left-0 right-0 z-[3] overflow-hidden border-y-0 md:border-y md:border-border/40 py-2 md:py-3 bg-background/70 md:bg-background/40 md:backdrop-blur-sm pointer-events-none"
         style={{ transform: "rotate(-1.5deg)" }}
       >
-        <div className="flex whitespace-nowrap" style={{ animation: "hero-marquee 30s linear infinite" }}>
+        <div
+          className="flex whitespace-nowrap"
+          style={{
+            animation: "hero-marquee 30s linear infinite",
+            animationPlayState: inView && !lowPower ? "running" : "paused",
+          }}
+        >
           {Array.from({ length: 2 }).map((_, i) => (
             <div key={i} className="flex shrink-0 items-center gap-10 px-6 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.4em]">
               <span>Premium Shopify Setup</span>
@@ -228,16 +233,6 @@ const Hero = () => {
           ))}
         </div>
       </div>
-
-      {/* Animated radial pulse — mobile only */}
-      <div
-        aria-hidden
-        className="md:hidden absolute inset-0 z-[2] pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 40% at 50% 35%, hsl(var(--primary) / 0.18), transparent 70%)",
-        }}
-      />
 
     </section>;
 };
