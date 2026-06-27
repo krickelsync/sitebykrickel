@@ -187,6 +187,22 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                   <stop offset="55%" stopColor={accent} stopOpacity="0.85" />
                   <stop offset="100%" stopColor={accent} stopOpacity="1" />
                 </linearGradient>
+                {/* Shimmer sweep — single animated gradient, zero JS cost */}
+                <linearGradient id="salesShimmer" x1="0" x2="1" y1="0" y2="0">
+                  <stop offset="0%" stopColor={accent} stopOpacity="0" />
+                  <stop offset="50%" stopColor="#ffffff" stopOpacity="0.9" />
+                  <stop offset="100%" stopColor={accent} stopOpacity="0" />
+                  {!reduce && (
+                    <animateTransform
+                      attributeName="gradientTransform"
+                      type="translate"
+                      from="-1 0"
+                      to="1 0"
+                      dur="2.6s"
+                      repeatCount="indefinite"
+                    />
+                  )}
+                </linearGradient>
                 <filter id="salesGlow" x="-20%" y="-60%" width="140%" height="220%">
                   <feGaussianBlur stdDeviation="1.6" result="blur" />
                   <feMerge>
@@ -206,23 +222,48 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
               {[12, 22, 32].map((y) => (
                 <line key={y} x1="8" x2="112" y1={y} y2={y} stroke="hsl(0 0% 100% / 0.06)" strokeWidth="0.5" />
               ))}
+              {/* Static milestone tick marks — zero runtime cost */}
+              {[40, 70, 100].map((x) => (
+                <line key={x} x1={x} x2={x} y1="6" y2="38" stroke="hsl(0 0% 100% / 0.07)" strokeWidth="0.5" strokeDasharray="1 2" />
+              ))}
               <g clipPath="url(#salesRevealClip)">
                 <motion.path
-                  d="M8,34 C18,33 21,30 30,29 C39,28 43,24 52,24 C62,24 66,19 74,19 C84,18 88,14 96,13 C103,12 107,10 112,8 L112,39 L8,39 Z"
+                  d={ZIG_AREA}
                   fill="url(#salesArea)"
                   initial={{ opacity: 0.45 }}
                   animate={reduce ? { opacity: 0.45 } : { opacity: [0.22, 0.48, 0.36] }}
                   transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
                 />
                 <path
-                  d="M8,34 C18,33 21,30 30,29 C39,28 43,24 52,24 C62,24 66,19 74,19 C84,18 88,14 96,13 C103,12 107,10 112,8"
+                  d={ZIG_PATH}
                   fill="none"
                   stroke="url(#salesLine)"
                   strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  strokeLinecap="square"
+                  strokeLinejoin="miter"
                   filter="url(#salesGlow)"
                 />
+                {/* Shimmer overlay on the zigzag — same path, sweeping gradient */}
+                <path
+                  d={ZIG_PATH}
+                  fill="none"
+                  stroke="url(#salesShimmer)"
+                  strokeWidth="2.4"
+                  strokeLinecap="square"
+                  strokeLinejoin="miter"
+                  opacity="0.7"
+                />
+                {/* Trail comet — 3 static circles behind the head dot, no extra animation */}
+                {[
+                  { off: 0.04, r: 1.5, op: 0.45 },
+                  { off: 0.08, r: 1.2, op: 0.25 },
+                  { off: 0.12, r: 1.0, op: 0.12 },
+                ].map((t, i) => {
+                  const [tx, ty] = getZigXY(Math.max(0, salesP - t.off));
+                  return <circle key={i} cx={tx} cy={ty} r={t.r} fill={accent} opacity={t.op} />;
+                })}
+                {/* Static glow halo behind the head dot */}
+                <circle cx={salesDotX} cy={salesDotY} r="4" fill={accent} opacity="0.22" />
                 <motion.circle
                   cx={salesDotX}
                   cy={salesDotY}
