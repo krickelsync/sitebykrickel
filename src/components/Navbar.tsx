@@ -69,7 +69,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
       className="fixed top-3 left-0 right-0 z-50 overflow-visible px-3 sm:px-6"
     >
       <div className="container mx-auto overflow-visible relative">
-        <div className="flex items-center justify-between gap-3 overflow-visible">
+        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 overflow-visible">
           {/* Logo (no pill) */}
           <Link
             to="/"
@@ -80,7 +80,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           </Link>
 
           {/* Desktop / tablet nav pill */}
-          <div className="hidden md:flex items-center gap-1 navbar-pill menu-rotating-glow h-12 px-1.5">
+          <div className="hidden md:flex items-center gap-1 navbar-pill menu-rotating-glow h-12 px-1.5 justify-self-center">
             {navLinks.map((link) => (
               <NavLink
                 key={link.name}
