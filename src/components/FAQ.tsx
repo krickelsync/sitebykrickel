@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import SectionHeader from "./shared/SectionHeader";
+import { typography, textSize } from "@/components/ui/typography";
 
 const faqs = [
   { question: "Is this a real Shopify theme?", answer: "Yes. SYNC is a real, fully Shopify 2.0 compatible theme that installs into any Shopify store." },
@@ -43,10 +44,10 @@ const FAQ = () => {
                 value={`item-${index}`}
                 className="glass-card px-4 md:px-6 border-none"
               >
-                <AccordionTrigger className="font-display text-left text-xs md:text-lg uppercase tracking-tight hover:text-primary transition-colors py-4 md:py-6 hover:no-underline">
+                <AccordionTrigger className={`font-display text-left uppercase tracking-tight hover:text-primary transition-colors py-4 md:py-6 hover:no-underline ${typography.h3}`}>
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="font-mono text-xs md:text-sm text-muted-foreground leading-relaxed pb-4 md:pb-6">
+                <AccordionContent className={`text-muted-foreground pb-4 md:pb-6 ${typography.body}`}>
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
