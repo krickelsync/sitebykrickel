@@ -956,3 +956,18 @@
   filter: none !important;
 }
 
+
+/* Reactor hero animations */
+@keyframes reactor-pulse-travel {
+  0% { offset-distance: 0%; }
+  100% { offset-distance: 100%; }
+}
+.reactor-shine {
+  animation: reactor-shine-sweep 3.5s ease-in-out infinite;
+}
+@keyframes reactor-shine-sweep {
+  0% { transform: translateX(-50%) skewX(-20deg); opacity: 0; }
+  20% { opacity: 0.9; }
+  60% { transform: translateX(350%) skewX(-20deg); opacity: 0; }
+  100% { transform: translateX(350%) skewX(-20deg); opacity: 0; }
+}
