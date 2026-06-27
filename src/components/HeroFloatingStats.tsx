@@ -64,6 +64,16 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
     br: { rx: -12, ry: 20, rz: 5 },
   };
 
+  // Combined rotateX/Y MotionValues per card (baseline + mouse delta)
+  const tlRX = useTransform(tiltDX, (v) => pose.tl.rx + v);
+  const tlRY = useTransform(tiltDY, (v) => pose.tl.ry + v);
+  const trRX = useTransform(tiltDX, (v) => pose.tr.rx + v);
+  const trRY = useTransform(tiltDY, (v) => pose.tr.ry + v);
+  const blRX = useTransform(tiltDX, (v) => pose.bl.rx + v);
+  const blRY = useTransform(tiltDY, (v) => pose.bl.ry + v);
+  const brRX = useTransform(tiltDX, (v) => pose.br.rx + v);
+  const brRY = useTransform(tiltDY, (v) => pose.br.ry + v);
+
   return (
     <div aria-hidden className="absolute inset-0 z-[3] pointer-events-none">
       {/* TOP LEFT — TOTAL SALES */}
@@ -82,8 +92,8 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           <motion.div
             style={{
               ...cardStyle,
-              rotateX: useTransform(tiltDX, (v) => pose.tl.rx + v),
-              rotateY: useTransform(tiltDY, (v) => pose.tl.ry + v),
+              rotateX: tlRX,
+              rotateY: tlRY,
               transformStyle: "preserve-3d",
             }}
             whileHover={reduce ? {} : { scale: 1.04 }}
