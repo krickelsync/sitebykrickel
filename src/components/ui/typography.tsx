@@ -45,6 +45,22 @@ export const typography = {
   price: "font-mono font-bold text-primary text-base md:text-xl leading-none",
 } as const;
 
+/**
+ * Responsive text-size tokens — one source of truth for mobile↔desktop sizing.
+ * Use these on inline elements (badges, CTAs, micro labels) so every screen
+ * stays visually balanced without hand-tuning per component.
+ */
+export const textSize = {
+  /** Micro UI labels: pill badges, trust row, eyebrow chips. */
+  micro: "text-[10px] md:text-[11px]",
+  /** Small UI text: rating count, line-through price, captions. */
+  small: "text-[11px] md:text-[12px]",
+  /** Default UI text: button labels, secondary copy. */
+  ui: "text-[12px] md:text-sm",
+  /** Prominent inline numerics / lead labels. */
+  lead: "text-[13px] md:text-base",
+} as const;
+
 export function Display<T extends ElementType = "h1">({ as, className, children, ...rest }: Props<T>) {
   const Tag = (as ?? "h1") as ElementType;
   return <Tag className={cn(baseDisplay, typography.display, className)} {...rest}>{children}</Tag>;
