@@ -43,8 +43,12 @@ const Prism = ({
     if (!container) return;
 
     const isMobile = window.innerWidth < 768;
-    const dpr = isMobile ? 1 : window.devicePixelRatio || 1;
-    const shaderSteps = isMobile ? 50 : 100;
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    // Clamp DPR and apply low-res render scale for GPU savings
+    const maxDpr = isMobile ? 1 : 1.25;
+    const renderScale = isMobile ? 0.6 : 0.75;
+    const dpr = Math.min(window.devicePixelRatio || 1, maxDpr) * renderScale;
+    const shaderSteps = isMobile ? 40 : 80;
 
     const H = Math.max(0.001, height);
     const BW = Math.max(0.001, baseWidth);
@@ -390,9 +394,21 @@ const Prism = ({
       startRAF();
     }
 
+    const onVisibility = () => {
+      if (document.hidden) stopRAF();
+      else startRAF();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    if (prefersReducedMotion) {
+      program.uniforms.uUseBaseWobble.value = 0;
+      program.uniforms.uTimeScale.value = 0;
+    }
+
     return () => {
       stopRAF();
       ro.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       if (animationType === 'hover') {
         if (onPointerMove) window.removeEventListener('pointermove', onPointerMove);
         window.removeEventListener('mouseleave', onLeave);
