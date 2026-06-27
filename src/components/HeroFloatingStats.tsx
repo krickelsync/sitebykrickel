@@ -200,14 +200,14 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
               ))}
               <g clipPath="url(#salesRevealClip)">
                 <motion.path
-                  d="M8,34 C18,33 21,30 30,29 C39,28 43,24 52,24 C62,24 66,19 74,19 C84,18 88,14 96,13 C103,12 107,10 112,8 L112,39 L8,39 Z"
+                  d="M8,34 L18,30 L28,33 L38,27 L48,30 L58,23 L68,26 L78,18 L88,22 L98,13 L112,8 L112,39 L8,39 Z"
                   fill="url(#salesArea)"
                   initial={{ opacity: 0.45 }}
                   animate={reduce ? { opacity: 0.45 } : { opacity: [0.22, 0.48, 0.36] }}
                   transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
                 />
                 <path
-                  d="M8,34 C18,33 21,30 30,29 C39,28 43,24 52,24 C62,24 66,19 74,19 C84,18 88,14 96,13 C103,12 107,10 112,8"
+                  d="M8,34 Q13,28 18,30 T28,33 T38,27 T48,30 T58,23 T68,26 T78,18 T88,22 T98,13 T112,8"
                   fill="none"
                   stroke="url(#salesLine)"
                   strokeWidth="2.2"
