@@ -48,7 +48,7 @@ function VelocityRow({ children, baseVelocity, className }: VelocityRowProps) {
   return (
     <div className="overflow-hidden whitespace-nowrap flex flex-nowrap">
       <motion.div
-        className={`flex whitespace-nowrap flex-nowrap font-display text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight ${className}`}
+        className={`flex whitespace-nowrap flex-nowrap font-display text-4xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight ${className}`}
         style={{ x }}
       >
         <span className="mr-8">{children}</span>
