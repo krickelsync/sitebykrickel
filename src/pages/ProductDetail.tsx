@@ -245,21 +245,21 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         {/* License card */}
         <div className="mb-5">
           <Eyebrow as="p" className="block mb-2.5">License</Eyebrow>
-          <div className="relative rounded-2xl border-2 border-primary bg-primary/[0.06] py-3.5 pl-4 pr-5 flex items-center justify-between gap-4">
+          <div className="relative rounded-2xl border-2 border-primary bg-primary/[0.06] py-3 pl-3.5 pr-4 md:py-3.5 md:pl-4 md:pr-5 flex items-center justify-between gap-3 md:gap-4">
             {hasDiscount && (
-              <span className="absolute -top-2.5 left-4 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-destructive text-destructive-foreground shadow-sm">
+              <span className="absolute -top-2 left-3 md:left-4 text-[9px] md:text-[10px] font-mono font-bold px-1.5 md:px-2 py-0.5 rounded-full bg-destructive text-destructive-foreground shadow-sm">
                 -{discountPct}% OFF
               </span>
             )}
-            <div className="flex items-center gap-3 min-w-0">
-              <span className="w-4 h-4 shrink-0 rounded-full border-2 border-primary grid place-items-center">
-                <span className="w-2 h-2 rounded-full bg-primary" />
+            <div className="flex items-center gap-2.5 md:gap-3 min-w-0">
+              <span className="w-3.5 h-3.5 md:w-4 md:h-4 shrink-0 rounded-full border-2 border-primary grid place-items-center">
+                <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary" />
               </span>
               <div className="min-w-0">
-                <span className="block font-display font-bold leading-tight text-sm md:text-base">
+                <span className="block font-display font-bold leading-tight text-[13px] md:text-base">
                   Lifetime License
                 </span>
-                <Meta as="span" className="block mt-0.5 truncate text-[11px]">
+                <Meta as="span" className="block mt-0.5 truncate text-[10px] md:text-[11px]">
                   Free updates · Unlimited dev
                 </Meta>
               </div>
