@@ -179,14 +179,6 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Corner brackets — mobile premium accent */}
-      <div aria-hidden className="md:hidden absolute inset-4 z-[3] pointer-events-none">
-        <span className="absolute top-0 left-0 w-5 h-5 border-t border-l border-primary/50" />
-        <span className="absolute top-0 right-0 w-5 h-5 border-t border-r border-primary/50" />
-        <span className="absolute bottom-0 left-0 w-5 h-5 border-b border-l border-primary/50" />
-        <span className="absolute bottom-0 right-0 w-5 h-5 border-b border-r border-primary/50" />
-      </div>
-
       {/* Animated radial pulse — mobile only */}
       <motion.div
         aria-hidden
