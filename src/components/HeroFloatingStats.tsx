@@ -43,12 +43,12 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   return (
     <div aria-hidden className="absolute inset-0 z-[3] pointer-events-none">
       {/* TOP LEFT — TOTAL SALES */}
+      <div className="absolute top-[12%] left-1 sm:left-3 lg:left-6 scale-[0.45] sm:scale-[0.6] md:scale-75 lg:scale-90 xl:scale-100 origin-top-left">
       <motion.div
         style={{ x: tlX, y: tlY }}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 0.8 }}
-        className="absolute top-[12%] left-1 sm:left-3 lg:left-6 scale-[0.45] sm:scale-[0.6] md:scale-75 lg:scale-90 xl:scale-100 origin-top-left"
       >
         <motion.div
           animate={reduce ? {} : { y: [0, -10, 0] }}
@@ -78,14 +78,15 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           </svg>
         </motion.div>
       </motion.div>
+      </div>
 
       {/* TOP RIGHT — CONVERSION RATE */}
+      <div className="absolute top-[12%] right-1 sm:right-3 lg:right-6 scale-[0.45] sm:scale-[0.6] md:scale-75 lg:scale-90 xl:scale-100 origin-top-right">
       <motion.div
         style={{ x: trX, y: trY }}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.0, duration: 0.8 }}
-        className="absolute top-[12%] right-1 sm:right-3 lg:right-6 scale-[0.45] sm:scale-[0.6] md:scale-75 lg:scale-90 xl:scale-100 origin-top-right"
       >
         <motion.div
           animate={reduce ? {} : { y: [0, 12, 0] }}
@@ -113,14 +114,15 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           </div>
         </motion.div>
       </motion.div>
+      </div>
 
       {/* BOTTOM LEFT — FULLY RESPONSIVE */}
+      <div className="absolute bottom-[30%] sm:bottom-[26%] left-1 sm:left-3 lg:left-6 scale-[0.5] sm:scale-[0.65] md:scale-75 lg:scale-90 xl:scale-100 origin-bottom-left">
       <motion.div
         style={{ x: blX, y: blY }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute bottom-[30%] sm:bottom-[26%] left-1 sm:left-3 lg:left-6 scale-[0.5] sm:scale-[0.65] md:scale-75 lg:scale-90 xl:scale-100 origin-bottom-left"
       >
         <motion.div
           animate={reduce ? {} : { y: [0, -8, 0] }}
@@ -137,14 +139,15 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           </div>
         </motion.div>
       </motion.div>
+      </div>
 
       {/* BOTTOM RIGHT — FAST LOADING SPEED */}
+      <div className="absolute bottom-[30%] sm:bottom-[26%] right-1 sm:right-3 lg:right-6 scale-[0.5] sm:scale-[0.65] md:scale-75 lg:scale-90 xl:scale-100 origin-bottom-right">
       <motion.div
         style={{ x: brX, y: brY }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.4, duration: 0.8 }}
-        className="absolute bottom-[30%] sm:bottom-[26%] right-1 sm:right-3 lg:right-6 scale-[0.5] sm:scale-[0.65] md:scale-75 lg:scale-90 xl:scale-100 origin-bottom-right"
       >
         <motion.div
           animate={reduce ? {} : { y: [0, 10, 0] }}
@@ -164,6 +167,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           <div className="font-syne text-[11px] font-bold uppercase text-white leading-tight">Speed</div>
         </motion.div>
       </motion.div>
+      </div>
     </div>
   );
 };
