@@ -39,6 +39,9 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   }, [reduce]);
   const sales = Math.round(SALES_FROM + (SALES_TO - SALES_FROM) * salesP);
   const salesTrend = Math.round(SALES_TREND_TO * salesP);
+  const salesChartWidth = reduce ? 120 : Math.max(0, Math.min(120, 120 * salesP));
+  const salesDotX = 8 + 104 * salesP;
+  const salesDotY = 34 - 26 * salesP;
 
   // Conversion: 0% → 18.4% with trend 0% → 92%; bar width tracks trend.
   const CONV_TO = 18.4;
@@ -177,13 +180,11 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                   </feMerge>
                 </filter>
                 <clipPath id="salesRevealClip">
-                  <motion.rect
+                  <rect
                     x="0"
                     y="0"
+                    width={salesChartWidth}
                     height="44"
-                    initial={false}
-                    animate={{ width: reduce ? 120 : 120 * salesP }}
-                    transition={{ duration: 0.18, ease: "linear" }}
                   />
                 </clipPath>
               </defs>
@@ -198,7 +199,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                   animate={reduce ? { opacity: 0.45 } : { opacity: [0.22, 0.48, 0.36] }}
                   transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
                 />
-                <motion.path
+                <path
                   d="M8,34 C18,33 21,30 30,29 C39,28 43,24 52,24 C62,24 66,19 74,19 C84,18 88,14 96,13 C103,12 107,10 112,8"
                   fill="none"
                   stroke="url(#salesLine)"
@@ -206,13 +207,10 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   filter="url(#salesGlow)"
-                  initial={false}
-                  animate={{ pathLength: reduce ? 1 : salesP }}
-                  transition={{ duration: 0.18, ease: "linear" }}
                 />
                 <motion.circle
-                  cx={8 + 104 * salesP}
-                  cy={34 - 26 * salesP}
+                  cx={salesDotX}
+                  cy={salesDotY}
                   r="1.8"
                   fill={accent}
                   animate={reduce ? {} : { opacity: [0.75, 1, 0.75] }}
