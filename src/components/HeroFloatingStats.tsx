@@ -15,16 +15,44 @@ interface Props {
 const HeroFloatingStats = ({ mx, my }: Props) => {
   const reduce = useReducedMotion();
 
-  // ---- Animated counter for Total Sales ----
+  // ---- Looping animated counters ----
   const [sales, setSales] = useState(0);
   useEffect(() => {
     if (reduce) { setSales(28420); return; }
-    const controls = animate(0, 28420, {
-      duration: 2.2,
-      ease: "easeOut",
-      onUpdate: (v) => setSales(Math.round(v)),
-    });
-    return () => controls.stop();
+    let cancelled = false;
+    const loop = () => {
+      // Pick a fresh target each cycle so the number keeps "living"
+      const target = 27800 + Math.floor(Math.random() * 1800);
+      const controls = animate(sales || 26000, target, {
+        duration: 2.4,
+        ease: "easeInOut",
+        onUpdate: (v) => !cancelled && setSales(Math.round(v)),
+        onComplete: () => !cancelled && setTimeout(loop, 900),
+      });
+      return controls;
+    };
+    const c = loop();
+    return () => { cancelled = true; c?.stop(); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reduce]);
+
+  const [conv, setConv] = useState(3.68);
+  useEffect(() => {
+    if (reduce) return;
+    let cancelled = false;
+    const loop = () => {
+      const target = 3.4 + Math.random() * 0.6;
+      const controls = animate(conv, target, {
+        duration: 2.2,
+        ease: "easeInOut",
+        onUpdate: (v) => !cancelled && setConv(v),
+        onComplete: () => !cancelled && setTimeout(loop, 700),
+      });
+      return controls;
+    };
+    const c = loop();
+    return () => { cancelled = true; c?.stop(); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reduce]);
 
   // ---- Mouse tilt deltas, added on top of baseline tilt ----
