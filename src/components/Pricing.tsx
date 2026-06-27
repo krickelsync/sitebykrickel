@@ -118,7 +118,7 @@ const Pricing = () => {
               {[
                 {
                   label: "Remove Watermark",
-                  hint: "+$50 white-label",
+                  hint: "+$50 • Removes \"Powered by SitebyKrickel\" on footer",
                   value: removeWatermark,
                   set: setRemoveWatermark,
                   aria: "Toggle remove footer watermark",
