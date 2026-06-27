@@ -16,62 +16,60 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   const reduce = useReducedMotion();
 
   // ---- Looping animated counters ----
-  // Total sales: ~5x previous range (was ~28k → now ~142k)
-  const [sales, setSales] = useState(0);
-  const [salesTrend, setSalesTrend] = useState(120);
-  const salesRef = useRef(0);
+  // Total sales: $90k → ~$130k, trend 0% → 130%
+  const SALES_FROM = 90000;
+  const SALES_TO = 130000;
+  const SALES_TREND = 130;
+  const [sales, setSales] = useState(SALES_FROM);
+  const [salesTrend, setSalesTrend] = useState(0);
   useEffect(() => {
-    if (reduce) { setSales(142100); setSalesTrend(120); return; }
+    if (reduce) { setSales(SALES_TO); setSalesTrend(SALES_TREND); return; }
     let cancelled = false;
-    let controls: ReturnType<typeof animate> | undefined;
+    const ctrls: ReturnType<typeof animate>[] = [];
     const loop = () => {
-      const from = salesRef.current || 130000;
-      const target = 139000 + Math.floor(Math.random() * 9000);
-      // Trend % scales with target (5x previous 24% baseline)
-      const trendTarget = Math.round(((target - 115000) / 115000) * 100 * 5);
-      setSalesTrend(trendTarget);
-      controls = animate(from, target, {
-        duration: 2.4,
-        ease: "easeInOut",
-        onUpdate: (v) => {
-          salesRef.current = v;
-          if (!cancelled) setSales(Math.round(v));
-        },
-        onComplete: () => { if (!cancelled) setTimeout(loop, 900); },
-      });
+      setSales(SALES_FROM);
+      setSalesTrend(0);
+      ctrls.push(animate(SALES_FROM, SALES_TO, {
+        duration: 2.8, ease: "easeOut",
+        onUpdate: (v) => { if (!cancelled) setSales(Math.round(v)); },
+      }));
+      ctrls.push(animate(0, SALES_TREND, {
+        duration: 2.8, ease: "easeOut",
+        onUpdate: (v) => { if (!cancelled) setSalesTrend(Math.round(v)); },
+        onComplete: () => { if (!cancelled) setTimeout(loop, 1400); },
+      }));
     };
     loop();
-    return () => { cancelled = true; controls?.stop(); };
+    return () => { cancelled = true; ctrls.forEach((c) => c.stop()); };
   }, [reduce]);
 
-  // Conversion: ~5x previous (was ~3.68% → now ~18.4%)
-  const [conv, setConv] = useState(18.4);
-  const [convTrend, setConvTrend] = useState(90);
-  const convRef = useRef(18.4);
+  // Conversion: 0% → ~18.4%, trend 0% → 92%
+  const CONV_TO = 18.4;
+  const CONV_TREND = 92;
+  const [conv, setConv] = useState(0);
+  const [convTrend, setConvTrend] = useState(0);
   useEffect(() => {
-    if (reduce) return;
+    if (reduce) { setConv(CONV_TO); setConvTrend(CONV_TREND); return; }
     let cancelled = false;
-    let controls: ReturnType<typeof animate> | undefined;
+    const ctrls: ReturnType<typeof animate>[] = [];
     const loop = () => {
-      const target = 17 + Math.random() * 3; // 17–20%
-      // Trend % proportional to value (5x previous 18% baseline)
-      setConvTrend(Math.round((target / 3.7) * 18));
-      controls = animate(convRef.current, target, {
-        duration: 2.2,
-        ease: "easeInOut",
-        onUpdate: (v) => {
-          convRef.current = v;
-          if (!cancelled) setConv(v);
-        },
-        onComplete: () => { if (!cancelled) setTimeout(loop, 700); },
-      });
+      setConv(0); setConvTrend(0);
+      ctrls.push(animate(0, CONV_TO, {
+        duration: 2.6, ease: "easeOut",
+        onUpdate: (v) => { if (!cancelled) setConv(v); },
+      }));
+      ctrls.push(animate(0, CONV_TREND, {
+        duration: 2.6, ease: "easeOut",
+        onUpdate: (v) => { if (!cancelled) setConvTrend(Math.round(v)); },
+        onComplete: () => { if (!cancelled) setTimeout(loop, 1400); },
+      }));
     };
     loop();
-    return () => { cancelled = true; controls?.stop(); };
+    return () => { cancelled = true; ctrls.forEach((c) => c.stop()); };
   }, [reduce]);
 
-  // Bar width follows conv value (17–20% → 75–95% bar fill)
-  const barWidth = `${Math.min(95, Math.max(20, ((conv - 5) / 20) * 100))}%`;
+  // Bar width follows conv value (0–18.4% → 0–95% bar fill)
+  const barWidth = `${Math.min(95, (conv / CONV_TO) * 95)}%`;
 
   // ---- Mouse tilt deltas, added on top of baseline tilt ----
   const tiltDX = useSpring(useTransform(my, (v) => (reduce ? 0 : v * -6)), { stiffness: 120, damping: 16 });
@@ -187,7 +185,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
               <motion.g
                 clipPath="url(#spark1Clip)"
                 animate={reduce ? {} : { x: [0, -100] }}
-                transition={reduce ? {} : { duration: 6, repeat: Infinity, ease: "linear" }}
+                transition={reduce ? {} : { duration: 8, repeat: Infinity, ease: "linear", repeatType: "loop" }}
               >
                 {[0, 100].map((dx) => (
                   <g key={dx} transform={`translate(${dx} 0)`}>
