@@ -1,63 +1,29 @@
 import VelocityText from "./VelocityText";
 import SectionHeader from "./shared/SectionHeader";
-import PricingCard, {
-  type PricingFeatureSection,
-} from "./pricing/PricingCard";
-import { useContactScroll } from "@/hooks/useContactScroll";
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { ArrowRight, Check } from "lucide-react";
 import { fadeIn } from "@/lib/motion";
+import { useContactScroll } from "@/hooks/useContactScroll";
 
-const starterFeatures: PricingFeatureSection[] = [
-  { category: "INCLUDED", items: [
-    { feature: "SYNC Starter Theme", included: true },
-    { feature: "1 Store License", included: true },
-    { feature: "Mobile-first Layout", included: true },
-    { feature: "Shopify 2.0 Compatible", included: true },
-    { feature: "Lifetime Updates", included: true },
-    { feature: "Email Support", included: true },
-  ]},
-];
-
-const proFeatures: PricingFeatureSection[] = [
-  { category: "EVERYTHING IN STARTER", items: [
-    { feature: "1 Store License", included: true },
-    { feature: "No Footer Watermark", included: true },
-  ]},
-  { category: "PRO ADD-ONS", items: [
-    { feature: "Product Page Builder", included: true },
-    { feature: "Lookbook Sections", included: true },
-    { feature: "Drop Countdown Sections", included: true },
-    { feature: "Sticky Add to Cart", included: true },
-    { feature: "Priority Email Support", included: true },
-  ]},
-];
-
-const allAccessFeatures: PricingFeatureSection[] = [
-  { category: "EVERYTHING IN PRO", items: [
-    { feature: "Unlimited Store Licenses", included: true },
-    { feature: "All Future Themes Included", included: true },
-  ]},
-  { category: "EXTRAS", items: [
-    { feature: "Mega Menu Layouts", included: true },
-    { feature: "Editorial Image Blocks", included: true },
-    { feature: "Trust Badges Pack", included: true },
-    { feature: "VIP Support", included: true },
-  ]},
-];
-
-const setupFeatures: PricingFeatureSection[] = [
-  { category: "DONE-FOR-YOU", items: [
-    { feature: "Theme Installation", included: true },
-    { feature: "Brand Setup (logo, fonts, colors)", included: true },
-    { feature: "Up to 20 Products Uploaded", included: true },
-    { feature: "Homepage & Product Pages", included: true },
-    { feature: "Mobile Polish & QA", included: true },
-    { feature: "Launch Support", included: true },
-  ]},
+const FEATURES = [
+  "Shopify 2.0 Ready",
+  "Mobile-first Responsive Layout",
+  "Infinite Customization Options",
+  "Product Page Builder",
+  "Lookbook & Editorial Sections",
+  "Drop Countdown & Sticky Cart",
+  "Mega Menu Layouts",
+  "Trust Badges Pack",
+  "Unlimited Store License",
+  "Lifetime Updates",
+  "Priority Email Support",
 ];
 
 const Pricing = () => {
   const handleContactClick = useContactScroll();
+  const [removeWatermark, setRemoveWatermark] = useState(false);
+  const price = removeWatermark ? 148 : 98;
 
   return (
     <section id="pricing" className="py-24 md:py-32">
@@ -66,52 +32,96 @@ const Pricing = () => {
 
         <SectionHeader
           eyebrow="PRICING"
-          title={<span className="text-foreground">SIMPLE PRICING.</span>}
-          accent="PICK YOUR LICENSE."
+          title={<span className="text-foreground">ONE THEME.</span>}
+          accent="EVERYTHING INCLUDED."
           accentTone="gold"
         />
 
-        <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
-          <PricingCard
-            tier="Starter Theme"
-            price="$49"
-            tagline="For new brands"
-            sections={starterFeatures}
-            ctaLabel="Get Started"
-            onCtaClick={handleContactClick}
-            variant="standard"
-          />
-          <PricingCard
-            tier="Pro Theme"
-            price="$99"
-            tagline="Most popular"
-            sections={proFeatures}
-            ctaLabel="Get Pro"
-            onCtaClick={handleContactClick}
-            variant="premium"
-            badge="MOST POPULAR"
-            delay={0.1}
-          />
-          <PricingCard
-            tier="All Access"
-            price="$199"
-            tagline="Unlimited stores"
-            sections={allAccessFeatures}
-            ctaLabel="Get All Access"
-            onCtaClick={handleContactClick}
-            variant="standard"
-            delay={0.15}
-          />
-          <PricingCard
-            tier="Done-for-you Setup"
-            price="$499"
-            tagline="We launch it for you"
-            sections={setupFeatures}
-            ctaLabel="Book Setup"
-            onCtaClick={handleContactClick}
-            variant="standard"
-            delay={0.2}
-          />
+        <div className="max-w-md mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="relative glass-card shiny-card rounded-2xl p-6 md:p-8 flex flex-col hover:border-primary/40 transition-all duration-500"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 pointer-events-none rounded-2xl" />
+
+            <div className="relative text-center pb-5 mb-5 border-b border-border/50">
+              <span className="font-mono text-[10px] md:text-xs text-primary uppercase tracking-[0.2em]">
+                SYNC Premium Theme
+              </span>
+              <div className="mt-2 flex items-baseline justify-center gap-1">
+                <motion.span
+                  key={price}
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="font-syne font-bold text-5xl md:text-6xl text-primary glow-text"
+                >
+                  ${price}
+                </motion.span>
+                <span className="font-mono text-xs text-muted-foreground">
+                  / one-time
+                </span>
+              </div>
+              <p className="font-mono text-[10px] md:text-xs text-muted-foreground mt-2 uppercase tracking-widest">
+                {removeWatermark ? "No Watermark" : "With Footer Watermark"}
+              </p>
+            </div>
+
+            {/* Compact watermark toggle */}
+            <div className="relative flex items-center justify-between gap-3 mb-5 px-3 py-2 rounded-lg border border-border/60 bg-background/40">
+              <div className="flex flex-col">
+                <span className="font-mono text-[11px] uppercase tracking-widest text-foreground">
+                  Remove Watermark
+                </span>
+                <span className="font-mono text-[9px] text-muted-foreground">
+                  +$50 white-label
+                </span>
+              </div>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={removeWatermark}
+                aria-label="Toggle remove footer watermark"
+                onClick={() => setRemoveWatermark((v) => !v)}
+                className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors ${
+                  removeWatermark ? "bg-primary" : "bg-muted"
+                }`}
+              >
+                <span
+                  className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-background shadow transition-transform ${
+                    removeWatermark ? "translate-x-4" : "translate-x-0"
+                  }`}
+                />
+              </button>
+            </div>
+
+            <ul className="relative flex-1 space-y-2.5 mb-6">
+              {FEATURES.map((f) => (
+                <li key={f} className="flex items-start gap-2.5">
+                  <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
+                    <Check className="w-2.5 h-2.5" strokeWidth={3} />
+                  </span>
+                  <span className="font-mono text-xs md:text-sm text-muted-foreground">
+                    {f}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href="/about#contact"
+              onClick={handleContactClick}
+              className="relative group inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-primary text-primary-foreground font-mono text-xs uppercase tracking-widest overflow-hidden hover:glow-box transition-all"
+            >
+              <span className="relative z-10 inline-flex items-center gap-2">
+                Get SYNC — ${price}
+                <ArrowRight className="w-4 h-4" />
+              </span>
+              <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+            </a>
+          </motion.div>
         </div>
 
         <motion.p
