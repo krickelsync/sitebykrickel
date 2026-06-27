@@ -39,6 +39,9 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   }, [reduce]);
   const sales = Math.round(SALES_FROM + (SALES_TO - SALES_FROM) * salesP);
   const salesTrend = Math.round(SALES_TREND_TO * salesP);
+  const salesChartWidth = reduce ? 120 : Math.max(0, Math.min(120, 120 * salesP));
+  const salesDotX = 8 + 104 * salesP;
+  const salesDotY = 34 - 26 * salesP;
 
   // Conversion: 0% → 18.4% with trend 0% → 92%; bar width tracks trend.
   const CONV_TO = 18.4;
@@ -157,60 +160,64 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                 <TrendingUp size={10} /> {salesTrend}%
               </span>
             </div>
-            {/* Continuously scrolling waveform (seamless loop) */}
-            <svg viewBox="0 0 100 36" className="relative mt-2 w-full h-12" preserveAspectRatio="none">
+            {/* Rising sales chart — rebuilt as a contained left-to-right reveal (no scrolling overflow). */}
+            <svg viewBox="0 0 120 44" className="relative mt-3 w-full h-12 block" preserveAspectRatio="none">
               <defs>
-                <linearGradient id="spark1" x1="0" x2="0" y1="0" y2="1">
+                <linearGradient id="salesArea" x1="0" x2="0" y1="0" y2="1">
                   <stop offset="0%" stopColor={accent} stopOpacity="0.55" />
                   <stop offset="100%" stopColor={accent} stopOpacity="0" />
                 </linearGradient>
-                <linearGradient id="spark1Line" x1="0" x2="1" y1="0" y2="0">
-                  <stop offset="0%" stopColor={accent} stopOpacity="0.4" />
+                <linearGradient id="salesLine" x1="0" x2="1" y1="0" y2="0">
+                  <stop offset="0%" stopColor={accent} stopOpacity="0.25" />
+                  <stop offset="55%" stopColor={accent} stopOpacity="0.85" />
                   <stop offset="100%" stopColor={accent} stopOpacity="1" />
                 </linearGradient>
-                <clipPath id="spark1Clip">
-                  <rect x="0" y="0" width="100" height="36" />
+                <filter id="salesGlow" x="-20%" y="-60%" width="140%" height="220%">
+                  <feGaussianBlur stdDeviation="1.6" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <clipPath id="salesRevealClip">
+                  <rect
+                    x="0"
+                    y="0"
+                    width={salesChartWidth}
+                    height="44"
+                  />
                 </clipPath>
               </defs>
-              {[8, 18, 28].map((y) => (
-                <line key={y} x1="0" x2="100" y1={y} y2={y} stroke="hsl(0 0% 100% / 0.06)" strokeWidth="0.4" />
+              {[12, 22, 32].map((y) => (
+                <line key={y} x1="8" x2="112" y1={y} y2={y} stroke="hsl(0 0% 100% / 0.06)" strokeWidth="0.5" />
               ))}
-              {/* Two tiled copies that scroll seamlessly */}
-              <motion.g
-                clipPath="url(#spark1Clip)"
-                animate={reduce ? {} : { x: [0, -100] }}
-                transition={reduce ? {} : { duration: 8, repeat: Infinity, ease: "linear", repeatType: "loop" }}
-              >
-                {/* start-Y == end-Y so tiles join without a vertical "cliff" */}
-                {[0, 100].map((dx) => (
-                  <g key={dx} transform={`translate(${dx} 0)`}>
-                    <path
-                      d="M0,22 L12,16 L24,24 L36,12 L48,20 L60,8 L72,18 L84,14 L100,22 L100,36 L0,36 Z"
-                      fill="url(#spark1)"
-                    />
-                    <path
-                      d="M0,22 L12,16 L24,24 L36,12 L48,20 L60,8 L72,18 L84,14 L100,22"
-                      fill="none"
-                      stroke="url(#spark1Line)"
-                      strokeWidth="1.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </g>
-                ))}
-              </motion.g>
-              {/* Pulsing dot — pulled in from the edge so it isn't clipped */}
-              {!reduce && (
-                <motion.circle
-                  cx="96"
-                  cy="22"
-                  r="1.6"
-                  fill={accent}
-                  animate={{ r: [1.4, 2.4, 1.4], opacity: [1, 0.5, 1] }}
-                  transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-                  style={{ filter: `drop-shadow(0 0 5px ${accent})` }}
+              <g clipPath="url(#salesRevealClip)">
+                <motion.path
+                  d="M8,34 C18,33 21,30 30,29 C39,28 43,24 52,24 C62,24 66,19 74,19 C84,18 88,14 96,13 C103,12 107,10 112,8 L112,39 L8,39 Z"
+                  fill="url(#salesArea)"
+                  initial={{ opacity: 0.45 }}
+                  animate={reduce ? { opacity: 0.45 } : { opacity: [0.22, 0.48, 0.36] }}
+                  transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
                 />
-              )}
+                <path
+                  d="M8,34 C18,33 21,30 30,29 C39,28 43,24 52,24 C62,24 66,19 74,19 C84,18 88,14 96,13 C103,12 107,10 112,8"
+                  fill="none"
+                  stroke="url(#salesLine)"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  filter="url(#salesGlow)"
+                />
+                <motion.circle
+                  cx={salesDotX}
+                  cy={salesDotY}
+                  r="1.8"
+                  fill={accent}
+                  animate={reduce ? {} : { opacity: [0.75, 1, 0.75] }}
+                  transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+                  style={{ filter: `drop-shadow(0 0 6px ${accent})` }}
+                />
+              </g>
             </svg>
           </motion.div>
         </motion.div>
