@@ -17,6 +17,8 @@ const Hero = () => {
   const rotatingWords = useMemo(() => ["CLOTHING BRAND", "STREETWEAR", "DROPSHIPPER", "BARBERSHOP"], []);
   const [wordIndex, setWordIndex] = useState(0);
   const [inView, setInView] = useState(true);
+  const [reactorStage, setReactorStage] = useState<"idle" | "connect" | "transfer" | "activate" | "orbit">("idle");
+  const cardsRevealed = reactorStage === "activate" || reactorStage === "orbit";
   const magneticRef = useMagnetic<HTMLAnchorElement>(0.25);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -106,7 +108,7 @@ const Hero = () => {
           {/* Eyebrow */}
           <motion.div {...fadeUpDelay(0.2)} className="mb-6">
             <Suspense fallback={null}>
-              <ReactorHeroLayer />
+              <ReactorHeroLayer onStageChange={setReactorStage} />
             </Suspense>
             <span
               className="badge-rotating-shine badge-shine-sweep hero-trust-badge relative inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono text-[9.5px] md:text-[11px] text-foreground/90 tracking-[0.16em] uppercase overflow-hidden border border-white/10"
@@ -196,10 +198,23 @@ const Hero = () => {
         </div>
       </motion.div>
 
-      {/* Floating glass stat cards — parallax-only assets */}
-      <Suspense fallback={null}>
-        <HeroFloatingStats mx={mx} my={my} />
-      </Suspense>
+      {/* Floating glass stat cards — pop in only after reactor cable connects */}
+      <AnimatePresence>
+        {cardsRevealed && (
+          <motion.div
+            key="hero-stats"
+            initial={{ opacity: 0, scale: 0.6, filter: "blur(12px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, scale: 0.8, filter: "blur(8px)" }}
+            transition={{ type: "spring", stiffness: 220, damping: 22 }}
+            className="absolute inset-0 z-[4] pointer-events-none"
+          >
+            <Suspense fallback={null}>
+              <HeroFloatingStats mx={mx} my={my} />
+            </Suspense>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Tilted bottom marquee ribbon — lifted above mobile bottom nav */}
       <div
