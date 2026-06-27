@@ -177,7 +177,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         transition={{ duration: 0.5 }}
         className="space-y-3 min-w-0 lg:sticky lg:top-28"
       >
-        <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-border/60 bg-card/40 isolate">
+        <div className="relative w-full aspect-square lg:aspect-[4/3] rounded-2xl overflow-hidden border border-border/60 bg-card/40 isolate">
           <div className="absolute inset-0 bg-secondary/40 overflow-hidden">
             {active && (
               <motion.img
