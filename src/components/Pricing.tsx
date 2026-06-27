@@ -91,23 +91,23 @@ const Pricing = () => {
             className="relative overflow-hidden rounded-2xl border border-border/60 p-6 md:p-8 flex flex-col hover:border-primary/40 transition-colors duration-500 shadow-2xl"
           >
             {/* Background — same prism style as STUDIO-GRADE product hero */}
-            <div className="absolute inset-0 -z-10 rounded-2xl overflow-hidden pointer-events-none">
-              <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-pulse-glow" aria-hidden />
-              <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-accent/30 rounded-full blur-3xl animate-pulse-glow" aria-hidden />
-              <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(hsl(var(--foreground))_1px,transparent_1px),linear-gradient(90deg,hsl(var(--foreground))_1px,transparent_1px)] bg-[size:32px_32px]" />
+            <div className="absolute inset-0 z-0 rounded-2xl overflow-hidden pointer-events-none bg-background/40">
+              <div className="absolute -top-24 -left-24 w-[28rem] h-[28rem] bg-primary/40 rounded-full blur-3xl animate-pulse-glow" aria-hidden />
+              <div className="absolute -bottom-24 -right-24 w-[28rem] h-[28rem] bg-accent/40 rounded-full blur-3xl animate-pulse-glow" aria-hidden />
+              <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(hsl(var(--foreground))_1px,transparent_1px),linear-gradient(90deg,hsl(var(--foreground))_1px,transparent_1px)] bg-[size:32px_32px]" />
             </div>
 
-            <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary text-primary-foreground font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] shadow-lg">
+            <span className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary text-primary-foreground font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] shadow-lg">
               <Sparkles className="w-3 h-3" /> Most Popular
             </span>
 
-            <div className="relative text-center pb-5 mb-5 border-b border-border/50">
+            <div className="relative z-10 text-center pb-5 mb-5 border-b border-border/50">
               {/* Giant custom Shopify logo to the right of price */}
               <img
                 src={shopifyBadge.url}
                 alt=""
                 aria-hidden="true"
-                className="pointer-events-none select-none absolute -right-6 md:-right-10 top-1/2 -translate-y-1/2 h-44 md:h-64 w-auto opacity-40 drop-shadow-[0_8px_28px_hsl(var(--primary)/0.5)]"
+                className="pointer-events-none select-none absolute -right-4 md:-right-8 top-1/2 -translate-y-1/2 h-44 md:h-64 w-auto opacity-60 drop-shadow-[0_10px_30px_hsl(var(--primary)/0.6)]"
               />
               <span className="font-mono text-[10px] md:text-xs text-primary uppercase tracking-[0.2em]">
                 SYNC Premium Theme
