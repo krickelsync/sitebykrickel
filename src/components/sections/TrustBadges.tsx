@@ -53,8 +53,8 @@ const badges = [
 
 const TrustBadges = () => {
   return (
-    <section className="relative py-12 md:py-16 px-4 md:px-8 border-t border-border/40">
-      <div className="max-w-5xl mx-auto grid grid-cols-4 gap-3 md:gap-6">
+    <section className="relative py-16 md:py-20 border-t border-border/40">
+      <div className="container mx-auto px-6 md:px-8 max-w-5xl grid grid-cols-4 gap-3 md:gap-6">
         {badges.map((b) => (
           <div
             key={b.label}
