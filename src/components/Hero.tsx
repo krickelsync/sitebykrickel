@@ -7,8 +7,6 @@ import { useMagnetic } from "@/hooks/useMagnetic";
 import { useMouseParallax } from "@/hooks/useMouseParallax";
 import { useLowPower } from "@/hooks/useLowPower";
 import { fadeUpDelay } from "@/lib/motion";
-import shopifyBadge from "@/assets/shopify-badge.png";
-
 // Lazy-load floating stats so they never block first paint
 const HeroFloatingStats = lazy(() => import("./HeroFloatingStats"));
 const ReactorHeroLayer = lazy(() => import("./sections/reactor/ReactorHeroLayer"));
@@ -64,7 +62,7 @@ const Hero = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return <section ref={sectionRef} aria-labelledby="hero-heading" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20 pb-24">
+  return <section ref={sectionRef} aria-labelledby="hero-heading" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-12 pb-20 md:pt-14 md:pb-24">
       {/* Liquid Chrome Background - z-index 0 (pure CSS, zero GPU) */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 pointer-events-none bg-background">
         <div className="hero-prism-fallback h-full w-full overflow-hidden" />
@@ -105,14 +103,13 @@ const Hero = () => {
         >
         <div className="max-w-[min(92vw,74rem)] mx-auto text-center">
           {/* Eyebrow */}
-          <motion.div {...fadeUpDelay(0.2)} className="mb-8">
+          <motion.div {...fadeUpDelay(0.2)} className="mb-6">
             <Suspense fallback={null}>
               <ReactorHeroLayer onStageChange={setReactorStage} />
             </Suspense>
             <span
               className="badge-rotating-shine badge-shine-sweep hero-trust-badge relative inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono text-[9.5px] md:text-[11px] text-foreground/90 tracking-[0.16em] uppercase overflow-hidden border border-white/10"
             >
-              <img src={shopifyBadge} alt="Shopify" className="relative z-[3] w-3.5 h-3.5 md:w-4 md:h-4 shrink-0 object-contain" />
               <span className="relative z-[3] whitespace-nowrap">
                 Trusted by <span className="font-bold" style={{ color: "hsl(45 100% 60%)" }}>1,900+</span> Brands
               </span>
@@ -125,7 +122,7 @@ const Hero = () => {
           <motion.h1
             {...fadeUpDelay(0.3, 0.8)}
             id="hero-heading"
-            className="font-syne text-[clamp(1.55rem,7.2vw,4.9rem)] font-extrabold uppercase leading-[0.92] tracking-normal mb-7 text-center px-2 sm:px-0"
+            className="font-syne text-[clamp(1.55rem,7.2vw,4.9rem)] font-extrabold uppercase leading-[0.92] tracking-normal mb-5 md:mb-6 text-center px-2 sm:px-0"
           >
             <span className="flex items-center justify-center gap-3 whitespace-nowrap hover-lift text-center">
               <span>THEMES</span>
@@ -154,7 +151,7 @@ const Hero = () => {
           {/* Sub-headline */}
           <motion.p
             {...fadeUpDelay(0.5)}
-            className="font-mono text-[11px] sm:text-sm md:text-base text-muted-foreground max-w-xs sm:max-w-xl md:max-w-2xl mx-auto mb-12 leading-relaxed md:leading-loose tracking-wide px-4 sm:px-0"
+            className="font-mono text-[11px] sm:text-sm md:text-base text-muted-foreground max-w-xs sm:max-w-xl md:max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed md:leading-loose tracking-wide px-4 sm:px-0"
           >
             Build your store in <span className="text-primary">minutes</span> with a
             high-performance Shopify theme
