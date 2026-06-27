@@ -95,11 +95,6 @@ const Hero = () => {
         />
       </div>
 
-      {/* Reactor visual layer (between background and headline) */}
-      <Suspense fallback={null}>
-        <ReactorHeroLayer onStageChange={setReactorStage} />
-      </Suspense>
-
       <motion.div
         style={{ y: headlineY, opacity: contentOpacity }}
         className="container relative z-10 px-5 sm:px-4 transition-opacity duration-500"
@@ -111,6 +106,9 @@ const Hero = () => {
         <div className="max-w-[min(92vw,74rem)] mx-auto text-center">
           {/* Eyebrow */}
           <motion.div {...fadeUpDelay(0.2)} className="mb-8">
+            <Suspense fallback={null}>
+              <ReactorHeroLayer onStageChange={setReactorStage} />
+            </Suspense>
             <span
               className="badge-rotating-shine badge-shine-sweep hero-trust-badge relative inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono text-[9.5px] md:text-[11px] text-foreground/90 tracking-[0.16em] uppercase overflow-hidden border border-white/10"
             >
