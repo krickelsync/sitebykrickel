@@ -11,7 +11,6 @@ const MobileFirstSection = lazy(() => import("@/components/sections/MobileFirstS
 const CustomizationSection = lazy(() => import("@/components/sections/CustomizationSection"));
 const CostComparison = lazy(() => import("@/components/sections/CostComparison"));
 const TrustBadges = lazy(() => import("@/components/sections/TrustBadges"));
-const ReactorHero = lazy(() => import("@/components/sections/ReactorHero"));
 const ServicesAddon = lazy(() => import("@/components/sections/ServicesAddon"));
 const FinalCTA = lazy(() => import("@/components/sections/FinalCTA"));
 const Pricing = lazy(() => import("@/components/Pricing"));
@@ -35,9 +34,6 @@ const Index = () => {
       <Marquee />
       <Suspense fallback={<SectionLoader />}>
         <TrustBadges />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <ReactorHero />
       </Suspense>
       <Suspense fallback={<SectionLoader />}>
         <ProblemSection />
