@@ -15,6 +15,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
   const lowPower = useLowPower();
   const [stage, setStage] = useState<Stage>("idle");
   const [burst, setBurst] = useState(0);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const controls = useAnimation();
   const timers = useRef<number[]>([]);
 
@@ -22,6 +23,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
 
   const runSequence = useCallback(() => {
     if (stage !== "idle") return;
+    setHasInteracted(true);
     timers.current.forEach(window.clearTimeout);
     timers.current = [];
     setStage("connect");
@@ -44,12 +46,6 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
   }, [stage, reduce, lowPower]);
 
   useEffect(() => {
-    if (stage !== "idle") return;
-    const id = window.setTimeout(runSequence, 450);
-    return () => window.clearTimeout(id);
-  }, [runSequence, stage]);
-
-  useEffect(() => {
     if (stage !== "activate") return;
     setBurst((b) => b + 1);
     controls.start({ x: [0, -2, 2, -1, 0], transition: { duration: 0.4 } });
@@ -59,7 +55,17 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
     <div className="relative z-20 mx-auto mb-0 flex w-full justify-center">
       <motion.div
         animate={controls}
-        className="relative h-[80px] w-[280px] select-none"
+        role="button"
+        tabIndex={0}
+        aria-label="Activate Shopify connection animation"
+        onClick={runSequence}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            runSequence();
+          }
+        }}
+        className="relative h-[80px] w-[280px] cursor-pointer select-none touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         style={{ perspective: 900 }}
       >
         <svg
@@ -80,7 +86,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             </filter>
           </defs>
           <motion.path
-            d="M 68 40 C 108 22, 164 58, 204 40"
+            d="M 86 40 C 122 22, 150 58, 174 40"
             stroke="hsl(var(--foreground) / 0.18)"
             strokeWidth="7"
             strokeLinecap="round"
@@ -90,7 +96,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             transition={{ duration: reduce || lowPower ? 0.25 : 0.65, ease: "easeInOut" }}
           />
           <motion.path
-            d="M 68 40 C 108 22, 164 58, 204 40"
+            d="M 86 40 C 122 22, 150 58, 174 40"
             stroke="url(#rhlCableStroke)"
             strokeWidth="3"
             strokeLinecap="round"
@@ -102,9 +108,9 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           />
           {stage !== "idle" && (
             <>
-              <motion.circle cx="68" cy="40" r="3.5" fill="hsl(140 80% 55%)" filter="url(#rhlCableGlow)"
+              <motion.circle cx="86" cy="40" r="3.5" fill="hsl(140 80% 55%)" filter="url(#rhlCableGlow)"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} />
-              <motion.circle cx="204" cy="40" r="4.5" fill="hsl(45 100% 65%)" filter="url(#rhlCableGlow)"
+              <motion.circle cx="174" cy="40" r="4.5" fill="hsl(45 100% 65%)" filter="url(#rhlCableGlow)"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: stage === "connect" ? 0 : 1, scale: stage === "connect" ? 0 : 1 }}
                 transition={{ duration: 0.25 }} />
@@ -120,7 +126,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
               animate={{ opacity: [0, 1, 1, 0] }}
               transition={{ duration: 1.2, ease: "easeInOut" }}
               style={{
-                offsetPath: "path('M 68 40 C 108 22, 164 58, 204 40')",
+                offsetPath: "path('M 86 40 C 122 22, 150 58, 174 40')",
                 animation: "reactor-pulse-travel 1.2s ease-in-out",
               } as React.CSSProperties}
             />
@@ -206,6 +212,17 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
               )}
             </motion.div>
           </div>
+
+          {hasInteracted && stage === "idle" && (
+            <motion.span
+              aria-hidden="true"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-8 font-mono text-[8px] uppercase tracking-[0.24em] text-primary/75"
+              animate={reduce ? undefined : { opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 1.8, repeat: Infinity }}
+            >
+              Tap
+            </motion.span>
+          )}
 
           {stage === "orbit" && REACTOR_FEATURES.map((item, i) => {
             const angle = (i / REACTOR_FEATURES.length) * 360;
