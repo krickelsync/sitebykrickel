@@ -176,7 +176,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
               </span>
             </div>
             {/* Rising sales chart — rebuilt as a contained left-to-right reveal (no scrolling overflow). */}
-            <svg viewBox="0 0 120 44" className="relative mt-2 sm:mt-3 -mx-3 sm:-mx-4 w-[calc(100%+1.5rem)] sm:w-[calc(100%+2rem)] h-10 sm:h-12 block overflow-visible" preserveAspectRatio="none">
+            <svg viewBox="0 4 120 36" className="relative mt-2 sm:mt-3 -mx-3 sm:-mx-4 w-[calc(100%+1.5rem)] sm:w-[calc(100%+2rem)] h-10 sm:h-12 block overflow-visible" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="salesArea" x1="0" x2="0" y1="0" y2="1">
                   <stop offset="0%" stopColor={accent} stopOpacity="0.55" />
