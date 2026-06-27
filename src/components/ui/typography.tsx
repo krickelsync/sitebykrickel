@@ -6,14 +6,24 @@ import type { ElementType, HTMLAttributes, ReactNode } from "react";
  * across desktop & mobile. Use these instead of ad-hoc font classes
  * so headings, taglines, body, and labels stay visually balanced.
  *
- * Scale (modular 1.333):
- *   Display  → hero page titles
- *   H1       → section / product titles
- *   H2 / H3  → sub-sections
- *   Tagline  → editorial accent line under a title
- *   Body     → paragraph text (mono)
- *   Eyebrow  → small uppercase label / meta
- *   Price    → numeric display
+ * GLOBAL GUIDELINE (locked to the Pricing card scale the user approved):
+ *   Display  → 32 → 56px   (hero headlines only)
+ *   H1       → 24 → 44px   (section titles — "ONE THEME.")
+ *   H2       → 20 → 32px   (card / block titles)
+ *   H3       → 16 → 20px   (sub-blocks, "SYNC Theme")
+ *   Body     → 13 → 14px   (feature lists, descriptions)
+ *   BodyLg   → 14 → 15px   (lead paragraphs)
+ *   UI label → 13 → 14px   (buttons, toggles)
+ *   Meta     → 11 → 12px   (hints under labels)
+ *   Eyebrow  → 10 → 11px   uppercase tracking 0.2em (chips, category labels)
+ *   Micro    → 10px        (mono ticker labels)
+ *   Price    → 36 → 48px   (numeric display)
+ *
+ * Mobile-first: every token uses clamp() so the mobile floor stays
+ * tight & legible like the reference, and desktop scales up smoothly
+ * without breakpoint jumps. Do NOT hand-tune `text-*` per component
+ * — pull from `typography` / `textSize` so the whole site stays in
+ * sync with this scale.
  */
 
 type Props<T extends ElementType> = {
@@ -27,28 +37,26 @@ const baseDisplay = "font-display font-extrabold uppercase break-words";
 const baseHeading = "font-display font-bold uppercase";
 
 export const typography = {
-  // Fluid type — clamp(min, preferred, max). Mobile stays readable while
-  // desktop scales up smoothly without breakpoint jumps.
   display:
-    "text-[clamp(2rem,5.5vw,4.75rem)] leading-[0.95] tracking-[-0.035em]",
+    "text-[clamp(2rem,5.5vw,3.5rem)] leading-[0.95] tracking-[-0.035em]",
   h1:
     "text-[clamp(1.5rem,3.6vw,2.75rem)] leading-[1] tracking-[-0.03em]",
   h2:
-    "text-[clamp(1.25rem,2.8vw,2.25rem)] leading-[1.1] tracking-[-0.02em]",
+    "text-[clamp(1.25rem,2.4vw,2rem)] leading-[1.1] tracking-[-0.02em]",
   h3:
-    "text-[clamp(1.0625rem,1.9vw,1.5rem)] leading-tight tracking-tight",
+    "text-[clamp(1rem,1.4vw,1.25rem)] leading-tight tracking-tight",
   tagline:
     "font-sans italic font-medium text-[clamp(0.8125rem,1.1vw,1rem)] leading-snug text-primary/90",
   body:
-    "font-sans text-[clamp(0.875rem,1.05vw,0.9375rem)] leading-[1.65] text-muted-foreground",
+    "font-sans text-[clamp(0.8125rem,0.95vw,0.875rem)] leading-[1.55] text-muted-foreground",
   bodyLg:
-    "font-sans text-[clamp(0.9375rem,1.15vw,1rem)] leading-[1.65] text-muted-foreground",
+    "font-sans text-[clamp(0.875rem,1.05vw,0.9375rem)] leading-[1.6] text-muted-foreground",
   eyebrow:
-    "font-sans font-semibold uppercase text-[clamp(0.625rem,0.8vw,0.6875rem)] tracking-[0.2em] text-muted-foreground",
+    "font-mono uppercase text-[clamp(0.625rem,0.75vw,0.6875rem)] tracking-[0.2em] text-muted-foreground",
   meta:
-    "font-sans text-[clamp(0.6875rem,0.85vw,0.75rem)] tracking-wide text-muted-foreground",
+    "font-mono text-[clamp(0.6875rem,0.8vw,0.75rem)] tracking-wide text-muted-foreground",
   price:
-    "font-sans font-bold text-primary text-[clamp(1rem,1.6vw,1.25rem)] leading-none",
+    "font-syne font-bold text-foreground text-[clamp(2.25rem,4vw,3rem)] leading-none tracking-[-0.02em]",
 } as const;
 
 /**
@@ -58,13 +66,13 @@ export const typography = {
  */
 export const textSize = {
   /** Micro UI labels: pill badges, trust row, eyebrow chips. */
-  micro: "text-[clamp(0.625rem,0.78vw,0.6875rem)]",
+  micro: "text-[clamp(0.625rem,0.7vw,0.6875rem)]",
   /** Small UI text: rating count, line-through price, captions. */
-  small: "text-[clamp(0.6875rem,0.9vw,0.75rem)]",
+  small: "text-[clamp(0.6875rem,0.8vw,0.75rem)]",
   /** Default UI text: button labels, secondary copy. */
-  ui: "text-[clamp(0.8125rem,1vw,0.875rem)]",
+  ui: "text-[clamp(0.8125rem,0.95vw,0.875rem)]",
   /** Prominent inline numerics / lead labels. */
-  lead: "text-[clamp(0.875rem,1.1vw,1rem)]",
+  lead: "text-[clamp(0.875rem,1vw,0.9375rem)]",
 } as const;
 
 export function Display<T extends ElementType = "h1">({ as, className, children, ...rest }: Props<T>) {
