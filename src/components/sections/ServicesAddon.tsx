@@ -12,8 +12,8 @@ const services = [
 const ServicesAddon = () => {
   const onClick = useContactScroll();
   return (
-    <section className="py-14 md:py-32 border-t border-border">
-      <div className="container px-4">
+    <section className="py-20 md:py-28 border-t border-border">
+      <div className="container mx-auto px-6 md:px-8">
         <SectionHeader
           eyebrow="SERVICES"
           title="NEED HELP"

@@ -2,8 +2,8 @@ import SectionHeader from "@/components/shared/SectionHeader";
 import { motion } from "framer-motion";
 
 const MobileFirstSection = () => (
-  <section className="py-14 md:py-32 border-t border-border">
-    <div className="container px-4 max-w-4xl">
+  <section className="py-20 md:py-28 border-t border-border">
+    <div className="container mx-auto px-6 md:px-8 max-w-4xl">
       <SectionHeader
         eyebrow="MOBILE-FIRST"
         title="BUILT FOR THE WAY"
