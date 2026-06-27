@@ -267,16 +267,16 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           style={{ perspective: 900 }}
         >
           <motion.div
-            className={`${cardBase} flex items-center gap-3`}
+            className={`${cardBase} flex flex-col items-start gap-3 w-[120px]`}
             style={{ ...cardStyle, rotateX: blRX, rotateY: blRY, transformStyle: "preserve-3d" }}
             whileHover={reduce ? {} : { scale: 1.04 }}
           >
-          <div className="grid place-items-center w-9 h-9 rounded-lg border" style={{ borderColor: accent, color: accent }}>
-            <Smartphone size={16} />
+          <div className="grid place-items-center w-10 h-10 rounded-lg border" style={{ borderColor: accent, color: accent }}>
+            <Smartphone size={18} />
           </div>
           <div>
             <div className="font-syne text-sm font-bold uppercase text-white leading-none">Fully</div>
-            <div className="font-syne text-sm font-bold uppercase text-white leading-tight">Responsive</div>
+            <div className="font-syne text-sm font-bold uppercase text-white leading-tight mt-1">Responsive</div>
           </div>
           </motion.div>
         </motion.div>
@@ -297,21 +297,21 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           style={{ perspective: 900 }}
         >
           <motion.div
-            className={`${cardBase} flex items-center gap-3`}
+            className={`${cardBase} flex flex-col items-start gap-3 w-[120px]`}
             style={{ ...cardStyle, rotateX: brRX, rotateY: brRY, transformStyle: "preserve-3d" }}
             whileHover={reduce ? {} : { scale: 1.04 }}
           >
           <motion.div
             animate={reduce ? {} : { scale: [1, 1.15, 1], filter: ["drop-shadow(0 0 0px " + accent + ")", "drop-shadow(0 0 12px " + accent + ")", "drop-shadow(0 0 0px " + accent + ")"] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="grid place-items-center w-9 h-9 rounded-lg border shrink-0"
+            className="grid place-items-center w-10 h-10 rounded-lg border shrink-0"
             style={{ color: accent, borderColor: accent }}
           >
-            <Zap size={16} fill={accent} />
+            <Zap size={18} fill={accent} />
           </motion.div>
           <div>
             <div className="font-syne text-sm font-bold uppercase text-white leading-none">Fast Loading</div>
-            <div className="font-syne text-sm font-bold uppercase text-white leading-tight">Speed</div>
+            <div className="font-syne text-sm font-bold uppercase text-white leading-tight mt-1">Speed</div>
           </div>
           </motion.div>
         </motion.div>
