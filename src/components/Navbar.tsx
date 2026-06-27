@@ -114,30 +114,32 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           </div>
 
           {/* Mobile trigger pill */}
-          <div className="flex md:hidden items-center gap-1 navbar-pill menu-rotating-glow h-12 px-2">
-            <ThemeToggle />
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 min-h-10 min-w-10 inline-flex items-center justify-center rounded-full hover:bg-foreground/5 transition-colors"
-              aria-label={isOpen ? "Close menu" : "Open menu"}
-              aria-expanded={isOpen}
-              aria-controls="mobile-nav"
-            >
-              <HamburgerIcon isOpen={isOpen} />
-            </button>
+          <div className="relative flex md:hidden items-center">
+            <div className="flex items-center gap-1 navbar-pill menu-rotating-glow h-12 px-2">
+              <ThemeToggle />
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2 min-h-10 min-w-10 inline-flex items-center justify-center rounded-full hover:bg-foreground/5 transition-colors"
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isOpen}
+                aria-controls="mobile-nav"
+              >
+                <HamburgerIcon isOpen={isOpen} />
+              </button>
+            </div>
+
+            <MobileMenu
+              isOpen={isOpen}
+              links={navLinks}
+              isActive={isActive}
+              onAnchorClick={handleNavClick}
+              onClose={() => setIsOpen(false)}
+              ctaText={finalCtaText}
+              ctaHref={finalCtaHref}
+              onCtaClick={onCtaClick}
+            />
           </div>
         </div>
-
-        <MobileMenu
-          isOpen={isOpen}
-          links={navLinks}
-          isActive={isActive}
-          onAnchorClick={handleNavClick}
-          onClose={() => setIsOpen(false)}
-          ctaText={finalCtaText}
-          ctaHref={finalCtaHref}
-          onCtaClick={onCtaClick}
-        />
       </div>
     </motion.nav>
   );
