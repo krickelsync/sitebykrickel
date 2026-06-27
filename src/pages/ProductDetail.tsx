@@ -218,14 +218,14 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         className="min-w-0 lg:pt-2"
       >
         {/* Meta row */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] md:text-[11px] font-mono font-bold uppercase tracking-[0.18em] bg-primary/10 text-primary border border-primary/30 rounded-full">
+        <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-2 mb-4 md:mb-6">
+          <span className="inline-flex items-center gap-1.5 px-2 md:px-2.5 py-0.5 md:py-1 text-[9px] md:text-[11px] font-mono font-bold uppercase tracking-[0.18em] bg-primary/10 text-primary border border-primary/30 rounded-full">
             <Sparkles className="w-3 h-3" /> Just released
           </span>
-          <div className="inline-flex items-center gap-1.5 text-[12px] md:text-[13px]" aria-label="Rated 4.9 out of 5">
+          <div className="inline-flex items-center gap-1.5 text-[11px] md:text-[13px]" aria-label="Rated 4.9 out of 5">
             <div className="flex text-primary">
               {[0, 1, 2, 3, 4].map((i) => (
-                <Star key={i} className="w-3 h-3 fill-current" />
+                <Star key={i} className="w-2.5 h-2.5 md:w-3 md:h-3 fill-current" />
               ))}
             </div>
             <span className="font-mono font-semibold">4.9</span>
@@ -233,17 +233,31 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
           </div>
         </div>
 
-        <H1 className="mb-5">{product.title}</H1>
+        <H1 className="mb-3 md:mb-5">{product.title}</H1>
 
+        {/* Tagline + description: hidden on mobile to declutter, shown on md+ */}
         {product.tagline && (
-          <Tagline className="mb-4 max-w-lg">{product.tagline}</Tagline>
+          <Tagline className="hidden md:block mb-4 max-w-lg">{product.tagline}</Tagline>
         )}
         {product.description && (
-          <Body className="mb-7 max-w-md">{product.description}</Body>
+          <Body className="hidden md:block mb-7 max-w-md">{product.description}</Body>
         )}
 
-        {/* License card */}
-        <div className="mb-5">
+        {/* Mobile-only compact price row */}
+        <div className="md:hidden flex items-baseline gap-2 mb-4">
+          <Price as="span">${product.price}</Price>
+          {hasDiscount && (
+            <>
+              <Meta as="span" className="line-through">${product.original_price}</Meta>
+              <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full bg-destructive text-destructive-foreground">
+                -{discountPct}% OFF
+              </span>
+            </>
+          )}
+        </div>
+
+        {/* License card — desktop only (mobile uses compact price row above) */}
+        <div className="hidden md:block mb-5">
           <Eyebrow as="p" className="block mb-2.5">License</Eyebrow>
           <div className="relative rounded-2xl border-2 border-primary bg-primary/[0.06] py-3 pl-3.5 pr-4 md:py-3.5 md:pl-4 md:pr-5 flex items-center justify-between gap-3 md:gap-4">
             {hasDiscount && (
@@ -287,7 +301,15 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         {/* Live demo button removed until a real demo URL exists per product. */}
         </div>
 
-        <div className="mt-7 pt-6 border-t border-border/60 grid grid-cols-3 gap-3">
+        {/* Mobile: single inline trust row */}
+        <div className="md:hidden mt-4 flex items-center justify-between gap-2 text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
+          <span className="inline-flex items-center gap-1.5"><InfinityIcon className="w-3 h-3 text-primary" /> Lifetime</span>
+          <span className="inline-flex items-center gap-1.5"><RefreshCw className="w-3 h-3 text-primary" /> Updates</span>
+          <span className="inline-flex items-center gap-1.5"><Zap className="w-3 h-3 text-primary" /> Instant</span>
+        </div>
+
+        {/* Desktop: full trust badge grid */}
+        <div className="hidden md:grid mt-7 pt-6 border-t border-border/60 grid-cols-3 gap-3">
           <TrustBadge icon={<RefreshCw className="w-4 h-4" />} title="Free updates" desc="Every update, on the house." />
           <TrustBadge icon={<InfinityIcon className="w-4 h-4" />} title="No subscription" desc="Pay once, lifetime access." />
           <TrustBadge icon={<Zap className="w-4 h-4" />} title="Instant delivery" desc="Download right after purchase." />
