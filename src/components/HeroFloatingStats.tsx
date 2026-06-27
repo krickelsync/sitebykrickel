@@ -243,12 +243,20 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
               <TrendingUp size={10} /> {convTrend}%
             </span>
           </div>
-          <div className="h-1.5 w-32 rounded-full bg-white/10 overflow-hidden">
-            <motion.div
-              animate={{ width: barWidth }}
-              transition={{ duration: 1.2, ease: "easeInOut" }}
+          <div
+            className="h-1.5 w-32 rounded-full bg-white/10 overflow-hidden"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={CONV_TREND_TO}
+            aria-valuenow={convTrend}
+            aria-label="Conversion trend"
+          >
+            <div
               className="h-full rounded-full"
-              style={{ background: `linear-gradient(90deg, ${accent}, hsl(45 100% 60%))` }}
+              style={{
+                width: barWidth,
+                background: `linear-gradient(90deg, ${accent}, hsl(45 100% 60%))`,
+              }}
             />
           </div>
           </motion.div>
