@@ -28,8 +28,8 @@ const rows: Row[] = [
 
 const CostComparison = () => {
   return (
-    <section className="relative py-20 md:py-28 px-4 md:px-8 border-t border-border/40">
-      <div className="max-w-4xl mx-auto">
+    <section className="relative py-20 md:py-28 border-t border-border/40">
+      <div className="container mx-auto px-6 md:px-8 max-w-4xl">
         <SectionHeader
           eyebrow="Cost Breakdown"
           title="Better, faster"
