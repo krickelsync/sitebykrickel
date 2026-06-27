@@ -40,8 +40,23 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   const sales = Math.round(SALES_FROM + (SALES_TO - SALES_FROM) * salesP);
   const salesTrend = Math.round(SALES_TREND_TO * salesP);
   const salesChartWidth = reduce ? 120 : Math.max(0, Math.min(120, 120 * salesP));
-  const salesDotX = 8 + 104 * salesP;
-  const salesDotY = 34 - 26 * salesP;
+  // Sharp zigzag points — overall trending up, angular (kaku), not wavy.
+  const ZIG_PTS: [number, number][] = [
+    [8, 36], [20, 28], [28, 32], [40, 22], [50, 26],
+    [62, 16], [72, 20], [84, 12], [96, 15], [112, 6],
+  ];
+  const ZIG_PATH = ZIG_PTS.map((p, i) => `${i === 0 ? "M" : "L"}${p[0]},${p[1]}`).join(" ");
+  const ZIG_AREA = `${ZIG_PATH} L112,39 L8,39 Z`;
+  const getZigXY = (p: number): [number, number] => {
+    const x = 8 + 104 * p;
+    for (let i = 0; i < ZIG_PTS.length - 1; i++) {
+      const [x1, y1] = ZIG_PTS[i];
+      const [x2, y2] = ZIG_PTS[i + 1];
+      if (x <= x2) return [x, y1 + ((y2 - y1) * (x - x1)) / (x2 - x1)];
+    }
+    return ZIG_PTS[ZIG_PTS.length - 1];
+  };
+  const [salesDotX, salesDotY] = getZigXY(salesP);
 
   // Conversion: 0% → 18.4% with trend 0% → 92%; bar width tracks trend.
   const CONV_TO = 18.4;
