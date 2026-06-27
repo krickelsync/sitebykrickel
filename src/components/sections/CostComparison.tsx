@@ -1,111 +1,138 @@
-import { Zap, DollarSign, Check, X } from "lucide-react";
+import {
+  GalleryHorizontalEnd,
+  Palette,
+  LayoutTemplate,
+  Menu,
+  Blocks,
+  TimerReset,
+  Hourglass,
+  Megaphone,
+} from "lucide-react";
 import SectionHeader from "@/components/shared/SectionHeader";
 
-const thirdPartyApps = [
-  { name: "Page Builder app", price: 29 },
-  { name: "Reviews app", price: 15 },
-  { name: "Upsell / Bundles app", price: 24 },
-  { name: "Sticky Cart app", price: 12 },
-  { name: "Countdown / Urgency app", price: 10 },
-  { name: "Custom Fonts & Animations", price: 9 },
-];
+type Row = {
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  gradient: string;
+  name: string;
+  desc: string;
+  price: string;
+};
 
-const totalApps = thirdPartyApps.reduce((s, a) => s + a.price, 0);
+const rows: Row[] = [
+  {
+    icon: GalleryHorizontalEnd,
+    gradient: "from-indigo-500 to-violet-600",
+    name: "Image Sliders & Carousels",
+    desc: "Create swipeable product, image, video & testimonial sliders",
+    price: "$29.99",
+  },
+  {
+    icon: Palette,
+    gradient: "from-pink-500 via-orange-400 to-amber-300",
+    name: "Product Color Swatch & Variants",
+    desc: "Custom swatches for product variants",
+    price: "$20",
+  },
+  {
+    icon: LayoutTemplate,
+    gradient: "from-sky-500 to-blue-600",
+    name: "Expensive Page Builders",
+    desc: "Stop spending monthly for expensive page builders",
+    price: "$468/yr",
+  },
+  {
+    icon: Menu,
+    gradient: "from-rose-500 to-fuchsia-600",
+    name: "Mega Menu & Navigation",
+    desc: "Easily add a mega menu for better navigation",
+    price: "$9.99",
+  },
+  {
+    icon: Blocks,
+    gradient: "from-emerald-500 to-green-600",
+    name: "Reusable Sections & Blocks",
+    desc: "Drag & drop blocks for your Shopify store",
+    price: "$9.99",
+  },
+  {
+    icon: TimerReset,
+    gradient: "from-blue-400 to-cyan-500",
+    name: "Countdown Timers",
+    desc: "Create urgency on product pages & promotional sections",
+    price: "$29.99",
+  },
+  {
+    icon: Hourglass,
+    gradient: "from-zinc-400 to-zinc-700",
+    name: "Product Page Metadata Options",
+    desc: "Branded badges & rich PDP information blocks",
+    price: "$9.99",
+  },
+  {
+    icon: Megaphone,
+    gradient: "from-yellow-300 to-amber-500",
+    name: "Announcement Bars & Pop-ups",
+    desc: "High-converting announcements, pop-ups & cross-offers",
+    price: "$14.99",
+  },
+];
 
 const CostComparison = () => {
   return (
     <section className="relative py-20 md:py-28 px-4 md:px-8 border-t border-border/40">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <SectionHeader
           eyebrow="Cost Breakdown"
           title="Better, faster"
-          accent="& cheaper."
+          accent="& cheaper. Period."
         />
         <p className="text-center -mt-10 mb-12 max-w-2xl mx-auto text-sm md:text-base text-muted-foreground">
-          Every extra app eats speed and money. SYNC gives you everything in one streamlined, cost-saving solution.
+          Every extra app eats speed and money. SYNC gives you everything in
+          one streamlined, cost-saving solution.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8 mt-12">
-          {/* Without SYNC */}
-          <div className="relative rounded-2xl border border-border/60 bg-card/40 backdrop-blur-sm p-6 md:p-8">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 rounded-full bg-destructive/10 flex items-center justify-center">
-                <X className="w-4 h-4 text-destructive" strokeWidth={2.5} />
-              </div>
-              <h3 className="font-syne text-lg md:text-xl font-bold uppercase tracking-wide">
-                Without SYNC
-              </h3>
-            </div>
-
-            <ul className="space-y-3 mb-6">
-              {thirdPartyApps.map((app) => (
-                <li
-                  key={app.name}
-                  className="flex items-center justify-between text-sm md:text-base py-2 border-b border-border/30 last:border-0"
+        <div className="rounded-2xl border border-border/60 bg-card/40 backdrop-blur-sm overflow-hidden shadow-[0_0_60px_-30px_hsl(var(--primary)/0.3)]">
+          <ul className="divide-y divide-border/40">
+            {rows.map(({ icon: Icon, gradient, name, desc, price }) => (
+              <li
+                key={name}
+                className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-4 md:py-5"
+              >
+                <div
+                  className={`shrink-0 w-10 h-10 md:w-11 md:h-11 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-md`}
                 >
-                  <span className="text-muted-foreground">{app.name}</span>
-                  <span className="font-mono text-foreground/80">
-                    ${app.price}<span className="text-xs text-muted-foreground">/mo</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
+                  <Icon className="w-5 h-5 text-white" strokeWidth={2.2} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-syne font-bold text-sm md:text-base leading-tight truncate">
+                    {name}
+                  </p>
+                  <p className="text-xs md:text-sm text-muted-foreground truncate">
+                    {desc}
+                  </p>
+                </div>
+                <span className="shrink-0 font-mono text-sm md:text-base text-foreground/90 tabular-nums">
+                  {price}
+                </span>
+              </li>
+            ))}
+          </ul>
 
-            <div className="flex items-center justify-between pt-4 border-t border-border/60">
-              <span className="font-syne font-bold uppercase text-sm tracking-wider">
-                Monthly cost
-              </span>
-              <span className="font-syne text-2xl md:text-3xl font-bold text-destructive">
-                ${totalApps}<span className="text-sm text-muted-foreground font-normal">/mo</span>
-              </span>
-            </div>
-
-            <p className="mt-4 text-xs text-muted-foreground flex items-center gap-2">
-              <Zap className="w-3 h-3" /> Slower store · heavier code · recurring fees
-            </p>
-          </div>
-
-          {/* With SYNC */}
-          <div className="relative rounded-2xl border border-primary/40 bg-gradient-to-br from-primary/5 via-card/60 to-card/40 backdrop-blur-sm p-6 md:p-8 shadow-[0_0_60px_-20px_hsl(var(--primary)/0.4)]">
-            <div className="absolute top-4 right-4 px-2 py-1 rounded-full bg-primary/15 border border-primary/30 text-[10px] font-syne font-bold uppercase tracking-wider text-primary">
-              Recommended
-            </div>
-
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center">
-                <Check className="w-4 h-4 text-primary" strokeWidth={2.5} />
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-4 md:px-6 py-5 border-t border-border/60 bg-background/30">
+            <div className="text-xs md:text-sm text-muted-foreground">
+              What you'd spend otherwise
+              <div className="font-syne font-bold text-foreground text-sm md:text-base mt-0.5">
+                Starting with SYNC
               </div>
-              <h3 className="font-syne text-lg md:text-xl font-bold uppercase tracking-wide">
-                With SYNC
-              </h3>
             </div>
-
-            <ul className="space-y-3 mb-6">
-              {thirdPartyApps.map((app) => (
-                <li
-                  key={app.name}
-                  className="flex items-center justify-between text-sm md:text-base py-2 border-b border-border/30 last:border-0"
-                >
-                  <span className="text-foreground/80">{app.name}</span>
-                  <span className="font-mono text-primary flex items-center gap-1">
-                    <Check className="w-3.5 h-3.5" /> Included
-                  </span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="flex items-center justify-between pt-4 border-t border-primary/30">
-              <span className="font-syne font-bold uppercase text-sm tracking-wider">
-                One-time
-              </span>
-              <span className="font-syne text-2xl md:text-3xl font-bold text-primary">
-                $98<span className="text-sm text-muted-foreground font-normal"> once</span>
-              </span>
+            <div className="text-right">
+              <div className="font-mono text-sm md:text-base text-destructive line-through decoration-2">
+                $154.93 / month
+              </div>
+              <div className="font-syne font-bold text-lg md:text-xl">
+                One Time <span className="text-primary glow-text">$98</span>
+              </div>
             </div>
-
-            <p className="mt-4 text-xs text-primary/80 flex items-center gap-2">
-              <DollarSign className="w-3 h-3" /> Save ${totalApps * 12}+ per year · faster store · own your code
-            </p>
           </div>
         </div>
       </div>
