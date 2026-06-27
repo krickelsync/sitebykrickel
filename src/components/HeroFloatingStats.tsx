@@ -15,61 +15,55 @@ interface Props {
 const HeroFloatingStats = ({ mx, my }: Props) => {
   const reduce = useReducedMotion();
 
-  // ---- Looping animated counters ----
-  // Total sales: $90k → ~$130k, trend 0% → 130%
+  // ---- Synced looping counters (single progress driver per card) ----
+  // Total Sales: $90k → $130k with trend 0% → 130%, perfectly synced.
   const SALES_FROM = 90000;
   const SALES_TO = 130000;
-  const SALES_TREND = 130;
-  const [sales, setSales] = useState(SALES_FROM);
-  const [salesTrend, setSalesTrend] = useState(0);
+  const SALES_TREND_TO = 130;
+  const [salesP, setSalesP] = useState(0); // 0..1
   useEffect(() => {
-    if (reduce) { setSales(SALES_TO); setSalesTrend(SALES_TREND); return; }
+    if (reduce) { setSalesP(1); return; }
     let cancelled = false;
-    const ctrls: ReturnType<typeof animate>[] = [];
+    let ctrl: ReturnType<typeof animate> | undefined;
     const loop = () => {
-      setSales(SALES_FROM);
-      setSalesTrend(0);
-      ctrls.push(animate(SALES_FROM, SALES_TO, {
-        duration: 2.8, ease: "easeOut",
-        onUpdate: (v) => { if (!cancelled) setSales(Math.round(v)); },
-      }));
-      ctrls.push(animate(0, SALES_TREND, {
-        duration: 2.8, ease: "easeOut",
-        onUpdate: (v) => { if (!cancelled) setSalesTrend(Math.round(v)); },
-        onComplete: () => { if (!cancelled) setTimeout(loop, 1400); },
-      }));
+      setSalesP(0);
+      ctrl = animate(0, 1, {
+        duration: 3.2,
+        ease: [0.22, 1, 0.36, 1], // smooth ease-out-quart, no overshoot
+        onUpdate: (v) => { if (!cancelled) setSalesP(v); },
+        onComplete: () => { if (!cancelled) setTimeout(loop, 1600); },
+      });
     };
     loop();
-    return () => { cancelled = true; ctrls.forEach((c) => c.stop()); };
+    return () => { cancelled = true; ctrl?.stop(); };
   }, [reduce]);
+  const sales = Math.round(SALES_FROM + (SALES_TO - SALES_FROM) * salesP);
+  const salesTrend = Math.round(SALES_TREND_TO * salesP);
 
-  // Conversion: 0% → ~18.4%, trend 0% → 92%
+  // Conversion: 0% → 18.4% with trend 0% → 92%; bar width tracks trend.
   const CONV_TO = 18.4;
-  const CONV_TREND = 92;
-  const [conv, setConv] = useState(0);
-  const [convTrend, setConvTrend] = useState(0);
+  const CONV_TREND_TO = 92;
+  const [convP, setConvP] = useState(0);
   useEffect(() => {
-    if (reduce) { setConv(CONV_TO); setConvTrend(CONV_TREND); return; }
+    if (reduce) { setConvP(1); return; }
     let cancelled = false;
-    const ctrls: ReturnType<typeof animate>[] = [];
+    let ctrl: ReturnType<typeof animate> | undefined;
     const loop = () => {
-      setConv(0); setConvTrend(0);
-      ctrls.push(animate(0, CONV_TO, {
-        duration: 2.6, ease: "easeOut",
-        onUpdate: (v) => { if (!cancelled) setConv(v); },
-      }));
-      ctrls.push(animate(0, CONV_TREND, {
-        duration: 2.6, ease: "easeOut",
-        onUpdate: (v) => { if (!cancelled) setConvTrend(Math.round(v)); },
-        onComplete: () => { if (!cancelled) setTimeout(loop, 1400); },
-      }));
+      setConvP(0);
+      ctrl = animate(0, 1, {
+        duration: 3.0,
+        ease: [0.22, 1, 0.36, 1],
+        onUpdate: (v) => { if (!cancelled) setConvP(v); },
+        onComplete: () => { if (!cancelled) setTimeout(loop, 1600); },
+      });
     };
     loop();
-    return () => { cancelled = true; ctrls.forEach((c) => c.stop()); };
+    return () => { cancelled = true; ctrl?.stop(); };
   }, [reduce]);
-
-  // Bar width follows conv value (0–18.4% → 0–95% bar fill)
-  const barWidth = `${Math.min(95, (conv / CONV_TO) * 95)}%`;
+  const conv = CONV_TO * convP;
+  const convTrend = Math.round(CONV_TREND_TO * convP);
+  // Bar fill is proportional to current trend value (max = CONV_TREND_TO%).
+  const barWidth = `${convTrend}%`;
 
   // ---- Mouse tilt deltas, added on top of baseline tilt ----
   const tiltDX = useSpring(useTransform(my, (v) => (reduce ? 0 : v * -6)), { stiffness: 120, damping: 16 });
