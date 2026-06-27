@@ -187,7 +187,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   return (
     <div aria-hidden className="absolute inset-0 z-[3] pointer-events-none">
       {/* TOP LEFT — TOTAL SALES */}
-      <div className="absolute top-[12%] left-1 sm:left-3 lg:left-6 scale-[0.45] sm:scale-[0.6] md:scale-75 lg:scale-90 xl:scale-100 origin-top-left">
+      <div className="absolute top-[10%] left-2 sm:left-3 lg:left-6 scale-[0.62] sm:scale-[0.6] md:scale-75 lg:scale-90 xl:scale-100 origin-top-left">
       <motion.div
         style={{ x: tlX, y: tlY }}
         initial={{ opacity: 0, y: -20 }}
@@ -330,7 +330,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
       </div>
 
       {/* TOP RIGHT — CONVERSION RATE */}
-      <div className="absolute top-[12%] right-1 sm:right-3 lg:right-6 scale-[0.45] sm:scale-[0.6] md:scale-75 lg:scale-90 xl:scale-100 origin-top-right">
+      <div className="absolute top-[10%] right-2 sm:right-3 lg:right-6 scale-[0.62] sm:scale-[0.6] md:scale-75 lg:scale-90 xl:scale-100 origin-top-right">
       <motion.div
         style={{ x: trX, y: trY }}
         initial={{ opacity: 0, y: -20 }}
