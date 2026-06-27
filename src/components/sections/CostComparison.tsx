@@ -1,5 +1,5 @@
 import { Zap, DollarSign, Check, X } from "lucide-react";
-import SectionHeader from "@/components/SectionHeader";
+import SectionHeader from "@/components/shared/SectionHeader";
 
 const thirdPartyApps = [
   { name: "Page Builder app", price: 29 },
@@ -18,9 +18,12 @@ const CostComparison = () => {
       <div className="max-w-6xl mx-auto">
         <SectionHeader
           eyebrow="Cost Breakdown"
-          title="Better, faster & cheaper."
-          subtitle="Every extra app eats speed and money. SYNC gives you everything in one streamlined, cost-saving solution."
+          title="Better, faster"
+          accent="& cheaper."
         />
+        <p className="text-center -mt-10 mb-12 max-w-2xl mx-auto text-sm md:text-base text-muted-foreground">
+          Every extra app eats speed and money. SYNC gives you everything in one streamlined, cost-saving solution.
+        </p>
 
         <div className="grid md:grid-cols-2 gap-6 md:gap-8 mt-12">
           {/* Without SYNC */}
