@@ -1,73 +1,106 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import SectionHeader from "@/components/shared/SectionHeader";
 
-const themes = [
-  {
-    name: "SYNC Theme",
-    license: "1 License • With Footer Watermark",
-    price: "$95",
-    features: ["Shopify 2.0 Ready", "Mobile-first Layout", "Lifetime Updates"],
-    href: "/products",
-  },
-  {
-    name: "SYNC Theme",
-    license: "1 License • No Watermark",
-    price: "$145",
-    features: ["Shopify 2.0 Ready", "Mobile-first Layout", "Lifetime Updates", "White-label Footer"],
-    href: "/products",
-    featured: true,
-  },
+const FEATURES = [
+  "Shopify 2.0 Ready",
+  "Mobile-first Layout",
+  "Infinite Customization",
+  "Lookbook & Editorial Sections",
+  "Drop Countdown & Sticky Cart",
+  "Lifetime Updates",
 ];
 
-const ThemeCollection = () => (
-  <section id="themes" className="py-24 md:py-32 border-t border-border">
-    <div className="container px-4">
-      <SectionHeader
-        eyebrow="THEME COLLECTION"
-        title="PREMIUM THEMES"
-        accent="BUILT FOR BRANDS."
-      />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
-        {themes.map((t, i) => (
-          <motion.a
-            href={t.href}
-            key={i}
+const ThemeCollection = () => {
+  const [removeWatermark, setRemoveWatermark] = useState(false);
+  const price = removeWatermark ? 148 : 98;
+
+  return (
+    <section id="themes" className="py-24 md:py-32 border-t border-border">
+      <div className="container px-4">
+        <SectionHeader
+          eyebrow="THE THEME"
+          title="SYNC THEME"
+          accent="BUILT FOR BRANDS."
+        />
+        <div className="max-w-xl mx-auto">
+          <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.08 }}
-            className={`group glass-card p-6 md:p-8 flex flex-col transition-all duration-500 hover:border-primary/40 ${
-              t.featured ? "shiny-card" : ""
-            }`}
+            transition={{ duration: 0.5 }}
+            className="group glass-card shiny-card p-6 md:p-8 flex flex-col transition-all duration-500 hover:border-primary/40"
           >
             <div className="flex items-start justify-between gap-4 mb-6">
               <div>
-                <h3 className="font-syne font-bold uppercase text-xl md:text-2xl tracking-tight">
-                  {t.name}
+                <h3 className="font-syne font-bold uppercase text-2xl md:text-3xl tracking-tight">
+                  SYNC Theme
                 </h3>
                 <p className="font-mono text-[10px] md:text-xs text-muted-foreground mt-1 uppercase tracking-widest">
-                  {t.license}
+                  1 License • {removeWatermark ? "No Watermark" : "With Footer Watermark"}
                 </p>
               </div>
-              <span className="font-syne font-bold text-2xl md:text-3xl text-primary">{t.price}</span>
+              <motion.span
+                key={price}
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="font-syne font-bold text-3xl md:text-4xl text-primary"
+              >
+                ${price}
+              </motion.span>
             </div>
+
+            {/* Watermark toggle */}
+            <button
+              type="button"
+              role="switch"
+              aria-checked={removeWatermark}
+              onClick={() => setRemoveWatermark((v) => !v)}
+              className="w-full flex items-center justify-between gap-4 p-4 mb-6 rounded-lg border border-border bg-background/40 hover:border-primary/40 transition-colors text-left"
+            >
+              <div className="flex flex-col">
+                <span className="font-mono text-xs uppercase tracking-widest text-foreground">
+                  Remove Footer Watermark
+                </span>
+                <span className="font-mono text-[10px] text-muted-foreground mt-0.5">
+                  +$50 • White-label your store
+                </span>
+              </div>
+              <span
+                className={`relative inline-flex h-6 w-11 shrink-0 rounded-full transition-colors ${
+                  removeWatermark ? "bg-primary" : "bg-muted"
+                }`}
+              >
+                <span
+                  className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-background shadow transition-transform ${
+                    removeWatermark ? "translate-x-5" : "translate-x-0"
+                  }`}
+                />
+              </span>
+            </button>
+
             <ul className="space-y-2 flex-1">
-              {t.features.map((f) => (
+              {FEATURES.map((f) => (
                 <li key={f} className="flex items-center gap-2 font-mono text-xs md:text-sm text-muted-foreground">
                   <Check className="w-3.5 h-3.5 text-primary shrink-0" />
                   {f}
                 </li>
               ))}
             </ul>
-            <div className="mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-foreground group-hover:text-primary transition-colors">
-              View Theme <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </motion.a>
-        ))}
+
+            <a
+              href="/products"
+              className="mt-6 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-primary text-primary-foreground font-mono text-xs uppercase tracking-widest hover:opacity-90 transition-opacity"
+            >
+              Get SYNC — ${price}
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </motion.div>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default ThemeCollection;
