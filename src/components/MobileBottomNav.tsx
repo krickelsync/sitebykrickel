@@ -9,8 +9,7 @@ import { ShoppingCart } from "lucide-react";
 
 const items = [
   { name: "Home", href: "/", icon: Home },
-  { name: "Products", href: "/products", icon: Tag },
-  { name: "Work", href: "/showcase", icon: Briefcase },
+  { name: "Themes", href: "/products", icon: Tag },
 ];
 
 const MobileBottomNav = () => {
