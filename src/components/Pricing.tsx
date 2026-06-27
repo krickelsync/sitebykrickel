@@ -7,86 +7,53 @@ import { useContactScroll } from "@/hooks/useContactScroll";
 import { motion } from "framer-motion";
 import { fadeIn } from "@/lib/motion";
 
-const standardFeatures: PricingFeatureSection[] = [
-  { category: "CORE SETUP", items: [
-    { feature: "Theme Installation", value: "Basic Theme" },
-    { feature: "Pages Setup", value: "5 Pages" },
-    { feature: "Product Upload", value: "Max 10 Products" },
-    { feature: "Mobile Responsive", value: "Standard" },
-  ]},
-  { category: "VISUAL & AESTHETICS", items: [
-    { feature: "Background Type", value: "Solid/Gradient" },
-    { feature: "Custom Font", value: "Google Fonts" },
-    { feature: "Lookbook", value: "Standard" },
-  ]},
-  { category: "MARKETING", items: [
-    { feature: "Newsletter Popup", value: "Standard" },
-    { feature: "Social Icons", value: "Standard" },
-  ]},
-  { category: "SUPPORT", items: [
-    { feature: "Revisions", value: "1x Minor" },
-    { feature: "Turnaround", value: "24 Hours" },
-    { feature: "Support", value: "Standard" },
-    { feature: "License", value: "Lifetime" },
+const starterFeatures: PricingFeatureSection[] = [
+  { category: "INCLUDED", items: [
+    { feature: "SYNC Starter Theme", included: true },
+    { feature: "1 Store License", included: true },
+    { feature: "Mobile-first Layout", included: true },
+    { feature: "Shopify 2.0 Compatible", included: true },
+    { feature: "Lifetime Updates", included: true },
+    { feature: "Email Support", included: true },
   ]},
 ];
 
-const ultimateFeatures: PricingFeatureSection[] = [
-  { category: "CORE SETUP", items: [
-    { feature: "Theme Installation", value: "Premium Theme" },
-    { feature: "Pages Setup", value: "Unlimited" },
-    { feature: "Product Upload", value: "Max 50 Products" },
-    { feature: "Mobile Responsive", value: "Compact UI" },
+const proFeatures: PricingFeatureSection[] = [
+  { category: "EVERYTHING IN STARTER", items: [
+    { feature: "1 Store License", included: true },
+    { feature: "No Footer Watermark", included: true },
   ]},
-  { category: "KRICKEL EXCLUSIVES", items: [
-    { feature: "Enter Page", value: "Video/Img/3D" },
-    { feature: "3D Interactive Logo", value: "Spinning .glb" },
-    { feature: "Global Music Player", value: "Popup Equalizer" },
-    { feature: "Glassmorphism Header", value: "Glass Effect" },
-    { feature: "Custom Cursor", value: "SVG Logo" },
-    { feature: "Free Domain Include", value: "Included" },
-    { feature: "Free Email Domain", value: "Up to 10 Custom Emails @yourbrand.com" },
-  ]},
-  { category: "VISUAL & AESTHETICS", items: [
-    { feature: "Background Type", value: "Vid/Gif/Img" },
-    { feature: "Custom Font", value: "Upload Fonts" },
-    { feature: "Lookbook", value: "Hover Animation" },
-    { feature: "Running Marquee", value: "Animated" },
-    { feature: "Text Glow Effect", value: "Neon Vibe" },
-    { feature: "Page Preloader", value: "Custom Gif" },
-  ]},
-  { category: "CONVERSION BOOSTERS", items: [
-    { feature: "Sticky Add-to-Cart", value: "Floating Bar" },
-    { feature: "Quick Add Button", value: "Glassmorph" },
-    { feature: "Pre-Order System", value: "Badge & Status" },
-    { feature: "Size Chart Popup", included: true },
-    { feature: "Stock Indicator", value: "Low Stock Alert" },
-  ]},
-  { category: "MARKETING", items: [
-    { feature: "Newsletter Popup", value: "Waitlist Email" },
-    { feature: "Social Icons", value: "More + Hover FX" },
-    { feature: "Shipping Status", value: "Password Page" },
-    { feature: "Countdown Timer", included: true },
-  ]},
-  { category: "SUPPORT", items: [
-    { feature: "Revisions", value: "10x Major" },
-    { feature: "Turnaround", value: "2-3 Days" },
-    { feature: "Support", value: "VIP WhatsApp" },
-    { feature: "License", value: "Lifetime" },
+  { category: "PRO ADD-ONS", items: [
+    { feature: "Product Page Builder", included: true },
+    { feature: "Lookbook Sections", included: true },
+    { feature: "Drop Countdown Sections", included: true },
+    { feature: "Sticky Add to Cart", included: true },
+    { feature: "Priority Email Support", included: true },
   ]},
 ];
 
-const notIncludedStandard = [
-  "Enter Page",
-  "3D Interactive Logo",
-  "Music Player",
-  "Glassmorphism",
-  "Custom Cursor",
-  "Running Marquee",
-  "Preloader",
-  "Sticky Cart",
-  "Pre-Order",
-  "Countdown",
+const allAccessFeatures: PricingFeatureSection[] = [
+  { category: "EVERYTHING IN PRO", items: [
+    { feature: "Unlimited Store Licenses", included: true },
+    { feature: "All Future Themes Included", included: true },
+  ]},
+  { category: "EXTRAS", items: [
+    { feature: "Mega Menu Layouts", included: true },
+    { feature: "Editorial Image Blocks", included: true },
+    { feature: "Trust Badges Pack", included: true },
+    { feature: "VIP Support", included: true },
+  ]},
+];
+
+const setupFeatures: PricingFeatureSection[] = [
+  { category: "DONE-FOR-YOU", items: [
+    { feature: "Theme Installation", included: true },
+    { feature: "Brand Setup (logo, fonts, colors)", included: true },
+    { feature: "Up to 20 Products Uploaded", included: true },
+    { feature: "Homepage & Product Pages", included: true },
+    { feature: "Mobile Polish & QA", included: true },
+    { feature: "Launch Support", included: true },
+  ]},
 ];
 
 const Pricing = () => {
@@ -99,32 +66,51 @@ const Pricing = () => {
 
         <SectionHeader
           eyebrow="PRICING"
-          title={<span className="text-foreground">AND MORE</span>}
-          accent="FEATURES!"
+          title={<span className="text-foreground">SIMPLE PRICING.</span>}
+          accent="PICK YOUR LICENSE."
           accentTone="gold"
         />
 
-        <div className="max-w-5xl mx-auto grid grid-cols-2 gap-3 md:gap-8">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
           <PricingCard
-            tier="Standard"
-            price="$150"
-            tagline="Perfect for starters"
-            sections={standardFeatures}
-            notIncluded={notIncludedStandard}
+            tier="Starter Theme"
+            price="$49"
+            tagline="For new brands"
+            sections={starterFeatures}
             ctaLabel="Get Started"
             onCtaClick={handleContactClick}
             variant="standard"
           />
           <PricingCard
-            tier="Ultimate Premium"
-            price="$299"
-            tagline="For high-end brands"
-            sections={ultimateFeatures}
-            ctaLabel="Get Premium"
+            tier="Pro Theme"
+            price="$99"
+            tagline="Most popular"
+            sections={proFeatures}
+            ctaLabel="Get Pro"
             onCtaClick={handleContactClick}
             variant="premium"
-            badge="PROMO!"
+            badge="MOST POPULAR"
             delay={0.1}
+          />
+          <PricingCard
+            tier="All Access"
+            price="$199"
+            tagline="Unlimited stores"
+            sections={allAccessFeatures}
+            ctaLabel="Get All Access"
+            onCtaClick={handleContactClick}
+            variant="standard"
+            delay={0.15}
+          />
+          <PricingCard
+            tier="Done-for-you Setup"
+            price="$499"
+            tagline="We launch it for you"
+            sections={setupFeatures}
+            ctaLabel="Book Setup"
+            onCtaClick={handleContactClick}
+            variant="standard"
+            delay={0.2}
           />
         </div>
 
