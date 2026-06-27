@@ -83,8 +83,8 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
   return <footer className="relative overflow-hidden border-t border-muted pt-10 md:pt-12">
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
       <div aria-hidden className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 h-64 w-[80%] rounded-full bg-primary/10 blur-3xl" />
-      <div className="container px-4 relative max-w-2xl">
-        <div className="flex flex-col gap-6 mb-8">
+      <div className="container px-4 relative">
+        <div className="flex flex-col md:grid md:grid-cols-3 gap-6 md:gap-12 mb-8 md:mb-12 md:items-start">
           {/* Brand Column */}
           <motion.div initial={{
           opacity: 0,
@@ -96,7 +96,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
           once: true
         }} transition={{
           duration: 0.6
-        }} className="space-y-4">
+          }} className="space-y-4 md:col-span-1">
             <h2 className="font-syne text-2xl md:text-3xl font-extrabold uppercase tracking-tight flex flex-col">
               <AnimatedBrandText text="SITE BY" className="text-foreground" />
               <AnimatedBrandText
@@ -122,13 +122,13 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
         }} transition={{
           duration: 0.6,
           delay: 0.1
-          }} className="border-y border-muted/50 py-3">
+          }} className="border-y border-muted/50 py-3 md:border-0 md:py-0 md:space-y-4">
             <button
               type="button"
               onClick={() => toggle("links")}
               aria-expanded={openSection === "links"}
               aria-controls="footer-links-panel"
-              className="flex w-full items-center justify-between min-h-[44px]"
+              className="flex w-full items-center justify-between min-h-[44px] md:min-h-0 md:pointer-events-none md:cursor-default"
             >
               <h3 className="font-mono text-xs uppercase tracking-widest text-primary">
                 Quick Links
@@ -136,7 +136,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
               <Plus
                 size={18}
                 aria-hidden="true"
-                className={`text-muted-foreground transition-transform duration-300 ${openSection === "links" ? "rotate-45" : ""}`}
+                className={`md:hidden text-muted-foreground transition-transform duration-300 ${openSection === "links" ? "rotate-45" : ""}`}
               />
             </button>
             <motion.ul
@@ -147,7 +147,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
                 opacity: openSection === "links" ? 1 : 0,
               }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-2 overflow-hidden mt-3"
+              className="space-y-2 overflow-hidden mt-3 md:!h-auto md:!opacity-100 md:mt-0"
             >
               {quickLinks.map(link => <li key={link.name}>
                   {link.href.startsWith("/") && !link.href.includes("#") ? (
@@ -183,13 +183,13 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
         }} transition={{
           duration: 0.6,
           delay: 0.2
-          }} className="border-b border-muted/50 pb-3">
+          }} className="border-b border-muted/50 pb-3 md:border-0 md:pb-0 md:space-y-4">
             <button
               type="button"
               onClick={() => toggle("contact")}
               aria-expanded={openSection === "contact"}
               aria-controls="footer-contact-panel"
-              className="flex w-full items-center justify-between min-h-[44px]"
+              className="flex w-full items-center justify-between min-h-[44px] md:min-h-0 md:pointer-events-none md:cursor-default"
             >
               <h3 className="font-mono text-xs uppercase tracking-widest text-primary">
                 Get in Touch
@@ -197,7 +197,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
               <Plus
                 size={18}
                 aria-hidden="true"
-                className={`text-muted-foreground transition-transform duration-300 ${openSection === "contact" ? "rotate-45" : ""}`}
+                className={`md:hidden text-muted-foreground transition-transform duration-300 ${openSection === "contact" ? "rotate-45" : ""}`}
               />
             </button>
             <motion.div
@@ -208,7 +208,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
                 opacity: openSection === "contact" ? 1 : 0,
               }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-3 overflow-hidden mt-3"
+              className="space-y-3 overflow-hidden mt-3 md:!h-auto md:!opacity-100 md:mt-0"
             >
               <a href="mailto:contact@sitebykrickel.com" aria-label="Email contact@sitebykrickel.com" className="flex items-center gap-3 font-mono text-sm text-muted-foreground hover:text-foreground transition-colors group">
                 <div className="w-10 h-10 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
@@ -262,7 +262,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
         >
           <h2
             className="font-syne font-extrabold uppercase tracking-tighter text-center leading-[0.8] text-transparent bg-clip-text bg-gradient-to-b from-foreground/90 via-foreground/40 to-transparent dark:from-amber-200 dark:via-amber-400/40 dark:to-transparent"
-            style={{ fontSize: 'clamp(6rem, 32vw, 26rem)' }}
+            style={{ fontSize: 'clamp(4.5rem, 24vw, 22rem)', whiteSpace: 'nowrap' }}
           >
             {"SYNC".split("").map((ch, i) => (
               <motion.span
