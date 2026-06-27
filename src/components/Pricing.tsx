@@ -66,7 +66,8 @@ const FEATURE_GROUPS: FeatureGroup[] = [
 const Pricing = () => {
   const handleContactClick = useContactScroll();
   const [removeWatermark, setRemoveWatermark] = useState(false);
-  const price = removeWatermark ? 148 : 98;
+  const [installSetup, setInstallSetup] = useState(false);
+  const price = 98 + (removeWatermark ? 50 : 0) + (installSetup ? 50 : 0);
 
   return (
     <section id="pricing" className="py-24 md:py-32">
@@ -113,31 +114,53 @@ const Pricing = () => {
             </div>
 
             {/* Compact watermark toggle */}
-            <div className="relative flex items-center justify-between gap-3 mb-5 px-3 py-2 rounded-lg border border-border/60 bg-background/40">
-              <div className="flex flex-col">
-                <span className="font-mono text-[11px] uppercase tracking-widest text-foreground">
-                  Remove Watermark
-                </span>
-                <span className="font-mono text-[9px] text-muted-foreground">
-                  +$50 white-label
-                </span>
-              </div>
-              <button
-                type="button"
-                role="switch"
-                aria-checked={removeWatermark}
-                aria-label="Toggle remove footer watermark"
-                onClick={() => setRemoveWatermark((v) => !v)}
-                className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors ${
-                  removeWatermark ? "bg-primary" : "bg-muted"
-                }`}
-              >
-                <span
-                  className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-background shadow transition-transform ${
-                    removeWatermark ? "translate-x-4" : "translate-x-0"
-                  }`}
-                />
-              </button>
+            <div className="relative space-y-2 mb-5">
+              {[
+                {
+                  label: "Remove Watermark",
+                  hint: "+$50 white-label",
+                  value: removeWatermark,
+                  set: setRemoveWatermark,
+                  aria: "Toggle remove footer watermark",
+                },
+                {
+                  label: "Install & Setup",
+                  hint: "+$50 done-for-you",
+                  value: installSetup,
+                  set: setInstallSetup,
+                  aria: "Toggle install and setup add-on",
+                },
+              ].map((t) => (
+                <div
+                  key={t.label}
+                  className="flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-border/60 bg-background/40"
+                >
+                  <div className="flex flex-col">
+                    <span className="font-mono text-[11px] uppercase tracking-widest text-foreground">
+                      {t.label}
+                    </span>
+                    <span className="font-mono text-[9px] text-muted-foreground">
+                      {t.hint}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={t.value}
+                    aria-label={t.aria}
+                    onClick={() => t.set((v) => !v)}
+                    className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors ${
+                      t.value ? "bg-primary" : "bg-muted"
+                    }`}
+                  >
+                    <span
+                      className={`absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-background shadow transition-transform ${
+                        t.value ? "translate-x-4" : "translate-x-0"
+                      }`}
+                    />
+                  </button>
+                </div>
+              ))}
             </div>
 
             <div className="relative flex-1 space-y-5 mb-6">
