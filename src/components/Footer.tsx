@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { scrollToId } from "@/lib/scroll";
 import { FOOTER_QUICK_LINKS, type NavLinkItem } from "@/lib/nav";
+import { typography, textSize } from "@/components/ui/typography";
 const AnimatedBrandText = ({
   text,
   className,
@@ -94,7 +95,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
         }} transition={{
           duration: 0.6
           }} className="hidden md:flex space-y-2 md:space-y-3 flex-col">
-            <h2 className="font-syne text-sm md:text-3xl font-extrabold uppercase tracking-tight flex flex-col leading-[0.95]">
+            <h2 className={`font-syne font-extrabold uppercase tracking-tight flex flex-col leading-[0.95] ${typography.h2}`}>
               <AnimatedBrandText text="SITE BY" className="text-foreground" />
               <AnimatedBrandText
                 text="KRICKEL"
@@ -102,7 +103,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
                 delay={0.4}
               />
             </h2>
-            <p className="font-mono text-[10px] md:text-sm text-muted-foreground max-w-xs leading-snug">
+            <p className={`text-muted-foreground max-w-xs leading-snug ${typography.body}`}>
               Creative Agency. Graphic & Web Design for Clothing Brands & any business ready to stand out.
             </p>
           </motion.div>
@@ -120,25 +121,25 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
           duration: 0.6,
           delay: 0.1
           }} className="space-y-2 md:space-y-3">
-            <h3 className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-primary">
+            <h3 className={`${typography.eyebrow} text-primary`}>
               Quick Links
             </h3>
             <ul className="space-y-0.5 md:space-y-1">
               {quickLinks.map(link => <li key={link.name}>
                   {link.href.startsWith("/") && !link.href.includes("#") ? (
-                    <Link to={link.href} className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[28px] md:min-h-[30px] items-center">
+                    <Link to={link.href} className={`font-mono text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[28px] md:min-h-[30px] items-center ${textSize.ui}`}>
                       {link.name}
                     </Link>
                   ) : link.href.startsWith("#") ? (
                     <a
                       href={link.href}
                       onClick={(e) => handleNavClick(e, link.href)}
-                      className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer inline-flex min-h-[28px] md:min-h-[30px] items-center"
+                      className={`font-mono text-muted-foreground hover:text-foreground transition-colors cursor-pointer inline-flex min-h-[28px] md:min-h-[30px] items-center ${textSize.ui}`}
                     >
                       {link.name}
                     </a>
                   ) : (
-                    <a href={link.href} className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[28px] md:min-h-[30px] items-center">
+                    <a href={link.href} className={`font-mono text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[28px] md:min-h-[30px] items-center ${textSize.ui}`}>
                       {link.name}
                     </a>
                   )}
@@ -159,18 +160,18 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
           duration: 0.6,
           delay: 0.2
           }} className="space-y-2 md:space-y-3">
-            <h3 className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-primary">
+            <h3 className={`${typography.eyebrow} text-primary`}>
               Get in Touch
             </h3>
             <div className="space-y-1.5 md:space-y-2">
-              <a href="mailto:contact@sitebykrickel.com" aria-label="Email contact@sitebykrickel.com" className="flex items-center gap-2 md:gap-3 font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors group break-all">
+              <a href="mailto:contact@sitebykrickel.com" aria-label="Email contact@sitebykrickel.com" className={`flex items-center gap-2 md:gap-3 font-mono text-muted-foreground hover:text-foreground transition-colors group break-all ${textSize.ui}`}>
                 <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
                   <Mail size={14} className="md:hidden" aria-hidden="true" />
                   <Mail size={16} className="hidden md:block" aria-hidden="true" />
                 </div>
                 <span>contact@sitebykrickel.com</span>
               </a>
-              <a href="https://www.instagram.com/krickel.sync/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @krickel.sync (opens in new tab)" className="flex items-center gap-2 md:gap-3 font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors group">
+              <a href="https://www.instagram.com/krickel.sync/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @krickel.sync (opens in new tab)" className={`flex items-center gap-2 md:gap-3 font-mono text-muted-foreground hover:text-foreground transition-colors group ${textSize.ui}`}>
                 <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
                   <Instagram size={14} className="md:hidden" aria-hidden="true" />
                   <Instagram size={16} className="hidden md:block" aria-hidden="true" />
@@ -192,10 +193,10 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
         duration: 0.6,
         delay: 0.3
       }} className="pt-4 md:pt-5 border-t border-muted/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-1.5 relative z-10">
-          <p className="font-mono text-[10px] md:text-xs text-muted-foreground">
+          <p className={`text-muted-foreground ${typography.meta}`}>
             © 2025 SITEBYKRICKEL. ALL RIGHTS RESERVED.
           </p>
-          <p className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-muted-foreground/60">
+          <p className={`${typography.eyebrow} text-muted-foreground/60`}>
             Crafted in Indonesia · Built for Brands
           </p>
         </motion.div>
