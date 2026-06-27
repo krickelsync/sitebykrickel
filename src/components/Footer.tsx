@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { Instagram, Mail, ArrowUpRight } from "lucide-react";
+import { Instagram, Mail } from "lucide-react";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { scrollToId } from "@/lib/scroll";
@@ -81,11 +81,20 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
       <div aria-hidden className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 h-64 w-[80%] rounded-full bg-primary/10 blur-3xl" />
       <div className="container px-4 relative">
-        {/* Bento Grid — 4 cells: 1 col mobile → 2x2 sm → 4 cols lg */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-5 md:mb-7">
-          {/* Cell 1 — Brand */}
-          <BentoCell delay={0}>
-            <h2 className="font-syne text-2xl md:text-3xl font-extrabold uppercase tracking-tight flex flex-col leading-[0.95] mb-2">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-8 mb-5 md:mb-7 items-start">
+          {/* Brand Column */}
+          <motion.div initial={{
+          opacity: 0,
+          y: 20
+        }} whileInView={{
+          opacity: 1,
+          y: 0
+        }} viewport={{
+          once: true
+        }} transition={{
+          duration: 0.6
+          }} className="hidden md:flex space-y-2 md:space-y-3 flex-col">
+            <h2 className="font-syne text-sm md:text-3xl font-extrabold uppercase tracking-tight flex flex-col leading-[0.95]">
               <AnimatedBrandText text="SITE BY" className="text-foreground" />
               <AnimatedBrandText
                 text="KRICKEL"
@@ -93,81 +102,83 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
                 delay={0.4}
               />
             </h2>
-            <p className="font-mono text-[11px] md:text-xs text-muted-foreground leading-snug">
-              Creative agency for clothing brands ready to stand out.
+            <p className="font-mono text-[10px] md:text-sm text-muted-foreground max-w-xs leading-snug">
+              Creative Agency. Graphic & Web Design for Clothing Brands & any business ready to stand out.
             </p>
-          </BentoCell>
+          </motion.div>
 
-          {/* Cell 2 — Quick Links */}
-          <BentoCell delay={0.05}>
-            <h3 className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-primary mb-2">
+          {/* Quick Links Column */}
+          <motion.div initial={{
+          opacity: 0,
+          y: 20
+        }} whileInView={{
+          opacity: 1,
+          y: 0
+        }} viewport={{
+          once: true
+        }} transition={{
+          duration: 0.6,
+          delay: 0.1
+          }} className="space-y-2 md:space-y-3">
+            <h3 className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-primary">
               Quick Links
             </h3>
-            <ul className="grid grid-cols-2 gap-x-2 gap-y-0.5">
-              {quickLinks.map(link => (
-                <li key={link.name}>
+            <ul className="space-y-0.5 md:space-y-1">
+              {quickLinks.map(link => <li key={link.name}>
                   {link.href.startsWith("/") && !link.href.includes("#") ? (
-                    <Link to={link.href} className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[26px] items-center">
+                    <Link to={link.href} className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[28px] md:min-h-[30px] items-center">
                       {link.name}
                     </Link>
                   ) : link.href.startsWith("#") ? (
-                    <a href={link.href} onClick={(e) => handleNavClick(e, link.href)} className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer inline-flex min-h-[26px] items-center">
+                    <a
+                      href={link.href}
+                      onClick={(e) => handleNavClick(e, link.href)}
+                      className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer inline-flex min-h-[28px] md:min-h-[30px] items-center"
+                    >
                       {link.name}
                     </a>
                   ) : (
-                    <a href={link.href} className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[26px] items-center">
+                    <a href={link.href} className="font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex min-h-[28px] md:min-h-[30px] items-center">
                       {link.name}
                     </a>
                   )}
-                </li>
-              ))}
+                </li>)}
             </ul>
-          </BentoCell>
+          </motion.div>
 
-          {/* Cell 3 — Latest Project */}
-          <BentoCell delay={0.1} asLink href="https://kcklsite.myshopify.com" external>
-            <div className="absolute inset-0 -z-10 opacity-60 group-hover:opacity-90 transition-opacity"
-              style={{
-                background:
-                  "radial-gradient(120% 80% at 20% 0%, hsl(var(--primary)/0.35), transparent 60%), radial-gradient(100% 80% at 100% 100%, hsl(38 75% 50% / 0.25), transparent 55%), linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted)/0.4) 100%)",
-              }}
-            />
-            <div className="flex items-start justify-between gap-2">
-              <h3 className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-primary">
-                Latest Demo
-              </h3>
-              <ArrowUpRight size={14} className="text-foreground/60 group-hover:text-foreground group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-            </div>
-            <div className="mt-auto pt-4">
-              <p className="font-syne text-lg md:text-xl font-bold uppercase tracking-tight leading-tight">
-                Clean Slate
-              </p>
-              <p className="font-mono text-[10px] text-muted-foreground mt-0.5">
-                Shopify · Streetwear theme
-              </p>
-            </div>
-          </BentoCell>
-
-          {/* Cell 4 — Contact */}
-          <BentoCell delay={0.15}>
-            <h3 className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-primary mb-2">
+          {/* Contact Column */}
+          <motion.div initial={{
+          opacity: 0,
+          y: 20
+        }} whileInView={{
+          opacity: 1,
+          y: 0
+        }} viewport={{
+          once: true
+        }} transition={{
+          duration: 0.6,
+          delay: 0.2
+          }} className="space-y-2 md:space-y-3">
+            <h3 className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-primary">
               Get in Touch
             </h3>
-            <div className="space-y-1.5">
-              <a href="mailto:contact@sitebykrickel.com" aria-label="Email contact@sitebykrickel.com" className="flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-foreground transition-colors group/c break-all">
-                <span className="w-8 h-8 shrink-0 glass-card rounded-full flex items-center justify-center group-hover/c:border-primary/50 transition-colors">
-                  <Mail size={13} aria-hidden="true" />
-                </span>
-                <span className="truncate">contact@sitebykrickel.com</span>
+            <div className="space-y-1.5 md:space-y-2">
+              <a href="mailto:contact@sitebykrickel.com" aria-label="Email contact@sitebykrickel.com" className="flex items-center gap-2 md:gap-3 font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors group break-all">
+                <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
+                  <Mail size={14} className="md:hidden" aria-hidden="true" />
+                  <Mail size={16} className="hidden md:block" aria-hidden="true" />
+                </div>
+                <span>contact@sitebykrickel.com</span>
               </a>
-              <a href="https://www.instagram.com/krickel.sync/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @krickel.sync (opens in new tab)" className="flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-foreground transition-colors group/c">
-                <span className="w-8 h-8 shrink-0 glass-card rounded-full flex items-center justify-center group-hover/c:border-primary/50 transition-colors">
-                  <Instagram size={13} aria-hidden="true" />
-                </span>
+              <a href="https://www.instagram.com/krickel.sync/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @krickel.sync (opens in new tab)" className="flex items-center gap-2 md:gap-3 font-mono text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors group">
+                <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
+                  <Instagram size={14} className="md:hidden" aria-hidden="true" />
+                  <Instagram size={16} className="hidden md:block" aria-hidden="true" />
+                </div>
                 <span>@krickel.sync</span>
               </a>
             </div>
-          </BentoCell>
+          </motion.div>
         </div>
 
         {/* Bottom Bar */}
@@ -229,46 +240,4 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
       </div>
     </footer>;
 };
-
-// Bento cell wrapper — rotating conic outline (matches navbar pill aesthetic)
-const BentoCell = ({
-  children,
-  delay = 0,
-  asLink = false,
-  href,
-  external = false,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  asLink?: boolean;
-  href?: string;
-  external?: boolean;
-}) => {
-  const className =
-    "menu-rotating-glow group relative overflow-hidden rounded-2xl border border-muted bg-background/30 backdrop-blur-md p-4 md:p-5 min-h-[140px] md:min-h-[160px] flex flex-col transition-colors hover:border-primary/40";
-  const inner = (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, delay }}
-      className="relative z-10 flex flex-col flex-1"
-    >
-      {children}
-    </motion.div>
-  );
-  if (asLink && href) {
-    return (
-      <a
-        href={href}
-        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-        className={className}
-      >
-        {inner}
-      </a>
-    );
-  }
-  return <div className={className}>{inner}</div>;
-};
-
 export default Footer;
