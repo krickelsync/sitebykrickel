@@ -7,8 +7,6 @@ import { useMagnetic } from "@/hooks/useMagnetic";
 import { useMouseParallax } from "@/hooks/useMouseParallax";
 import { useLowPower } from "@/hooks/useLowPower";
 import { fadeUpDelay } from "@/lib/motion";
-import shopifyBadge from "@/assets/shopify-badge.png";
-
 // Lazy-load floating stats so they never block first paint
 const HeroFloatingStats = lazy(() => import("./HeroFloatingStats"));
 const ReactorHeroLayer = lazy(() => import("./sections/reactor/ReactorHeroLayer"));
