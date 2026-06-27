@@ -220,15 +220,26 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             </motion.div>
           </div>
 
-          {hasInteracted && stage === "idle" && (
-            <motion.span
+          {stage === "idle" && (
+            <motion.div
               aria-hidden="true"
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-8 font-mono text-[8px] uppercase tracking-[0.24em] text-primary/75"
-              animate={reduce ? undefined : { opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 1.8, repeat: Infinity }}
+              className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1"
+              animate={reduce ? undefined : { y: [0, -3, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
             >
-              Tap
-            </motion.span>
+              <span className="relative flex h-7 w-7 items-center justify-center">
+                <span className="absolute inset-0 rounded-full bg-primary/20 blur-md" />
+                <motion.span
+                  className="absolute inset-0 rounded-full border border-primary/70"
+                  animate={reduce ? undefined : { scale: [1, 1.6], opacity: [0.7, 0] }}
+                  transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
+                />
+                <Hand className="relative h-4 w-4 text-primary" strokeWidth={1.6} />
+              </span>
+              <span className="font-mono text-[8px] uppercase tracking-[0.24em] text-primary/80">
+                Tap
+              </span>
+            </motion.div>
           )}
 
           {stage === "orbit" && REACTOR_FEATURES.map((item, i) => {
