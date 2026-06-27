@@ -69,7 +69,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
       className="fixed top-3 left-0 right-0 z-50 overflow-visible px-3 sm:px-6"
     >
       <div className="container mx-auto overflow-visible relative">
-        <div className="flex items-center justify-between gap-3 overflow-visible">
+        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 overflow-visible">
           {/* Logo (no pill) */}
           <Link
             to="/"
@@ -80,21 +80,23 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           </Link>
 
           {/* Desktop / tablet nav pill */}
-          <div className="hidden md:flex items-center gap-1 navbar-pill menu-rotating-glow h-12 px-1.5">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.name}
-                href={link.href}
-                label={link.name}
-                active={isActive(link.href)}
-                variant="desktop"
-                onAnchorClick={handleNavClick}
-              />
-            ))}
+          <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="flex items-center gap-1 navbar-pill menu-rotating-glow h-12 px-1.5">
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.name}
+                  href={link.href}
+                  label={link.name}
+                  active={isActive(link.href)}
+                  variant="desktop"
+                  onAnchorClick={handleNavClick}
+                />
+              ))}
+            </div>
           </div>
 
           {/* CTA + theme pill */}
-          <div className="hidden md:flex items-center gap-2 navbar-pill menu-rotating-glow h-12 px-2">
+          <div className="hidden md:flex items-center gap-2 navbar-pill menu-rotating-glow h-12 px-2 justify-self-end">
             <ThemeToggle />
             <CartButton />
             {onCtaClick ? (
@@ -116,7 +118,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           </div>
 
           {/* Mobile trigger pill */}
-          <div className="relative flex md:hidden items-center">
+          <div className="relative flex md:hidden items-center justify-self-end">
             <div className="flex items-center gap-1 navbar-pill menu-rotating-glow h-12 px-2">
               <ThemeToggle />
               <CartButton />
