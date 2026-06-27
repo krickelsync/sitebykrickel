@@ -87,15 +87,24 @@ const Pricing = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative glass-card shiny-card rounded-2xl p-6 md:p-8 flex flex-col hover:border-primary/40 transition-colors duration-500"
+            className="relative overflow-hidden rounded-2xl border border-border/60 p-6 md:p-8 flex flex-col hover:border-primary/40 transition-colors duration-500 shadow-2xl"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 pointer-events-none rounded-2xl" />
+            {/* Background layers */}
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(120%_80%_at_50%_0%,hsl(var(--primary)/0.18),transparent_60%),radial-gradient(80%_60%_at_100%_100%,hsl(var(--primary)/0.10),transparent_70%),linear-gradient(180deg,hsl(var(--background)),hsl(var(--background)/0.6))] pointer-events-none rounded-2xl" />
+            <div className="absolute inset-0 -z-10 opacity-[0.07] mix-blend-overlay pointer-events-none rounded-2xl bg-[linear-gradient(hsl(var(--foreground))_1px,transparent_1px),linear-gradient(90deg,hsl(var(--foreground))_1px,transparent_1px)] bg-[size:32px_32px]" />
 
             <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary text-primary-foreground font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] shadow-lg">
               <Sparkles className="w-3 h-3" /> Most Popular
             </span>
 
             <div className="relative text-center pb-5 mb-5 border-b border-border/50">
+              {/* Giant Shopify shadow logo to the right of price */}
+              <img
+                src="https://cdn.shopify.com/shopifycloud/brochure/assets/brand-assets/shopify-logo-primary-logo-456baa801ee66a0a435671082365958316831c9960c480451dd0330bcdae304f.svg"
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none select-none absolute right-0 top-1/2 -translate-y-1/2 h-24 md:h-32 w-auto opacity-[0.10] drop-shadow-[0_8px_24px_hsl(var(--primary)/0.35)]"
+              />
               <span className="font-mono text-[10px] md:text-xs text-primary uppercase tracking-[0.2em]">
                 SYNC Premium Theme
               </span>
