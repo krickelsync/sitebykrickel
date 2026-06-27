@@ -160,7 +160,7 @@ const Pricing = () => {
                 >
                   <div className="flex flex-col min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="font-sans font-medium text-sm text-foreground">
+                      <span className="font-mono font-medium text-sm text-foreground">
                         {t.label}
                       </span>
                       <span className="font-mono text-[10px] text-muted-foreground">
@@ -198,7 +198,7 @@ const Pricing = () => {
                     {group.items.map((item) => (
                       <li key={item.label} className="flex items-baseline gap-2 text-[13px] leading-snug">
                         <span className="text-muted-foreground/50 font-mono">·</span>
-                        <span className="font-sans text-muted-foreground">
+                        <span className="font-mono text-muted-foreground">
                           {item.label}
                           {item.value && (
                             <span className="text-foreground"> — {item.value}</span>
@@ -214,7 +214,7 @@ const Pricing = () => {
             <a
               href="/about#contact"
               onClick={handleContactClick}
-              className="relative group inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-foreground text-background font-sans font-medium text-sm overflow-hidden transition-colors hover:bg-foreground/90"
+              className="relative group inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-foreground text-background font-mono font-medium text-sm overflow-hidden transition-colors hover:bg-foreground/90"
             >
               Get SYNC — ${price}
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
