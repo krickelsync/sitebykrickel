@@ -8,7 +8,7 @@ import CheckoutModal from "@/components/products/CheckoutModal";
 import LandingBlocks from "@/components/products/LandingBlocks";
 import { useProduct, useProducts, useResolvedImage, resolveImageUrl, type Product } from "@/hooks/useProducts";
 import { AnimatePresence } from "framer-motion";
-import { H1, H2, Tagline, Body, Eyebrow, Meta, Price, spacing } from "@/components/ui/typography";
+import { H1, H2, Tagline, Body, Eyebrow, Meta, Price, spacing, textSize } from "@/components/ui/typography";
 
 const ProductDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -219,10 +219,10 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
       >
         {/* Meta row */}
         <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-2 mb-4 md:mb-6">
-          <span className="inline-flex items-center gap-1.5 px-2 md:px-2.5 py-0.5 md:py-1 text-[9px] md:text-[11px] font-mono font-bold uppercase tracking-[0.18em] bg-primary/10 text-primary border border-primary/30 rounded-full">
+          <span className={`inline-flex items-center gap-1.5 px-2 md:px-2.5 py-0.5 md:py-1 ${textSize.micro} font-mono font-bold uppercase tracking-[0.18em] bg-primary/10 text-primary border border-primary/30 rounded-full`}>
             <Sparkles className="w-3 h-3" /> Just released
           </span>
-          <div className="inline-flex items-center gap-1.5 text-[11px] md:text-[13px]" aria-label="Rated 4.9 out of 5">
+          <div className={`inline-flex items-center gap-1.5 ${textSize.small}`} aria-label="Rated 4.9 out of 5">
             <div className="flex text-primary">
               {[0, 1, 2, 3, 4].map((i) => (
                 <Star key={i} className="w-2.5 h-2.5 md:w-3 md:h-3 fill-current" />
@@ -249,7 +249,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
           {hasDiscount && (
             <>
               <Meta as="span" className="line-through">${product.original_price}</Meta>
-              <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-full bg-destructive text-destructive-foreground">
+              <span className={`${textSize.micro} font-mono font-bold px-1.5 py-0.5 rounded-full bg-destructive text-destructive-foreground`}>
                 -{discountPct}% OFF
               </span>
             </>
@@ -261,7 +261,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
           <Eyebrow as="p" className="block mb-2.5">License</Eyebrow>
           <div className="relative rounded-2xl border-2 border-primary bg-primary/[0.06] py-3 pl-3.5 pr-4 md:py-3.5 md:pl-4 md:pr-5 flex items-center justify-between gap-3 md:gap-4">
             {hasDiscount && (
-              <span className="absolute -top-2 left-3 md:left-4 text-[9px] md:text-[10px] font-mono font-bold px-1.5 md:px-2 py-0.5 rounded-full bg-destructive text-destructive-foreground shadow-sm">
+              <span className={`absolute -top-2 left-3 md:left-4 ${textSize.micro} font-mono font-bold px-1.5 md:px-2 py-0.5 rounded-full bg-destructive text-destructive-foreground shadow-sm`}>
                 -{discountPct}% OFF
               </span>
             )}
@@ -270,10 +270,10 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
                 <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary" />
               </span>
               <div className="min-w-0">
-                <span className="block font-display font-bold leading-tight text-[13px] md:text-base">
+                <span className={`block font-display font-bold leading-tight ${textSize.lead}`}>
                   Lifetime License
                 </span>
-                <Meta as="span" className="block mt-0.5 truncate text-[10px] md:text-[11px]">
+                <Meta as="span" className={`block mt-0.5 truncate ${textSize.micro}`}>
                   Free updates · Unlimited dev
                 </Meta>
               </div>
@@ -291,7 +291,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         <div className="flex flex-col gap-2.5">
         <button
           onClick={onBuy}
-          className="group relative w-full inline-flex items-center justify-center gap-2 px-5 py-3 md:py-3.5 rounded-2xl bg-primary text-primary-foreground font-display font-extrabold uppercase tracking-[0.14em] md:tracking-[0.18em] text-[11px] md:text-sm shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_45px_-5px_hsl(var(--primary)/0.9)] hover:bg-primary/90 active:scale-[0.99] transition-all"
+          className={`group relative w-full inline-flex items-center justify-center gap-2 px-5 py-3 md:py-3.5 rounded-2xl bg-primary text-primary-foreground font-display font-extrabold uppercase tracking-[0.14em] md:tracking-[0.18em] ${textSize.ui} shadow-[0_0_30px_-5px_hsl(var(--primary)/0.6)] hover:shadow-[0_0_45px_-5px_hsl(var(--primary)/0.9)] hover:bg-primary/90 active:scale-[0.99] transition-all`}
         >
           <ShoppingBag className="w-3.5 h-3.5 md:w-4 md:h-4" />
           <span>Add to cart</span>
@@ -302,7 +302,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
         </div>
 
         {/* Mobile: single inline trust row */}
-        <div className="md:hidden mt-4 flex items-center justify-between gap-2 text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
+        <div className={`md:hidden mt-4 flex items-center justify-between gap-2 ${textSize.micro} font-mono uppercase tracking-wider text-muted-foreground`}>
           <span className="inline-flex items-center gap-1.5"><InfinityIcon className="w-3 h-3 text-primary" /> Lifetime</span>
           <span className="inline-flex items-center gap-1.5"><RefreshCw className="w-3 h-3 text-primary" /> Updates</span>
           <span className="inline-flex items-center gap-1.5"><Zap className="w-3 h-3 text-primary" /> Instant</span>
