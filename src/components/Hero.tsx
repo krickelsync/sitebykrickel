@@ -116,7 +116,7 @@ const Hero = () => {
           >
             <span className="flex items-center justify-center whitespace-nowrap hover-lift text-center">
               THEMES<span className="hidden sm:inline"> FOR</span>
-              <span className="block sm:hidden">FOR</span>
+              <span className="sm:hidden ml-2">FOR</span>
             </span>
             <span
               className="flex items-center justify-center text-center glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense text-[clamp(1.65rem,6.2vw,4.5rem)] leading-[0.94] break-words min-h-[1.08em] overflow-hidden"
