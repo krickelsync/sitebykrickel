@@ -126,7 +126,7 @@ const ReactorHero = () => {
             aria-hidden
             viewBox="0 0 1000 600"
             className="absolute inset-0 w-full h-full pointer-events-none"
-            preserveAspectRatio="none"
+            preserveAspectRatio="xMidYMid meet"
           >
             <defs>
               <linearGradient id="cableStroke" x1="0" x2="1">
@@ -141,7 +141,7 @@ const ReactorHero = () => {
             </defs>
             {/* Cable outer (chrome tube) */}
             <motion.path
-              d="M 170 300 C 320 220, 430 380, 560 300"
+              d="M 200 300 C 350 200, 500 400, 650 300"
               stroke="hsl(0 0% 30%)"
               strokeWidth="10"
               strokeLinecap="round"
@@ -155,7 +155,7 @@ const ReactorHero = () => {
             />
             {/* Cable inner (neon energy) */}
             <motion.path
-              d="M 170 300 C 320 220, 430 380, 560 300"
+              d="M 200 300 C 350 200, 500 400, 650 300"
               stroke="url(#cableStroke)"
               strokeWidth="3"
               strokeLinecap="round"
@@ -168,9 +168,9 @@ const ReactorHero = () => {
             {/* Connector nodes at both ends */}
             {stage !== "idle" && (
               <>
-                <motion.circle cx="170" cy="300" r="6" fill="hsl(140 80% 55%)" filter="url(#cableGlow)"
+                <motion.circle cx="200" cy="300" r="6" fill="hsl(140 80% 55%)" filter="url(#cableGlow)"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} />
-                <motion.circle cx="560" cy="300" r="7" fill="hsl(45 100% 65%)" filter="url(#cableGlow)"
+                <motion.circle cx="650" cy="300" r="7" fill="hsl(45 100% 65%)" filter="url(#cableGlow)"
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: stage === "connect" ? 0 : 1, scale: stage === "connect" ? 0 : 1 }}
                   transition={{ duration: 0.3, delay: 0.1 }} />
@@ -187,19 +187,19 @@ const ReactorHero = () => {
                 animate={{ opacity: [0, 1, 1, 0] }}
                 transition={{ duration: 1.4, ease: "easeInOut" }}
                 style={{
-                  offsetPath: "path('M 170 300 C 320 220, 430 380, 560 300')",
+                  offsetPath: "path('M 200 300 C 350 200, 500 400, 650 300')",
                   animation: "reactor-pulse-travel 1.4s ease-in-out",
                 } as React.CSSProperties}
               />
             )}
           </svg>
 
-          {/* Shopify icon (left, anchored to cable start at x=17%) */}
+          {/* Shopify icon (left) */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="absolute left-[17%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+            className="absolute left-[8%] sm:left-[12%] top-1/2 -translate-y-1/2 z-10"
           >
             <div className="relative flex items-center justify-center w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-[#0b1f12]/60 backdrop-blur border border-[hsl(140_60%_35%)]/40 shadow-[0_0_30px_hsl(140_80%_45%/0.25)]">
               <svg viewBox="0 0 109 124" className="w-7 h-7 sm:w-10 sm:h-10" aria-hidden>
@@ -219,10 +219,10 @@ const ReactorHero = () => {
             <p className="mt-2 text-center font-mono text-[9px] uppercase tracking-widest text-muted-foreground">Shopify</p>
           </motion.div>
 
-          {/* Chrome Bag (anchored to cable end at x=56%) with 3D tilt */}
+          {/* Chrome Bag (right/center) with 3D tilt */}
           <motion.div
             style={{ rotateX: rotX, rotateY: rotY, x: tx, y: ty, transformStyle: "preserve-3d" }}
-            className="absolute left-[56%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
+            className="absolute left-[58%] sm:left-[62%] top-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
           >
             <div className="relative">
               {/* shockwave */}
