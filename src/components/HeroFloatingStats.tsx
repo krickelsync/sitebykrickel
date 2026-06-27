@@ -182,11 +182,15 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         transition={{ delay: 1.0, duration: 0.8 }}
       >
         <motion.div
-          animate={reduce ? {} : { y: [0, 12, 0] }}
+          animate={reduce ? {} : { y: [0, 12, 0], rotateZ: [pose.tr.rz, pose.tr.rz + 1.5, pose.tr.rz] }}
           transition={floatTransition(1)}
-          className={cardBase}
-          style={cardStyle}
+          style={{ perspective: 900 }}
         >
+          <motion.div
+            className={cardBase}
+            style={{ ...cardStyle, rotateX: trRX, rotateY: trRY, transformStyle: "preserve-3d" }}
+            whileHover={reduce ? {} : { scale: 1.04 }}
+          >
           <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/60 mb-1">
             Conversion Rate
           </div>
@@ -205,6 +209,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
               style={{ background: `linear-gradient(90deg, ${accent}, hsl(45 100% 60%))` }}
             />
           </div>
+          </motion.div>
         </motion.div>
       </motion.div>
       </div>
@@ -218,11 +223,15 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         transition={{ delay: 1.2, duration: 0.8 }}
       >
         <motion.div
-          animate={reduce ? {} : { y: [0, -8, 0] }}
+          animate={reduce ? {} : { y: [0, -8, 0], rotateZ: [pose.bl.rz, pose.bl.rz - 1.5, pose.bl.rz] }}
           transition={floatTransition(0.5)}
-          className={`${cardBase} flex items-center gap-3`}
-          style={cardStyle}
+          style={{ perspective: 900 }}
         >
+          <motion.div
+            className={`${cardBase} flex items-center gap-3`}
+            style={{ ...cardStyle, rotateX: blRX, rotateY: blRY, transformStyle: "preserve-3d" }}
+            whileHover={reduce ? {} : { scale: 1.04 }}
+          >
           <div className="grid place-items-center w-9 h-9 rounded-lg border" style={{ borderColor: accent, color: accent }}>
             <Smartphone size={16} />
           </div>
@@ -230,6 +239,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
             <div className="font-syne text-sm font-bold uppercase text-white leading-none">Fully</div>
             <div className="font-syne text-sm font-bold uppercase text-white leading-tight">Responsive</div>
           </div>
+          </motion.div>
         </motion.div>
       </motion.div>
       </div>
@@ -243,11 +253,15 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         transition={{ delay: 1.4, duration: 0.8 }}
       >
         <motion.div
-          animate={reduce ? {} : { y: [0, 10, 0] }}
+          animate={reduce ? {} : { y: [0, 10, 0], rotateZ: [pose.br.rz, pose.br.rz + 1.5, pose.br.rz] }}
           transition={floatTransition(1.5)}
-          className={`${cardBase} text-center`}
-          style={cardStyle}
+          style={{ perspective: 900 }}
         >
+          <motion.div
+            className={`${cardBase} text-center`}
+            style={{ ...cardStyle, rotateX: brRX, rotateY: brRY, transformStyle: "preserve-3d" }}
+            whileHover={reduce ? {} : { scale: 1.04 }}
+          >
           <motion.div
             animate={reduce ? {} : { scale: [1, 1.15, 1], filter: ["drop-shadow(0 0 0px " + accent + ")", "drop-shadow(0 0 12px " + accent + ")", "drop-shadow(0 0 0px " + accent + ")"] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -258,6 +272,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           </motion.div>
           <div className="font-syne text-[11px] font-bold uppercase text-white leading-tight">Fast Loading</div>
           <div className="font-syne text-[11px] font-bold uppercase text-white leading-tight">Speed</div>
+          </motion.div>
         </motion.div>
       </motion.div>
       </div>
