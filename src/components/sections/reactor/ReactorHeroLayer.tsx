@@ -16,15 +16,14 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
   const lowPower = useLowPower();
   const [stage, setStage] = useState<Stage>("idle");
   const [burst, setBurst] = useState(0);
-  const [hasInteracted, setHasInteracted] = useState(false);
   const controls = useAnimation();
   const timers = useRef<number[]>([]);
+  const cablePath = "M 70 28 C 108 16, 146 58, 174 40";
 
   useEffect(() => { onStageChange?.(stage); }, [stage, onStageChange]);
 
   const runSequence = useCallback(() => {
     if (stage !== "idle") return;
-    setHasInteracted(true);
     timers.current.forEach(window.clearTimeout);
     timers.current = [];
     setStage("connect");
@@ -35,16 +34,9 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
       setStage("orbit");
     }, 1450 * speed);
     timers.current = [t1, t2, t3];
-  }, [stage]);
+  }, [lowPower, reduce, stage]);
 
   useEffect(() => () => timers.current.forEach(window.clearTimeout), []);
-
-  const [pulseTick, setPulseTick] = useState(0);
-  useEffect(() => {
-    if (stage !== "orbit" || reduce || lowPower) return;
-    const id = setInterval(() => setPulseTick((n) => n + 1), 4200);
-    return () => clearInterval(id);
-  }, [stage, reduce, lowPower]);
 
   useEffect(() => {
     if (stage !== "activate") return;
@@ -87,7 +79,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             </filter>
           </defs>
           <motion.path
-            d="M 86 40 C 122 24, 150 58, 174 40"
+            d={cablePath}
             stroke="hsl(var(--foreground) / 0.18)"
             strokeWidth="7"
             strokeLinecap="round"
@@ -97,7 +89,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             transition={{ duration: reduce || lowPower ? 0.25 : 0.65, ease: "easeInOut" }}
           />
           <motion.path
-            d="M 86 40 C 122 24, 150 58, 174 40"
+            d={cablePath}
             stroke="url(#rhlCableStroke)"
             strokeWidth="3"
             strokeLinecap="round"
@@ -109,24 +101,13 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           />
           {stage !== "idle" && (
             <>
-              <motion.circle cx="86" cy="40" r="3" fill="hsl(140 80% 55%)" filter="url(#rhlCableGlow)"
+              <motion.circle cx="70" cy="28" r="3" fill="hsl(140 80% 55%)" filter="url(#rhlCableGlow)"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} />
               <motion.circle cx="174" cy="40" r="4.5" fill="hsl(45 100% 65%)" filter="url(#rhlCableGlow)"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: stage === "connect" ? 0 : 1, scale: stage === "connect" ? 0 : 1 }}
                 transition={{ duration: 0.25 }} />
             </>
-          )}
-          {(stage === "transfer" || stage === "activate" || stage === "orbit") && !reduce && !lowPower && (
-            <circle
-              r="4.5"
-              fill="hsl(45 100% 65%)"
-              filter="url(#rhlCableGlow)"
-              style={{
-                offsetPath: "path('M 86 40 C 122 24, 150 58, 174 40')",
-                animation: "reactor-pulse-travel 1.6s linear infinite",
-              } as React.CSSProperties}
-            />
           )}
         </svg>
 
@@ -140,21 +121,30 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             <img
               src="https://cdn.simpleicons.org/shopify/95BF47"
               alt="Shopify"
-              className="h-8 w-8 object-contain drop-shadow-[0_0_14px_hsl(140_80%_45%/0.45)]"
+              className="h-8 w-8 object-contain"
               loading="lazy"
               decoding="async"
             />
-            {stage !== "idle" && (
-              <motion.div
-                aria-hidden
-                className="absolute inset-0"
-                style={{ filter: "drop-shadow(0 0 16px hsl(140 80% 50% / 0.7))" }}
-                animate={{ opacity: [0.35, 0.8, 0.35] }}
-                transition={{ duration: 1.8, repeat: Infinity }}
-              />
-            )}
           </div>
         </motion.div>
+
+        {stage === "idle" && (
+          <motion.div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-[130px] top-[40px] z-30 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-primary/35 bg-background/55 backdrop-blur-sm"
+            animate={reduce ? undefined : { scale: [1, 1.05, 1] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            {!reduce && (
+              <motion.span
+                className="absolute inset-0 rounded-full border border-primary/45"
+                animate={{ scale: [1, 1.45], opacity: [0.55, 0] }}
+                transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
+              />
+            )}
+            <Hand className="relative h-4 w-4 text-primary" strokeWidth={1.8} />
+          </motion.div>
+        )}
 
         <motion.div
           className="absolute left-[204px] top-[40px] z-20 -translate-x-1/2 -translate-y-1/2"
@@ -202,45 +192,17 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
                 loading="lazy"
                 decoding="async"
               />
-              {stage !== "idle" && !reduce && !lowPower && (
-                <>
-                  {[0, 0.9, 1.8].map((delay, i) => (
-                    <motion.span
-                      key={i}
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 rounded-full border border-primary/60"
-                      initial={{ scale: 0.7, opacity: 0.55 }}
-                      animate={{ scale: 2.1, opacity: 0 }}
-                      transition={{ duration: 2.7, delay, repeat: Infinity, ease: "easeOut" }}
-                      style={{ boxShadow: "0 0 18px hsl(45 100% 60% / 0.45)" }}
-                    />
-                  ))}
-                </>
+              {(stage === "activate" || stage === "orbit") && !reduce && !lowPower && (
+                <motion.span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 rounded-full border border-primary/55"
+                  initial={false}
+                  animate={{ scale: [0.95, 1.55], opacity: [0.5, 0] }}
+                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeOut" }}
+                />
               )}
             </motion.div>
           </div>
-
-          {stage === "idle" && (
-            <motion.div
-              aria-hidden="true"
-              className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1"
-              animate={reduce ? undefined : { y: [0, -3, 0] }}
-              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <span className="relative flex h-7 w-7 items-center justify-center">
-                <span className="absolute inset-0 rounded-full bg-primary/20 blur-md" />
-                <motion.span
-                  className="absolute inset-0 rounded-full border border-primary/70"
-                  animate={reduce ? undefined : { scale: [1, 1.6], opacity: [0.7, 0] }}
-                  transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
-                />
-                <Hand className="relative h-4 w-4 text-primary" strokeWidth={1.6} />
-              </span>
-              <span className="font-mono text-[8px] uppercase tracking-[0.24em] text-primary/80">
-                Tap
-              </span>
-            </motion.div>
-          )}
 
           {stage === "orbit" && REACTOR_FEATURES.map((item, i) => {
             const angle = (i / REACTOR_FEATURES.length) * 360;
