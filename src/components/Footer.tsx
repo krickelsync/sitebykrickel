@@ -66,8 +66,10 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
       scrollToId(hash);
     }
   };
-  return <footer className="py-16 md:py-24 border-t border-muted">
-      <div className="container px-4">
+  return <footer className="relative overflow-hidden border-t border-muted pt-16 md:pt-24">
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+      <div aria-hidden className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 h-64 w-[80%] rounded-full bg-primary/10 blur-3xl" />
+      <div className="container px-4 relative">
         <div className="grid md:grid-cols-3 gap-12 md:gap-8 mb-12">
           {/* Brand Column */}
           <motion.div initial={{
@@ -176,11 +178,28 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
       }} transition={{
         duration: 0.6,
         delay: 0.3
-      }} className="pt-8 border-t border-muted/50 flex flex-col md:flex-row items-center justify-between gap-4">
+      }} className="pt-8 border-t border-muted/50 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
           <p className="font-mono text-xs text-muted-foreground">
             © 2025 SITEBYKRICKEL. ALL RIGHTS RESERVED.
           </p>
-          
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground/60">
+            Crafted in Indonesia · Built for Brands
+          </p>
+        </motion.div>
+      </div>
+
+      {/* Giant half-cut KRICKEL wordmark */}
+      <div aria-hidden className="relative mt-8 md:mt-12 overflow-hidden select-none">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="translate-y-[35%] md:translate-y-[40%]"
+        >
+          <h2 className="font-syne font-extrabold uppercase tracking-tighter text-center leading-[0.8] text-transparent bg-clip-text bg-gradient-to-b from-foreground/90 via-foreground/40 to-transparent dark:from-amber-200 dark:via-amber-400/40 dark:to-transparent" style={{ fontSize: 'clamp(5rem, 22vw, 22rem)' }}>
+            KRICKEL
+          </h2>
         </motion.div>
       </div>
     </footer>;
