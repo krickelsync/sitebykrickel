@@ -80,17 +80,19 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           </Link>
 
           {/* Desktop / tablet nav pill */}
-          <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-1 navbar-pill menu-rotating-glow h-12 px-1.5">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.name}
-                href={link.href}
-                label={link.name}
-                active={isActive(link.href)}
-                variant="desktop"
-                onAnchorClick={handleNavClick}
-              />
-            ))}
+          <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="flex items-center gap-1 navbar-pill menu-rotating-glow h-12 px-1.5">
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.name}
+                  href={link.href}
+                  label={link.name}
+                  active={isActive(link.href)}
+                  variant="desktop"
+                  onAnchorClick={handleNavClick}
+                />
+              ))}
+            </div>
           </div>
 
           {/* CTA + theme pill */}
