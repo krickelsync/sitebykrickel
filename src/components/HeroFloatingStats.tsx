@@ -40,8 +40,15 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   const sales = Math.round(SALES_FROM + (SALES_TO - SALES_FROM) * salesP);
   const salesTrend = Math.round(SALES_TREND_TO * salesP);
   const salesChartWidth = reduce ? 120 : Math.max(0, Math.min(120, 120 * salesP));
-  const salesDotX = 8 + 104 * salesP;
-  const salesDotY = 34 - 26 * salesP;
+  // Wavy upward path samples (x: 8→112, y values for matching path below)
+  const waveX = [8, 18, 28, 38, 48, 58, 68, 78, 88, 98, 112];
+  const waveY = [34, 30, 33, 27, 30, 23, 26, 18, 22, 13, 8];
+  const _segs = waveX.length - 1;
+  const _f = salesP * _segs;
+  const _i = Math.min(_segs - 1, Math.floor(_f));
+  const _t = _f - _i;
+  const salesDotX = waveX[_i] + (waveX[_i + 1] - waveX[_i]) * _t;
+  const salesDotY = waveY[_i] + (waveY[_i + 1] - waveY[_i]) * _t;
 
   // Conversion: 0% → 18.4% with trend 0% → 92%; bar width tracks trend.
   const CONV_TO = 18.4;
@@ -193,14 +200,14 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
               ))}
               <g clipPath="url(#salesRevealClip)">
                 <motion.path
-                  d="M8,34 C18,33 21,30 30,29 C39,28 43,24 52,24 C62,24 66,19 74,19 C84,18 88,14 96,13 C103,12 107,10 112,8 L112,39 L8,39 Z"
+                  d="M8,34 L18,30 L28,33 L38,27 L48,30 L58,23 L68,26 L78,18 L88,22 L98,13 L112,8 L112,39 L8,39 Z"
                   fill="url(#salesArea)"
                   initial={{ opacity: 0.45 }}
                   animate={reduce ? { opacity: 0.45 } : { opacity: [0.22, 0.48, 0.36] }}
                   transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
                 />
                 <path
-                  d="M8,34 C18,33 21,30 30,29 C39,28 43,24 52,24 C62,24 66,19 74,19 C84,18 88,14 96,13 C103,12 107,10 112,8"
+                  d="M8,34 Q13,28 18,30 T28,33 T38,27 T48,30 T58,23 T68,26 T78,18 T88,22 T98,13 T112,8"
                   fill="none"
                   stroke="url(#salesLine)"
                   strokeWidth="2.2"
