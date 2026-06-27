@@ -7,6 +7,7 @@ import { useMagnetic } from "@/hooks/useMagnetic";
 import { useMouseParallax } from "@/hooks/useMouseParallax";
 import { fadeUpDelay } from "@/lib/motion";
 import shopifyBadge from "@/assets/shopify-badge.png";
+import HeroFloatingStats from "./HeroFloatingStats";
 
 // Lazy load heavy Prism component
 const Prism = lazy(() => import("./Prism"));
@@ -196,6 +197,9 @@ const Hero = () => {
           </motion.div>
         </div>
       </motion.div>
+
+      {/* Floating glass stat cards — parallax-only assets */}
+      <HeroFloatingStats mx={mx} my={my} />
 
       {/* Tilted bottom marquee ribbon — lifted above mobile bottom nav */}
       <div
