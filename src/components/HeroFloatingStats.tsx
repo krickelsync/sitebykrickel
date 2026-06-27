@@ -181,14 +181,15 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                 animate={reduce ? {} : { x: [0, -100] }}
                 transition={reduce ? {} : { duration: 8, repeat: Infinity, ease: "linear", repeatType: "loop" }}
               >
+                {/* start-Y == end-Y so tiles join without a vertical "cliff" */}
                 {[0, 100].map((dx) => (
                   <g key={dx} transform={`translate(${dx} 0)`}>
                     <path
-                      d="M0,28 L12,22 L24,26 L36,14 L48,18 L60,10 L72,14 L84,6 L100,2 L100,36 L0,36 Z"
+                      d="M0,22 L12,16 L24,24 L36,12 L48,20 L60,8 L72,18 L84,14 L100,22 L100,36 L0,36 Z"
                       fill="url(#spark1)"
                     />
                     <path
-                      d="M0,28 L12,22 L24,26 L36,14 L48,18 L60,10 L72,14 L84,6 L100,2"
+                      d="M0,22 L12,16 L24,24 L36,12 L48,20 L60,8 L72,18 L84,14 L100,22"
                       fill="none"
                       stroke="url(#spark1Line)"
                       strokeWidth="1.6"
@@ -198,14 +199,14 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                   </g>
                 ))}
               </motion.g>
-              {/* Pulsing dot at the leading edge */}
+              {/* Pulsing dot — pulled in from the edge so it isn't clipped */}
               {!reduce && (
                 <motion.circle
-                  cx="100"
-                  cy="2"
-                  r="1.8"
+                  cx="96"
+                  cy="22"
+                  r="1.6"
                   fill={accent}
-                  animate={{ r: [1.8, 2.6, 1.8], opacity: [1, 0.6, 1] }}
+                  animate={{ r: [1.4, 2.4, 1.4], opacity: [1, 0.5, 1] }}
                   transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
                   style={{ filter: `drop-shadow(0 0 5px ${accent})` }}
                 />
