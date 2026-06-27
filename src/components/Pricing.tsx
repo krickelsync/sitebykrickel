@@ -6,18 +6,61 @@ import { ArrowRight, Check } from "lucide-react";
 import { fadeIn } from "@/lib/motion";
 import { useContactScroll } from "@/hooks/useContactScroll";
 
-const FEATURES = [
-  "Shopify 2.0 Ready",
-  "Mobile-first Responsive Layout",
-  "Infinite Customization Options",
-  "Product Page Builder",
-  "Lookbook & Editorial Sections",
-  "Drop Countdown & Sticky Cart",
-  "Mega Menu Layouts",
-  "Trust Badges Pack",
-  "Unlimited Store License",
-  "Lifetime Updates",
-  "Priority Email Support",
+type FeatureItem = { label: string; value?: string };
+type FeatureGroup = { category: string; items: FeatureItem[] };
+
+const FEATURE_GROUPS: FeatureGroup[] = [
+  {
+    category: "EXPERIENCE & INTERACTIVITY",
+    items: [
+      { label: "Enter Page", value: "Video / Img / 3D" },
+      { label: "3D Interactive Logo", value: "Spinning .glb" },
+      { label: "Global Music Player", value: "Popup Equalizer" },
+      { label: "Glassmorphism Header", value: "Glass Effect" },
+      { label: "Custom Cursor", value: "SVG Logo" },
+      { label: "Free Domain Include", value: "Included" },
+      { label: "Free Email Domain", value: "Up to 10 @yourbrand.com" },
+    ],
+  },
+  {
+    category: "VISUAL & AESTHETICS",
+    items: [
+      { label: "Background Type", value: "Vid / Gif / Img" },
+      { label: "Custom Font", value: "Upload Fonts" },
+      { label: "Lookbook", value: "Hover Animation" },
+      { label: "Running Marquee", value: "Animated" },
+      { label: "Text Glow Effect", value: "Neon Vibe" },
+      { label: "Page Preloader", value: "Custom Gif" },
+    ],
+  },
+  {
+    category: "CONVERSION BOOSTERS",
+    items: [
+      { label: "Sticky Add-to-Cart", value: "Floating Bar" },
+      { label: "Quick Add Button", value: "Glassmorph" },
+      { label: "Pre-Order System", value: "Badge & Status" },
+      { label: "Size Chart Popup" },
+      { label: "Stock Indicator", value: "Low Stock Alert" },
+    ],
+  },
+  {
+    category: "MARKETING",
+    items: [
+      { label: "Newsletter Popup", value: "Waitlist Email" },
+      { label: "Social Icons", value: "More + Hover FX" },
+      { label: "Shipping Status", value: "Password Page" },
+      { label: "Countdown Timer" },
+    ],
+  },
+  {
+    category: "SUPPORT",
+    items: [
+      { label: "Revisions", value: "10× Major" },
+      { label: "Turnaround", value: "2–3 Days" },
+      { label: "Support", value: "VIP WhatsApp" },
+      { label: "License", value: "Lifetime" },
+    ],
+  },
 ];
 
 const Pricing = () => {
@@ -37,7 +80,7 @@ const Pricing = () => {
           accentTone="gold"
         />
 
-        <div className="max-w-md mx-auto">
+        <div className="max-w-lg mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -97,18 +140,33 @@ const Pricing = () => {
               </button>
             </div>
 
-            <ul className="relative flex-1 space-y-2.5 mb-6">
-              {FEATURES.map((f) => (
-                <li key={f} className="flex items-start gap-2.5">
-                  <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
-                    <Check className="w-2.5 h-2.5" strokeWidth={3} />
-                  </span>
-                  <span className="font-mono text-xs md:text-sm text-muted-foreground">
-                    {f}
-                  </span>
-                </li>
+            <div className="relative flex-1 space-y-5 mb-6">
+              {FEATURE_GROUPS.map((group) => (
+                <div key={group.category}>
+                  <h4 className="font-mono text-[10px] md:text-[11px] text-primary uppercase tracking-[0.2em] mb-2">
+                    {group.category}
+                  </h4>
+                  <ul className="space-y-1.5">
+                    {group.items.map((item) => (
+                      <li key={item.label} className="flex items-start gap-2.5">
+                        <Check className="mt-0.5 w-3.5 h-3.5 shrink-0 text-primary" strokeWidth={3} />
+                        <span className="font-mono text-xs md:text-sm text-muted-foreground">
+                          {item.label}
+                          {item.value && (
+                            <>
+                              :{" "}
+                              <span className="text-foreground font-semibold">
+                                {item.value}
+                              </span>
+                            </>
+                          )}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
-            </ul>
+            </div>
 
             <a
               href="/about#contact"
