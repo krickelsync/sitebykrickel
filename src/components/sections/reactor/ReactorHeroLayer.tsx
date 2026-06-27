@@ -196,7 +196,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
                   : { scale: 1, y: 0 }
               }
               transition={{ duration: 0.45 }}
-              className="relative h-[70px] w-[70px] sm:h-[82px] sm:w-[82px] md:h-[88px] md:w-[88px]"
+              className="relative h-[58px] w-[58px] sm:h-[68px] sm:w-[68px] md:h-[76px] md:w-[76px]"
             >
               <img
                 src={chromeBag.url}
