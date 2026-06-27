@@ -6,6 +6,7 @@ import ThemeToggle from "./navbar/ThemeToggle";
 import HamburgerIcon from "./navbar/HamburgerIcon";
 import NavLink from "./navbar/NavLink";
 import MobileMenu from "./navbar/MobileMenu";
+import CartButton from "./cart/CartButton";
 import { scrollToId } from "@/lib/scroll";
 import { PRIMARY_NAV, type NavLinkItem } from "@/lib/nav";
 import { useHashScroll } from "@/hooks/useHashScroll";
@@ -95,6 +96,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           {/* CTA + theme pill */}
           <div className="hidden md:flex items-center gap-2 navbar-pill menu-rotating-glow h-12 px-2">
             <ThemeToggle />
+            <CartButton />
             {onCtaClick ? (
               <button
                 onClick={onCtaClick}
@@ -117,6 +119,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           <div className="relative flex md:hidden items-center">
             <div className="flex items-center gap-1 navbar-pill menu-rotating-glow h-12 px-2">
               <ThemeToggle />
+              <CartButton />
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2 min-h-10 min-w-10 inline-flex items-center justify-center rounded-full hover:bg-foreground/5 transition-colors"
