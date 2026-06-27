@@ -12,14 +12,14 @@ const services = [
 const ServicesAddon = () => {
   const onClick = useContactScroll();
   return (
-    <section className="py-24 md:py-32 border-t border-border">
+    <section className="py-14 md:py-32 border-t border-border">
       <div className="container px-4">
         <SectionHeader
           eyebrow="SERVICES"
           title="NEED HELP"
           accent="LAUNCHING?"
         />
-        <p className="font-mono text-sm md:text-base text-muted-foreground text-center max-w-2xl mx-auto -mt-8 mb-12">
+        <p className="font-mono text-xs md:text-base text-muted-foreground text-center max-w-2xl mx-auto -mt-6 md:-mt-8 mb-8 md:mb-12">
           Buy the theme and let us set it up for you. Perfect for founders who want a launch-ready store
           without touching the backend.
         </p>
@@ -33,19 +33,19 @@ const ServicesAddon = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="glass-card p-6 md:p-8 flex flex-col"
+                className="glass-card p-4 md:p-8 flex flex-col"
               >
-                <Icon className="w-6 h-6 text-primary mb-4" aria-hidden />
-                <h3 className="font-syne font-bold uppercase text-lg md:text-xl tracking-tight mb-2">
+                <Icon className="w-5 h-5 md:w-6 md:h-6 text-primary mb-3 md:mb-4" aria-hidden />
+                <h3 className="font-syne font-bold uppercase text-sm md:text-xl tracking-tight mb-2">
                   {s.name}
                 </h3>
-                <p className="font-mono text-xs md:text-sm text-muted-foreground leading-relaxed flex-1">
+                <p className="font-mono text-[11px] md:text-sm text-muted-foreground leading-relaxed flex-1">
                   {s.desc}
                 </p>
                 <a
                   href="/about#contact"
                   onClick={onClick}
-                  className="mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-primary hover:gap-3 transition-all"
+                  className="mt-4 md:mt-6 inline-flex items-center gap-2 font-mono text-[10px] md:text-xs uppercase tracking-widest text-primary hover:gap-3 transition-all"
                 >
                   Get in touch <ArrowRight className="w-3.5 h-3.5" />
                 </a>
