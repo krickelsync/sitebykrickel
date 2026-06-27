@@ -107,7 +107,6 @@ const Hero = () => {
         />
       </motion.div>
       <motion.div style={{ y: headlineY, opacity: contentOpacity }} className="container relative z-10 px-4">
-        <HeroFloatingStats mx={mx} my={my} />
         <div className="max-w-5xl mx-auto text-center">
           {/* Eyebrow */}
           <motion.div {...fadeUpDelay(0.2)} style={{ x: badgePX, y: badgePY }} className="mb-8">
@@ -198,6 +197,9 @@ const Hero = () => {
           </motion.div>
         </div>
       </motion.div>
+
+      {/* Floating glass stat cards — parallax-only assets */}
+      <HeroFloatingStats mx={mx} my={my} />
 
       {/* Tilted bottom marquee ribbon — lifted above mobile bottom nav */}
       <div
