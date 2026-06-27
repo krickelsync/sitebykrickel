@@ -40,10 +40,10 @@ export const typography = {
   bodyLg:
     "font-sans text-[14px] md:text-base leading-[1.65] text-muted-foreground",
   eyebrow:
-    "font-mono font-semibold uppercase text-[9px] md:text-[11px] tracking-[0.2em] text-muted-foreground",
+    "font-sans font-semibold uppercase text-[9px] md:text-[11px] tracking-[0.2em] text-muted-foreground",
   meta:
-    "font-mono text-[10px] md:text-xs tracking-wide text-muted-foreground",
-  price: "font-mono font-bold text-primary text-base md:text-xl leading-none",
+    "font-sans text-[10px] md:text-xs tracking-wide text-muted-foreground",
+  price: "font-sans font-bold text-primary text-base md:text-xl leading-none",
 } as const;
 
 /**
