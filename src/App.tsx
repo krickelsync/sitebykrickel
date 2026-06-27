@@ -22,6 +22,7 @@ const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminProductEdit = lazy(() => import("./pages/AdminProductEdit"));
+const StyleGuide = lazy(() => import("./pages/StyleGuide"));
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const AppInner = () => {
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:slug" element={<Suspense fallback={null}><ProductDetail /></Suspense>} />
+        <Route path="/style-guide" element={<Suspense fallback={null}><StyleGuide /></Suspense>} />
         <Route path="/admin/login" element={<Suspense fallback={null}><AdminLogin /></Suspense>} />
         <Route path="/admin" element={<Suspense fallback={null}><Admin /></Suspense>} />
         <Route path="/admin/products/:id" element={<Suspense fallback={null}><AdminProductEdit /></Suspense>} />
