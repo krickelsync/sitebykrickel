@@ -162,7 +162,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                 ${sales.toLocaleString("en-US")}
               </span>
               <span className="font-mono text-[10px] flex items-center gap-0.5" style={{ color: accent }}>
-                <TrendingUp size={10} /> 24%
+                <TrendingUp size={10} /> {salesTrend}%
               </span>
             </div>
             {/* Continuously scrolling waveform (seamless loop) */}
@@ -248,14 +248,13 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           <div className="flex items-baseline gap-2 mb-2">
             <span className="font-syne text-2xl font-bold text-white tabular-nums">{conv.toFixed(2)}%</span>
             <span className="font-mono text-[10px] flex items-center gap-0.5" style={{ color: accent }}>
-              <TrendingUp size={10} /> 18%
+              <TrendingUp size={10} /> {convTrend}%
             </span>
           </div>
           <div className="h-1.5 w-32 rounded-full bg-white/10 overflow-hidden">
             <motion.div
-              initial={{ width: "30%" }}
-              animate={reduce ? { width: "72%" } : { width: ["30%", "85%", "55%", "78%", "30%"] }}
-              transition={reduce ? { duration: 0 } : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              animate={{ width: barWidth }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
               className="h-full rounded-full"
               style={{ background: `linear-gradient(90deg, ${accent}, hsl(45 100% 60%))` }}
             />
