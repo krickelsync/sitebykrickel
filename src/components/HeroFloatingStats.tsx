@@ -75,12 +75,17 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         transition={{ delay: 0.8, duration: 0.8 }}
       >
         <motion.div
-          animate={reduce ? {} : { y: [0, -10, 0] }}
+          animate={reduce ? {} : { y: [0, -10, 0], rotateZ: [pose.tl.rz, pose.tl.rz - 1.5, pose.tl.rz] }}
           transition={floatTransition(0)}
-          style={{ perspective: 800 }}
+          style={{ perspective: 900 }}
         >
           <motion.div
-            style={{ ...cardStyle, rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }}
+            style={{
+              ...cardStyle,
+              rotateX: useTransform(tiltDX, (v) => pose.tl.rx + v),
+              rotateY: useTransform(tiltDY, (v) => pose.tl.ry + v),
+              transformStyle: "preserve-3d",
+            }}
             whileHover={reduce ? {} : { scale: 1.04 }}
             className={`${cardBase} pointer-events-auto relative overflow-hidden w-[200px]`}
           >
