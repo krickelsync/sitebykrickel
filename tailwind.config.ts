@@ -20,8 +20,8 @@ export default {
         // Body / UI — humanist sans, default for paragraphs, buttons, nav, forms.
         sans: ['"Plus Jakarta Sans"', "system-ui", "-apple-system", "sans-serif"],
         body: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"],
-        // Mono — labels, eyebrows, prices, technical meta.
-        mono: ['"JetBrains Mono"', "ui-monospace", "SFMono-Regular", "monospace"],
+        // Mono alias → mapped to Plus Jakarta Sans so the whole site uses just 2 fonts.
+        mono: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
