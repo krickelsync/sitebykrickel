@@ -1,3 +1,4 @@
+import type { LucideIcon } from "lucide-react";
 import {
   GalleryHorizontalEnd,
   Palette,
@@ -11,7 +12,7 @@ import {
 import SectionHeader from "@/components/shared/SectionHeader";
 
 type Row = {
-  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  icon: LucideIcon;
   gradient: string;
   name: string;
   desc: string;
