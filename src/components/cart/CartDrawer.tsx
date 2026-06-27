@@ -23,7 +23,7 @@ const CartDrawer = () => {
       <SheetContent
         side="right"
         overlayClassName="bg-transparent"
-        className="!fixed !top-[4.25rem] !bottom-auto !right-3 sm:!right-6 !left-auto !h-[calc(100svh-5.5rem)] !w-[22rem] !max-w-[calc(100vw-1.5rem)] navbar-pill menu-rotating-glow !rounded-2xl !border-0 !p-0 !shadow-2xl flex flex-col z-[60]"
+        className="cart-drawer-panel !fixed !top-[4.25rem] !bottom-auto !right-3 sm:!right-6 !left-auto !h-[calc(100svh-5.5rem)] !w-[22rem] !max-w-[calc(100vw-1.5rem)] navbar-pill menu-rotating-glow !rounded-2xl !border-0 !p-0 !shadow-2xl flex flex-col z-[60]"
       >
        <div className="flex flex-col h-full px-4 pt-4 pb-3">
         <SheetHeader>
