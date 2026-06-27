@@ -108,7 +108,7 @@ const Hero = () => {
           </motion.div>
 
           {/* Main Headline */}
-          <div className="relative inline-block text-center">
+          <div className="relative w-full text-center">
           <motion.h1
             {...fadeUpDelay(0.3, 0.8)}
             id="hero-heading"
