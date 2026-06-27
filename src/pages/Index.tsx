@@ -6,7 +6,6 @@ import AnnouncementBar from "@/components/sections/AnnouncementBar";
 
 // Lazy load below-the-fold components
 const ProblemSection = lazy(() => import("@/components/sections/ProblemSection"));
-const ThemeCollection = lazy(() => import("@/components/sections/ThemeCollection"));
 const FeatureGrid = lazy(() => import("@/components/sections/FeatureGrid"));
 const MobileFirstSection = lazy(() => import("@/components/sections/MobileFirstSection"));
 const CustomizationSection = lazy(() => import("@/components/sections/CustomizationSection"));
@@ -33,9 +32,6 @@ const Index = () => {
       <Marquee />
       <Suspense fallback={<SectionLoader />}>
         <ProblemSection />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <ThemeCollection />
       </Suspense>
       <Suspense fallback={<SectionLoader />}>
         <FeatureGrid />
