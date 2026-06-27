@@ -9,14 +9,12 @@ import { useLowPower } from "@/hooks/useLowPower";
 import { fadeUpDelay } from "@/lib/motion";
 import shopifyBadge from "@/assets/shopify-badge.png";
 
-// Lazy-load heavy view layers so they never block first paint
-const Prism = lazy(() => import("./Prism"));
+// Lazy-load floating stats so they never block first paint
 const HeroFloatingStats = lazy(() => import("./HeroFloatingStats"));
 
 const Hero = () => {
   const getIsMobile = () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
   const [isMobile, setIsMobile] = useState(getIsMobile);
-  const [prismScale, setPrismScale] = useState(getIsMobile() ? 1.8 : 3);
   const rotatingWords = useMemo(() => ["CLOTHING BRAND", "STREETWEAR", "DROPSHIPPER", "BARBERSHOP"], []);
   const [wordIndex, setWordIndex] = useState(0);
   const [inView, setInView] = useState(true);
@@ -44,7 +42,6 @@ const Hero = () => {
 
   const reduce = useReducedMotion();
   const lowPower = useLowPower();
-  const useStaticPrism = isMobile || reduce || lowPower;
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -60,36 +57,15 @@ const Hero = () => {
     const handleResize = () => {
       const mobile = getIsMobile();
       setIsMobile(mobile);
-      setPrismScale(mobile ? 1.8 : 3);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return <section ref={sectionRef} aria-labelledby="hero-heading" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20 pb-24">
-      {/* Prism Background Effect - z-index 0 */}
+      {/* Liquid Chrome Background - z-index 0 (pure CSS, zero GPU) */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 pointer-events-none bg-background">
-        {useStaticPrism ? (
-          <div className="hero-prism-fallback h-full w-full" />
-        ) : (
-          <Suspense fallback={<div className="hero-prism-fallback h-full w-full" />}>
-            <Prism 
-              animationType="rotate"
-              timeScale={0.35}
-              height={4}
-              baseWidth={5}
-              scale={prismScale}
-              hueShift={0}
-              colorFrequency={1}
-              noise={0}
-              glow={0.85}
-              bloom={0.75}
-              offset={{ x: 0, y: 0 }}
-              suspendWhenOffscreen={true}
-              frameRate={24}
-            />
-          </Suspense>
-        )}
+        <div className="hero-prism-fallback h-full w-full overflow-hidden" />
         {/* Fade overlay at the bottom */}
         <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent z-[1]" />
       </motion.div>
