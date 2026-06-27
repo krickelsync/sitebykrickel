@@ -1,10 +1,7 @@
 import { motion, useAnimation, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import chromeBag from "@/assets/chrome-bag.png.asset.json";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { useLowPower } from "@/hooks/useLowPower";
-import { REACTOR_FEATURES, type ReactorFeature } from "./features";
-import FeatureCard from "./FeatureCard";
 
 type Stage = "idle" | "connect" | "transfer" | "activate" | "orbit";
 
@@ -15,10 +12,8 @@ interface Props {
 const ReactorHeroLayer = ({ onStageChange }: Props) => {
   const reduce = useReducedMotion();
   const lowPower = useLowPower();
-  const isMobile = useIsMobile();
   const [stage, setStage] = useState<Stage>("idle");
   const [burst, setBurst] = useState(0);
-  const [active, setActive] = useState<ReactorFeature | null>(null);
   const controls = useAnimation();
   const timers = useRef<number[]>([]);
 
@@ -34,7 +29,6 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
     const t2 = window.setTimeout(() => setStage("activate"), 1050 * speed);
     const t3 = window.setTimeout(() => {
       setStage("orbit");
-      setActive(REACTOR_FEATURES[0]);
     }, 1450 * speed);
     timers.current = [t1, t2, t3];
   }, [stage]);
@@ -53,11 +47,6 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
     controls.start({ x: [0, -2, 2, -1, 0], transition: { duration: 0.4 } });
     if (stage === "idle") runSequence();
   }, [controls, runSequence, stage]);
-
-  const onFeatureClick = (f: ReactorFeature) => {
-    if (stage !== "orbit") return;
-    setActive((cur) => (cur?.key === f.key ? null : f));
-  };
 
   return (
     <div className="relative z-20 mx-auto mb-3 flex w-full justify-center md:mb-4">
@@ -217,77 +206,8 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             </motion.div>
           </button>
 
-          {!isMobile && stage === "orbit" && REACTOR_FEATURES.map((item, i) => {
-            const angle = (i / REACTOR_FEATURES.length) * 360;
-            const radius = i % 2 === 0 ? 62 : 78;
-            const duration = i % 2 === 0 ? 22 : 30;
-            const { Icon } = item;
-            const isActive = active?.key === item.key;
-            return (
-              <motion.div
-                key={item.key}
-                className="absolute left-1/2 top-1/2"
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 + (burst ? 0.12 : 0) }}
-                transition={{ delay: 0.12 * i, duration: 0.5 }}
-                style={{ transformOrigin: "0 0" }}
-              >
-                <motion.div
-                  animate={reduce ? undefined : { rotate: 360 }}
-                  transition={{ duration, repeat: Infinity, ease: "linear" }}
-                  style={{ transformOrigin: "0 0" }}
-                >
-                  <div style={{ transform: `rotate(${angle}deg) translate(${radius}px) rotate(-${angle}deg)` }}>
-                    <button
-                      type="button"
-                      onClick={() => onFeatureClick(item)}
-                      aria-label={`Show ${item.title}`}
-                      className={`-translate-x-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border transition ${
-                        isActive
-                          ? "border-primary bg-primary/20"
-                          : "border-white/10 bg-background/40 hover:border-primary/60 hover:bg-primary/10"
-                      }`}
-                      style={{ backdropFilter: "blur(8px)" }}
-                    >
-                      <Icon
-                        className="h-4 w-4 text-primary"
-                        strokeWidth={1.25}
-                        style={{ filter: "drop-shadow(0 0 6px hsl(45 100% 60% / 0.7))" }}
-                      />
-                    </button>
-                  </div>
-                </motion.div>
-              </motion.div>
-            );
-          })}
         </motion.div>
       </motion.div>
-
-      {isMobile && stage === "orbit" && (
-        <div className="absolute left-1/2 top-full z-30 mt-2 flex -translate-x-1/2 items-center gap-2">
-          {REACTOR_FEATURES.map((item) => {
-            const { Icon } = item;
-            const isActive = active?.key === item.key;
-            return (
-              <button
-                key={item.key}
-                type="button"
-                onClick={() => onFeatureClick(item)}
-                aria-label={`Show ${item.title}`}
-                className={`flex h-8 w-8 items-center justify-center rounded-full border backdrop-blur transition ${
-                  isActive
-                    ? "border-primary bg-primary/20"
-                    : "border-white/10 bg-background/60"
-                }`}
-              >
-                <Icon className="h-4 w-4 text-primary" strokeWidth={1.25} />
-              </button>
-            );
-          })}
-        </div>
-      )}
-
-      <FeatureCard feature={active} isMobile={isMobile} onClose={() => setActive(null)} />
     </div>
   );
 };
