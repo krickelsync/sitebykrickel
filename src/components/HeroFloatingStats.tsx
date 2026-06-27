@@ -27,20 +27,19 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
     return () => controls.stop();
   }, [reduce]);
 
-  // ---- Tilt interaction for Total Sales card ----
-  const tiltX = useSpring(useTransform(my, (v) => (reduce ? 0 : v * -10)), { stiffness: 120, damping: 14 });
-  const tiltY = useSpring(useTransform(mx, (v) => (reduce ? 0 : v * 14)), { stiffness: 120, damping: 14 });
+  // ---- Mouse tilt deltas, added on top of baseline tilt ----
+  const tiltDX = useSpring(useTransform(my, (v) => (reduce ? 0 : v * -6)), { stiffness: 120, damping: 16 });
+  const tiltDY = useSpring(useTransform(mx, (v) => (reduce ? 0 : v * 8)), { stiffness: 120, damping: 16 });
 
   // depth factors per card (some move more, some less → 3D layering)
-  // kept conservative so cards never drift off-screen
-  const tlX = useTransform(mx, (v) => (reduce ? 0 : v * 18));
-  const tlY = useTransform(my, (v) => (reduce ? 0 : v * 14));
-  const trX = useTransform(mx, (v) => (reduce ? 0 : v * -14));
-  const trY = useTransform(my, (v) => (reduce ? 0 : v * 12));
-  const blX = useTransform(mx, (v) => (reduce ? 0 : v * 12));
-  const blY = useTransform(my, (v) => (reduce ? 0 : v * -14));
-  const brX = useTransform(mx, (v) => (reduce ? 0 : v * -16));
-  const brY = useTransform(my, (v) => (reduce ? 0 : v * -12));
+  const tlX = useTransform(mx, (v) => (reduce ? 0 : v * 14));
+  const tlY = useTransform(my, (v) => (reduce ? 0 : v * 10));
+  const trX = useTransform(mx, (v) => (reduce ? 0 : v * -12));
+  const trY = useTransform(my, (v) => (reduce ? 0 : v * 10));
+  const blX = useTransform(mx, (v) => (reduce ? 0 : v * 10));
+  const blY = useTransform(my, (v) => (reduce ? 0 : v * -12));
+  const brX = useTransform(mx, (v) => (reduce ? 0 : v * -14));
+  const brY = useTransform(my, (v) => (reduce ? 0 : v * -10));
 
   const cardBase =
     "pointer-events-none rounded-2xl border border-white/10 px-4 py-3 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] will-change-transform";
@@ -56,6 +55,14 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
     repeat: Infinity,
     ease: "easeInOut" as const,
   });
+
+  // Baseline tilt poses — cards already look "parallaxed" without mouse input
+  const pose = {
+    tl: { rx: 14, ry: -22, rz: -6 },
+    tr: { rx: 14, ry: 22, rz: 6 },
+    bl: { rx: -12, ry: -20, rz: -5 },
+    br: { rx: -12, ry: 20, rz: 5 },
+  };
 
   return (
     <div aria-hidden className="absolute inset-0 z-[3] pointer-events-none">
