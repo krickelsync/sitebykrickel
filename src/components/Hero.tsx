@@ -108,18 +108,18 @@ const Hero = () => {
           </motion.div>
 
           {/* Main Headline */}
-          <div className="relative inline-block">
+          <div className="relative inline-block text-center">
           <motion.h1
             {...fadeUpDelay(0.3, 0.8)}
             id="hero-heading"
-            className="font-syne text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold uppercase leading-[0.9] sm:leading-[0.85] tracking-tighter mb-8"
+            className="font-syne text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold uppercase leading-[0.9] sm:leading-[0.85] tracking-tighter mb-8 text-center"
           >
-            <span className="block hover-lift">
+            <span className="block hover-lift text-center">
               THEMES<span className="hidden sm:inline"> FOR</span>
               <span className="block sm:hidden">FOR</span>
             </span>
             <span
-              className="block glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense min-h-[1em] text-[1.65rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] sm:leading-[0.85] break-words"
+              className="block text-center glow-text-luxury-mobile md:glow-text-luxury hover-glow-intense min-h-[1em] text-[1.65rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[0.9] sm:leading-[0.85] break-words"
               style={{ color: "hsl(45 100% 58%)" }}
             >
               <AnimatePresence mode="wait">
