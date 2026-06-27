@@ -6,7 +6,7 @@ import { useMotionValue, useSpring, useReducedMotion } from "framer-motion";
  * Returns spring-smoothed motion values in range [-1, 1] you can multiply
  * by a depth value to drive parallax layers.
  */
-export const useMouseParallax = (target?: React.RefObject<HTMLElement>) => {
+export const useMouseParallax = (target?: React.RefObject<HTMLElement>, enabled: boolean = true) => {
   const reduce = useReducedMotion();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -15,7 +15,7 @@ export const useMouseParallax = (target?: React.RefObject<HTMLElement>) => {
   const sy = useSpring(y, springConf);
 
   useEffect(() => {
-    if (reduce) return;
+    if (reduce || !enabled) return;
     // Skip on touch / coarse pointer devices
     if (typeof window !== "undefined" && window.matchMedia("(hover: none)").matches) return;
 
@@ -43,7 +43,7 @@ export const useMouseParallax = (target?: React.RefObject<HTMLElement>) => {
       window.removeEventListener("mousemove", handle);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [target, reduce, x, y]);
+  }, [target, reduce, enabled, x, y]);
 
   return { x: sx, y: sy };
 };
