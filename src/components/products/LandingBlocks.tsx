@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import type { LandingBlock } from "@/hooks/useProducts";
-import { H2, BodyLg, spacing } from "@/components/ui/typography";
+import { H2, H3, BodyLg, spacing } from "@/components/ui/typography";
 
 const AnimatedHero = lazy(() => import("./landing/AnimatedHero"));
 const MarqueeBlock = lazy(() => import("./landing/MarqueeBlock"));
@@ -78,7 +78,7 @@ function renderBlock(block: LandingBlock) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 max-w-5xl mx-auto">
           {block.items.map((it, idx) => (
             <div key={idx} className="glass-card p-6 min-w-0">
-              <h3 className="font-display font-bold text-lg mb-2">{it.title}</h3>
+              <H3 className="mb-2">{it.title}</H3>
               {it.description && (
                 <p className="text-sm text-muted-foreground">{it.description}</p>
               )}
@@ -103,8 +103,8 @@ function renderBlock(block: LandingBlock) {
         <div className="max-w-2xl mx-auto space-y-3">
           {block.items.map((it, idx) => (
             <details key={idx} className="glass-card p-5 group">
-              <summary className="cursor-pointer font-display font-bold list-none flex justify-between items-center">
-                {it.q}
+              <summary className="cursor-pointer list-none flex justify-between items-center gap-4">
+                <span className="font-display font-bold uppercase tracking-tight text-base md:text-lg">{it.q}</span>
                 <span className="text-primary group-open:rotate-45 transition-transform">+</span>
               </summary>
               <p className="mt-3 text-sm text-muted-foreground whitespace-pre-line">{it.a}</p>

@@ -34,7 +34,7 @@ const StatsStrip = ({ items }: { items: Stat[] }) => {
           transition={{ delay: i * 0.1 }}
           className="text-center"
         >
-          <p className="font-display text-3xl md:text-5xl font-black text-primary"><Counter value={s.value} /></p>
+          <p className="font-display text-3xl md:text-5xl font-extrabold text-primary"><Counter value={s.value} /></p>
           <p className="mt-2 text-xs font-mono uppercase tracking-widest text-muted-foreground">{s.label}</p>
         </motion.div>
       ))}

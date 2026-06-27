@@ -46,7 +46,7 @@ const AnimatedHero = ({ eyebrow, title, subtitle, badge, ctaLabel, ctaHref, bgVa
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="font-display text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[0.95] tracking-tight"
+          className="font-display text-4xl md:text-6xl lg:text-7xl font-extrabold uppercase leading-[0.95] tracking-tight"
         >
           {title.split("\n").map((line, i) => (
             <span key={i} className="block">{line}</span>
