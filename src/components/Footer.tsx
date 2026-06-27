@@ -67,7 +67,8 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
   });
   const wordmarkY = useTransform(scrollYProgress, [0, 1], ["12%", "-4%"]);
   const wordmarkScale = useTransform(scrollYProgress, [0, 1], [0.96, 1.02]);
-  const wordmarkBlur = useTransform(scrollYProgress, [0, 0.6, 1], ["8px", "0px", "0px"]);
+  const wordmarkBlurPx = useTransform(scrollYProgress, [0, 0.6, 1], [8, 0, 0]);
+  const wordmarkFilter = useTransform(wordmarkBlurPx, (b) => `blur(${b}px)`);
   const [openSection, setOpenSection] = useState<"links" | "contact" | null>("links");
   const toggle = (key: "links" | "contact") =>
     setOpenSection((prev) => (prev === key ? null : key));
@@ -255,7 +256,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
           style={
             prefersReducedMotion
               ? undefined
-              : { y: wordmarkY, scale: wordmarkScale, filter: useTransform(wordmarkBlur, (b) => `blur(${b})`) }
+              : { y: wordmarkY, scale: wordmarkScale, filter: wordmarkFilter }
           }
           className="translate-y-[35%] md:translate-y-[40%] will-change-transform"
         >
