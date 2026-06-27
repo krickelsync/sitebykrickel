@@ -13,7 +13,7 @@ const SmoothScroll = () => {
     const isTouch =
       window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768;
 
-    // Low-power guard: battery <=20% unplugged, save-data, or 2g/slow-2g.
+    // Low-power guard: save-data, 2g/slow-2g, or battery <=20% unplugged.
     const conn = (navigator as any).connection;
     const saveData = !!conn?.saveData;
     const slowNet = /(^| )(2g|slow-2g)/.test(conn?.effectiveType || "");
@@ -27,12 +27,15 @@ const SmoothScroll = () => {
       if (cancelled || saveData || slowNet || lowBattery) return;
 
       lenis = new Lenis({
-        duration: isTouch ? 0.8 : 1.05,
+        duration: isTouch ? 0.9 : 1.05,
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
-        // smoothTouch off: native iOS/Android scroll is GPU-accelerated & cheaper.
-        smoothTouch: false,
-        touchMultiplier: 1.2,
+        // syncTouch: lightweight touch smoothing (Lenis 1.x) — works on iOS/Android
+        // without the CPU cost of legacy smoothTouch. Falls back gracefully.
+        syncTouch: isTouch,
+        syncTouchLerp: 0.075,
+        touchInertiaMultiplier: 20,
+        touchMultiplier: 1.5,
       } as ConstructorParameters<typeof Lenis>[0]);
 
       let running = true;
