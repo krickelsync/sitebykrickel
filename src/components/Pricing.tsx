@@ -90,9 +90,12 @@ const Pricing = () => {
             transition={{ duration: 0.5 }}
             className="relative overflow-hidden rounded-2xl border border-border/60 p-6 md:p-8 flex flex-col hover:border-primary/40 transition-colors duration-500 shadow-2xl"
           >
-            {/* Background layers — softer, brighter, vignette */}
-            <div className="absolute inset-0 -z-10 rounded-2xl pointer-events-none bg-[radial-gradient(140%_90%_at_50%_-10%,hsl(var(--primary)/0.28),transparent_55%),radial-gradient(100%_70%_at_100%_110%,hsl(var(--primary)/0.18),transparent_65%),linear-gradient(180deg,hsl(var(--background)/0.92),hsl(var(--background)/0.78))]" />
-            <div className="absolute inset-0 -z-10 rounded-2xl pointer-events-none opacity-[0.05] bg-[linear-gradient(hsl(var(--foreground))_1px,transparent_1px),linear-gradient(90deg,hsl(var(--foreground))_1px,transparent_1px)] bg-[size:32px_32px]" />
+            {/* Background — same prism style as STUDIO-GRADE product hero */}
+            <div className="absolute inset-0 -z-10 rounded-2xl overflow-hidden pointer-events-none">
+              <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-pulse-glow" aria-hidden />
+              <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-accent/30 rounded-full blur-3xl animate-pulse-glow" aria-hidden />
+              <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(hsl(var(--foreground))_1px,transparent_1px),linear-gradient(90deg,hsl(var(--foreground))_1px,transparent_1px)] bg-[size:32px_32px]" />
+            </div>
 
             <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary text-primary-foreground font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] shadow-lg">
               <Sparkles className="w-3 h-3" /> Most Popular
@@ -104,7 +107,7 @@ const Pricing = () => {
                 src={shopifyBadge.url}
                 alt=""
                 aria-hidden="true"
-                className="pointer-events-none select-none absolute -right-4 md:-right-6 top-1/2 -translate-y-1/2 h-36 md:h-52 w-auto opacity-[0.22] drop-shadow-[0_6px_22px_hsl(var(--primary)/0.55)]"
+                className="pointer-events-none select-none absolute -right-6 md:-right-10 top-1/2 -translate-y-1/2 h-44 md:h-64 w-auto opacity-40 drop-shadow-[0_8px_28px_hsl(var(--primary)/0.5)]"
               />
               <span className="font-mono text-[10px] md:text-xs text-primary uppercase tracking-[0.2em]">
                 SYNC Premium Theme
