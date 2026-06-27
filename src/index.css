@@ -856,6 +856,23 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+.hero-prism-fallback {
+  background:
+    radial-gradient(ellipse 70% 42% at 50% 36%, hsl(var(--primary) / 0.18), transparent 68%),
+    radial-gradient(ellipse 42% 28% at 28% 30%, hsl(var(--gold) / 0.12), transparent 72%),
+    linear-gradient(135deg, hsl(var(--primary) / 0.08), hsl(var(--background)) 46%, hsl(var(--gold) / 0.07));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-grid-overlay,
+  .badge-rotating-shine::before,
+  .badge-shine-sweep::after,
+  .navbar-pill::after,
+  .menu-rotating-glow::before {
+    animation: none !important;
+  }
+}
+
 /* ============================================== */
 /* PERFORMANCE: kill all glow/shadow/blur halos   */
 /* User opted out for smoother scrolling.         */

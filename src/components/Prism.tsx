@@ -17,6 +17,7 @@ interface PrismProps {
   bloom?: number;
   suspendWhenOffscreen?: boolean;
   timeScale?: number;
+  frameRate?: number;
 }
 
 const Prism = ({
@@ -34,7 +35,8 @@ const Prism = ({
   inertia = 0.05,
   bloom = 1,
   suspendWhenOffscreen = true,
-  timeScale = 0.5
+  timeScale = 0.5,
+  frameRate = 30
 }: PrismProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -45,10 +47,11 @@ const Prism = ({
     const isMobile = window.innerWidth < 768;
     const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     // Clamp DPR and apply low-res render scale for GPU savings
-    const maxDpr = isMobile ? 1 : 1.25;
-    const renderScale = isMobile ? 0.6 : 0.75;
+    const maxDpr = isMobile ? 1 : 1.15;
+    const renderScale = isMobile ? 0.5 : 0.62;
     const dpr = Math.min(window.devicePixelRatio || 1, maxDpr) * renderScale;
-    const shaderSteps = isMobile ? 40 : 80;
+    const shaderSteps = isMobile ? 28 : 52;
+    const frameInterval = 1000 / Math.max(12, Math.min(60, frameRate));
 
     const H = Math.max(0.001, height);
     const BW = Math.max(0.001, baseWidth);
@@ -300,6 +303,7 @@ const Prism = ({
 
     let yaw = 0, pitch = 0, roll = 0;
     let targetYaw = 0, targetPitch = 0;
+    let lastFrame = 0;
 
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
     const pointer = { x: 0, y: 0, inside: true };
@@ -337,6 +341,11 @@ const Prism = ({
     }
 
     const render = (t: number) => {
+      if (t - lastFrame < frameInterval) {
+        raf = requestAnimationFrame(render);
+        return;
+      }
+      lastFrame = t;
       const time = (t - t0) * 0.001;
       program.uniforms.iTime.value = time;
       let continueRAF = true;
@@ -423,7 +432,7 @@ const Prism = ({
     };
   }, [
     height, baseWidth, animationType, glow, noise, offset?.x, offset?.y,
-    scale, transparent, hueShift, colorFrequency, timeScale,
+    scale, transparent, hueShift, colorFrequency, timeScale, frameRate,
     hoverStrength, inertia, bloom, suspendWhenOffscreen
   ]);
 

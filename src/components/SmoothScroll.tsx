@@ -12,12 +12,15 @@ const SmoothScroll = () => {
     const isTouch =
       window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768;
 
+    // Native mobile scroll is smoother and cheaper over animated/WebGL heroes.
+    if (isTouch) return;
+
     const lenis = new Lenis({
-      duration: isTouch ? 0.9 : 1.15,
+      duration: 1.05,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      smoothTouch: isTouch,
-      touchMultiplier: isTouch ? 1.5 : 1.2,
+      smoothTouch: false,
+      touchMultiplier: 1.2,
     } as ConstructorParameters<typeof Lenis>[0]);
 
     let raf = 0;

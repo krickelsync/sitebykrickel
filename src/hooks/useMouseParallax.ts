@@ -19,16 +19,30 @@ export const useMouseParallax = (target?: React.RefObject<HTMLElement>) => {
     // Skip on touch / coarse pointer devices
     if (typeof window !== "undefined" && window.matchMedia("(hover: none)").matches) return;
 
-    const handle = (e: MouseEvent) => {
+    let raf = 0;
+    let latestX = 0;
+    let latestY = 0;
+
+    const update = () => {
+      raf = 0;
       const el = target?.current;
       const rect = el ? el.getBoundingClientRect() : { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight };
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
-      x.set((e.clientX - cx) / (rect.width / 2));
-      y.set((e.clientY - cy) / (rect.height / 2));
+      x.set((latestX - cx) / (rect.width / 2));
+      y.set((latestY - cy) / (rect.height / 2));
+    };
+
+    const handle = (e: MouseEvent) => {
+      latestX = e.clientX;
+      latestY = e.clientY;
+      if (!raf) raf = requestAnimationFrame(update);
     };
     window.addEventListener("mousemove", handle, { passive: true });
-    return () => window.removeEventListener("mousemove", handle);
+    return () => {
+      window.removeEventListener("mousemove", handle);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, [target, reduce, x, y]);
 
   return { x: sx, y: sy };
