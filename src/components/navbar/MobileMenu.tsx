@@ -38,11 +38,11 @@ const MobileMenu = ({
         exit={{ opacity: 0, scale: 0.95, y: -8 }}
         transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
         style={{ transformOrigin: "top right" }}
-        className="md:hidden absolute right-2 top-14 w-44 navbar-pill menu-rotating-glow !rounded-2xl p-1.5 shadow-2xl text-right"
+        className="md:hidden absolute right-2 top-14 w-44 navbar-pill menu-rotating-glow !rounded-2xl p-1.5 shadow-2xl"
       >
         <div className="flex flex-col gap-0.5 items-stretch">
           {links.map((link, index) => (
-            <motion.div key={link.name} {...itemAnim(index)} className="text-right">
+            <motion.div key={link.name} {...itemAnim(index)}>
               <NavLink
                 href={link.href}
                 label={link.name}
