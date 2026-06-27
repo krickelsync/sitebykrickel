@@ -267,7 +267,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           style={{ perspective: 900 }}
         >
           <motion.div
-            className={`${cardBase} flex flex-col items-start gap-2.5 w-[110px] sm:w-[120px]`}
+            className={`${cardBase} flex flex-row items-center gap-3`}
             style={{ ...cardStyle, rotateX: blRX, rotateY: blRY, transformStyle: "preserve-3d" }}
             whileHover={reduce ? {} : { scale: 1.04 }}
           >
@@ -276,7 +276,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           </div>
           <div>
             <div className="font-syne text-sm font-bold uppercase text-white leading-none">Fully</div>
-            <div className="font-syne text-sm font-bold uppercase text-white leading-tight mt-1">Responsive</div>
+            <div className="font-syne text-sm font-bold uppercase text-white leading-tight">Responsive</div>
           </div>
           </motion.div>
         </motion.div>
@@ -297,7 +297,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           style={{ perspective: 900 }}
         >
           <motion.div
-            className={`${cardBase} flex flex-col items-start gap-2.5 w-[110px] sm:w-[120px]`}
+            className={`${cardBase} flex flex-col items-center text-center gap-2.5 w-[120px] sm:w-[130px]`}
             style={{ ...cardStyle, rotateX: brRX, rotateY: brRY, transformStyle: "preserve-3d" }}
             whileHover={reduce ? {} : { scale: 1.04 }}
           >
@@ -309,7 +309,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           >
             <Zap size={18} fill={accent} />
           </motion.div>
-          <div>
+          <div className="flex flex-col items-center">
             <div className="font-syne text-sm font-bold uppercase text-white leading-none">Fast Loading</div>
             <div className="font-syne text-sm font-bold uppercase text-white leading-tight mt-1">Speed</div>
           </div>
