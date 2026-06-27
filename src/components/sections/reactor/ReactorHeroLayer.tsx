@@ -56,17 +56,17 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
   }, [controls, stage]);
 
   return (
-    <div className="relative z-20 mx-auto mb-1 flex w-full justify-center">
+    <div className="relative z-20 mx-auto mb-0 flex w-full justify-center">
       <motion.div
         animate={controls}
-        className="relative h-[74px] w-[260px] select-none sm:h-[78px] sm:w-[274px] md:h-[80px] md:w-[280px]"
+        className="relative h-[80px] w-[280px] select-none"
         style={{ perspective: 900 }}
       >
         <svg
           aria-hidden
           viewBox="0 0 280 80"
           className="pointer-events-none absolute inset-0 h-full w-full"
-          preserveAspectRatio="none"
+          preserveAspectRatio="xMidYMid meet"
         >
           <defs>
             <linearGradient id="rhlCableStroke" x1="0" x2="1">
@@ -131,13 +131,13 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
-          className="absolute left-[24.285%] top-1/2 -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-[68px] top-[40px] -translate-x-1/2 -translate-y-1/2"
         >
-          <div className="relative flex h-8 w-8 items-center justify-center sm:h-9 sm:w-9 md:h-10 md:w-10">
+          <div className="relative flex h-10 w-10 items-center justify-center">
             <img
               src="https://cdn.simpleicons.org/shopify/95BF47"
               alt="Shopify"
-              className="h-6 w-6 object-contain drop-shadow-[0_0_14px_hsl(140_80%_45%/0.45)] sm:h-7 sm:w-7 md:h-8 md:w-8"
+              className="h-8 w-8 object-contain drop-shadow-[0_0_14px_hsl(140_80%_45%/0.45)]"
               loading="lazy"
               decoding="async"
             />
@@ -154,7 +154,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
         </motion.div>
 
         <motion.div
-          className="absolute left-[72.857%] top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-[204px] top-[40px] z-20 -translate-x-1/2 -translate-y-1/2"
         >
           <div
             aria-hidden="true"
@@ -190,7 +190,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
                   : { scale: 1, y: 0 }
               }
               transition={{ duration: 0.45 }}
-              className="relative h-[48px] w-[48px] sm:h-[56px] sm:w-[56px] md:h-[60px] md:w-[60px]"
+              className="relative h-[60px] w-[60px]"
             >
               <img
                 src={chromeBag.url}
@@ -229,7 +229,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
                   <div style={{ transform: `rotate(${angle}deg) translate(${radius}px) rotate(-${angle}deg)` }}>
                     <Icon
                       aria-hidden="true"
-                      className="h-4 w-4 -translate-x-1/2 -translate-y-1/2 text-primary sm:h-[18px] sm:w-[18px]"
+                      className="h-[18px] w-[18px] -translate-x-1/2 -translate-y-1/2 text-primary"
                       strokeWidth={1.35}
                       style={{ filter: "drop-shadow(0 0 8px hsl(45 100% 60% / 0.75))" }}
                     />

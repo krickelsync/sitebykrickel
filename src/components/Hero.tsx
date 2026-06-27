@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Check, Eye } from "lucide-react";
+import { ArrowRight, Eye } from "lucide-react";
 import { lazy, Suspense, useState, useEffect, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { scrollToId } from "@/lib/scroll";
@@ -17,7 +17,6 @@ const Hero = () => {
   const rotatingWords = useMemo(() => ["CLOTHING BRAND", "STREETWEAR", "DROPSHIPPER", "BARBERSHOP"], []);
   const [wordIndex, setWordIndex] = useState(0);
   const [inView, setInView] = useState(true);
-  const [reactorStage, setReactorStage] = useState<string>("idle");
   const magneticRef = useMagnetic<HTMLAnchorElement>(0.25);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -46,11 +45,11 @@ const Hero = () => {
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  const mobileHeroLift = isMobile ? -54 : 0;
+  const mobileHeroLift = isMobile ? -104 : 0;
   const headlineY = useTransform(
     scrollYProgress,
     [0, 1],
-    reduce ? [mobileHeroLift, mobileHeroLift] : [mobileHeroLift, isMobile ? -132 : -120]
+    reduce ? [mobileHeroLift, mobileHeroLift] : [mobileHeroLift, isMobile ? -172 : -120]
   );
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.6, 0]);
   const bgY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 80]);
@@ -102,23 +101,27 @@ const Hero = () => {
         style={{ y: headlineY, opacity: contentOpacity }}
         className="container relative z-10 px-5 sm:px-4 transition-opacity duration-500"
       >
-        <div
-          className="transition-opacity duration-500"
-          style={{ opacity: reactorStage === "orbit" ? 0.7 : 1 }}
-        >
-        <div className="max-w-[min(92vw,74rem)] mx-auto -mt-8 text-center sm:-mt-10 md:mt-0">
+        <div className="transition-opacity duration-500">
+        <div className="max-w-[min(92vw,74rem)] mx-auto -mt-12 text-center sm:-mt-10 md:mt-0">
           {/* Eyebrow */}
           <motion.div {...fadeUpDelay(0.2)} className="mb-6">
             <Suspense fallback={null}>
-              <ReactorHeroLayer onStageChange={setReactorStage} />
+              <ReactorHeroLayer />
             </Suspense>
             <span
               className="badge-rotating-shine badge-shine-sweep hero-trust-badge relative inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono text-[9.5px] md:text-[11px] text-foreground/90 tracking-[0.16em] uppercase overflow-hidden border border-white/10"
             >
+              <img
+                src="https://cdn.simpleicons.org/shopify/95BF47"
+                alt=""
+                aria-hidden="true"
+                className="relative z-[3] h-3.5 w-3.5 shrink-0 object-contain md:h-4 md:w-4"
+                loading="lazy"
+                decoding="async"
+              />
               <span className="relative z-[3] whitespace-nowrap">
                 Trusted by <span className="font-bold" style={{ color: "hsl(45 100% 60%)" }}>1,900+</span> Brands
               </span>
-              <Check size={11} className="relative z-[3] shrink-0" style={{ color: "hsl(210 100% 70%)" }} aria-hidden="true" />
             </span>
           </motion.div>
 
