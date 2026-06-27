@@ -68,18 +68,18 @@ const CostComparison = () => {
             ))}
           </ul>
 
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-4 md:px-6 py-5 border-t border-border/60 bg-background/30">
-            <div className="text-xs md:text-sm text-muted-foreground">
+          <div className="flex flex-row items-center justify-between gap-2 px-3 md:px-6 py-4 md:py-5 border-t border-border/60 bg-background/30">
+            <div className="text-[10px] md:text-sm text-muted-foreground">
               What you'd spend otherwise
-              <div className="font-syne font-bold text-foreground text-sm md:text-base mt-0.5">
+              <div className="font-syne font-bold text-foreground text-[11px] md:text-base mt-0.5">
                 Starting with SYNC
               </div>
             </div>
             <div className="text-right">
-              <div className="font-mono text-sm md:text-base text-destructive line-through decoration-2">
+              <div className="font-mono text-[11px] md:text-base text-destructive line-through decoration-2">
                 $154.93 / month
               </div>
-              <div className="font-syne font-bold text-lg md:text-xl">
+              <div className="font-syne font-bold text-sm md:text-xl">
                 One Time <span className="text-primary glow-text">$98</span>
               </div>
             </div>

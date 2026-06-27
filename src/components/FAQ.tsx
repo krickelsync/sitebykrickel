@@ -20,8 +20,8 @@ const faqs = [
 
 const FAQ = () => {
   return (
-    <section id="faq" aria-labelledby="faq-heading" className="py-24 md:py-32 border-t border-muted">
-      <div className="container px-4">
+    <section id="faq" aria-labelledby="faq-heading" className="py-20 md:py-28 border-t border-muted">
+      <div className="container mx-auto px-6 md:px-8">
         <SectionHeader
           eyebrow="FAQ"
           title="QUESTIONS?"
@@ -36,17 +36,17 @@ const FAQ = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-3xl mx-auto"
         >
-          <Accordion type="single" collapsible className="space-y-4">
+          <Accordion type="single" collapsible className="space-y-2 md:space-y-4">
             {faqs.map((faq, index) => (
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="glass-card px-6 border-none"
+                className="glass-card px-4 md:px-6 border-none"
               >
-                <AccordionTrigger className="font-display text-left text-base md:text-lg uppercase tracking-tight hover:text-primary transition-colors py-6 hover:no-underline">
+                <AccordionTrigger className="font-display text-left text-xs md:text-lg uppercase tracking-tight hover:text-primary transition-colors py-4 md:py-6 hover:no-underline">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="font-mono text-sm text-muted-foreground leading-relaxed pb-6">
+                <AccordionContent className="font-mono text-xs md:text-sm text-muted-foreground leading-relaxed pb-4 md:pb-6">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
