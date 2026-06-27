@@ -122,7 +122,7 @@ const Hero = () => {
           <motion.h1
             {...fadeUpDelay(0.3, 0.8)}
             id="hero-heading"
-            className="font-syne text-[clamp(1.55rem,7.2vw,4.9rem)] font-extrabold uppercase leading-[0.92] tracking-normal mb-7 text-center px-2 sm:px-0"
+            className="font-syne text-[clamp(1.55rem,7.2vw,4.9rem)] font-extrabold uppercase leading-[0.92] tracking-normal mb-5 md:mb-6 text-center px-2 sm:px-0"
           >
             <span className="flex items-center justify-center gap-3 whitespace-nowrap hover-lift text-center">
               <span>THEMES</span>
