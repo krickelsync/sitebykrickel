@@ -1,5 +1,6 @@
 import { motion, useAnimation, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Hand } from "lucide-react";
 import chromeBag from "@/assets/chrome-bag.png.asset.json";
 import { useLowPower } from "@/hooks/useLowPower";
 import { REACTOR_FEATURES } from "./features";
