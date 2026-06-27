@@ -54,18 +54,18 @@ const badges = [
 const TrustBadges = () => {
   return (
     <section className="relative py-12 md:py-16 px-4 md:px-8 border-t border-border/40">
-      <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
+      <div className="max-w-5xl mx-auto grid grid-cols-4 gap-3 md:gap-6">
         {badges.map((b) => (
           <div
             key={b.label}
-            className="flex flex-col items-center text-center gap-3"
+            className="flex flex-col items-center text-center gap-2 md:gap-3"
           >
-            <div className="w-14 h-14 md:w-16 md:h-16 rounded-full border border-border/60 bg-card/40 backdrop-blur-sm flex items-center justify-center text-foreground transition-colors hover:text-primary hover:border-primary/40">
-              <span className="w-6 h-6 md:w-7 md:h-7 block [&>svg]:w-full [&>svg]:h-full">
+            <div className="w-11 h-11 md:w-16 md:h-16 rounded-full border border-border/60 bg-card/40 backdrop-blur-sm flex items-center justify-center text-foreground transition-colors hover:text-primary hover:border-primary/40">
+              <span className="w-5 h-5 md:w-7 md:h-7 block [&>svg]:w-full [&>svg]:h-full">
                 {b.svg}
               </span>
             </div>
-            <p className="font-syne font-semibold text-xs md:text-sm leading-tight max-w-[10ch]">
+            <p className="font-syne font-semibold text-[10px] md:text-sm leading-tight max-w-[12ch]">
               {b.label}
             </p>
           </div>

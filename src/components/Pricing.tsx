@@ -2,7 +2,7 @@ import VelocityText from "./VelocityText";
 import SectionHeader from "./shared/SectionHeader";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Sparkles } from "lucide-react";
 import { fadeIn } from "@/lib/motion";
 import { useContactScroll } from "@/hooks/useContactScroll";
 
@@ -87,9 +87,13 @@ const Pricing = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative glass-card shiny-card rounded-2xl p-6 md:p-8 flex flex-col hover:border-primary/40 transition-all duration-500"
+            className="relative glass-card shiny-card rounded-2xl p-6 md:p-8 flex flex-col hover:border-primary/40 transition-colors duration-500"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 pointer-events-none rounded-2xl" />
+
+            <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary text-primary-foreground font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] shadow-lg">
+              <Sparkles className="w-3 h-3" /> Most Popular
+            </span>
 
             <div className="relative text-center pb-5 mb-5 border-b border-border/50">
               <span className="font-mono text-[10px] md:text-xs text-primary uppercase tracking-[0.2em]">
@@ -98,9 +102,10 @@ const Pricing = () => {
               <div className="mt-2 flex items-baseline justify-center gap-1">
                 <motion.span
                   key={price}
-                  initial={{ opacity: 0, y: -6 }}
+                  initial={{ opacity: 0, y: -4 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="font-syne font-bold text-5xl md:text-6xl text-primary glow-text"
+                  transition={{ duration: 0.25 }}
+                  className="font-syne font-bold text-5xl md:text-6xl bg-gradient-to-b from-foreground to-primary bg-clip-text text-transparent"
                 >
                   ${price}
                 </motion.span>
@@ -109,12 +114,12 @@ const Pricing = () => {
                 </span>
               </div>
               <p className="font-mono text-[10px] md:text-xs text-muted-foreground mt-2 uppercase tracking-widest">
-                {removeWatermark ? "No Watermark" : "With Footer Watermark"}
+                Lifetime License • VIP Support
               </p>
             </div>
 
             {/* Compact watermark toggle */}
-            <div className="relative space-y-2 mb-5">
+            <div className="relative space-y-2 mb-6">
               {[
                 {
                   label: "Remove Watermark",
@@ -131,9 +136,18 @@ const Pricing = () => {
                   aria: "Toggle install and setup add-on",
                 },
               ].map((t) => (
-                <div
+                <button
+                  type="button"
                   key={t.label}
-                  className="flex items-center justify-between gap-3 px-3 py-2 rounded-lg border border-border/60 bg-background/40"
+                  role="switch"
+                  aria-checked={t.value}
+                  aria-label={t.aria}
+                  onClick={() => t.set((v) => !v)}
+                  className={`w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg border text-left transition-colors ${
+                    t.value
+                      ? "border-primary/50 bg-primary/5"
+                      : "border-border/60 bg-background/40 hover:border-border"
+                  }`}
                 >
                   <div className="flex flex-col">
                     <span className="font-mono text-[11px] uppercase tracking-widest text-foreground">
@@ -143,12 +157,8 @@ const Pricing = () => {
                       {t.hint}
                     </span>
                   </div>
-                  <button
-                    type="button"
-                    role="switch"
-                    aria-checked={t.value}
-                    aria-label={t.aria}
-                    onClick={() => t.set((v) => !v)}
+                  <span
+                    aria-hidden="true"
                     className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors ${
                       t.value ? "bg-primary" : "bg-muted"
                     }`}
@@ -158,8 +168,8 @@ const Pricing = () => {
                         t.value ? "translate-x-4" : "translate-x-0"
                       }`}
                     />
-                  </button>
-                </div>
+                  </span>
+                </button>
               ))}
             </div>
 
