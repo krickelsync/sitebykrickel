@@ -47,14 +47,17 @@ function normalize(row: any): Product {
 }
 
 export function useProducts(opts: { includeUnpublished?: boolean } = {}) {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const cacheKey = opts.includeUnpublished ? "all" : "published";
+  const [products, setProducts] = useState<Product[]>(() => listCache[cacheKey] ?? []);
+  const [loading, setLoading] = useState(() => !listCache[cacheKey]);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
-      let q = supabase.from("products").select("*").order("sort_order").order("created_at");
+      // Only the columns the listing needs — landing_content is huge and not used here.
+      const cols = "id, slug, title, tagline, description, price, original_price, cover_image, is_published, sort_order";
+      let q = supabase.from("products").select(cols).order("sort_order").order("created_at");
       if (!opts.includeUnpublished) q = q.eq("is_published", true);
       const { data, error } = await q;
       if (cancelled) return;
@@ -63,7 +66,9 @@ export function useProducts(opts: { includeUnpublished?: boolean } = {}) {
         setError(error as unknown as Error);
       } else {
         setError(null);
-        setProducts((data ?? []).map(normalize));
+        const next = (data ?? []).map(normalize);
+        listCache[cacheKey] = next;
+        setProducts(next);
       }
       setLoading(false);
     };
@@ -82,8 +87,8 @@ export function useProducts(opts: { includeUnpublished?: boolean } = {}) {
 }
 
 export function useProduct(slug: string | undefined) {
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState<Product | null>(() => (slug ? productCache[slug] ?? null : null));
+  const [loading, setLoading] = useState(() => !(slug && productCache[slug]));
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
@@ -97,7 +102,9 @@ export function useProduct(slug: string | undefined) {
         setError(error as unknown as Error);
       } else {
         setError(null);
-        setProduct(data ? normalize(data) : null);
+        const next = data ? normalize(data) : null;
+        if (next) productCache[slug] = next;
+        setProduct(next);
       }
       setLoading(false);
     };
