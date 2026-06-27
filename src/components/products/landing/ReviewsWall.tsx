@@ -16,7 +16,15 @@ const Column = ({ reviews, direction }: { reviews: Review[]; direction: "up" | "
   const distance = -100 * reviews.length;
   const animateY = direction === "up" ? [0, distance] : [distance, 0];
   return (
-    <div className="relative h-[500px] overflow-hidden">
+    <div
+      className="relative h-[500px] overflow-hidden"
+      style={{
+        maskImage:
+          "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+        WebkitMaskImage:
+          "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+      }}
+    >
       <motion.div
         className="flex flex-col gap-4"
         animate={{ y: animateY }}
@@ -45,9 +53,14 @@ const Column = ({ reviews, direction }: { reviews: Review[]; direction: "up" | "
 
 const ReviewsWall = ({ columns }: Props) => {
   if (!columns?.length) return null;
-  const gridCls = columns.length === 1 ? "" : columns.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3";
+  const gridCls =
+    columns.length === 1
+      ? ""
+      : columns.length === 2
+      ? "grid-cols-2"
+      : "grid-cols-2 md:grid-cols-3";
   return (
-    <div className={`grid grid-cols-1 ${gridCls} gap-4 max-w-6xl mx-auto`}>
+    <div className={`grid ${gridCls} gap-3 md:gap-4 max-w-6xl mx-auto`}>
       {columns.map((col, i) => (
         <Column key={i} reviews={col} direction={i % 2 === 0 ? "up" : "down"} />
       ))}
