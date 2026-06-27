@@ -117,7 +117,7 @@ const Hero = () => {
               <ReactorHeroLayer onStageChange={setReactorStage} />
             </Suspense>
             <span
-              className="badge-rotating-shine badge-shine-sweep hero-trust-badge relative inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono text-[9.5px] md:text-[11px] text-foreground/90 tracking-[0.16em] uppercase overflow-hidden border border-white/10"
+              className="badge-rotating-shine badge-shine-sweep hero-trust-badge relative inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono text-[clamp(0.625rem,0.78vw,0.6875rem)] text-foreground/90 tracking-[0.16em] uppercase overflow-hidden border border-white/10"
             >
               <img
                 src="https://cdn.simpleicons.org/shopify/95BF47"
@@ -167,7 +167,7 @@ const Hero = () => {
           {/* Sub-headline */}
           <motion.p
             {...fadeUpDelay(0.5)}
-            className="font-mono text-[11px] sm:text-sm md:text-base text-muted-foreground max-w-xs sm:max-w-xl md:max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed md:leading-loose tracking-wide px-4 sm:px-0"
+            className="font-mono text-[clamp(0.6875rem,1vw,0.9375rem)] text-muted-foreground max-w-xs sm:max-w-xl md:max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed md:leading-loose tracking-wide px-4 sm:px-0"
           >
             Build your store in <span className="text-primary">minutes</span> with a
             high-performance Shopify theme
@@ -188,14 +188,14 @@ const Hero = () => {
                 e.preventDefault();
                 scrollToId('pricing');
               }}
-              className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 bg-primary text-primary-foreground px-4 py-2.5 sm:px-8 sm:py-4 font-mono text-[11px] sm:text-sm font-bold uppercase tracking-wider overflow-hidden hover:glow-box cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background will-change-transform"
+              className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 bg-primary text-primary-foreground px-4 py-2.5 sm:px-8 sm:py-4 font-mono text-[clamp(0.6875rem,0.95vw,0.875rem)] font-bold uppercase tracking-wider overflow-hidden hover:glow-box cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background will-change-transform"
             >
               <span className="relative z-10">View Packages</span>
               <ArrowRight aria-hidden="true" className="relative z-10 group-hover:translate-x-1 transition-transform w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
               <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             </a>
 
-            <Link to="/showcase" aria-label="View showcase" className="group inline-flex items-center justify-center gap-2 sm:gap-3 px-4 py-2.5 sm:px-8 sm:py-4 font-mono text-[11px] sm:text-sm uppercase tracking-wider border border-muted hover:border-foreground transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background">
+            <Link to="/showcase" aria-label="View showcase" className="group inline-flex items-center justify-center gap-2 sm:gap-3 px-4 py-2.5 sm:px-8 sm:py-4 font-mono text-[clamp(0.6875rem,0.95vw,0.875rem)] uppercase tracking-wider border border-muted hover:border-foreground transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background">
               <Eye aria-hidden="true" className="group-hover:scale-110 transition-transform w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
               <span>SHOWCASE</span>
             </Link>
@@ -236,7 +236,7 @@ const Hero = () => {
           }}
         >
           {Array.from({ length: 2 }).map((_, i) => (
-            <div key={i} className="flex shrink-0 items-center gap-10 px-6 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.4em]">
+            <div key={i} className="flex shrink-0 items-center gap-10 px-6 font-mono text-[clamp(0.625rem,0.8vw,0.6875rem)] text-muted-foreground uppercase tracking-[0.4em]">
               <span>Premium Shopify Setup</span>
               <span className="text-primary">✦</span>
               <span>High Conversion Architecture</span>
