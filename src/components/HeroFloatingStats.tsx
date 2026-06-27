@@ -15,14 +15,15 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   const reduce = useReducedMotion();
 
   // depth factors per card (some move more, some less → 3D layering)
-  const tlX = useTransform(mx, (v) => (reduce ? 0 : v * 38));
-  const tlY = useTransform(my, (v) => (reduce ? 0 : v * 32));
-  const trX = useTransform(mx, (v) => (reduce ? 0 : v * -28));
-  const trY = useTransform(my, (v) => (reduce ? 0 : v * 26));
-  const blX = useTransform(mx, (v) => (reduce ? 0 : v * 22));
-  const blY = useTransform(my, (v) => (reduce ? 0 : v * -30));
-  const brX = useTransform(mx, (v) => (reduce ? 0 : v * -36));
-  const brY = useTransform(my, (v) => (reduce ? 0 : v * -22));
+  // kept conservative so cards never drift off-screen
+  const tlX = useTransform(mx, (v) => (reduce ? 0 : v * 18));
+  const tlY = useTransform(my, (v) => (reduce ? 0 : v * 14));
+  const trX = useTransform(mx, (v) => (reduce ? 0 : v * -14));
+  const trY = useTransform(my, (v) => (reduce ? 0 : v * 12));
+  const blX = useTransform(mx, (v) => (reduce ? 0 : v * 12));
+  const blY = useTransform(my, (v) => (reduce ? 0 : v * -14));
+  const brX = useTransform(mx, (v) => (reduce ? 0 : v * -16));
+  const brY = useTransform(my, (v) => (reduce ? 0 : v * -12));
 
   const cardBase =
     "absolute z-[4] pointer-events-none rounded-2xl border border-white/10 px-4 py-3 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)] will-change-transform";
@@ -40,14 +41,14 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   });
 
   return (
-    <div aria-hidden className="absolute inset-0 z-[3] pointer-events-none hidden md:block">
+    <div aria-hidden className="absolute inset-0 z-[3] pointer-events-none">
       {/* TOP LEFT — TOTAL SALES */}
       <motion.div
         style={{ x: tlX, y: tlY }}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 0.8 }}
-        className="absolute top-[18%] left-[5%] lg:left-[8%]"
+        className="absolute top-[14%] left-2 sm:left-[4%] lg:left-[6%] scale-[0.62] sm:scale-75 md:scale-90 lg:scale-100 origin-top-left"
       >
         <motion.div
           animate={reduce ? {} : { y: [0, -10, 0] }}
@@ -84,7 +85,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.0, duration: 0.8 }}
-        className="absolute top-[14%] right-[5%] lg:right-[8%]"
+        className="absolute top-[12%] right-2 sm:right-[4%] lg:right-[6%] scale-[0.62] sm:scale-75 md:scale-90 lg:scale-100 origin-top-right"
       >
         <motion.div
           animate={reduce ? {} : { y: [0, 12, 0] }}
@@ -119,7 +120,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute bottom-[22%] left-[4%] lg:left-[7%]"
+        className="absolute bottom-[28%] sm:bottom-[24%] left-2 sm:left-[4%] lg:left-[6%] scale-[0.65] sm:scale-75 md:scale-90 lg:scale-100 origin-bottom-left"
       >
         <motion.div
           animate={reduce ? {} : { y: [0, -8, 0] }}
@@ -143,7 +144,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.4, duration: 0.8 }}
-        className="absolute bottom-[24%] right-[4%] lg:right-[7%]"
+        className="absolute bottom-[28%] sm:bottom-[24%] right-2 sm:right-[4%] lg:right-[6%] scale-[0.65] sm:scale-75 md:scale-90 lg:scale-100 origin-bottom-right"
       >
         <motion.div
           animate={reduce ? {} : { y: [0, 10, 0] }}

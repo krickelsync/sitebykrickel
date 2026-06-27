@@ -33,20 +33,6 @@ const Hero = () => {
 
   // Interactive mouse parallax — drives layered depth in the hero
   const { x: mx, y: my } = useMouseParallax(sectionRef);
-  const bgPX = useTransform(mx, (v) => v * 24);
-  const bgPY = useTransform(my, (v) => v * 24);
-  const headlinePX = useTransform(mx, (v) => v * -18);
-  const headlinePY = useTransform(my, (v) => v * -12);
-  const badgePX = useTransform(mx, (v) => v * -8);
-  const badgePY = useTransform(my, (v) => v * -6);
-  const subPX = useTransform(mx, (v) => v * -10);
-  const subPY = useTransform(my, (v) => v * -6);
-  const ctaPX = useTransform(mx, (v) => v * -6);
-  const ctaPY = useTransform(my, (v) => v * -4);
-  const gridPX = useTransform(mx, (v) => v * 14);
-  const gridPY = useTransform(my, (v) => v * 14);
-  const glowPX = useTransform(mx, (v) => v * 40);
-  const glowPY = useTransform(my, (v) => v * 40);
 
   useEffect(() => {
     const handleResize = () => {
@@ -58,7 +44,7 @@ const Hero = () => {
 
   return <section ref={sectionRef} aria-labelledby="hero-heading" className="relative min-h-[100svh] flex items-center justify-center overflow-hidden pt-20 pb-24">
       {/* Prism Background Effect - z-index 0 */}
-      <motion.div style={{ y: bgY, x: bgPX, translateY: bgPY }} className="absolute inset-0 z-0 pointer-events-none bg-background">
+      <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 pointer-events-none bg-background">
         <Suspense fallback={<div className="w-full h-full bg-gradient-to-br from-primary/10 via-background to-background" />}>
           <Prism 
             animationType="rotate"
@@ -83,20 +69,15 @@ const Hero = () => {
       <div className="absolute inset-0 z-[1] bg-background/50 pointer-events-none" />
 
       {/* Kinetic grid overlay */}
-      <motion.div
+      <div
         aria-hidden
-        style={{ x: gridPX, y: gridPY }}
-        className="absolute -inset-10 z-[2] pointer-events-none opacity-[0.08] hero-grid-overlay"
+        className="absolute inset-0 z-[2] pointer-events-none opacity-[0.08] hero-grid-overlay"
       />
       {/* Grain noise */}
       <div aria-hidden className="absolute inset-0 z-[2] pointer-events-none opacity-[0.06] hero-noise mix-blend-overlay" />
 
-      {/* Floating spotlight that follows the cursor */}
-      <motion.div
-        aria-hidden
-        style={{ x: glowPX, y: glowPY }}
-        className="absolute inset-0 z-[2] pointer-events-none hidden md:block"
-      >
+      {/* Static ambient glow */}
+      <div aria-hidden className="absolute inset-0 z-[2] pointer-events-none hidden md:block">
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-[900px] max-h-[900px] rounded-full"
           style={{
@@ -105,11 +86,11 @@ const Hero = () => {
             filter: "blur(40px)",
           }}
         />
-      </motion.div>
+      </div>
       <motion.div style={{ y: headlineY, opacity: contentOpacity }} className="container relative z-10 px-4">
         <div className="max-w-5xl mx-auto text-center">
           {/* Eyebrow */}
-          <motion.div {...fadeUpDelay(0.2)} style={{ x: badgePX, y: badgePY }} className="mb-8">
+          <motion.div {...fadeUpDelay(0.2)} className="mb-8">
             <span
               className="badge-rotating-shine badge-shine-sweep relative inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono text-[9.5px] md:text-[11px] text-foreground/90 tracking-[0.16em] uppercase overflow-hidden border border-white/10"
               style={{
@@ -127,7 +108,7 @@ const Hero = () => {
           </motion.div>
 
           {/* Main Headline */}
-          <motion.div style={{ x: headlinePX, y: headlinePY }} className="relative inline-block will-change-transform">
+          <div className="relative inline-block">
           <motion.h1
             {...fadeUpDelay(0.3, 0.8)}
             id="hero-heading"
@@ -155,12 +136,11 @@ const Hero = () => {
               </AnimatePresence>
             </span>
           </motion.h1>
-          </motion.div>
+          </div>
 
           {/* Sub-headline */}
           <motion.p
             {...fadeUpDelay(0.5)}
-            style={{ x: subPX, y: subPY }}
             className="font-mono text-[11px] sm:text-sm md:text-base text-muted-foreground max-w-xs sm:max-w-xl md:max-w-2xl mx-auto mb-12 leading-relaxed md:leading-loose tracking-wide px-4 sm:px-0"
           >
             Build your store in <span className="text-primary">minutes</span> with a
@@ -172,7 +152,6 @@ const Hero = () => {
           {/* CTA Buttons */}
           <motion.div
             {...fadeUpDelay(0.7)}
-            style={{ x: ctaPX, y: ctaPY }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <a
