@@ -39,13 +39,6 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
 
   useEffect(() => () => timers.current.forEach(window.clearTimeout), []);
 
-  const [pulseTick, setPulseTick] = useState(0);
-  useEffect(() => {
-    if (stage !== "orbit" || reduce || lowPower) return;
-    const id = setInterval(() => setPulseTick((n) => n + 1), 4200);
-    return () => clearInterval(id);
-  }, [stage, reduce, lowPower]);
-
   useEffect(() => {
     if (stage !== "activate") return;
     setBurst((b) => b + 1);
@@ -53,7 +46,10 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
   }, [controls, stage]);
 
   return (
-    <div className="relative z-20 mx-auto mb-0 flex w-full justify-center -mt-3 md:mt-0 scale-75 md:scale-100 origin-bottom">
+    <div
+      className="relative z-20 mx-auto mb-0 flex w-full justify-center -mt-3 md:mt-0 scale-[0.8] md:scale-100 origin-bottom transform-gpu"
+      style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" } as React.CSSProperties}
+    >
       <motion.div
         animate={controls}
         role="button"
@@ -67,7 +63,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
           }
         }}
         className="relative h-[80px] w-[280px] cursor-pointer select-none touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-        style={{ perspective: 900 }}
+        style={{ perspective: 900, backfaceVisibility: "hidden" } as React.CSSProperties}
       >
         <svg
           aria-hidden
