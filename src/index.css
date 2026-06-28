@@ -980,6 +980,31 @@
   0% { offset-distance: 0%; }
   100% { offset-distance: 100%; }
 }
+
+/* Unified ripple wave — used by Shopify icon + chrome bag.
+   Pure transform + opacity → GPU-only, zero JS, no jank. */
+@keyframes reactor-ripple {
+  0%   { transform: scale(0.7); opacity: 0.55; }
+  80%  { opacity: 0; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+.reactor-ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1px solid hsl(45 100% 60% / 0.55);
+  will-change: transform, opacity;
+  animation: reactor-ripple 2.6s ease-out infinite;
+  pointer-events: none;
+}
+.reactor-ripple--shopify {
+  border-color: hsl(140 80% 55% / 0.55);
+}
+.reactor-ripple--d1 { animation-delay: 0.9s; }
+.reactor-ripple--d2 { animation-delay: 1.8s; }
+@media (prefers-reduced-motion: reduce) {
+  .reactor-ripple { animation: none; opacity: 0; }
+}
 .reactor-shine {
   animation: reactor-shine-sweep 3.5s ease-in-out infinite;
 }
