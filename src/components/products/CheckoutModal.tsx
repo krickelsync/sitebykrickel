@@ -135,25 +135,24 @@ const CheckoutModal = ({
                   onApprove={async (data, actions) => {
                     if (actions.order) {
                       const details = await actions.order.capture();
-                      const payer = details.payer;
-                      const buyer_name = [payer?.name?.given_name, payer?.name?.surname]
-                        .filter(Boolean)
-                        .join(" ") || null;
-                      // Persist a record of the sale (RLS allows anon INSERT only).
-                      try {
-                        await supabase.from("orders").insert({
-                          product_id: productId ?? null,
-                          product_title: productName,
-                          buyer_email: payer?.email_address ?? null,
-                          buyer_name,
-                          paypal_order_id: details.id ?? data.orderID,
-                          amount: price,
-                          currency: "USD",
-                          status: details.status ?? "COMPLETED",
-                        });
-                      } catch (err) {
-                        console.error("Failed to record order:", err);
-                      }
+                       const payer = details.payer;
+                       // Persist via server-side edge function that verifies the PayPal order.
+                       try {
+                         await supabase.functions.invoke("record-order", {
+                           body: {
+                             paypal_order_id: details.id ?? data.orderID,
+                             items: [
+                               {
+                                 product_id: productId ?? null,
+                                 product_title: productName,
+                                 amount: price,
+                               },
+                             ],
+                           },
+                         });
+                       } catch (err) {
+                         console.error("Failed to record order:", err);
+                       }
                       toast.success(
                         `Payment successful! Thank you, ${payer?.name?.given_name || "Customer"}!`
                       );
