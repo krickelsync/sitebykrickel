@@ -95,7 +95,7 @@ const Pricing = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative overflow-hidden border border-foreground/15 bg-background/80 backdrop-blur-xl p-6 md:p-10 flex flex-col transition-colors duration-300 hover:border-primary/40"
+            className="relative overflow-hidden menu-rotating-glow border border-foreground/15 bg-background/80 backdrop-blur-xl p-6 md:p-10 flex flex-col transition-colors duration-300 hover:border-primary/40"
           >
             {/* Corner brackets — hero-style */}
             <span aria-hidden className="absolute top-0 left-0 w-4 h-4 border-t border-l border-primary/70" />
@@ -111,13 +111,9 @@ const Pricing = () => {
               className="pointer-events-none select-none absolute bottom-6 right-6 h-20 md:h-24 w-auto opacity-[0.05]"
             />
 
-            {/* Header row — chip + price */}
             <div className="relative flex items-start justify-between gap-4 pb-6 mb-6 border-b border-foreground/10">
               <div>
-                <span className={`inline-block px-2 py-0.5 border border-primary/40 text-primary bg-primary/5 ${typography.eyebrow}`}>
-                  [ Premium ]
-                </span>
-                <h3 className={`mt-3 font-syne font-bold text-foreground ${typography.h3}`}>
+                <h3 className={`font-syne font-bold text-foreground ${typography.h3}`}>
                   SYNC Theme
                 </h3>
                 <p className={`${typography.meta} mt-1`}>
@@ -205,12 +201,11 @@ const Pricing = () => {
               {FEATURE_GROUPS.map((group) => (
                 <div key={group.category}>
                   <h4 className={`${typography.eyebrow} text-primary/80 mb-3`}>
-                    [ {group.category} ]
+                    {group.category}
                   </h4>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
                     {group.items.map((item) => (
                       <li key={item.label} className={`flex items-baseline gap-2 leading-snug ${textSize.ui}`}>
-                        <span className="text-primary/60 font-mono">+</span>
                         <span className="font-mono text-muted-foreground">
                           {item.label}
                           {item.value && (
@@ -227,11 +222,11 @@ const Pricing = () => {
             <a
               href="/about#contact"
               onClick={handleContactClick}
-              className={`prism-cta group mt-2 ${textSize.ui}`}
+              className={`cta-shiny inline-flex items-center justify-center gap-2 rounded-full bg-foreground text-background px-6 py-3 font-mono whitespace-nowrap hover:opacity-90 transition-all duration-300 mt-2 ${textSize.ui}`}
               aria-label={`Get SYNC for $${price}`}
             >
-              Get SYNC — ${price}
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+              <span className="relative z-10">Get SYNC — ${price}</span>
+              <ArrowRight className="w-4 h-4 relative z-10" />
             </a>
           </motion.div>
         </div>
