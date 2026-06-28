@@ -117,13 +117,13 @@ const Hero = () => {
               <ReactorHeroLayer onStageChange={setReactorStage} />
             </Suspense>
             <span
-              className="badge-rotating-shine badge-shine-sweep hero-trust-badge relative inline-flex items-center gap-1.5 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full font-mono text-[clamp(0.625rem,0.78vw,0.6875rem)] text-foreground/90 tracking-[0.16em] uppercase overflow-hidden border border-white/10"
+              className="badge-rotating-shine badge-shine-sweep hero-trust-badge relative inline-flex items-center gap-1 md:gap-2 px-2.5 py-1 md:px-4 md:py-2 rounded-full font-mono text-[9px] md:text-[clamp(0.625rem,0.78vw,0.6875rem)] text-foreground/90 tracking-[0.14em] md:tracking-[0.16em] uppercase overflow-hidden border border-white/10"
             >
               <img
                 src="https://cdn.simpleicons.org/shopify/95BF47"
                 alt=""
                 aria-hidden="true"
-                className="relative z-[3] h-3.5 w-3.5 shrink-0 object-contain md:h-4 md:w-4"
+                className="relative z-[3] h-3 w-3 shrink-0 object-contain md:h-4 md:w-4"
                 loading="lazy"
                 decoding="async"
               />
