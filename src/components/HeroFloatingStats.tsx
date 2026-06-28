@@ -343,21 +343,21 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
           style={{ perspective: 900 }}
         >
           <motion.div
-            className={cardBase}
+            className={`${cardBase} w-[170px] sm:w-[190px] lg:w-[200px]`}
             style={{ ...cardStyle, rotateX: trRX, rotateY: trRY, transformStyle: "preserve-3d" }}
             whileHover={reduce ? {} : { scale: 1.04 }}
           >
           <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/60 mb-1">
             Conversion Rate
           </div>
-          <div className="flex items-baseline gap-2 mb-2">
-            <span className="font-syne text-2xl font-bold text-white tabular-nums">{conv.toFixed(2)}%</span>
-            <span className="font-mono text-[10px] flex items-center gap-0.5" style={{ color: accent }}>
+          <div className="flex items-baseline gap-1.5 sm:gap-2 mb-2 flex-wrap">
+            <span className="font-syne text-xl sm:text-2xl font-bold text-white tabular-nums">{conv.toFixed(2)}%</span>
+            <span className="font-mono text-[10px] flex items-center gap-0.5 shrink-0" style={{ color: accent }}>
               <TrendingUp size={10} /> {convTrend}%
             </span>
           </div>
           <div
-            className="h-1.5 w-32 rounded-full bg-white/10 overflow-hidden"
+            className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden"
             role="progressbar"
             aria-valuemin={0}
             aria-valuemax={CONV_TREND_TO}
