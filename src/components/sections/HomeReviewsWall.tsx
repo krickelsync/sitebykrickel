@@ -23,9 +23,12 @@ const HomeReviewsWall = () => (
   <section className="container mx-auto px-6 md:px-8 py-20 md:py-28">
     <SectionHeader
       eyebrow="Loved by builders"
-      title="REAL BRANDS. REAL RESULTS."
-      subtitle="Hundreds of clothing brands, dropshippers, and barbershops shipping faster with SitebyKrickel."
+      title="REAL BRANDS."
+      accent="REAL RESULTS."
     />
+    <p className="-mt-4 md:-mt-8 mb-10 text-center font-mono text-[clamp(0.6875rem,1vw,0.9375rem)] text-muted-foreground max-w-xl mx-auto">
+      Hundreds of clothing brands, dropshippers, and barbershops shipping faster with SitebyKrickel.
+    </p>
     <div className="mt-12">
       <ReviewsWall columns={columns} />
     </div>
