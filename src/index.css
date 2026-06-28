@@ -583,6 +583,24 @@
     -webkit-backdrop-filter: none !important;
   }
 
+  /* Neutralize Tailwind's backdrop-blur-* utilities on mobile to cut GPU cost */
+  [class*="backdrop-blur"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* Respect users who prefer reduced motion: stop all decorative loops */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
   /* Reduce glow effects */
   .glow-text,
   .glow-text-mobile,
