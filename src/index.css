@@ -1011,23 +1011,27 @@
 }
 .prism-cta__glow {
   position: absolute;
-  inset: -6px;
+  left: 8%;
+  right: 8%;
+  bottom: -10px;
+  height: 60%;
   z-index: 1;
   border-radius: var(--prism-radius);
-  background: conic-gradient(
-    from 0deg,
-    #ff5e9c, #ffb86c, #f9f871, #6ee7b7, #60a5fa, #a78bfa, #ff5e9c
+  background: linear-gradient(
+    90deg,
+    #a78bfa 0%, #60a5fa 20%, #6ee7b7 40%, #f9f871 60%, #ffb86c 80%, #ff5e9c 100%
   );
-  filter: blur(14px);
-  opacity: 0.85;
-  animation: prism-cta-spin 6s linear infinite;
+  background-size: 200% 100%;
+  filter: blur(10px);
+  opacity: 0.7;
+  animation: prism-cta-shift 6s linear infinite;
 }
 .prism-cta:hover .prism-cta__glow {
-  opacity: 1;
-  filter: blur(18px);
+  opacity: 0.9;
+  filter: blur(12px);
 }
-@keyframes prism-cta-spin {
-  to { transform: rotate(360deg); }
+@keyframes prism-cta-shift {
+  to { background-position: 200% 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .prism-cta__glow { animation: none; }
