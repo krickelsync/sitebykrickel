@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import Logo3D from "./Logo3D";
+const Logo3D = lazy(() => import("./Logo3D"));
 import ThemeToggle from "./navbar/ThemeToggle";
 import HamburgerIcon from "./navbar/HamburgerIcon";
 import NavLink from "./navbar/NavLink";
@@ -77,7 +77,9 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
             className="flex items-center justify-center h-12 shrink-0"
             style={{ overflow: 'visible' }}
           >
-            <Logo3D />
+            <Suspense fallback={<div className="w-12 h-12" />}>
+              <Logo3D />
+            </Suspense>
           </Link>
 
           {/* Desktop / tablet nav pill */}

@@ -36,48 +36,20 @@ const Index = () => {
       <Suspense fallback={<SectionLoader />}>
         <TrustBadges />
       </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <ProblemSection />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <FeatureGrid />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <MobileFirstSection />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <DesktopShowcase />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <CustomizationSection />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <CostComparison />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <Pricing />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <HomeVelocityText />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <HomeReviewsWall />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <ServicesAddon />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <CurvedLoop />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <FAQ />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <FinalCTA />
-      </Suspense>
-      <Suspense fallback={<SectionLoader />}>
-        <Footer />
-      </Suspense>
+      <div className="cv-auto"><Suspense fallback={<SectionLoader />}><ProblemSection /></Suspense></div>
+      <div className="cv-auto"><Suspense fallback={<SectionLoader />}><FeatureGrid /></Suspense></div>
+      <div className="cv-auto"><Suspense fallback={<SectionLoader />}><MobileFirstSection /></Suspense></div>
+      <div className="cv-auto"><Suspense fallback={<SectionLoader />}><DesktopShowcase /></Suspense></div>
+      <div className="cv-auto"><Suspense fallback={<SectionLoader />}><CustomizationSection /></Suspense></div>
+      <div className="cv-auto"><Suspense fallback={<SectionLoader />}><CostComparison /></Suspense></div>
+      <div className="cv-auto"><Suspense fallback={<SectionLoader />}><Pricing /></Suspense></div>
+      <div className="cv-auto"><Suspense fallback={<SectionLoader />}><HomeVelocityText /></Suspense></div>
+      <div className="cv-auto"><Suspense fallback={<SectionLoader />}><HomeReviewsWall /></Suspense></div>
+      <div className="cv-auto"><Suspense fallback={<SectionLoader />}><ServicesAddon /></Suspense></div>
+      <div className="cv-auto"><Suspense fallback={<SectionLoader />}><CurvedLoop /></Suspense></div>
+      <div className="cv-auto"><Suspense fallback={<SectionLoader />}><FAQ /></Suspense></div>
+      <div className="cv-auto"><Suspense fallback={<SectionLoader />}><FinalCTA /></Suspense></div>
+      <Suspense fallback={<SectionLoader />}><Footer /></Suspense>
     </main>
   );
 };
