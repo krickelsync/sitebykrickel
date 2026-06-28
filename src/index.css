@@ -1227,156 +1227,161 @@
   background: rgba(255,255,255,.85);
 }
 
-/* ============ MacBook Showcase ============ */
-.macbook {
-  position: relative;
-  width: 100%;
-  max-width: 880px;
-  margin: 0 auto;
-  filter: drop-shadow(0 30px 40px rgba(0,0,0,.45));
-}
-.macbook__lid {
-  position: relative;
-  padding: 14px 14px 16px;
-  border-radius: 18px 18px 6px 6px;
-  background: linear-gradient(160deg, #2a2a2d 0%, #0c0c0d 60%, #1c1c1e 100%);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,.05) inset,
-    0 0 0 0.5px rgba(0,0,0,.9);
-}
-.macbook__bezel {
-  position: relative;
-  background: #000;
-  border-radius: 8px;
-  padding: 18px 6px 6px;
-  box-shadow: 0 0 0 1px rgba(255,255,255,.04) inset;
-}
-.macbook__camera {
-  position: absolute;
-  top: 7px; left: 50%;
-  transform: translateX(-50%);
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #1f3a5f 0%, #050a14 70%);
-}
-.macbook__screen {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  border-radius: 4px;
-  overflow: hidden;
-  background: #050506;
-}
-.macbook__scroll {
-  display: flex;
-  flex-direction: column;
-  animation: macbook-scroll 28s linear infinite;
-  will-change: transform;
-}
-@keyframes macbook-scroll {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-50%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .macbook__scroll { animation: none; }
-}
-.macbook__glare {
-  pointer-events: none;
-  position: absolute; inset: 0;
-  background: linear-gradient(115deg, rgba(255,255,255,.08) 0%, transparent 30%, transparent 70%, rgba(255,255,255,.05) 100%);
-  mix-blend-mode: screen;
-}
-.macbook__base {
-  position: relative;
-  height: 14px;
-  margin: 0 -2%;
-  border-radius: 0 0 14px 14px;
-  background: linear-gradient(180deg, #1c1c1e 0%, #0a0a0b 70%, #2a2a2d 100%);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,.04) inset,
-    0 14px 24px -10px rgba(0,0,0,.55);
-}
-.macbook__notch {
-  position: absolute;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 14%; height: 4px;
-  border-radius: 0 0 8px 8px;
-  background: linear-gradient(180deg, #050506, #1a1a1c);
-}
+/* ============ Laptop Showcase (ported from buildcleanslate.com) ============ */
+.laptop-showcase { padding: clamp(3rem,6vw,6rem) 0; background: transparent; overflow: hidden; }
+.laptop-showcase__inner { max-width: 80rem; margin: 0 auto; padding: 0 clamp(1rem,3vw,2rem); }
+.laptop-showcase__intro { text-align: center; max-width: 42rem; margin: 0 auto clamp(2rem,5vw,3.5rem); }
+.laptop-showcase__device { position: relative; display: flex; justify-content: center; padding: clamp(1rem,4vw,3rem) 0 clamp(2rem,4vw,3rem); }
 
-/* Slides inside macbook */
-.macbook-slide {
-  flex: 0 0 100%;
-  aspect-ratio: 16 / 10;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.laptop {
+  --frame-color: #1f1f23;
+  --frame-edge: #34343a;
+  --frame-deep: #0e0e10;
+  --screen-bezel: #0a0a0c;
+  --glow-color: hsl(var(--foreground));
   position: relative;
+  width: min(64rem, 100%);
+  animation: laptop-float 7s ease-in-out infinite;
+  transform-style: preserve-3d;
 }
-.macbook-slide__bar {
-  display: flex; align-items: center; gap: 6px;
-  height: 22px;
-  padding: 0 10px;
-  border-radius: 6px;
-  background: rgba(0,0,0,.35);
-  border: 1px solid rgba(255,255,255,.08);
+@media (prefers-reduced-motion: reduce) { .laptop { animation: none; } }
+@keyframes laptop-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.laptop-showcase[data-glow="cyan"] .laptop { --glow-color: #52bffe; }
+.laptop-showcase[data-glow="gold"] .laptop { --glow-color: #f59e0b; }
+.laptop-showcase[data-glow="none"] .laptop__glow { display: none; }
+
+.laptop__lid {
+  position: relative; width: 100%; aspect-ratio: 16 / 10;
+  padding: clamp(.5rem,1.2vw,.95rem);
+  padding-bottom: clamp(.85rem,1.8vw,1.4rem);
+  border-radius: clamp(.75rem,1.4vw,1.1rem) clamp(.75rem,1.4vw,1.1rem) .25rem .25rem;
+  background: linear-gradient(180deg, var(--frame-edge) 0%, var(--frame-color) 18%, var(--frame-color) 100%);
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.1),
+    inset 0 0 0 1px rgba(255,255,255,.04),
+    0 30px 60px -25px rgba(0,0,0,.55),
+    0 12px 30px -18px rgba(0,0,0,.45);
 }
-.macbook-slide__bar > span:not(.macbook-slide__url) {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: rgba(255,255,255,.35);
+.laptop__camera {
+  position: absolute; top: clamp(.18rem,.45vw,.4rem); left: 50%; transform: translateX(-50%);
+  width: clamp(.22rem,.5vw,.36rem); height: clamp(.22rem,.5vw,.36rem); border-radius: 50%;
+  background: #050507;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.12), inset 0 0 2px rgba(120,160,220,.4);
 }
-.macbook-slide__url {
-  margin-left: auto;
-  font-family: ui-monospace, monospace;
-  font-size: 10px;
-  color: rgba(255,255,255,.7);
-  background: rgba(255,255,255,.08);
-  padding: 2px 10px;
-  border-radius: 4px;
+.laptop__led {
+  position: absolute; bottom: clamp(.28rem,.6vw,.55rem); left: 50%; transform: translateX(-50%);
+  width: clamp(.18rem,.4vw,.28rem); height: clamp(.18rem,.4vw,.28rem); border-radius: 50%;
+  background: #2bd462;
+  box-shadow: 0 0 6px rgba(43,212,98,.7);
+  animation: laptop-led-pulse 3.2s ease-in-out infinite;
 }
-.macbook-slide__hero {
-  flex: 1.4;
-  border-radius: 8px;
-  padding: 18px;
-  display: flex; flex-direction: column; gap: 10px; justify-content: center;
-  background: linear-gradient(180deg, rgba(255,255,255,.16), transparent 70%), rgba(0,0,0,.18);
-  border: 1px solid rgba(255,255,255,.08);
+@keyframes laptop-led-pulse {
+  0%,100% { opacity: .55; transform: translateX(-50%) scale(.9); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
 }
-.macbook-slide__eyebrow {
-  font-family: ui-monospace, monospace;
-  font-size: 9px; letter-spacing: 0.18em;
-  color: rgba(255,255,255,.85);
+@media (prefers-reduced-motion: reduce) { .laptop__led { animation: none; } }
+
+.laptop__screen {
+  position: relative; width: 100%; height: 100%;
+  background: var(--screen-bezel);
+  border-radius: clamp(.35rem,.7vw,.55rem); overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), inset 0 1px 4px rgba(0,0,0,.6);
 }
-.macbook-slide__title {
-  height: 14px; width: 60%;
-  border-radius: 4px;
-  background: rgba(255,255,255,.85);
+.laptop__chrome {
+  display: flex; align-items: center; gap: clamp(.4rem,1vw,.75rem);
+  padding: clamp(.4rem,.9vw,.6rem) clamp(.55rem,1.2vw,.85rem);
+  background: linear-gradient(180deg,#2a2a30,#1d1d22);
+  border-bottom: 1px solid rgba(255,255,255,.06);
 }
-.macbook-slide__sub {
-  height: 8px; width: 40%;
-  border-radius: 3px;
-  background: rgba(255,255,255,.55);
+.laptop__chrome-dots { display: inline-flex; align-items: center; gap: clamp(.25rem,.55vw,.4rem); flex-shrink: 0; }
+.laptop__chrome-dot {
+  display: block; width: clamp(.55rem,1vw,.78rem); height: clamp(.55rem,1vw,.78rem); border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.15);
 }
-.macbook-slide__cta {
-  height: 18px; width: 90px;
-  border-radius: 4px;
-  background: #fff;
-  margin-top: 4px;
+.laptop__chrome-dot--red { background: #ff5f56; }
+.laptop__chrome-dot--yellow { background: #ffbd2e; }
+.laptop__chrome-dot--green { background: #27c93f; }
+.laptop__chrome-url {
+  display: inline-flex; align-items: center; gap: .35rem; flex: 1 1 auto; min-width: 0;
+  padding: clamp(.25rem,.6vw,.4rem) clamp(.5rem,1.2vw,.85rem);
+  background: rgba(255,255,255,.06); border-radius: 999px;
+  color: rgba(255,255,255,.65);
+  font-family: "SF Mono", ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace;
+  font-size: clamp(.65rem,1.05vw,.82rem); letter-spacing: .01em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.macbook-slide__grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-  flex: 1;
+.laptop__chrome-url svg { flex-shrink: 0; width: clamp(.65rem,1vw,.85rem); height: clamp(.65rem,1vw,.85rem); color: rgba(120,220,150,.85); }
+.laptop__chrome-spacer { flex-shrink: 0; width: clamp(2rem,4.5vw,3.4rem); }
+
+.laptop__display { position: relative; width: 100%; height: 100%; background: #000; }
+.laptop__display--has-chrome { height: calc(100% - clamp(1.4rem,3vw,2rem)); }
+.laptop__video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.laptop__placeholder {
+  width: 100%; height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: .7rem;
+  color: rgba(255,255,255,.5);
+  background: linear-gradient(135deg,#1a1a20,#0b0b0e);
 }
-.macbook-slide__grid > span {
-  display: block; border-radius: 6px;
-  background: rgba(255,255,255,.1);
-  border: 1px solid rgba(255,255,255,.08);
+.laptop__placeholder svg { width: clamp(2rem,4vw,3rem); height: clamp(2rem,4vw,3rem); color: rgba(255,255,255,.35); }
+.laptop__placeholder span { font-family: inherit; font-size: clamp(.85rem,1.4vw,1rem); letter-spacing: -.01em; }
+
+.laptop__reflection {
+  position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.07) 48%, rgba(255,255,255,.02) 55%, transparent 65%);
+  pointer-events: none; mix-blend-mode: screen;
 }
-.macbook-slide__row {
-  display: flex; gap: 8px;
+.laptop__hinge {
+  position: relative; height: clamp(.18rem,.4vw,.3rem); width: 100%;
+  background: linear-gradient(180deg,#08080a,#1a1a1e,#08080a);
+  box-shadow: inset 0 1px rgba(255,255,255,.05);
 }
-.macbook-slide__row > span {
-  flex: 1; height: 14px; border-radius: 4px;
-  background: rgba(255,255,255,.18);
+.laptop__base {
+  position: relative; width: 106%; margin: 0 -3%;
+  height: clamp(2.2rem,4.5vw,3.2rem);
+  background: linear-gradient(180deg,#2a2a30,#1c1c20 40%,#0e0e12);
+  border-radius: 0 0 clamp(.55rem,1vw,.85rem) clamp(.55rem,1vw,.85rem);
+  clip-path: polygon(3% 0%, 97% 0%, 100% 100%, 0% 100%);
+  box-shadow: inset 0 1px rgba(255,255,255,.08), 0 22px 30px -18px rgba(0,0,0,.5);
+}
+.laptop__keys {
+  position: absolute; top: 15%; left: 12%; right: 12%; height: 48%; border-radius: 3px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0, transparent calc(7.14% - 1px), rgba(0,0,0,.45) calc(7.14% - 1px), rgba(0,0,0,.45) 7.14%),
+    repeating-linear-gradient(0deg, transparent 0, transparent calc(25% - 1px), rgba(0,0,0,.35) calc(25% - 1px), rgba(0,0,0,.35) 25%),
+    linear-gradient(180deg,#1c1c20,#14141a);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.5), inset 0 1px rgba(255,255,255,.04);
+}
+.laptop__trackpad {
+  position: absolute; bottom: 12%; left: 36%; right: 36%; height: 18%; border-radius: 3px;
+  background: linear-gradient(180deg,#1a1a1e,#14141a);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.4), inset 0 1px rgba(255,255,255,.03);
+}
+.laptop__notch {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: clamp(2.5rem,10%,6rem); height: clamp(.18rem,.35vw,.28rem);
+  background: #050507; border-radius: 0 0 .5rem .5rem;
+  box-shadow: inset 0 -1px rgba(255,255,255,.04);
+}
+.laptop__shadow {
+  position: absolute; left: 10%; right: 10%; bottom: clamp(-2.5rem,-3vw,-2rem);
+  height: clamp(2rem,4vw,3rem);
+  background: radial-gradient(ellipse at center, rgba(0,0,0,.55) 0%, rgba(0,0,0,.2) 45%, transparent 75%);
+  filter: blur(12px); pointer-events: none; z-index: -2;
+}
+.laptop__glow {
+  position: absolute; top: -8%; right: -12%; bottom: -18%; left: -12%;
+  background: radial-gradient(ellipse 60% 55% at 50% 65%,
+    color-mix(in srgb, var(--glow-color) 30%, transparent) 0%,
+    color-mix(in srgb, var(--glow-color) 12%, transparent) 35%,
+    transparent 75%);
+  filter: blur(28px); pointer-events: none; z-index: -3;
+  animation: laptop-glow-pulse 6s ease-in-out infinite;
+}
+@keyframes laptop-glow-pulse { 0%,100% { opacity: .65; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .laptop__glow { animation: none; } }
+
+@media (max-width: 700px) {
+  .laptop { width: 100%; }
+  .laptop__lid { padding-bottom: clamp(.7rem,2.5vw,1rem); }
+  .laptop__shadow { left: 15%; right: 15%; }
 }
