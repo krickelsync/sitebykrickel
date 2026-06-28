@@ -164,12 +164,12 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
               Get in Touch
             </h3>
             <div className="space-y-1.5 md:space-y-2">
-              <a href="mailto:contact@sitebykrickel.com" aria-label="Email contact@sitebykrickel.com" className={`flex items-center gap-2 md:gap-3 font-mono text-muted-foreground hover:text-foreground transition-colors group break-all ${textSize.ui}`}>
-                <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
-                  <Mail size={14} className="md:hidden" aria-hidden="true" />
+              <a href="mailto:contact@sitebykrickel.com" aria-label="Email contact@sitebykrickel.com" className={`flex items-center gap-2 md:gap-3 font-mono text-muted-foreground hover:text-foreground transition-colors group ${textSize.ui}`}>
+                <div className="w-7 h-7 md:w-10 md:h-10 shrink-0 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
+                  <Mail size={12} className="md:hidden" aria-hidden="true" />
                   <Mail size={16} className="hidden md:block" aria-hidden="true" />
                 </div>
-                <span>contact@sitebykrickel.com</span>
+                <span className="text-[10px] md:text-sm whitespace-nowrap">contact@sitebykrickel.com</span>
               </a>
               <a href="https://www.instagram.com/krickel.sync/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @krickel.sync (opens in new tab)" className={`flex items-center gap-2 md:gap-3 font-mono text-muted-foreground hover:text-foreground transition-colors group ${textSize.ui}`}>
                 <div className="w-8 h-8 md:w-10 md:h-10 shrink-0 glass-card rounded-full flex items-center justify-center group-hover:border-primary/50 transition-colors">
