@@ -77,7 +77,9 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
             className="flex items-center justify-center h-12 shrink-0"
             style={{ overflow: 'visible' }}
           >
-            <Logo3D />
+            <Suspense fallback={<div className="w-12 h-12" />}>
+              <Logo3D />
+            </Suspense>
           </Link>
 
           {/* Desktop / tablet nav pill */}
