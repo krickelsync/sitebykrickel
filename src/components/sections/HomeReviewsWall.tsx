@@ -3,19 +3,19 @@ import SectionHeader from "@/components/shared/SectionHeader";
 
 const columns = [
   [
-    { initials: "BM", name: "Brandon M.", rating: 5, avatarColor: "bg-green-500", content: "theme ini gila sih, store gw langsung keliatan premium. konversi naik dalam seminggu fr fr" },
-    { initials: "JT", name: "Jasmine T.", rating: 4, avatarColor: "bg-blue-500", content: "load speed Shopify gw 98 di Lighthouse. customer ga kabur lagi. W theme" },
-    { initials: "DR", name: "Devon R.", rating: 5, avatarColor: "bg-purple-500", content: "finally a Shopify theme yang ga keliatan template. clean banget" },
+    { initials: "BM", name: "Brandon M.", rating: 5, avatarColor: "bg-green-500", content: "this theme hits different. store looks premium instantly and conversions jumped within a week fr fr" },
+    { initials: "JT", name: "Jasmine T.", rating: 4, avatarColor: "bg-blue-500", content: "my Shopify hits 98 on Lighthouse now. customers actually stick around. W theme no cap" },
+    { initials: "DR", name: "Devon R.", rating: 5, avatarColor: "bg-purple-500", content: "finally a Shopify theme that doesn't scream template. clean as hell" },
   ],
   [
-    { initials: "ZP", name: "Zara P.", rating: 5, avatarColor: "bg-teal-500", content: "hemat jutaan ga perlu hire dev. setup-nya cepet bgt buat clothing brand gw" },
-    { initials: "TJ", name: "Tyler J.", rating: 4, avatarColor: "bg-indigo-500", content: "ok tapi kenapa theme-nya smooth bgt??? straight fire di mobile" },
-    { initials: "AK", name: "Aaliyah K.", rating: 5, avatarColor: "bg-pink-500", content: "pake buat drop streetwear gw, sold out 2 jam. 10/10 theme" },
+    { initials: "ZP", name: "Zara P.", rating: 5, avatarColor: "bg-teal-500", content: "saved thousands not having to hire a dev. setup was crazy fast for my clothing brand" },
+    { initials: "TJ", name: "Tyler J.", rating: 4, avatarColor: "bg-indigo-500", content: "ok but why is this theme so smooth??? straight fire on mobile" },
+    { initials: "AK", name: "Aaliyah K.", rating: 5, avatarColor: "bg-pink-500", content: "used it for my streetwear drop, sold out in 2 hours. 10/10 theme" },
   ],
   [
-    { initials: "MW", name: "Marcus W.", rating: 5, avatarColor: "bg-orange-500", content: "vibes Shopify store gw immaculate skrg. customer ngerasa brand gw real" },
-    { initials: "NB", name: "Naomi B.", rating: 4, avatarColor: "bg-yellow-500", content: "Shopify store gw skrg 10x lebih premium. legit theme terbaik" },
-    { initials: "EF", name: "Ethan F.", rating: 5, avatarColor: "bg-red-500", content: "ganti theme lama gw yang lemot ke SYNC. checkout rate naik gila" },
+    { initials: "MW", name: "Marcus W.", rating: 5, avatarColor: "bg-orange-500", content: "the vibes on my Shopify store are immaculate now. customers actually feel the brand" },
+    { initials: "NB", name: "Naomi B.", rating: 4, avatarColor: "bg-yellow-500", content: "store looks 10x more premium now. legit the best theme out there" },
+    { initials: "EF", name: "Ethan F.", rating: 5, avatarColor: "bg-red-500", content: "swapped my old laggy theme for SYNC. checkout rate went crazy" },
   ],
 ];
 
