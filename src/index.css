@@ -1001,14 +1001,77 @@
   transition: transform 0.3s ease;
 }
 .prism-cta:hover {
-  box-shadow:
-    0 0 0 1px hsl(var(--primary) / 0.4),
-    0 0 22px hsl(var(--primary) / 0.35),
-    0 0 48px hsl(var(--primary) / 0.18);
+  box-shadow: 0 0 0 1px hsl(var(--primary) / 0.4);
 }
 .prism-cta:hover::before { transform: translateY(0); }
 .prism-cta:hover { color: hsl(var(--background)); }
 .prism-cta:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--primary));
+}
+
+/* ============================================== */
+/* GLOBAL: Strip all gradient text + glow effects */
+/* User opted out of glows & gradient typography. */
+/* ============================================== */
+
+/* Neutralize the .text-gradient utility */
+.text-gradient,
+.light .text-gradient {
+  background-image: none !important;
+  -webkit-background-clip: initial !important;
+          background-clip: initial !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Catch every Tailwind `bg-clip-text` + `text-transparent` gradient text */
+[class*="bg-clip-text"][class*="text-transparent"],
+[class*="bg-clip-text"].text-transparent {
+  background-image: none !important;
+  -webkit-background-clip: initial !important;
+          background-clip: initial !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+/* Remove every text glow, including hover/scale variants */
+.glow-text,
+.glow-text-mobile,
+.glow-text-luxury,
+.glow-text-luxury-mobile,
+.hover-glow,
+.hover-glow:hover,
+.hover-glow-intense,
+.hover-glow-intense:hover,
+.hover-lift:hover,
+.hover-scale-premium:hover,
+.hover-tracking-expand:hover {
+  text-shadow: none !important;
+}
+
+/* Remove luxury gold tint so it inherits regular foreground */
+.glow-text-luxury,
+.glow-text-luxury-mobile {
+  color: inherit !important;
+}
+
+/* Kill ambient box glows and pulse animations */
+.glow-border,
+.glow-box,
+.animate-pulse-glow,
+.shiny-card:hover {
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+/* Kill filter-based glows (drop-shadow utilities) */
+[class*="drop-shadow"] {
+  filter: none !important;
+}
+
+/* Prism CTA: no glow on hover, keep the slide-up fill */
+.prism-cta:hover,
+.prism-cta:focus-visible {
+  box-shadow: none !important;
 }
