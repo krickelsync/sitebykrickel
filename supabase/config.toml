@@ -2,3 +2,6 @@ project_id = "pgppgdlkoblmpqdyfxfc"
 
 [functions.send-contact-email]
 verify_jwt = false
+
+[functions.record-order]
+verify_jwt = false

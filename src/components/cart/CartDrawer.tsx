@@ -189,22 +189,21 @@ const CartDrawer = () => {
                       const payer = details.payer;
                       const buyer_name =
                         [payer?.name?.given_name, payer?.name?.surname].filter(Boolean).join(" ") || null;
-                      try {
-                        await supabase.from("orders").insert(
-                          items.map((it) => ({
-                            product_id: it.id,
-                            product_title: `${it.title} x${it.qty}`,
-                            buyer_email: payer?.email_address ?? null,
-                            buyer_name,
-                            paypal_order_id: details.id ?? data.orderID,
-                            amount: it.price * it.qty,
-                            currency: "USD",
-                            status: details.status ?? "COMPLETED",
-                          }))
-                        );
-                      } catch (err) {
-                        console.error("Failed to record orders:", err);
-                      }
+                       try {
+                         await supabase.functions.invoke("record-order", {
+                           body: {
+                             paypal_order_id: details.id ?? data.orderID,
+                             items: items.map((it) => ({
+                               product_id: it.id,
+                               product_title: `${it.title} x${it.qty}`,
+                               amount: it.price * it.qty,
+                             })),
+                           },
+                         });
+                       } catch (err) {
+                         console.error("Failed to record orders:", err);
+                       }
+                       void buyer_name;
                       toast.success(
                         `Payment successful! Thanks, ${payer?.name?.given_name || "friend"}.`
                       );
