@@ -1069,3 +1069,114 @@
 .prism-cta:focus-visible {
   box-shadow: none !important;
 }
+
+/* ============ Phone Marquee (Build Clean Slate style) ============ */
+.phone-marquee {
+  position: relative;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  transform: rotate(-2deg);
+}
+.phone-row {
+  width: 100%;
+  overflow: hidden;
+}
+.phone-track {
+  display: flex;
+  width: max-content;
+  animation: phone-scroll linear infinite;
+  will-change: transform;
+}
+.phone-row:nth-child(2) .phone-track { animation-direction: reverse; }
+@keyframes phone-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .phone-track { animation: none; }
+}
+
+.phone-mock {
+  width: 150px;
+}
+@media (min-width: 768px) {
+  .phone-mock { width: 200px; }
+}
+.phone-mock__frame {
+  position: relative;
+  aspect-ratio: 9 / 19;
+  border-radius: 28px;
+  padding: 6px;
+  background: linear-gradient(160deg, hsl(var(--border)) 0%, hsl(var(--muted)) 50%, hsl(var(--border)) 100%);
+  box-shadow:
+    0 1px 0 hsl(var(--background)) inset,
+    0 20px 40px -20px rgba(0,0,0,.5),
+    0 0 0 1px hsl(var(--border));
+  overflow: hidden;
+}
+.phone-mock__notch {
+  position: absolute;
+  top: 10px; left: 50%;
+  transform: translateX(-50%);
+  width: 38%;
+  height: 14px;
+  border-radius: 0 0 12px 12px;
+  background: hsl(var(--background));
+  z-index: 3;
+}
+.phone-mock__screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 22px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 10px 10px;
+  gap: 8px;
+}
+.phone-mock__statusbar {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: ui-monospace, monospace;
+  font-size: 8px;
+  color: rgba(255,255,255,.85);
+  padding: 0 6px;
+}
+.phone-mock__dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,.7);
+}
+.phone-mock__hero {
+  flex: 1.3;
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.18), transparent 60%),
+    rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.1);
+}
+.phone-mock__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  flex: 1;
+}
+.phone-mock__grid > span {
+  display: block;
+  border-radius: 8px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.08);
+}
+.phone-mock__bar {
+  height: 18px;
+  border-radius: 6px;
+  background: rgba(255,255,255,.85);
+}
+.phone-mock__reflection {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(255,255,255,.18) 0%, transparent 35%, transparent 65%, rgba(255,255,255,.1) 100%);
+  mix-blend-mode: screen;
+}
