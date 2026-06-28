@@ -47,8 +47,8 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
 
   return (
     <div
-      className="relative z-20 mx-auto mb-0 flex w-full justify-center -mt-3 md:mt-0 origin-bottom transform-gpu"
-      style={{ backfaceVisibility: "hidden" }}
+      className="relative z-20 mx-auto mb-0 flex w-full justify-center -mt-3 md:mt-0 scale-[0.8] md:scale-100 origin-bottom transform-gpu"
+      style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" } as React.CSSProperties}
     >
       <motion.div
         animate={controls}
@@ -62,8 +62,8 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
             runSequence();
           }
         }}
-        className="relative h-[64px] w-[224px] md:h-[80px] md:w-[280px] cursor-pointer select-none touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-        style={{ perspective: 900, backfaceVisibility: "hidden" }}
+        className="relative h-[80px] w-[280px] cursor-pointer select-none touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        style={{ perspective: 900, backfaceVisibility: "hidden" } as React.CSSProperties}
       >
         <svg
           aria-hidden
