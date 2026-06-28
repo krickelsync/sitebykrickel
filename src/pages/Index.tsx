@@ -7,6 +7,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 const ProblemSection = lazy(() => import("@/components/sections/ProblemSection"));
 const FeatureGrid = lazy(() => import("@/components/sections/FeatureGrid"));
 const MobileFirstSection = lazy(() => import("@/components/sections/MobileFirstSection"));
+const DesktopShowcase = lazy(() => import("@/components/sections/DesktopShowcase"));
 const CustomizationSection = lazy(() => import("@/components/sections/CustomizationSection"));
 const CostComparison = lazy(() => import("@/components/sections/CostComparison"));
 const TrustBadges = lazy(() => import("@/components/sections/TrustBadges"));
@@ -43,6 +44,9 @@ const Index = () => {
       </Suspense>
       <Suspense fallback={<SectionLoader />}>
         <MobileFirstSection />
+      </Suspense>
+      <Suspense fallback={<SectionLoader />}>
+        <DesktopShowcase />
       </Suspense>
       <Suspense fallback={<SectionLoader />}>
         <CustomizationSection />
