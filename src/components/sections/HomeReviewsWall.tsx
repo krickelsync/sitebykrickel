@@ -3,19 +3,19 @@ import SectionHeader from "@/components/shared/SectionHeader";
 
 const columns = [
   [
-    { initials: "BM", name: "Brandon M.", rating: 5, avatarColor: "bg-green-500", content: "bro this AI is lowkey insane saved my whole budget fr fr. my product photos look professional af now" },
-    { initials: "JT", name: "Jasmine T.", rating: 4, avatarColor: "bg-blue-500", content: "no cap, my sales went UP after using these pics. W tool" },
-    { initials: "DR", name: "Devon R.", rating: 5, avatarColor: "bg-purple-500", content: "finally some AI that actually gets product aesthetics" },
+    { initials: "BM", name: "Brandon M.", rating: 5, avatarColor: "bg-green-500", content: "theme ini gila sih, store gw langsung keliatan premium. konversi naik dalam seminggu fr fr" },
+    { initials: "JT", name: "Jasmine T.", rating: 4, avatarColor: "bg-blue-500", content: "load speed Shopify gw 98 di Lighthouse. customer ga kabur lagi. W theme" },
+    { initials: "DR", name: "Devon R.", rating: 5, avatarColor: "bg-purple-500", content: "finally a Shopify theme yang ga keliatan template. clean banget" },
   ],
   [
-    { initials: "ZP", name: "Zara P.", rating: 5, avatarColor: "bg-teal-500", content: "saved me so much money on photoshoots. this is the future fr" },
-    { initials: "TJ", name: "Tyler J.", rating: 4, avatarColor: "bg-indigo-500", content: "ok but why is this so good??? straight fire" },
-    { initials: "AK", name: "Aaliyah K.", rating: 5, avatarColor: "bg-pink-500", content: "used this for my drop and it went crazy. 10/10" },
+    { initials: "ZP", name: "Zara P.", rating: 5, avatarColor: "bg-teal-500", content: "hemat jutaan ga perlu hire dev. setup-nya cepet bgt buat clothing brand gw" },
+    { initials: "TJ", name: "Tyler J.", rating: 4, avatarColor: "bg-indigo-500", content: "ok tapi kenapa theme-nya smooth bgt??? straight fire di mobile" },
+    { initials: "AK", name: "Aaliyah K.", rating: 5, avatarColor: "bg-pink-500", content: "pake buat drop streetwear gw, sold out 2 jam. 10/10 theme" },
   ],
   [
-    { initials: "MW", name: "Marcus W.", rating: 5, avatarColor: "bg-orange-500", content: "the vibes are immaculate ngl. customers love it" },
-    { initials: "NB", name: "Naomi B.", rating: 4, avatarColor: "bg-yellow-500", content: "my Shopify store looks 10x better now. legit" },
-    { initials: "EF", name: "Ethan F.", rating: 5, avatarColor: "bg-red-500", content: "replaced my entire photo workflow. wild" },
+    { initials: "MW", name: "Marcus W.", rating: 5, avatarColor: "bg-orange-500", content: "vibes Shopify store gw immaculate skrg. customer ngerasa brand gw real" },
+    { initials: "NB", name: "Naomi B.", rating: 4, avatarColor: "bg-yellow-500", content: "Shopify store gw skrg 10x lebih premium. legit theme terbaik" },
+    { initials: "EF", name: "Ethan F.", rating: 5, avatarColor: "bg-red-500", content: "ganti theme lama gw yang lemot ke SYNC. checkout rate naik gila" },
   ],
 ];
 
