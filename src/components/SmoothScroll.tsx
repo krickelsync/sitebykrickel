@@ -45,7 +45,6 @@ const SmoothScroll = ({ children }: { children?: ReactNode }) => {
         smoothWheel: true,
         syncTouch: isTouch,
         syncTouchLerp: 0.075,
-        touchInertiaMultiplier: 20,
         touchMultiplier: 1.5,
       }}
     >
