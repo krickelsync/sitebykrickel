@@ -12,6 +12,8 @@ const CostComparison = lazy(() => import("@/components/sections/CostComparison")
 const TrustBadges = lazy(() => import("@/components/sections/TrustBadges"));
 const ServicesAddon = lazy(() => import("@/components/sections/ServicesAddon"));
 const FinalCTA = lazy(() => import("@/components/sections/FinalCTA"));
+const HomeReviewsWall = lazy(() => import("@/components/sections/HomeReviewsWall"));
+const HomeVelocityText = lazy(() => import("@/components/sections/HomeVelocityText"));
 const Pricing = lazy(() => import("@/components/Pricing"));
 const CurvedLoop = lazy(() => import("@/components/CurvedLoop"));
 const FAQ = lazy(() => import("@/components/FAQ"));
@@ -50,6 +52,12 @@ const Index = () => {
       </Suspense>
       <Suspense fallback={<SectionLoader />}>
         <Pricing />
+      </Suspense>
+      <Suspense fallback={<SectionLoader />}>
+        <HomeVelocityText />
+      </Suspense>
+      <Suspense fallback={<SectionLoader />}>
+        <HomeReviewsWall />
       </Suspense>
       <Suspense fallback={<SectionLoader />}>
         <ServicesAddon />
