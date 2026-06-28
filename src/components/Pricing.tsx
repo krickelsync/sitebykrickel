@@ -215,10 +215,14 @@ const Pricing = () => {
             <a
               href="/about#contact"
               onClick={handleContactClick}
-              className={`relative group inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-foreground text-background font-mono font-medium overflow-hidden transition-colors hover:bg-foreground/90 ${textSize.ui}`}
+              className="prism-cta group relative inline-flex items-center justify-center w-full mt-2"
+              aria-label={`Get SYNC for $${price}`}
             >
-              Get SYNC — ${price}
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+              <span aria-hidden="true" className="prism-cta__glow" />
+              <span className={`prism-cta__inner ${textSize.ui}`}>
+                Get SYNC — ${price}
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+              </span>
             </a>
           </motion.div>
         </div>
