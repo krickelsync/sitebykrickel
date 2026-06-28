@@ -141,13 +141,12 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
               decoding="async"
             />
             {stage !== "idle" && (
-              <motion.div
-                aria-hidden
-                className="absolute inset-0"
-                style={{ filter: "drop-shadow(0 0 16px hsl(140 80% 50% / 0.7))" }}
-                animate={{ opacity: [0.35, 0.8, 0.35] }}
-                transition={{ duration: 1.8, repeat: Infinity }}
-              />
+              !reduce && !lowPower && (
+                <>
+                  <span aria-hidden className="reactor-ripple reactor-ripple--shopify" />
+                  <span aria-hidden className="reactor-ripple reactor-ripple--shopify reactor-ripple--d1" />
+                </>
+              )
             )}
           </div>
         </motion.div>
@@ -200,17 +199,9 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
               />
               {stage !== "idle" && !reduce && !lowPower && (
                 <>
-                  {[0, 0.9, 1.8].map((delay, i) => (
-                    <motion.span
-                      key={i}
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 rounded-full border border-primary/60"
-                      initial={{ scale: 0.7, opacity: 0.55 }}
-                      animate={{ scale: 2.1, opacity: 0 }}
-                      transition={{ duration: 2.7, delay, repeat: Infinity, ease: "easeOut" }}
-                      style={{ boxShadow: "0 0 18px hsl(45 100% 60% / 0.45)" }}
-                    />
-                  ))}
+                  <span aria-hidden className="reactor-ripple" />
+                  <span aria-hidden className="reactor-ripple reactor-ripple--d1" />
+                  <span aria-hidden className="reactor-ripple reactor-ripple--d2" />
                 </>
               )}
             </motion.div>
