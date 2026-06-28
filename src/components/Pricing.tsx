@@ -222,11 +222,12 @@ const Pricing = () => {
             <a
               href="/about#contact"
               onClick={handleContactClick}
-              className={`cta-shiny inline-flex items-center justify-center gap-2 rounded-full bg-foreground text-background px-6 py-3 font-mono whitespace-nowrap hover:opacity-90 transition-all duration-300 mt-2 ${textSize.ui}`}
+              className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 bg-primary text-primary-foreground px-4 py-2.5 sm:px-8 sm:py-4 font-mono text-[clamp(0.6875rem,0.95vw,0.875rem)] font-bold uppercase tracking-wider overflow-hidden hover:glow-box cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background will-change-transform mt-2"
               aria-label={`Get SYNC for $${price}`}
             >
               <span className="relative z-10">Get SYNC — ${price}</span>
-              <ArrowRight className="w-4 h-4 relative z-10" />
+              <ArrowRight aria-hidden="true" className="relative z-10 group-hover:translate-x-1 transition-transform w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
+              <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             </a>
           </motion.div>
         </div>
