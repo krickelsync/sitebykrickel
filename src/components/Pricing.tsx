@@ -83,27 +83,39 @@ const Pricing = () => {
           accentTone="gold"
         />
 
-        <div className="max-w-xl mx-auto">
+        <div className="max-w-xl mx-auto relative">
+          {/* Ambient prism glow behind card — matches hero atmosphere */}
+          <div
+            aria-hidden="true"
+            className="hero-prism-fallback absolute -inset-6 md:-inset-10 opacity-60 blur-2xl pointer-events-none"
+          />
+
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative overflow-hidden rounded-xl border border-border bg-card p-6 md:p-10 flex flex-col transition-colors duration-300 hover:border-foreground/30"
+            className="relative overflow-hidden border border-foreground/15 bg-background/80 backdrop-blur-xl p-6 md:p-10 flex flex-col transition-colors duration-300 hover:border-primary/40"
           >
+            {/* Corner brackets — hero-style */}
+            <span aria-hidden className="absolute top-0 left-0 w-4 h-4 border-t border-l border-primary/70" />
+            <span aria-hidden className="absolute top-0 right-0 w-4 h-4 border-t border-r border-primary/70" />
+            <span aria-hidden className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-primary/70" />
+            <span aria-hidden className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-primary/70" />
+
             {/* Watermark logo — bottom-right corner, very subtle */}
             <img
               src={shopifyBadge.url}
               alt=""
               aria-hidden="true"
-              className="pointer-events-none select-none absolute bottom-4 right-4 h-20 md:h-24 w-auto opacity-[0.06]"
+              className="pointer-events-none select-none absolute bottom-6 right-6 h-20 md:h-24 w-auto opacity-[0.05]"
             />
 
-            {/* Header row — chip + price, flat HeroUI style */}
-            <div className="relative flex items-start justify-between gap-4 pb-6 mb-6 border-b border-border">
+            {/* Header row — chip + price */}
+            <div className="relative flex items-start justify-between gap-4 pb-6 mb-6 border-b border-foreground/10">
               <div>
-                <span className={`inline-block px-2 py-0.5 rounded-md border border-border ${typography.eyebrow}`}>
-                  Premium
+                <span className={`inline-block px-2 py-0.5 border border-primary/40 text-primary bg-primary/5 ${typography.eyebrow}`}>
+                  [ Premium ]
                 </span>
                 <h3 className={`mt-3 font-syne font-bold text-foreground ${typography.h3}`}>
                   SYNC Theme
@@ -128,8 +140,8 @@ const Pricing = () => {
               </div>
             </div>
 
-            {/* Inline add-on toggles — Stripe-style row */}
-            <div className="relative space-y-px mb-6 border border-border rounded-lg overflow-hidden">
+            {/* Inline add-on toggles — sharp edge, hero-aligned */}
+            <div className="relative space-y-px mb-6 border border-foreground/10 overflow-hidden">
               {[
                 {
                   label: "Remove Watermark",
@@ -155,8 +167,8 @@ const Pricing = () => {
                   aria-checked={t.value}
                   aria-label={t.aria}
                   onClick={() => t.set((v) => !v)}
-                  className={`w-full flex items-center justify-between gap-3 px-4 py-3 text-left transition-colors border-b border-border last:border-b-0 ${
-                    t.value ? "bg-foreground/[0.03]" : "hover:bg-foreground/[0.02]"
+                  className={`w-full flex items-center justify-between gap-3 px-4 py-3 text-left transition-colors border-b border-foreground/10 last:border-b-0 ${
+                    t.value ? "bg-primary/[0.06]" : "hover:bg-foreground/[0.03]"
                   }`}
                 >
                   <div className="flex flex-col min-w-0">
@@ -164,7 +176,7 @@ const Pricing = () => {
                       <span className={`font-mono font-medium text-foreground ${textSize.ui}`}>
                         {t.label}
                       </span>
-                      <span className={typography.eyebrow}>
+                      <span className={`${typography.eyebrow} text-primary`}>
                         {t.price}
                       </span>
                     </div>
@@ -175,7 +187,7 @@ const Pricing = () => {
                   <span
                     aria-hidden="true"
                     className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors ${
-                      t.value ? "bg-foreground" : "bg-muted"
+                      t.value ? "bg-primary" : "bg-muted"
                     }`}
                   >
                     <span
@@ -192,13 +204,13 @@ const Pricing = () => {
             <div className="relative flex-1 space-y-6 mb-8">
               {FEATURE_GROUPS.map((group) => (
                 <div key={group.category}>
-                  <h4 className={`${typography.eyebrow} mb-3`}>
-                    — {group.category}
+                  <h4 className={`${typography.eyebrow} text-primary/80 mb-3`}>
+                    [ {group.category} ]
                   </h4>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
                     {group.items.map((item) => (
                       <li key={item.label} className={`flex items-baseline gap-2 leading-snug ${textSize.ui}`}>
-                        <span className="text-muted-foreground/50 font-mono">·</span>
+                        <span className="text-primary/60 font-mono">+</span>
                         <span className="font-mono text-muted-foreground">
                           {item.label}
                           {item.value && (
