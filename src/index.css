@@ -1050,12 +1050,6 @@
   text-shadow: none !important;
 }
 
-/* Remove luxury gold tint so it inherits regular foreground */
-.glow-text-luxury,
-.glow-text-luxury-mobile {
-  color: inherit !important;
-}
-
 /* Kill ambient box glows and pulse animations */
 .glow-border,
 .glow-box,
