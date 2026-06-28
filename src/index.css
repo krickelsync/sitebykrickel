@@ -1072,3 +1072,19 @@
 .prism-cta:focus-visible {
   box-shadow: none !important;
 }
+
+/* Luxe Emerald ambient — deep jewel-tone radial glow */
+.luxe-emerald-glow {
+  background:
+    radial-gradient(60% 55% at 20% 30%, hsla(150, 65%, 28%, 0.55) 0%, transparent 70%),
+    radial-gradient(55% 50% at 85% 75%, hsla(95, 55%, 32%, 0.45) 0%, transparent 70%),
+    radial-gradient(70% 60% at 50% 50%, hsla(160, 70%, 18%, 0.35) 0%, transparent 75%);
+}
+
+/* Luxe Emerald hairline — thin jewel-green outline */
+.luxe-emerald-border {
+  border-color: hsla(150, 60%, 45%, 0.45) !important;
+}
+.luxe-emerald-border:hover {
+  border-color: hsla(150, 70%, 55%, 0.75) !important;
+}
