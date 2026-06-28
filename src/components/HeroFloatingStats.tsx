@@ -221,12 +221,12 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
             <div className="relative font-mono text-[9px] uppercase tracking-[0.22em] text-white/60 mb-1">
               Total Sales
             </div>
-            <div className="relative flex items-baseline gap-1.5 sm:gap-2 flex-wrap">
-              <span className="font-syne text-xl sm:text-2xl font-bold text-white tabular-nums">
+            <div className="relative flex items-baseline gap-1.5 sm:gap-2 flex-nowrap whitespace-nowrap">
+              <span className="font-syne text-lg sm:text-2xl font-bold text-white tabular-nums">
                 ${sales.toLocaleString("en-US")}
               </span>
-              <span className="font-mono text-[10px] flex items-center gap-0.5 shrink-0" style={{ color: accent }}>
-                <TrendingUp size={10} /> {salesTrend}%
+              <span className="font-mono text-[9px] sm:text-[10px] flex items-center gap-0.5 shrink-0" style={{ color: accent }}>
+                <TrendingUp size={9} /> {salesTrend}%
               </span>
             </div>
             {/* Rising sales chart — rebuilt as a contained left-to-right reveal (no scrolling overflow). */}
