@@ -87,7 +87,7 @@ const Pricing = () => {
           {/* Ambient prism glow behind card — matches hero atmosphere */}
           <div
             aria-hidden="true"
-            className="luxe-emerald-glow absolute -inset-6 md:-inset-10 opacity-80 blur-3xl pointer-events-none"
+            className="hero-prism-fallback absolute -inset-6 md:-inset-10 opacity-60 blur-2xl pointer-events-none"
           />
 
           <motion.div
@@ -95,7 +95,7 @@ const Pricing = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="luxe-emerald-border relative overflow-hidden menu-rotating-glow border bg-background/80 backdrop-blur-xl p-6 md:p-10 flex flex-col transition-colors duration-300"
+            className="relative overflow-hidden menu-rotating-glow border border-foreground/15 bg-background/80 backdrop-blur-xl p-6 md:p-10 flex flex-col transition-colors duration-300 hover:border-primary/40"
           >
             {/* Corner brackets — hero-style */}
             <span aria-hidden className="absolute top-0 left-0 w-4 h-4 border-t border-l border-primary/70" />

@@ -7,20 +7,20 @@
     --background: 60 2% 11%;
     --foreground: 51 24% 94%;
 
-    --card: 60 2% 14%;
+    --card: 0 0% 18%;
     --card-foreground: 51 24% 94%;
 
-    --popover: 60 2% 14%;
+    --popover: 0 0% 18%;
     --popover-foreground: 51 24% 94%;
 
     --primary: 53 100% 57%;
     --primary-foreground: 60 2% 11%;
 
-    --secondary: 60 2% 16%;
+    --secondary: 0 0% 20%;
     --secondary-foreground: 51 24% 94%;
 
-    --muted: 60 2% 18%;
-    --muted-foreground: 51 12% 65%;
+    --muted: 0 0% 24%;
+    --muted-foreground: 51 10% 70%;
 
     --accent: 53 100% 57%;
     --accent-foreground: 60 2% 11%;
@@ -28,8 +28,8 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 51 24% 94%;
 
-    --border: 51 10% 94% / 0.10;
-    --input: 51 10% 94% / 0.10;
+    --border: 0 0% 26%;
+    --input: 0 0% 26%;
     --ring: 53 100% 57%;
 
     --radius: 0.5rem;
@@ -49,22 +49,22 @@
   .dark {
     --background: 60 2% 11%;
     --foreground: 51 24% 94%;
-    --card: 60 2% 14%;
+    --card: 0 0% 18%;
     --card-foreground: 51 24% 94%;
-    --popover: 60 2% 14%;
+    --popover: 0 0% 18%;
     --popover-foreground: 51 24% 94%;
     --primary: 53 100% 57%;
     --primary-foreground: 60 2% 11%;
-    --secondary: 60 2% 16%;
+    --secondary: 0 0% 20%;
     --secondary-foreground: 51 24% 94%;
-    --muted: 60 2% 18%;
-    --muted-foreground: 51 12% 65%;
+    --muted: 0 0% 24%;
+    --muted-foreground: 51 10% 70%;
     --accent: 53 100% 57%;
     --accent-foreground: 60 2% 11%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 51 24% 94%;
-    --border: 51 10% 94% / 0.10;
-    --input: 51 10% 94% / 0.10;
+    --border: 0 0% 26%;
+    --input: 0 0% 26%;
     --ring: 53 100% 57%;
     --gold: 53 100% 57%;
     --gold-foreground: 60 2% 11%;
@@ -74,42 +74,45 @@
 
 /* Light mode with CSS invert filter */
 .light {
-    /* Bone-first light mode — Obsidian ink, Voltage accent (disciplined) */
-    --background: 51 24% 94%;        /* Bone #F5F4EB */
-    --foreground: 60 2% 11%;         /* Obsidian #1d1d1c */
+    /* Gallery White — premium SaaS aesthetic (Linear / Vercel / Apple) */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 4%;
 
-    --card: 51 20% 91%;
-    --card-foreground: 60 2% 11%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 4%;
 
-    --popover: 51 24% 94%;
-    --popover-foreground: 60 2% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 4%;
 
-    --primary: 53 100% 57%;          /* Voltage stays */
-    --primary-foreground: 60 2% 11%;
+    /* Electric blue accent — no more neon yellow in light mode */
+    --primary: 218 100% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 51 18% 88%;
-    --secondary-foreground: 60 2% 11%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 4%;
 
-    --muted: 51 16% 90%;
-    --muted-foreground: 60 4% 35%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 53 100% 57%;
-    --accent-foreground: 60 2% 11%;
+    --accent: 218 100% 50%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 72% 45%;
-    --destructive-foreground: 51 24% 94%;
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 60 2% 11% / 0.10;
-    --input: 60 2% 11% / 0.10;
-    --ring: 53 100% 57%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 218 100% 50%;
 
-    --glass-bg: 60 2% 11% / 0.03;
-    --glass-border: 60 2% 11% / 0.10;
-    --glow-green: 53 100% 57%;
+    /* Glass / glow — hairline + soft shadow, no halo */
+    --glass-bg: 0 0% 0% / 0.02;
+    --glass-border: 0 0% 0% / 0.08;
+    --glow-green: 218 100% 50%;
     --glow-intensity: 0;
 
-    --gold: 53 100% 57%;
-    --gold-foreground: 60 2% 11%;
+    /* Gold tone-down so it doesn't glare on white */
+    --gold: 38 75% 38%;
+    --gold-foreground: 0 0% 100%;
     --success: 142 60% 38%;
 }
 
@@ -1071,20 +1074,4 @@
 .prism-cta:hover,
 .prism-cta:focus-visible {
   box-shadow: none !important;
-}
-
-/* Luxe Emerald ambient — deep jewel-tone radial glow */
-.luxe-emerald-glow {
-  background:
-    radial-gradient(60% 55% at 20% 30%, hsla(150, 65%, 28%, 0.55) 0%, transparent 70%),
-    radial-gradient(55% 50% at 85% 75%, hsla(95, 55%, 32%, 0.45) 0%, transparent 70%),
-    radial-gradient(70% 60% at 50% 50%, hsla(160, 70%, 18%, 0.35) 0%, transparent 75%);
-}
-
-/* Luxe Emerald hairline — thin jewel-green outline */
-.luxe-emerald-border {
-  border-color: hsla(150, 60%, 45%, 0.45) !important;
-}
-.luxe-emerald-border:hover {
-  border-color: hsla(150, 70%, 55%, 0.75) !important;
 }
