@@ -53,7 +53,7 @@ const ReactorHeroLayer = ({ onStageChange }: Props) => {
   }, [controls, stage]);
 
   return (
-    <div className="relative z-20 mx-auto mb-0 flex w-full justify-center">
+    <div className="relative z-20 mx-auto mb-0 flex w-full justify-center -mt-3 md:mt-0 scale-75 md:scale-100 origin-bottom">
       <motion.div
         animate={controls}
         role="button"
