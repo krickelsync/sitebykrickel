@@ -7,6 +7,7 @@ import blocks from "@/assets/cost-icons/blocks.png.asset.json";
 import countdown from "@/assets/cost-icons/countdown.png.asset.json";
 import metadata from "@/assets/cost-icons/metadata.png.asset.json";
 import announce from "@/assets/cost-icons/announce.png.asset.json";
+import music from "@/assets/cost-icons/music.webp.asset.json";
 
 type Row = {
   icon: string;
@@ -24,7 +25,7 @@ const rows: Row[] = [
   { icon: countdown.url, name: "Countdown Timers", desc: "Create urgency on product pages & promotional sections", price: "$29.99" },
   { icon: metadata.url, name: "Product Page Metadata Options", desc: "Branded badges & rich PDP information blocks", price: "$9.99" },
   { icon: announce.url, name: "Announcement Bars & Pop-ups", desc: "High-converting announcements, pop-ups & cross-offers", price: "$14.99" },
-  { icon: announce.url, name: "Custom Background Music", desc: "Add background music & audio player to your storefront", price: "$2.99" },
+  { icon: music.url, name: "Custom Background Music", desc: "Add background music & audio player to your storefront", price: "$2.99" },
 ];
 
 const CostComparison = () => {
