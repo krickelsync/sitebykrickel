@@ -26,13 +26,20 @@ const SmoothScroll = ({ children }: { children?: ReactNode }) => {
   useEffect(() => {
     if (typeof window === "undefined") return;
     let timer = 0;
+    let ticking = false;
 
     const stop = () => {
       document.documentElement.classList.remove("is-scrolling");
     };
 
     const markScrolling = () => {
-      document.documentElement.classList.add("is-scrolling");
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(() => {
+          document.documentElement.classList.add("is-scrolling");
+          ticking = false;
+        });
+      }
       window.clearTimeout(timer);
       timer = window.setTimeout(stop, isTouch ? 180 : 140);
     };
@@ -48,7 +55,7 @@ const SmoothScroll = ({ children }: { children?: ReactNode }) => {
       window.removeEventListener("wheel", markScrolling);
       window.removeEventListener("touchmove", markScrolling);
     };
-  }, []);
+  }, [isTouch]);
 
   if (!enabled) return <>{children}</>;
 
