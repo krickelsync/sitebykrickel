@@ -1430,17 +1430,20 @@ html.is-scrolling .animate-scroll-line {
   background: #fff;
 }
 .laptop__scroll-img {
+  position: absolute;
+  left: 0;
+  top: 0;
   display: block;
   width: 100%;
   height: auto;
-  will-change: transform;
+  will-change: transform, top;
   animation: laptop-scroll 28s linear infinite;
 }
 @keyframes laptop-scroll {
-  0%   { transform: translate3d(0, 0, 0); }
-  6%   { transform: translate3d(0, 0, 0); }
-  94%  { transform: translate3d(0, calc(-100% + 100cqh - 3cqi), 0); }
-  100% { transform: translate3d(0, calc(-100% + 100cqh - 3cqi), 0); }
+  0%   { top: 0%;   transform: translate3d(0, 0, 0); }
+  6%   { top: 0%;   transform: translate3d(0, 0, 0); }
+  94%  { top: 100%; transform: translate3d(0, -100%, 0); }
+  100% { top: 100%; transform: translate3d(0, -100%, 0); }
 }
 html.is-scrolling .laptop__scroll-img { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) {
