@@ -18,7 +18,7 @@ class ChunkErrorBoundary extends Component<{ children: ReactNode }, State> {
     const msg = (error as Error)?.message || "";
     const name = (error as Error)?.name || "";
     const isChunkErr =
-      /Loading chunk|Loading CSS chunk|dynamically imported module|Importing a module script failed/i.test(
+      /Loading chunk|Loading CSS chunk|dynamically imported module|Importing a module script failed|Failed to fetch dynamically imported module|error loading dynamically imported module/i.test(
         msg
       ) || name === "ChunkLoadError";
 
