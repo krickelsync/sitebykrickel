@@ -1,6 +1,6 @@
 import SectionHeader from "@/components/shared/SectionHeader";
 import { motion } from "framer-motion";
-import { Monitor } from "lucide-react";
+import laptopShowcaseAsset from "@/assets/laptop-showcase.webp.asset.json";
 
 const DesktopShowcase = () => (
   <section className="laptop-showcase" data-glow="cyan">
@@ -43,9 +43,14 @@ const DesktopShowcase = () => (
                 <span className="laptop__chrome-spacer" />
               </div>
               <div className="laptop__display laptop__display--has-chrome">
-                <div className="laptop__placeholder">
-                  <Monitor />
-                  <span>Live preview coming soon</span>
+                <div className="laptop__scroll" aria-hidden>
+                  <img
+                    src={laptopShowcaseAsset.url}
+                    alt="SitebyKrickel Shopify theme preview"
+                    loading="lazy"
+                    decoding="async"
+                    className="laptop__scroll-img"
+                  />
                 </div>
               </div>
               <span className="laptop__reflection" aria-hidden />
