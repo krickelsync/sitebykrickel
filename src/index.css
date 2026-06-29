@@ -1423,6 +1423,29 @@ html.is-scrolling .animate-scroll-line {
 }
 .laptop__placeholder svg { width: 4cqi; height: 4cqi; color: rgba(255,255,255,.35); }
 .laptop__placeholder span { font-family: inherit; font-size: 1.4cqi; letter-spacing: -.01em; }
+.laptop__scroll {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #fff;
+}
+.laptop__scroll-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  will-change: transform;
+  animation: laptop-scroll 28s linear infinite;
+}
+@keyframes laptop-scroll {
+  0%   { transform: translate3d(0, 0, 0); }
+  6%   { transform: translate3d(0, 0, 0); }
+  94%  { transform: translate3d(0, calc(-100% + 100cqh - 3cqi), 0); }
+  100% { transform: translate3d(0, calc(-100% + 100cqh - 3cqi), 0); }
+}
+html.is-scrolling .laptop__scroll-img { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .laptop__scroll-img { animation: none; }
+}
 
 .laptop__reflection {
   position: absolute; inset: 0; border-radius: inherit;
