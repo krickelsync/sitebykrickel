@@ -3,8 +3,8 @@ import { ReactLenis } from "lenis/react";
 
 /**
  * Inertial smooth scrolling via the official Lenis React wrapper
- * (darkroomengineering/lenis). Disabled on reduced motion / save-data /
- * slow networks / low battery to keep the page snappy on weak devices.
+ * (darkroomengineering/lenis). No battery-based caps; decorative loops are
+ * paused while the user scrolls so every battery level stays smooth.
  */
 const SmoothScroll = ({ children }: { children?: ReactNode }) => {
   const [enabled, setEnabled] = useState(false);
@@ -20,19 +20,42 @@ const SmoothScroll = ({ children }: { children?: ReactNode }) => {
     if (conn?.saveData) return;
     if (/(^| )(2g|slow-2g)/.test(conn?.effectiveType || "")) return;
 
-    let cancelled = false;
-    const bat = (navigator as any).getBattery?.();
-    if (bat && typeof bat.then === "function") {
-      bat.then((b: any) => {
-        if (!cancelled && !(b.level <= 0.2 && !b.charging)) setEnabled(true);
-      });
-    } else {
-      setEnabled(true);
-    }
-    return () => {
-      cancelled = true;
-    };
+    setEnabled(true);
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let timer = 0;
+    let ticking = false;
+
+    const stop = () => {
+      document.documentElement.classList.remove("is-scrolling");
+    };
+
+    const markScrolling = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(() => {
+          document.documentElement.classList.add("is-scrolling");
+          ticking = false;
+        });
+      }
+      window.clearTimeout(timer);
+      timer = window.setTimeout(stop, isTouch ? 180 : 140);
+    };
+
+    window.addEventListener("scroll", markScrolling, { passive: true });
+    window.addEventListener("wheel", markScrolling, { passive: true });
+    window.addEventListener("touchmove", markScrolling, { passive: true });
+
+    return () => {
+      window.clearTimeout(timer);
+      stop();
+      window.removeEventListener("scroll", markScrolling);
+      window.removeEventListener("wheel", markScrolling);
+      window.removeEventListener("touchmove", markScrolling);
+    };
+  }, [isTouch]);
 
   if (!enabled) return <>{children}</>;
 
@@ -40,12 +63,12 @@ const SmoothScroll = ({ children }: { children?: ReactNode }) => {
     <ReactLenis
       root
       options={{
-        duration: isTouch ? 0.9 : 1.05,
+        duration: isTouch ? 0.62 : 0.95,
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        lerp: isTouch ? 0.14 : 0.09,
         smoothWheel: true,
-        syncTouch: isTouch,
-        syncTouchLerp: 0.075,
-        touchMultiplier: 1.5,
+        syncTouch: false,
+        touchMultiplier: 1,
       }}
     >
       {children}

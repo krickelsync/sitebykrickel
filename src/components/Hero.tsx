@@ -229,7 +229,7 @@ const Hero = () => {
         style={{ transform: "rotate(-1.5deg)" }}
       >
         <div
-          className="flex whitespace-nowrap"
+          className="hero-bottom-marquee flex whitespace-nowrap"
           style={{
             animation: "hero-marquee 30s linear infinite",
             animationPlayState: inView && !lowPower ? "running" : "paused",

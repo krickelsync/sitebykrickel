@@ -549,7 +549,7 @@
 /* On touch devices / small screens, auto-loop the shine so the CTA still feels alive */
 @media (hover: none), (max-width: 768px) {
   .cta-shiny::before {
-    animation: cta-shine 2.8s ease-in-out infinite;
+    animation: cta-shine 4.8s ease-in-out infinite;
     animation-delay: 1.2s;
   }
 }
@@ -617,6 +617,12 @@
 
   .hero-grid-overlay {
     animation: none !important;
+  }
+
+  .hero-prism-fallback::before {
+    animation: none !important;
+    filter: none !important;
+    opacity: 0.38;
   }
 
   /* Reduce premium card effects */
@@ -1138,6 +1144,47 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .phone-track { animation: none; }
+}
+
+/* Battery-independent scroll performance mode: pause only while scrolling. */
+html.is-scrolling .hero-prism-fallback::before,
+html.is-scrolling .hero-grid-overlay,
+html.is-scrolling .badge-rotating-shine::before,
+html.is-scrolling .badge-shine-sweep::after,
+html.is-scrolling .navbar-pill::after,
+html.is-scrolling .menu-rotating-glow::before,
+html.is-scrolling .reactor-ripple,
+html.is-scrolling .reactor-shine,
+html.is-scrolling .phone-track,
+html.is-scrolling .hero-bottom-marquee,
+html.is-scrolling .laptop,
+html.is-scrolling .laptop__glow,
+html.is-scrolling .laptop__led,
+html.is-scrolling .cta-shiny::before,
+html.is-scrolling .animate-scroll-line {
+  animation-play-state: paused !important;
+}
+
+@media (max-width: 768px) {
+  .badge-rotating-shine::before,
+  .menu-rotating-glow::before,
+  .navbar-pill::after {
+    animation-duration: 12s !important;
+  }
+
+  .badge-shine-sweep::after {
+    animation-duration: 7s !important;
+  }
+
+  .phone-track {
+    will-change: auto;
+  }
+
+  .phone-mock__reflection,
+  .laptop__reflection {
+    mix-blend-mode: normal;
+    opacity: 0.45;
+  }
 }
 
 .phone-mock {
