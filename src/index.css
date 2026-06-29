@@ -123,11 +123,13 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-feature-settings: "ss01", "cv11";
+    overflow-x: hidden;
   }
 
   ::selection {
@@ -565,13 +567,11 @@
 }
 
 /* ============ Performance: skip render of offscreen sections ============ */
-.cv-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 800px;
-}
-@media (max-width: 768px) {
-  .cv-auto { contain-intrinsic-size: 1px 600px; }
-}
+/* NOTE: `content-visibility: auto` was removed because the intrinsic-size
+   estimate caused the document height to flicker, which broke Lenis smooth
+   scroll (page couldn't reach the footer). Sections are still lazy-loaded
+   via React.lazy + Suspense, so paint cost stays low. */
+.cv-auto { /* no-op kept for backwards compatibility */ }
 
 @media (max-width: 768px) {
 
