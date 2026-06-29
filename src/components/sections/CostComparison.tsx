@@ -24,6 +24,7 @@ const rows: Row[] = [
   { icon: countdown.url, name: "Countdown Timers", desc: "Create urgency on product pages & promotional sections", price: "$29.99" },
   { icon: metadata.url, name: "Product Page Metadata Options", desc: "Branded badges & rich PDP information blocks", price: "$9.99" },
   { icon: announce.url, name: "Announcement Bars & Pop-ups", desc: "High-converting announcements, pop-ups & cross-offers", price: "$14.99" },
+  { icon: announce.url, name: "Custom Background Music", desc: "Add background music & audio player to your storefront", price: "$2.99" },
 ];
 
 const CostComparison = () => {
@@ -76,8 +77,8 @@ const CostComparison = () => {
               </div>
             </div>
             <div className="text-right">
-              <div className="font-mono text-[11px] md:text-base text-destructive line-through decoration-2">
-                $154.93 / month
+              <div className="font-mono text-[11px] md:text-base text-red-400 line-through decoration-2 decoration-red-400">
+                $157.92 / month
               </div>
               <div className="font-syne font-bold text-sm md:text-xl">
                 One Time <span className="text-primary glow-text">$98</span>
