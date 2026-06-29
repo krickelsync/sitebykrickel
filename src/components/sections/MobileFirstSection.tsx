@@ -2,40 +2,33 @@ import SectionHeader from "@/components/shared/SectionHeader";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
 
-import phone1 from "@/assets/phones/phone-1.webp.asset.json";
-import phone2 from "@/assets/phones/phone-2.webp.asset.json";
-import phone3 from "@/assets/phones/phone-3.webp.asset.json";
-import phone4 from "@/assets/phones/phone-4.webp.asset.json";
-import phone5 from "@/assets/phones/phone-5.webp.asset.json";
-import phone6 from "@/assets/phones/phone-6.webp.asset.json";
-import phone7 from "@/assets/phones/phone-7.webp.asset.json";
-import phone8 from "@/assets/phones/phone-8.webp.asset.json";
-import phone9 from "@/assets/phones/phone-9.webp.asset.json";
-import phone10 from "@/assets/phones/phone-10.webp.asset.json";
-import phone11 from "@/assets/phones/phone-11.webp.asset.json";
-import phone12 from "@/assets/phones/phone-12.webp.asset.json";
-import phone13 from "@/assets/phones/phone-13.webp.asset.json";
-
-const PHONE_IMAGES = [
-  phone1.url, phone2.url, phone3.url, phone4.url, phone5.url, phone6.url,
-  phone7.url, phone8.url, phone9.url, phone10.url, phone11.url, phone12.url,
-  phone13.url,
+const PLACEHOLDER_GRADIENTS = [
+  "linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#334155 100%)",
+  "linear-gradient(135deg,#1e1b4b 0%,#312e81 60%,#60a5fa 100%)",
+  "linear-gradient(135deg,#0c0a09 0%,#292524 50%,#78716c 100%)",
+  "linear-gradient(135deg,#082f49 0%,#0c4a6e 60%,#e0f2fe 100%)",
+  "linear-gradient(135deg,#1f2937 0%,#374151 60%,#9ca3af 100%)",
+  "linear-gradient(135deg,#171717 0%,#262626 50%,#facc15 120%)",
+  "linear-gradient(135deg,#020617 0%,#1e293b 50%,#3b82f6 100%)",
+  "linear-gradient(135deg,#1c1917 0%,#44403c 50%,#e7e5e4 110%)",
 ];
 
 const Phone = ({ idx }: { idx: number }) => {
-  const src = PHONE_IMAGES[idx % PHONE_IMAGES.length];
+  const bg = PLACEHOLDER_GRADIENTS[idx % PLACEHOLDER_GRADIENTS.length];
   return (
     <div className="phone-mock shrink-0 mx-2 md:mx-3" aria-hidden>
       <div className="phone-mock__frame">
         <span className="phone-mock__notch" />
-        <div className="phone-mock__screen">
-          <img
-            src={src}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            className="phone-mock__image"
-          />
+        <div className="phone-mock__screen" style={{ background: bg }}>
+          <div className="phone-mock__statusbar">
+            <span>9:41</span>
+            <span className="phone-mock__dot" />
+          </div>
+          <div className="phone-mock__hero" />
+          <div className="phone-mock__grid">
+            <span /><span /><span /><span />
+          </div>
+          <div className="phone-mock__bar" />
         </div>
         <span className="phone-mock__reflection" />
       </div>
