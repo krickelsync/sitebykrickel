@@ -33,7 +33,7 @@ const CostComparison = () => {
         <SectionHeader
           eyebrow="Cost Breakdown"
           title="Better, faster"
-          accent="& cheaper. Period."
+          accent="& cheaper."
         />
         <p className="text-center -mt-6 md:-mt-10 mb-8 md:mb-12 max-w-2xl mx-auto text-xs md:text-base text-muted-foreground">
           Every extra app eats speed and money. SYNC gives you everything in
