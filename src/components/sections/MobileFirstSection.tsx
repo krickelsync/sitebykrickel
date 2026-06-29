@@ -27,7 +27,6 @@ const Phone = ({ idx }: { idx: number }) => {
   return (
     <div className="phone-mock shrink-0 mx-2 md:mx-3" aria-hidden>
       <div className="phone-mock__frame">
-        <span className="phone-mock__notch" />
         <div className="phone-mock__screen">
           <img
             src={src}
