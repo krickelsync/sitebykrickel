@@ -20,7 +20,7 @@ export const useLowPower = (): boolean => {
     const slowNet = ["slow-2g", "2g"].includes((navigator as any).connection?.effectiveType ?? "");
 
     const evaluate = () => {
-      const lowBat = battery ? battery.level <= 0.2 && !battery.charging : false;
+      const lowBat = battery ? battery.level <= 0.35 && !battery.charging : false;
       setLow(reduce || saveData || slowNet || lowBat);
     };
 
