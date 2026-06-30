@@ -88,7 +88,7 @@ const ReactorHero = () => {
       <div className="container relative z-10 px-4">
         <div className="text-center mb-10 md:mb-14">
           <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
-            Powered by Shopify · Engineered by SitebyKrickel
+            Powered by Shopify, Engineered by SitebyKrickel
           </p>
           <h2 className="font-syne text-3xl sm:text-4xl md:text-6xl font-extrabold uppercase tracking-tight">
             One Plug. <span style={{ color: "hsl(45 100% 58%)" }}>Infinite Commerce.</span>
