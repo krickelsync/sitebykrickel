@@ -271,7 +271,7 @@ const Pricing = () => {
                     open={defaultOpen}
                     className="group/details feature-group border border-foreground/10 bg-foreground/[0.02] open:bg-foreground/[0.04] transition-colors"
                   >
-                    <summary className="flex items-center gap-2 px-3 py-2.5 cursor-pointer md:cursor-default list-none [&::-webkit-details-marker]:hidden">
+                    <summary className="flex items-center gap-2 px-3 py-2.5 cursor-pointer list-none [&::-webkit-details-marker]:hidden hover:bg-foreground/[0.03] transition-colors">
                       <Icon
                         aria-hidden="true"
                         fill="currentColor"
