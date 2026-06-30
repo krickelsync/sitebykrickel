@@ -1530,3 +1530,10 @@ html.is-scrolling .laptop__scroll-img { animation-play-state: paused; }
     scroll-behavior: auto !important;
   }
 }
+
+/* Pricing feature groups — force-open on desktop, collapsible on mobile */
+@media (min-width: 768px) {
+  details.feature-group > *:not(summary) {
+    display: block !important;
+  }
+}
