@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { fadeIn } from "@/lib/motion";
 import { useContactScroll } from "@/hooks/useContactScroll";
+import { useIsMobile } from "@/hooks/use-mobile";
 import shopifyBadge from "@/assets/shopify-badge.png.asset.json";
 import { typography, textSize } from "@/components/ui/typography";
 
@@ -111,6 +112,7 @@ const FEATURE_GROUPS: FeatureGroup[] = [
 
 const Pricing = () => {
   const handleContactClick = useContactScroll();
+  const isMobile = useIsMobile();
   const [removeWatermark, setRemoveWatermark] = useState(false);
   const [installSetup, setInstallSetup] = useState(false);
   const price = 98 + (removeWatermark ? 50 : 0) + (installSetup ? 50 : 0);
@@ -261,22 +263,27 @@ const Pricing = () => {
             <div className="relative flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-8">
               {FEATURE_GROUPS.map((group, idx) => {
                 const Icon = group.icon;
+                // Mobile: all open. Desktop: first row (left + right = idx 0 & 1) open.
+                const defaultOpen = isMobile ? true : idx < 2;
                 return (
                   <details
                     key={group.category}
-                    open={idx === 0}
+                    open={defaultOpen}
                     className="group/details feature-group border border-foreground/10 bg-foreground/[0.02] open:bg-foreground/[0.04] transition-colors"
                   >
                     <summary className="flex items-center gap-2 px-3 py-2.5 cursor-pointer md:cursor-default list-none [&::-webkit-details-marker]:hidden">
-                      <span className="inline-flex items-center justify-center w-7 h-7 border border-primary/30 bg-primary/[0.06] shrink-0">
-                        <Icon aria-hidden="true" className="w-3.5 h-3.5 text-primary" />
-                      </span>
+                      <Icon
+                        aria-hidden="true"
+                        fill="currentColor"
+                        strokeWidth={0}
+                        className="w-5 h-5 text-primary shrink-0"
+                      />
                       <span className={`flex-1 ${typography.eyebrow} text-foreground`}>
                         {group.category}
                       </span>
                       <span
                         aria-hidden="true"
-                        className="md:hidden font-mono text-xs text-muted-foreground transition-transform group-open/details:rotate-45"
+                        className="font-mono text-base leading-none text-muted-foreground transition-transform duration-300 group-open/details:rotate-45"
                       >
                         +
                       </span>
