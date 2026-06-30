@@ -274,8 +274,6 @@ const Pricing = () => {
                     <summary className="flex items-center gap-2 px-3 py-2.5 cursor-pointer list-none [&::-webkit-details-marker]:hidden hover:bg-foreground/[0.03] transition-colors">
                       <Icon
                         aria-hidden="true"
-                        fill="currentColor"
-                        strokeWidth={0}
                         className="w-5 h-5 text-primary shrink-0"
                       />
                       <span className={`flex-1 ${typography.eyebrow} text-foreground`}>
