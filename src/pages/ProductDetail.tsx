@@ -270,7 +270,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
           )}
         </div>
 
-        {/* License card — desktop only (mobile uses compact price row above) */}
+        {/* License card . desktop only (mobile uses compact price row above) */}
         <div className="hidden md:block mb-5">
           <Eyebrow as="p" className="block mb-2.5">License</Eyebrow>
           <div className="relative rounded-2xl border-2 border-primary bg-primary/[0.06] py-3 pl-3.5 pr-4 md:py-3.5 md:pl-4 md:pr-5 flex items-center justify-between gap-3 md:gap-4">

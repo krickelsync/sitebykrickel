@@ -477,7 +477,7 @@ const BlockEditor = ({ block, onChange }: { block: LandingBlock; onChange: (p: a
             <option value="center">Align center</option>
             <option value="right">Align right</option>
           </select>
-          <input className={inputCls} placeholder="Emphasis color (#hex) — apply to lines starting with *" value={block.emphasisColor ?? ""} onChange={(e) => onChange({ emphasisColor: e.target.value })} />
+          <input className={inputCls} placeholder="Emphasis color (#hex) . apply to lines starting with *" value={block.emphasisColor ?? ""} onChange={(e) => onChange({ emphasisColor: e.target.value })} />
           <textarea rows={5} className={inputCls} placeholder="One line per row. Prefix with * for emphasis color." value={block.lines.join("\n")}
             onChange={(e) => onChange({ lines: e.target.value.split("\n") })} />
         </div>

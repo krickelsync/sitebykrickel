@@ -118,7 +118,7 @@ const Admin = () => {
             {orders.map((o) => (
               <div key={o.id} className="p-4 flex justify-between text-sm font-mono">
                 <span className="truncate">{o.product_title}</span>
-                <span className="text-muted-foreground">{o.buyer_email ?? "—"}</span>
+                <span className="text-muted-foreground">{o.buyer_email ?? "."}</span>
                 <span className="text-primary">${o.amount}</span>
               </div>
             ))}

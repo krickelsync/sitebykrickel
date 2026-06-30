@@ -130,7 +130,7 @@ const Pricing = () => {
         />
 
         <div className="max-w-xl mx-auto relative">
-          {/* Ambient prism glow behind card — matches hero atmosphere */}
+          {/* Ambient prism glow behind card . matches hero atmosphere */}
           <div
             aria-hidden="true"
             className="hero-prism-fallback absolute -inset-6 md:-inset-10 opacity-60 blur-2xl pointer-events-none"
@@ -143,13 +143,13 @@ const Pricing = () => {
             transition={{ duration: 0.5 }}
             className="relative overflow-hidden menu-rotating-glow border border-foreground/15 bg-background/80 backdrop-blur-xl p-6 md:p-10 flex flex-col transition-colors duration-300 hover:border-primary/40"
           >
-            {/* Corner brackets — hero-style */}
+            {/* Corner brackets . hero-style */}
             <span aria-hidden className="absolute top-0 left-0 w-4 h-4 border-t border-l border-primary/70" />
             <span aria-hidden className="absolute top-0 right-0 w-4 h-4 border-t border-r border-primary/70" />
             <span aria-hidden className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-primary/70" />
             <span aria-hidden className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-primary/70" />
 
-            {/* Watermark logo — bottom-right corner, very subtle */}
+            {/* Watermark logo . bottom-right corner, very subtle */}
             <img
               src={shopifyBadge.url}
               alt=""
@@ -182,7 +182,7 @@ const Pricing = () => {
               </div>
             </div>
 
-            {/* Inline add-on toggles — sharp edge, hero-aligned */}
+            {/* Inline add-on toggles . sharp edge, hero-aligned */}
             <div className="relative space-y-px mb-6 border border-foreground/10 overflow-hidden">
               {[
                 {
@@ -242,7 +242,7 @@ const Pricing = () => {
               ))}
             </div>
 
-            {/* Stats bar — by the numbers */}
+            {/* Stats bar . by the numbers */}
             <div className="relative grid grid-cols-4 gap-px mb-3 border border-foreground/10 bg-foreground/10 overflow-hidden">
               {STATS.map((s) => (
                 <div key={s.label} className="bg-background/80 px-2 py-3 text-center">
@@ -259,7 +259,7 @@ const Pricing = () => {
               397 customization options · no code required
             </p>
 
-            {/* Feature groups — collapsible on mobile, always open on md+ */}
+            {/* Feature groups . collapsible on mobile, always open on md+ */}
             <div className="relative flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-8">
               {FEATURE_GROUPS.map((group, idx) => {
                 const Icon = group.icon;
@@ -299,7 +299,7 @@ const Pricing = () => {
                           <span className="font-mono text-muted-foreground">
                             {item.label}
                             {item.value && (
-                              <span className="text-foreground"> — {item.value}</span>
+                              <span className="text-foreground"> . {item.value}</span>
                             )}
                           </span>
                         </li>
@@ -316,7 +316,7 @@ const Pricing = () => {
               className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 bg-primary text-primary-foreground px-4 py-2.5 sm:px-8 sm:py-4 font-mono text-[clamp(0.6875rem,0.95vw,0.875rem)] font-bold uppercase tracking-wider overflow-hidden hover:glow-box cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background will-change-transform mt-2"
               aria-label={`Get SYNC for $${price}`}
             >
-              <span className="relative z-10">Get SYNC — ${price}</span>
+              <span className="relative z-10">Get SYNC . ${price}</span>
               <ArrowRight aria-hidden="true" className="relative z-10 group-hover:translate-x-1 transition-transform w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
               <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             </a>

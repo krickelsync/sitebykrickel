@@ -36,7 +36,7 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
       const targetPath = path === '' ? location.pathname : path;
       return location.pathname === targetPath && location.hash === `#${hash}`;
     }
-    // Plain path (no hash) — only active when there's no hash in the URL.
+    // Plain path (no hash) . only active when there's no hash in the URL.
     return location.pathname === href && !location.hash;
   };
 

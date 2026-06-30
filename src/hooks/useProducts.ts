@@ -59,7 +59,7 @@ export function useProducts(opts: { includeUnpublished?: boolean } = {}) {
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
-      // Only the columns the listing needs — landing_content is huge and not used here.
+      // Only the columns the listing needs . landing_content is huge and not used here.
       const cols = "id, slug, title, tagline, description, price, original_price, cover_image, is_published, sort_order";
       let q = supabase.from("products").select(cols).order("sort_order").order("created_at");
       if (!opts.includeUnpublished) q = q.eq("is_published", true);

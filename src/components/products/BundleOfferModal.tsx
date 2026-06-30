@@ -102,7 +102,7 @@ const BundleOfferModal = ({
                     transition={{ delay: 0.3 }}
                     className="text-sm font-mono text-primary uppercase tracking-wider"
                   >
-                    Wait — Exclusive Bundle Deal
+                    Wait . Exclusive Bundle Deal
                   </motion.p>
                   <motion.h2
                     initial={{ opacity: 0, y: 10 }}

@@ -12,7 +12,7 @@ interface NavLinkProps {
 }
 
 /**
- * Single nav link — picks the right element (anchor for hashes, Link for routes)
+ * Single nav link . picks the right element (anchor for hashes, Link for routes)
  * and applies the active/inactive styling per variant.
  */
 const NavLink = ({

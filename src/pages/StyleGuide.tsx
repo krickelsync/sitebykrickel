@@ -2,7 +2,7 @@ import { Display, H1, H2, H3, Tagline, Body, BodyLg, Eyebrow, Meta, Price, spaci
 import { Button } from "@/components/ui/button";
 
 /**
- * /style-guide — internal reference page.
+ * /style-guide . internal reference page.
  * Renders every typography token + spacing/textSize scale so we can
  * eyeball consistency across the system.
  */
@@ -80,8 +80,8 @@ export default function StyleGuide() {
 
         <Section title="Font families">
           <Row label="font-display" sample={<p className="font-display font-extrabold uppercase text-3xl tracking-tight">Syne Display 800</p>} code="font-display" />
-          <Row label="font-sans" sample={<p className="font-sans text-lg">Plus Jakarta Sans — the quick brown fox jumps over the lazy dog.</p>} code="font-sans" />
-          <Row label="font-mono" sample={<p className="font-mono text-sm">JetBrains Mono — 0123456789 · {`{ code: true }`}</p>} code="font-mono" />
+          <Row label="font-sans" sample={<p className="font-sans text-lg">Plus Jakarta Sans . the quick brown fox jumps over the lazy dog.</p>} code="font-sans" />
+          <Row label="font-mono" sample={<p className="font-mono text-sm">JetBrains Mono . 0123456789 · {`{ code: true }`}</p>} code="font-mono" />
         </Section>
 
         <Section title="Buttons">

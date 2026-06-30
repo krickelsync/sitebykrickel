@@ -202,7 +202,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
         </motion.div>
       </div>
 
-      {/* Giant half-cut SYNC wordmark — scroll-reactive */}
+      {/* Giant half-cut SYNC wordmark . scroll-reactive */}
       <div
         ref={wordmarkRef}
         aria-hidden

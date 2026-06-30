@@ -2,13 +2,13 @@ import { cn } from "@/lib/utils";
 import type { ElementType, HTMLAttributes, ReactNode } from "react";
 
 /**
- * Typography system — reusable tokens for consistent type scale
+ * Typography system . reusable tokens for consistent type scale
  * across desktop & mobile. Use these instead of ad-hoc font classes
  * so headings, taglines, body, and labels stay visually balanced.
  *
  * GLOBAL GUIDELINE (locked to the Pricing card scale the user approved):
  *   Display  → 32 → 56px   (hero headlines only)
- *   H1       → 24 → 44px   (section titles — "ONE THEME.")
+ *   H1       → 24 → 44px   (section titles . "ONE THEME.")
  *   H2       → 20 → 32px   (card / block titles)
  *   H3       → 16 → 20px   (sub-blocks, "SYNC Theme")
  *   Body     → 13 → 14px   (feature lists, descriptions)
@@ -22,7 +22,7 @@ import type { ElementType, HTMLAttributes, ReactNode } from "react";
  * Mobile-first: every token uses clamp() so the mobile floor stays
  * tight & legible like the reference, and desktop scales up smoothly
  * without breakpoint jumps. Do NOT hand-tune `text-*` per component
- * — pull from `typography` / `textSize` so the whole site stays in
+ * . pull from `typography` / `textSize` so the whole site stays in
  * sync with this scale.
  */
 
@@ -32,7 +32,7 @@ type Props<T extends ElementType> = {
   children: ReactNode;
 } & Omit<HTMLAttributes<HTMLElement>, "className" | "children">;
 
-// Syne maxes at 800 — use font-extrabold (800) for display, font-bold (700) for headings.
+// Syne maxes at 800 . use font-extrabold (800) for display, font-bold (700) for headings.
 const baseDisplay = "font-display font-extrabold uppercase break-words";
 const baseHeading = "font-display font-bold uppercase";
 
@@ -60,7 +60,7 @@ export const typography = {
 } as const;
 
 /**
- * Responsive text-size tokens — one source of truth for mobile↔desktop sizing.
+ * Responsive text-size tokens . one source of truth for mobile↔desktop sizing.
  * Use these on inline elements (badges, CTAs, micro labels) so every screen
  * stays visually balanced without hand-tuning per component.
  */
@@ -126,7 +126,7 @@ export function Price<T extends ElementType = "span">({ as, className, children,
 }
 
 /**
- * Spacing system — consistent vertical rhythm across sections.
+ * Spacing system . consistent vertical rhythm across sections.
  * Use these instead of ad-hoc `mb-*` / `py-*` so mobile and desktop
  * stay balanced without feeling crowded.
  */

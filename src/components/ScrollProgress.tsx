@@ -2,7 +2,7 @@ import { motion, useScroll, useSpring } from "framer-motion";
 
 /**
  * Thin top progress bar that tracks vertical scroll across the page.
- * Purely decorative — pointer-events disabled, hidden from a11y tree.
+ * Purely decorative . pointer-events disabled, hidden from a11y tree.
  */
 const ScrollProgress = () => {
   const { scrollYProgress } = useScroll();

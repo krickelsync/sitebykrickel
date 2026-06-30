@@ -4,7 +4,7 @@ import { ShoppingCart, Smartphone, Zap, Box, Package } from "lucide-react";
 import chromeBag from "@/assets/chrome-bag.png.asset.json";
 
 /**
- * ReactorHero — cinematic "Shopify → SitebyKrickel" energy connection
+ * ReactorHero . cinematic "Shopify → SitebyKrickel" energy connection
  * Drop-in section. Does NOT replace the main Hero.
  */
 const ORBIT_ICONS = [
@@ -74,7 +74,7 @@ const ReactorHero = () => {
       aria-label="SYNC reactor showcase"
       className="relative w-full overflow-hidden py-20 md:py-28 bg-background"
     >
-      {/* Ambient glow only — grid removed for cleaner luxury feel */}
+      {/* Ambient glow only . grid removed for cleaner luxury feel */}
       <div aria-hidden className="absolute inset-0 pointer-events-none">
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] max-w-[800px] max-h-[800px] rounded-full"
@@ -104,7 +104,7 @@ const ReactorHero = () => {
           className="relative mx-auto h-[420px] sm:h-[500px] md:h-[600px] w-full max-w-5xl select-none cursor-pointer"
           style={{ perspective: 1200 }}
         >
-          {/* Orbit rings — only after activation */}
+          {/* Orbit rings . only after activation */}
           {stage === "orbit" && (
             <>
               {[1, 1.35, 1.7].map((s, i) => (
@@ -265,7 +265,7 @@ const ReactorHero = () => {
               >
                 <img
                   src={chromeBag.url}
-                  alt="SitebyKrickel chrome shopping bag — S monogram"
+                  alt="SitebyKrickel chrome shopping bag . S monogram"
                   className="w-full h-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
                   loading="lazy"
                   decoding="async"
@@ -280,7 +280,7 @@ const ReactorHero = () => {
                 </div>
               </motion.div>
 
-              {/* Orbiting feature icons — clean line icons, no boxes */}
+              {/* Orbiting feature icons . clean line icons, no boxes */}
               {stage === "orbit" && ORBIT_ICONS.map((item, i) => {
                 const angle = (i / ORBIT_ICONS.length) * 360;
                 const radius = i % 2 === 0 ? 150 : 190;
