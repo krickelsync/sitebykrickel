@@ -61,7 +61,7 @@ const Admin = () => {
     <div className="min-h-dvh bg-background">
       <header className="border-b border-border">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="font-display text-xl font-bold uppercase tracking-wider">Admin · Products</h1>
+          <h1 className="font-display text-xl font-bold uppercase tracking-wider">Admin, Products</h1>
           <div className="flex items-center gap-3">
             <Link to="/admin/products/new"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-mono text-sm">
@@ -90,7 +90,7 @@ const Admin = () => {
                 <div key={p.id} className="flex items-center gap-4 p-4">
                   <div className="flex-1 min-w-0">
                     <p className="font-display font-bold truncate">{p.title}</p>
-                    <p className="text-xs font-mono text-muted-foreground truncate">/{p.slug} · ${p.price}</p>
+                    <p className="text-xs font-mono text-muted-foreground truncate">/{p.slug}, ${p.price}</p>
                   </div>
                   <button onClick={() => togglePublish(p.id, p.is_published)}
                     className="p-2 rounded-lg hover:bg-secondary"

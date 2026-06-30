@@ -197,7 +197,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
             © 2025 SITEBYKRICKEL. ALL RIGHTS RESERVED.
           </p>
           <p className={`${typography.eyebrow} text-muted-foreground/60`}>
-            Crafted in Indonesia · Built for Brands
+            Crafted in Indonesia, Built for Brands
           </p>
         </motion.div>
       </div>

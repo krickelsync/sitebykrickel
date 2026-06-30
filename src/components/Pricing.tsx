@@ -51,7 +51,7 @@ const FEATURE_GROUPS: FeatureGroup[] = [
     icon: Zap,
     items: [
       { label: "Enter Page 3D", value: "Auto-rotate + skybox" },
-      { label: "Image Slideshow FX", value: "Grain · CRT · Glitch" },
+      { label: "Image Slideshow FX", value: "Grain, CRT, Glitch" },
       { label: "Lookbook bento grid", value: "Auto asymmetric" },
       { label: "Drop Countdown", value: "Auto It's Live" },
       { label: "Product Slideshow", value: "Carousel + blueprint" },
@@ -88,9 +88,9 @@ const FEATURE_GROUPS: FeatureGroup[] = [
     category: "Ready-to-use Pages",
     icon: FileText,
     items: [
-      { label: "About · Contact · FAQ" },
-      { label: "Shipping · Size Chart" },
-      { label: "Lookbook · Preorder · Wishlist" },
+      { label: "About, Contact, FAQ" },
+      { label: "Shipping, Size Chart" },
+      { label: "Lookbook, Preorder, Wishlist" },
       { label: "Experimental", value: "Drag-drop builder" },
       { label: "Password page", value: "Coming-soon + countdown" },
     ],
@@ -163,7 +163,7 @@ const Pricing = () => {
                   SYNC Theme
                 </h3>
                 <p className={`${typography.meta} mt-1`}>
-                  Lifetime license · VIP support
+                  Lifetime license, VIP support
                 </p>
               </div>
               <div className="text-right shrink-0">
@@ -256,7 +256,7 @@ const Pricing = () => {
               ))}
             </div>
             <p className={`${typography.meta} text-center mb-6`}>
-              397 customization options · no code required
+              397 customization options, no code required
             </p>
 
             {/* Feature groups . collapsible on mobile, always open on md+ */}
@@ -330,7 +330,7 @@ const Pricing = () => {
           viewport={{ once: true }}
           className={`${typography.meta} text-center mt-6`}
         >
-          Secure payment · Setup starts within 24 hours
+          Secure payment, Setup starts within 24 hours
         </motion.p>
       </div>
     </section>

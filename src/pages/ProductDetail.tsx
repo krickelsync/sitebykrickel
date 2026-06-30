@@ -288,7 +288,7 @@ function ProductHero({ product, onBuy }: { product: Product; onBuy: () => void }
                   Lifetime License
                 </span>
                 <Meta as="span" className={`block mt-0.5 truncate ${textSize.micro}`}>
-                  Free updates · Unlimited dev
+                  Free updates, Unlimited dev
                 </Meta>
               </div>
             </div>

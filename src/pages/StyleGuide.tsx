@@ -32,10 +32,10 @@ export default function StyleGuide() {
     <main className="min-h-[100svh] pt-28 md:pt-32 pb-24">
       <div className="container max-w-5xl">
         <header className="mb-12 md:mb-16">
-          <Eyebrow>Internal · /style-guide</Eyebrow>
+          <Eyebrow>Internal, /style-guide</Eyebrow>
           <Display className="mt-3">Typography System</Display>
           <BodyLg className="mt-4 max-w-xl">
-            Syne (display) · Plus Jakarta Sans (body) · JetBrains Mono (meta).
+            Syne (display), Plus Jakarta Sans (body), JetBrains Mono (meta).
             Reference for cross-section consistency.
           </BodyLg>
         </header>
@@ -66,22 +66,22 @@ export default function StyleGuide() {
         </Section>
 
         <Section title="Labels & Meta">
-          <Row label="Eyebrow" sample={<Eyebrow>Featured · 01</Eyebrow>} code="<Eyebrow />" />
+          <Row label="Eyebrow" sample={<Eyebrow>Featured, 01</Eyebrow>} code="<Eyebrow />" />
           <Row label="Meta" sample={<Meta>Updated 2 hours ago</Meta>} code="<Meta />" />
           <Row label="Price" sample={<Price>$129.00</Price>} code="<Price />" />
         </Section>
 
         <Section title="Inline text sizes">
-          <Row label="textSize.micro" sample={<span className={`font-mono ${textSize.micro}`}>MICRO · BADGE · TRUST</span>} code="textSize.micro" />
-          <Row label="textSize.small" sample={<span className={`font-sans ${textSize.small}`}>Small UI · 1,200 reviews</span>} code="textSize.small" />
-          <Row label="textSize.ui" sample={<span className={`font-sans ${textSize.ui}`}>Default UI · button label</span>} code="textSize.ui" />
-          <Row label="textSize.lead" sample={<span className={`font-sans ${textSize.lead} font-semibold`}>Lead inline · $129</span>} code="textSize.lead" />
+          <Row label="textSize.micro" sample={<span className={`font-mono ${textSize.micro}`}>MICRO, BADGE, TRUST</span>} code="textSize.micro" />
+          <Row label="textSize.small" sample={<span className={`font-sans ${textSize.small}`}>Small UI, 1,200 reviews</span>} code="textSize.small" />
+          <Row label="textSize.ui" sample={<span className={`font-sans ${textSize.ui}`}>Default UI, button label</span>} code="textSize.ui" />
+          <Row label="textSize.lead" sample={<span className={`font-sans ${textSize.lead} font-semibold`}>Lead inline, $129</span>} code="textSize.lead" />
         </Section>
 
         <Section title="Font families">
           <Row label="font-display" sample={<p className="font-display font-extrabold uppercase text-3xl tracking-tight">Syne Display 800</p>} code="font-display" />
           <Row label="font-sans" sample={<p className="font-sans text-lg">Plus Jakarta Sans . the quick brown fox jumps over the lazy dog.</p>} code="font-sans" />
-          <Row label="font-mono" sample={<p className="font-mono text-sm">JetBrains Mono . 0123456789 · {`{ code: true }`}</p>} code="font-mono" />
+          <Row label="font-mono" sample={<p className="font-mono text-sm">JetBrains Mono . 0123456789, {`{ code: true }`}</p>} code="font-mono" />
         </Section>
 
         <Section title="Buttons">
