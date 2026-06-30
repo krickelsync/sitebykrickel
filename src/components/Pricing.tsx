@@ -2,65 +2,109 @@ import VelocityText from "./VelocityText";
 import SectionHeader from "./shared/SectionHeader";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  Palette,
+  Zap,
+  ShoppingBag,
+  Megaphone,
+  FileText,
+  Rocket,
+  type LucideIcon,
+} from "lucide-react";
 import { fadeIn } from "@/lib/motion";
 import { useContactScroll } from "@/hooks/useContactScroll";
 import shopifyBadge from "@/assets/shopify-badge.png.asset.json";
 import { typography, textSize } from "@/components/ui/typography";
 
 type FeatureItem = { label: string; value?: string };
-type FeatureGroup = { category: string; items: FeatureItem[] };
+type FeatureGroup = {
+  category: string;
+  icon: LucideIcon;
+  items: FeatureItem[];
+};
+
+const STATS: { label: string; value: string }[] = [
+  { label: "Sections", value: "18" },
+  { label: "Templates", value: "10+" },
+  { label: "Snippets", value: "15" },
+  { label: "Settings", value: "397" },
+];
 
 const FEATURE_GROUPS: FeatureGroup[] = [
   {
-    category: "EXPERIENCE & INTERACTIVITY",
+    category: "Total Customization",
+    icon: Palette,
     items: [
-      { label: "Enter Page", value: "Video / Img / 3D" },
-      { label: "3D Interactive Logo", value: "Spinning .glb" },
-      { label: "Global Music Player", value: "Popup Equalizer" },
-      { label: "Glassmorphism Header", value: "Glass Effect" },
-      { label: "Custom Cursor", value: "SVG Logo" },
-      { label: "Free Domain Include", value: "Included" },
-      { label: "Free Email Domain", value: "Up to 10 @yourbrand.com" },
+      { label: "Color schemes", value: "20 presets" },
+      { label: "Animated gradient BG", value: "3-color drift" },
+      { label: "Background", value: "Solid / Image / GIF / MP4" },
+      { label: "Custom fonts", value: "50+ Shopify & Google" },
+      { label: "Custom cursor", value: "Your logo" },
+      { label: "Custom icons", value: "Header / cart / account" },
+      { label: "3D Logo .glb", value: "Header + Home" },
     ],
   },
   {
-    category: "VISUAL & AESTHETICS",
+    category: "SYNC Features",
+    icon: Zap,
     items: [
-      { label: "Background Type", value: "Vid / Gif / Img" },
-      { label: "Custom Font", value: "Upload Fonts" },
-      { label: "Lookbook", value: "Hover Animation" },
-      { label: "Running Marquee", value: "Animated" },
-      { label: "Text Glow Effect", value: "Neon Vibe" },
-      { label: "Page Preloader", value: "Custom Gif" },
+      { label: "Enter Page 3D", value: "Auto-rotate + skybox" },
+      { label: "Image Slideshow FX", value: "Grain · CRT · Glitch" },
+      { label: "Lookbook bento grid", value: "Auto asymmetric" },
+      { label: "Drop Countdown", value: "Auto It's Live" },
+      { label: "Product Slideshow", value: "Carousel + blueprint" },
+      { label: "Live clock + timezone", value: "Hero overlay" },
     ],
   },
   {
-    category: "CONVERSION BOOSTERS",
+    category: "Shopping & Conversion",
+    icon: ShoppingBag,
     items: [
-      { label: "Sticky Add-to-Cart", value: "Floating Bar" },
-      { label: "Quick Add Button", value: "Glassmorph" },
-      { label: "Pre-Order System", value: "Badge & Status" },
-      { label: "Size Chart Popup" },
-      { label: "Stock Indicator", value: "Low Stock Alert" },
+      { label: "Quick Add + Cart Drawer", value: "With notes" },
+      { label: "Quick View Modal" },
+      { label: "Wishlist", value: "Heart-pop" },
+      { label: "Sticky Add-to-Cart", value: "Desktop + Mobile" },
+      { label: "Hover image swap" },
+      { label: "Size guide modal" },
+      { label: "Preorder system", value: "Badge & status" },
     ],
   },
   {
-    category: "MARKETING",
+    category: "Engagement & Marketing",
+    icon: Megaphone,
     items: [
-      { label: "Newsletter Popup", value: "Waitlist Email" },
-      { label: "Social Icons", value: "More + Hover FX" },
-      { label: "Shipping Status", value: "Password Page" },
-      { label: "Countdown Timer" },
+      { label: "Marketing popup", value: "Discount + email" },
+      { label: "Page loader", value: "Custom GIF" },
+      { label: "Music player", value: "Up to 3 tracks" },
+      { label: "Announcement marquee" },
+      { label: "Animated shine text" },
+      { label: "Fullscreen search overlay" },
+      { label: "Region / currency selector" },
     ],
   },
   {
-    category: "SUPPORT",
+    category: "Ready-to-use Pages",
+    icon: FileText,
     items: [
-      { label: "Revisions", value: "10× Major" },
-      { label: "Turnaround", value: "2–3 Days" },
-      { label: "Support", value: "VIP WhatsApp" },
-      { label: "License", value: "Lifetime" },
+      { label: "About · Contact · FAQ" },
+      { label: "Shipping · Size Chart" },
+      { label: "Lookbook · Preorder · Wishlist" },
+      { label: "Experimental", value: "Drag-drop builder" },
+      { label: "Password page", value: "Coming-soon + countdown" },
+    ],
+  },
+  {
+    category: "Performance & SEO",
+    icon: Rocket,
+    items: [
+      { label: "Fully responsive" },
+      { label: "Lazy loading" },
+      { label: "Debounce / throttle + rAF" },
+      { label: "Deferred scripts", value: "15× faster paint" },
+      { label: "Glassmorphism", value: "31× backdrop-filter" },
+      { label: "Reduced-motion aware" },
+      { label: "Open Graph", value: "9 meta tags" },
     ],
   },
 ];
@@ -196,27 +240,69 @@ const Pricing = () => {
               ))}
             </div>
 
-            {/* Feature groups — flat dash-prefixed list, 2-col on desktop */}
-            <div className="relative flex-1 space-y-6 mb-8">
-              {FEATURE_GROUPS.map((group) => (
-                <div key={group.category}>
-                  <h4 className={`${typography.eyebrow} text-primary/80 mb-3`}>
-                    {group.category}
-                  </h4>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
-                    {group.items.map((item) => (
-                      <li key={item.label} className={`flex items-baseline gap-2 leading-snug ${textSize.ui}`}>
-                        <span className="font-mono text-muted-foreground">
-                          {item.label}
-                          {item.value && (
-                            <span className="text-foreground"> — {item.value}</span>
-                          )}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
+            {/* Stats bar — by the numbers */}
+            <div className="relative grid grid-cols-4 gap-px mb-3 border border-foreground/10 bg-foreground/10 overflow-hidden">
+              {STATS.map((s) => (
+                <div key={s.label} className="bg-background/80 px-2 py-3 text-center">
+                  <div className="font-syne font-bold text-foreground text-lg md:text-2xl leading-none tabular-nums">
+                    {s.value}
+                  </div>
+                  <div className={`${typography.eyebrow} mt-1 text-[9px] md:text-[10px]`}>
+                    {s.label}
+                  </div>
                 </div>
               ))}
+            </div>
+            <p className={`${typography.meta} text-center mb-6`}>
+              397 customization options · no code required
+            </p>
+
+            {/* Feature groups — collapsible on mobile, always open on md+ */}
+            <div className="relative flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-8">
+              {FEATURE_GROUPS.map((group, idx) => {
+                const Icon = group.icon;
+                return (
+                  <details
+                    key={group.category}
+                    open={idx === 0}
+                    className="group/details feature-group border border-foreground/10 bg-foreground/[0.02] open:bg-foreground/[0.04] transition-colors"
+                  >
+                    <summary className="flex items-center gap-2 px-3 py-2.5 cursor-pointer md:cursor-default list-none [&::-webkit-details-marker]:hidden">
+                      <span className="inline-flex items-center justify-center w-7 h-7 border border-primary/30 bg-primary/[0.06] shrink-0">
+                        <Icon aria-hidden="true" className="w-3.5 h-3.5 text-primary" />
+                      </span>
+                      <span className={`flex-1 ${typography.eyebrow} text-foreground`}>
+                        {group.category}
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className="md:hidden font-mono text-xs text-muted-foreground transition-transform group-open/details:rotate-45"
+                      >
+                        +
+                      </span>
+                    </summary>
+                    <ul className="px-3 pb-3 pt-1 space-y-1">
+                      {group.items.map((item) => (
+                        <li
+                          key={item.label}
+                          className={`flex items-baseline gap-2 leading-snug ${textSize.ui}`}
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="mt-1.5 w-1 h-1 rounded-full bg-primary/70 shrink-0"
+                          />
+                          <span className="font-mono text-muted-foreground">
+                            {item.label}
+                            {item.value && (
+                              <span className="text-foreground"> — {item.value}</span>
+                            )}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                );
+              })}
             </div>
 
             <a
