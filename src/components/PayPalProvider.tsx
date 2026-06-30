@@ -12,7 +12,7 @@ const PayPalProvider = ({ children }: PayPalProviderProps) => {
     // turning real checkouts into sandbox "sb" test payments.
     // eslint-disable-next-line no-console
     console.error(
-      "[PayPal] VITE_PAYPAL_CLIENT_ID is not set — checkout is running in PayPal sandbox mode."
+      "[PayPal] VITE_PAYPAL_CLIENT_ID is not set . checkout is running in PayPal sandbox mode."
     );
   }
   const clientId = envClientId || "sb";

@@ -57,7 +57,7 @@ const Hero = () => {
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.6, 0]);
   const bgY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, 80]);
 
-  // Interactive mouse parallax — only listens while hero is visible and not low-power
+  // Interactive mouse parallax . only listens while hero is visible and not low-power
   const { x: mx, y: my } = useMouseParallax(sectionRef, inView && !lowPower);
 
   useEffect(() => {
@@ -85,12 +85,12 @@ const Hero = () => {
       {/* Dark Overlay for text readability - z-index 1 */}
       <div className="absolute inset-0 z-[1] bg-background/25 pointer-events-none" />
 
-      {/* Kinetic grid overlay — visible on all devices */}
+      {/* Kinetic grid overlay . visible on all devices */}
       <div
         aria-hidden
         className="absolute inset-0 z-[2] pointer-events-none opacity-[0.18] md:opacity-[0.22] hero-grid-overlay"
       />
-      {/* Grain noise — desktop only */}
+      {/* Grain noise . desktop only */}
       <div aria-hidden className="absolute inset-0 z-[2] pointer-events-none opacity-[0.06] hero-noise mix-blend-overlay hidden md:block" />
 
       {/* Static ambient glow */}
@@ -204,7 +204,7 @@ const Hero = () => {
         </div>
       </motion.div>
 
-      {/* Floating glass stat cards — pop in only after reactor cable connects */}
+      {/* Floating glass stat cards . pop in only after reactor cable connects */}
       <AnimatePresence>
         {cardsRevealed && (
           <motion.div
@@ -222,7 +222,7 @@ const Hero = () => {
         )}
       </AnimatePresence>
 
-      {/* Tilted bottom marquee ribbon — lifted above mobile bottom nav */}
+      {/* Tilted bottom marquee ribbon . lifted above mobile bottom nav */}
       <div
         aria-hidden
         className="absolute bottom-28 md:bottom-20 left-0 right-0 z-[3] overflow-hidden border-y-0 md:border-y md:border-border/40 py-2 md:py-3 bg-background/70 md:bg-background/40 md:backdrop-blur-sm pointer-events-none"

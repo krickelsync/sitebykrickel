@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 
-// Typography system — load once, use across the app via tailwind font tokens.
+// Typography system . load once, use across the app via tailwind font tokens.
 import "@fontsource/syne/600.css";
 import "@fontsource/syne/700.css";
 import "@fontsource/syne/800.css";

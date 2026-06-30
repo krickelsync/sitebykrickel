@@ -1,4 +1,4 @@
-// Lightweight UI sound engine using Web Audio API — no asset files needed.
+// Lightweight UI sound engine using Web Audio API . no asset files needed.
 let ctx: AudioContext | null = null;
 const KEY = "sbk-sound-enabled";
 

@@ -8,7 +8,7 @@ interface Props {
 }
 
 /**
- * Floating glass stat cards — reference: TOTAL SALES, CONVERSION RATE,
+ * Floating glass stat cards . reference: TOTAL SALES, CONVERSION RATE,
  * FULLY RESPONSIVE, FAST LOADING SPEED. Mouse parallax is applied ONLY
  * to these assets (per design spec).
  */
@@ -22,7 +22,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
   const SALES_TREND_TO = 130;
   const salesProgress = useMotionValue(reduce ? 1 : 0);
   const [salesDisplay, setSalesDisplay] = useState({ sales: SALES_FROM, trend: 0 });
-  // Sharp zigzag points — overall trending up, angular (kaku), full-width.
+  // Sharp zigzag points . overall trending up, angular (kaku), full-width.
   const ZIG_PTS: [number, number][] = [
     [0, 38], [14, 28], [24, 33], [38, 22], [50, 27],
     [62, 15], [74, 20], [88, 10], [100, 14], [120, 4],
@@ -166,7 +166,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
     ease: "easeInOut" as const,
   });
 
-  // Baseline tilt poses — cards already look "parallaxed" without mouse input
+  // Baseline tilt poses . cards already look "parallaxed" without mouse input
   const pose = {
     tl: { rx: 14, ry: -22, rz: -6 },
     tr: { rx: 14, ry: 22, rz: 6 },
@@ -186,7 +186,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
 
   return (
     <div aria-hidden className="absolute inset-0 z-[3] pointer-events-none">
-      {/* TOP LEFT — TOTAL SALES */}
+      {/* TOP LEFT . TOTAL SALES */}
       <div className="absolute top-[10%] left-2 sm:left-3 lg:left-6 scale-[0.62] sm:scale-[0.6] md:scale-75 lg:scale-90 xl:scale-100 origin-top-left">
       <motion.div
         style={{ x: tlX, y: tlY }}
@@ -229,7 +229,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                 <TrendingUp size={9} /> {salesTrend}%
               </span>
             </div>
-            {/* Rising sales chart — rebuilt as a contained left-to-right reveal (no scrolling overflow). */}
+            {/* Rising sales chart . rebuilt as a contained left-to-right reveal (no scrolling overflow). */}
             <svg viewBox="0 4 120 36" className="relative mt-2 sm:mt-3 -mx-3 sm:-mx-4 w-[calc(100%+1.5rem)] sm:w-[calc(100%+2rem)] h-10 sm:h-12 block overflow-visible" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="salesArea" x1="0" x2="0" y1="0" y2="1">
@@ -241,7 +241,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                   <stop offset="55%" stopColor={accent} stopOpacity="0.85" />
                   <stop offset="100%" stopColor={accent} stopOpacity="1" />
                 </linearGradient>
-                {/* Shimmer sweep — single animated gradient, zero JS cost */}
+                {/* Shimmer sweep . single animated gradient, zero JS cost */}
                 <linearGradient id="salesShimmer" x1="0" x2="1" y1="0" y2="0">
                   <stop offset="0%" stopColor={accent} stopOpacity="0" />
                   <stop offset="50%" stopColor="#ffffff" stopOpacity="0.9" />
@@ -276,7 +276,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
               {[12, 22, 32].map((y) => (
                 <line key={y} x1="0" x2="120" y1={y} y2={y} stroke="hsl(0 0% 100% / 0.06)" strokeWidth="0.5" />
               ))}
-              {/* Static milestone tick marks — zero runtime cost */}
+              {/* Static milestone tick marks . zero runtime cost */}
               {[30, 60, 90].map((x) => (
                 <line key={x} x1={x} x2={x} y1="2" y2="42" stroke="hsl(0 0% 100% / 0.07)" strokeWidth="0.5" strokeDasharray="1 2" />
               ))}
@@ -297,7 +297,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                   strokeLinejoin="miter"
                   filter="url(#salesGlow)"
                 />
-                {/* Shimmer overlay on the zigzag — same path, sweeping gradient */}
+                {/* Shimmer overlay on the zigzag . same path, sweeping gradient */}
                 <path
                   d={ZIG_PATH}
                   fill="none"
@@ -307,7 +307,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
                   strokeLinejoin="miter"
                   opacity="0.7"
                 />
-                {/* Trail comet — 3 static circles behind the head dot, no extra animation */}
+                {/* Trail comet . 3 static circles behind the head dot, no extra animation */}
                 <motion.circle cx={trail1X} cy={trail1Y} r="1.5" fill={accent} opacity="0.45" />
                 <motion.circle cx={trail2X} cy={trail2Y} r="1.2" fill={accent} opacity="0.25" />
                 <motion.circle cx={trail3X} cy={trail3Y} r="1" fill={accent} opacity="0.12" />
@@ -329,7 +329,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
       </motion.div>
       </div>
 
-      {/* TOP RIGHT — CONVERSION RATE */}
+      {/* TOP RIGHT . CONVERSION RATE */}
       <div className="absolute top-[10%] right-2 sm:right-3 lg:right-6 scale-[0.62] sm:scale-[0.6] md:scale-75 lg:scale-90 xl:scale-100 origin-top-right">
       <motion.div
         style={{ x: trX, y: trY }}
@@ -377,7 +377,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
       </motion.div>
       </div>
 
-      {/* BOTTOM LEFT — FULLY RESPONSIVE */}
+      {/* BOTTOM LEFT . FULLY RESPONSIVE */}
       <div className="absolute bottom-[22%] sm:bottom-[28%] md:bottom-[26%] left-1 sm:left-3 lg:left-6 scale-[0.6] sm:scale-[0.75] md:scale-90 lg:scale-100 origin-bottom-left">
       <motion.div
         style={{ x: blX, y: blY }}
@@ -407,7 +407,7 @@ const HeroFloatingStats = ({ mx, my }: Props) => {
       </motion.div>
       </div>
 
-      {/* BOTTOM RIGHT — FAST LOADING SPEED */}
+      {/* BOTTOM RIGHT . FAST LOADING SPEED */}
       <div className="absolute bottom-[22%] sm:bottom-[28%] md:bottom-[26%] right-1 sm:right-3 lg:right-6 scale-[0.6] sm:scale-[0.75] md:scale-90 lg:scale-100 origin-bottom-right">
       <motion.div
         style={{ x: brX, y: brY }}

@@ -93,7 +93,7 @@ const ThemeCollection = () => {
               href="/products"
               className="mt-6 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-primary text-primary-foreground font-mono text-xs uppercase tracking-widest hover:opacity-90 transition-opacity"
             >
-              Get SYNC — ${price}
+              Get SYNC . ${price}
               <ArrowRight className="w-4 h-4" />
             </a>
           </motion.div>
