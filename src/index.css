@@ -1531,9 +1531,4 @@ html.is-scrolling .laptop__scroll-img { animation-play-state: paused; }
   }
 }
 
-/* Pricing feature groups — force-open on desktop, collapsible on mobile */
-@media (min-width: 768px) {
-  details.feature-group > *:not(summary) {
-    display: block !important;
-  }
-}
+/* Pricing feature groups — collapsible on all breakpoints */
