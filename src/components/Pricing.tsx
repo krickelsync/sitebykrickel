@@ -6,7 +6,7 @@ import {
   ArrowRight,
   Palette,
   Zap,
-  ShoppingBag,
+  ShoppingCart,
   Megaphone,
   FileText,
   Rocket,
@@ -40,7 +40,7 @@ function FeatureGroupDisclosure({
 
   const panelId = `feat-${group.category.replace(/\s+/g, "-").toLowerCase()}`;
   return (
-    <div className="feature-group mb-3 md:mb-4 break-inside-avoid border border-foreground/10 bg-foreground/[0.02] transition-colors data-[open=true]:bg-foreground/[0.04]" data-open={open}>
+    <div className="feature-group mb-3 md:mb-4 break-inside-avoid rounded-xl overflow-hidden border border-foreground/10 bg-foreground/[0.02] transition-colors data-[open=true]:bg-foreground/[0.04]" data-open={open}>
       <button
         type="button"
         aria-expanded={open}
@@ -133,7 +133,7 @@ const FEATURE_GROUPS: FeatureGroup[] = [
   },
   {
     category: "Shopping & Conversion",
-    icon: ShoppingBag,
+    icon: ShoppingCart,
     items: [
       { label: "Quick Add + Cart Drawer", value: "With notes" },
       { label: "Quick View Modal" },
@@ -214,7 +214,7 @@ const Pricing = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative overflow-hidden menu-rotating-glow border border-foreground/15 bg-background/80 backdrop-blur-xl p-6 md:p-10 flex flex-col transition-colors duration-300 hover:border-primary/40"
+            className="relative overflow-hidden rounded-2xl menu-rotating-glow border border-foreground/15 bg-background/80 backdrop-blur-xl p-6 md:p-10 flex flex-col transition-colors duration-300 hover:border-primary/40"
           >
             {/* Corner brackets . hero-style */}
             <span aria-hidden className="absolute top-0 left-0 w-4 h-4 border-t border-l border-primary/70" />
@@ -256,11 +256,11 @@ const Pricing = () => {
             </div>
 
             {/* Inline add-on toggles . sharp edge, hero-aligned */}
-            <div className="relative space-y-px mb-6 border border-foreground/10 overflow-hidden">
+            <div className="relative space-y-px mb-6 rounded-xl border border-foreground/10 overflow-hidden">
               {[
                 {
                   label: "Remove Watermark",
-                  hint: "Hide \"Powered by SitebyKrickel\" in footer",
+                  hint: "Hide \"SitebyKrickel\" in footer",
                   price: "+$50",
                   value: removeWatermark,
                   set: setRemoveWatermark,
@@ -316,13 +316,13 @@ const Pricing = () => {
             </div>
 
             {/* Stats bar . by the numbers */}
-            <div className="relative grid grid-cols-4 gap-px mb-3 border border-foreground/10 bg-foreground/10 overflow-hidden">
+            <div className="relative grid grid-cols-4 gap-px mb-3 rounded-xl border border-foreground/10 bg-foreground/10 overflow-hidden">
               {STATS.map((s) => (
                 <div key={s.label} className="bg-background/80 px-2 py-3 text-center">
-                  <div className="font-syne font-bold text-foreground text-lg md:text-2xl leading-none tabular-nums">
+                  <div className="font-syne font-bold text-foreground text-base md:text-2xl leading-none tabular-nums">
                     {s.value}
                   </div>
-                  <div className={`${typography.eyebrow} mt-1 text-[9px] md:text-[10px]`}>
+                  <div className={`${typography.eyebrow} mt-1 text-[7.5px] md:text-[10px]`}>
                     {s.label}
                   </div>
                 </div>
@@ -346,7 +346,7 @@ const Pricing = () => {
             <a
               href="/about#contact"
               onClick={handleContactClick}
-              className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 bg-primary text-primary-foreground px-4 py-2.5 sm:px-8 sm:py-4 font-mono text-[clamp(0.6875rem,0.95vw,0.875rem)] font-bold uppercase tracking-wider overflow-hidden hover:glow-box cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background will-change-transform mt-2"
+              className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 rounded-full bg-primary text-primary-foreground px-4 py-2.5 sm:px-8 sm:py-4 font-mono text-[clamp(0.6875rem,0.95vw,0.875rem)] font-bold uppercase tracking-wider overflow-hidden hover:glow-box cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background will-change-transform mt-2"
               aria-label={`Get SYNC for $${price}`}
             >
               <span className="relative z-10">Get SYNC . ${price}</span>
