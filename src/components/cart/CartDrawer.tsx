@@ -266,26 +266,48 @@ const CartDrawer = () => {
                       const payer = details.payer;
                       const buyer_name =
                         [payer?.name?.given_name, payer?.name?.surname].filter(Boolean).join(" ") || null;
+                       const paypal_order_id = details.id ?? data.orderID;
                        try {
-                         await supabase.functions.invoke("record-order", {
+                         const { data: res, error } = await supabase.functions.invoke("record-order", {
                            body: {
-                             paypal_order_id: details.id ?? data.orderID,
+                             paypal_order_id,
+                             theme_slug: "sync",
                              items: items.map((it) => ({
                                product_id: it.id,
                                product_title: `${it.title} x${it.qty}`,
                                amount: it.price * it.qty,
+                               theme_slug: "sync",
                              })),
                            },
                          });
+                         if (error) throw error;
+                         if (res?.license_key && res?.download_url) {
+                           const lic: LicenseResult = {
+                             license_key: res.license_key,
+                             download_url: res.download_url,
+                             paypal_order_id,
+                             buyer_email: res.buyer_email,
+                             theme_slug: res.theme_slug,
+                           };
+                           try {
+                             localStorage.setItem(`license:${paypal_order_id}`, JSON.stringify(lic));
+                           } catch {}
+                           setLicense(lic);
+                           setStep("success");
+                           clear();
+                           toast.success(`Payment successful! Thanks, ${payer?.name?.given_name || "friend"}.`);
+                           return;
+                         }
+                         toast.warning(
+                           res?.license_error
+                             ? `Payment ok but license issue failed: ${res.license_error}`
+                             : "Payment ok but license not issued. Check your email or contact support."
+                         );
                        } catch (err) {
-                         console.error("Failed to record orders:", err);
+                         console.error("Failed to record order:", err);
+                         toast.error("Payment recorded issue. Please contact support with your PayPal order ID.");
                        }
                        void buyer_name;
-                      toast.success(
-                        `Payment successful! Thanks, ${payer?.name?.given_name || "friend"}.`
-                      );
-                      clear();
-                      handleClose();
                     }}
                     onError={(err) => {
                       console.error("PayPal error:", err);
