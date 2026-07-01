@@ -416,7 +416,9 @@ const CartDrawer = () => {
                                 ),
                               },
                              items: items.map((it) => ({
-                               product_id: it.id,
+                                // Cart item ids are slugs (e.g. "theme-sync"), not DB uuids.
+                                // Edge function requires uuid|null, so pass null and rely on theme_slug.
+                                product_id: null,
                                product_title: `${it.title} x${it.qty}`,
                                amount: it.price * it.qty,
                                 // addon rows use their own slug so admin can tell them apart.
