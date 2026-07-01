@@ -8,8 +8,8 @@ import { toast } from "sonner";
 type Coupon = {
   id: string;
   code: string;
-  discount_type: string;
-  discount_value: number;
+  type: string;
+  value: number;
   max_uses: number | null;
   used_count: number;
   expires_at: string | null;
@@ -24,8 +24,8 @@ const AdminCoupons = () => {
   const [rows, setRows] = useState<Coupon[]>([]);
   const [form, setForm] = useState({
     code: "",
-    discount_type: "percent" as "percent" | "fixed",
-    discount_value: "10",
+    type: "percent" as "percent" | "fixed",
+    value: "10",
     max_uses: "",
     expires_at: "",
   });
@@ -55,7 +55,7 @@ const AdminCoupons = () => {
   const create = async (e: React.FormEvent) => {
     e.preventDefault();
     const code = form.code.trim().toUpperCase();
-    const value = Number(form.discount_value);
+    const value = Number(form.value);
     if (!code || !value || value <= 0) {
       toast.error("Code and value required");
       return;
@@ -63,8 +63,8 @@ const AdminCoupons = () => {
     setSaving(true);
     const { error } = await supabase.from("coupons").insert({
       code,
-      discount_type: form.discount_type,
-      discount_value: value,
+      type: form.type,
+      value: value,
       max_uses: form.max_uses ? Number(form.max_uses) : null,
       expires_at: form.expires_at ? new Date(form.expires_at).toISOString() : null,
       active: true,
@@ -72,7 +72,7 @@ const AdminCoupons = () => {
     setSaving(false);
     if (error) return toast.error(error.message);
     toast.success("Coupon created");
-    setForm({ code: "", discount_type: "percent", discount_value: "10", max_uses: "", expires_at: "" });
+    setForm({ code: "", type: "percent", value: "10", max_uses: "", expires_at: "" });
     load();
   };
 
@@ -117,8 +117,8 @@ const AdminCoupons = () => {
           <label className="space-y-1">
             <span className="text-[10px] font-mono uppercase text-muted-foreground">Type</span>
             <select
-              value={form.discount_type}
-              onChange={(e) => setForm({ ...form, discount_type: e.target.value as "percent" | "fixed" })}
+              value={form.type}
+              onChange={(e) => setForm({ ...form, type: e.target.value as "percent" | "fixed" })}
               className="w-full px-3 py-2 rounded-md bg-secondary/50 border border-border text-sm font-mono focus:outline-none focus:border-primary/60"
             >
               <option value="percent">%</option>
@@ -130,8 +130,8 @@ const AdminCoupons = () => {
             <input
               type="number"
               step="0.01"
-              value={form.discount_value}
-              onChange={(e) => setForm({ ...form, discount_value: e.target.value })}
+              value={form.value}
+              onChange={(e) => setForm({ ...form, value: e.target.value })}
               className="w-full px-3 py-2 rounded-md bg-secondary/50 border border-border text-sm font-mono focus:outline-none focus:border-primary/60"
             />
           </label>
@@ -179,7 +179,7 @@ const AdminCoupons = () => {
                 {c.code} <Copy className="w-3 h-3" />
               </button>
               <span className="text-xs font-mono text-muted-foreground">
-                {c.discount_type === "percent" ? `${c.discount_value}%` : `$${c.discount_value}`}
+                {c.type === "percent" ? `${c.value}%` : `$${c.value}`}
               </span>
               <span className="text-[10px] font-mono text-muted-foreground">
                 {c.used_count}/{c.max_uses ?? "∞"} used
