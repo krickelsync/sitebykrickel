@@ -216,12 +216,6 @@ const Pricing = () => {
             transition={{ duration: 0.5 }}
             className="relative overflow-hidden rounded-2xl menu-rotating-glow border border-foreground/15 bg-background/80 backdrop-blur-xl p-6 md:p-10 flex flex-col transition-colors duration-300 hover:border-primary/40"
           >
-            {/* Corner brackets . hero-style */}
-            <span aria-hidden className="absolute top-0 left-0 w-4 h-4 border-t border-l border-foreground/30" />
-            <span aria-hidden className="absolute top-0 right-0 w-4 h-4 border-t border-r border-foreground/30" />
-            <span aria-hidden className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-foreground/30" />
-            <span aria-hidden className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-foreground/30" />
-
             {/* Watermark logo . bottom-right corner, very subtle */}
             <img
               src={shopifyBadge.url}
