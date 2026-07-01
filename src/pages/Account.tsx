@@ -129,7 +129,7 @@ const Account = () => {
   if (!user) {
     return (
       <main className="min-h-[100svh] pt-28 pb-16 px-4 flex items-start justify-center">
-        <div className="w-full max-w-md navbar-pill menu-rotating-glow rounded-3xl p-8 space-y-6">
+        <div className="w-full max-w-md rounded-3xl border border-border bg-card/60 backdrop-blur-sm p-8 space-y-6">
           <div>
             <h1 className="font-syne font-bold text-3xl uppercase tracking-tighter">
               Your account
@@ -212,7 +212,7 @@ const Account = () => {
             {orders.map((order) => (
               <li
                 key={order.id}
-                className="navbar-pill rounded-3xl border border-border/60 p-5 md:p-6 space-y-4"
+                className="rounded-3xl border border-border bg-card/60 backdrop-blur-sm p-5 md:p-6 space-y-4"
               >
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
@@ -297,7 +297,7 @@ const Account = () => {
             ))}
           </ul>
         ) : (
-          <div className="navbar-pill rounded-3xl border border-border/60 p-10 text-center space-y-3">
+          <div className="rounded-3xl border border-border bg-card/60 backdrop-blur-sm p-10 text-center space-y-3">
             <div className="w-14 h-14 rounded-full border border-border mx-auto flex items-center justify-center">
               <Package className="w-6 h-6 text-muted-foreground" />
             </div>
