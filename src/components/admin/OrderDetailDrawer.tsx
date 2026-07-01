@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Copy, ExternalLink, Mail, X, Ban, Save } from "lucide-react";
+import { Copy, ExternalLink, Mail, X, Ban, Save, Undo2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { OrderStatusBadge } from "./OrderStatusBadge";
@@ -72,6 +72,7 @@ export function OrderDetailDrawer({
   const [revoking, setRevoking] = useState(false);
   const [installStatus, setInstallStatus] = useState<string>("");
   const [savingInstall, setSavingInstall] = useState(false);
+  const [refunding, setRefunding] = useState(false);
 
   useEffect(() => {
     setNote(order?.admin_note ?? "");
@@ -147,6 +148,45 @@ export function OrderDetailDrawer({
   const gross = buyerPaid ? subtotal + storedFee : subtotal;
   const net = +(gross - fee).toFixed(2);
   const revoked = !!order.license_revoked_at;
+  const alreadyRefunded = Number(order.refunded_amount || 0);
+  const remaining = Math.max(0, +(subtotal + (buyerPaid ? storedFee : 0) - alreadyRefunded).toFixed(2));
+  const canRefund = !!order.paypal_order_id && remaining > 0.01 && order.status !== "REFUNDED";
+
+  const refund = async () => {
+    if (!canRefund) return;
+    const partial = prompt(
+      `Refund amount in ${order.currency ?? "USD"} (blank = full ${remaining.toFixed(2)}). Buyer will be refunded via PayPal.`,
+      remaining.toFixed(2),
+    );
+    if (partial === null) return;
+    const amt = partial.trim() === "" ? undefined : Number(partial);
+    if (amt !== undefined && (!isFinite(amt) || amt <= 0)) {
+      toast.error("Invalid amount");
+      return;
+    }
+    const reason = prompt("Reason (optional, shown to buyer)") ?? undefined;
+    setRefunding(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("refund-order", {
+        body: {
+          order_id: order.id,
+          amount: amt,
+          reason,
+          revoke_license: true,
+        },
+      });
+      if (error) throw error;
+      toast.success(
+        (data as { fully_refunded?: boolean })?.fully_refunded
+          ? "Fully refunded. License revoked."
+          : "Partial refund processed.",
+      );
+    } catch (e: any) {
+      toast.error(e?.message ?? "Refund failed");
+    } finally {
+      setRefunding(false);
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-[80] flex" role="dialog" aria-modal="true">
@@ -367,6 +407,17 @@ export function OrderDetailDrawer({
               className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-red-500/15 text-red-400 border border-red-500/30 font-mono text-sm hover:bg-red-500/25 disabled:opacity-60"
             >
               <Ban className="w-4 h-4" /> {revoking ? "Revoking." : "Revoke license"}
+            </button>
+          )}
+
+          {canRefund && (
+            <button
+              onClick={refund}
+              disabled={refunding}
+              className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30 font-mono text-sm hover:bg-amber-500/25 disabled:opacity-60"
+            >
+              <Undo2 className="w-4 h-4" />
+              {refunding ? "Refunding." : `Refund via PayPal (${remaining.toFixed(2)} ${order.currency ?? "USD"} left)`}
             </button>
           )}
 
