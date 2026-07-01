@@ -184,9 +184,9 @@ Deno.serve(async (req) => {
 
     await admin.from("webhook_logs").insert({
       source: "refund-order",
-      event_type: "refund.completed",
+      event: "refund.completed",
+      order_id,
       payload: {
-        order_id,
         paypal_order_id: order.paypal_order_id,
         capture_id: captureId,
         refund_id: refundJson?.id,
@@ -194,7 +194,7 @@ Deno.serve(async (req) => {
         reason: reason ?? null,
         actor: userData.user.email,
       },
-      status: "ok",
+      status_code: 200,
     }).catch(() => {});
 
     return new Response(
