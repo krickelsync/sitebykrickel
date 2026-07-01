@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { OrderStatusBadge } from "./OrderStatusBadge";
 import { paypalFee, fmtMoney } from "@/lib/revenue";
+import { getFriendlyError } from "@/lib/errors";
 
 export type AdminOrder = {
   id: string;
@@ -95,8 +96,8 @@ export function OrderDetailDrawer({
       });
       if (error) throw error;
       toast.success("Receipt email resent");
-    } catch (e: any) {
-      toast.error(e?.message ?? "Resend failed");
+    } catch (e) {
+      toast.error(getFriendlyError(e, "Resend failed"));
     } finally {
       setResending(false);
     }
@@ -109,7 +110,7 @@ export function OrderDetailDrawer({
       .update({ admin_note: note || null })
       .eq("id", order.id);
     setSavingNote(false);
-    if (error) toast.error(error.message);
+    if (error) toast.error(getFriendlyError(error, "Could not save note"));
     else toast.success("Note saved");
   };
 
@@ -125,7 +126,7 @@ export function OrderDetailDrawer({
       })
       .eq("id", order.id);
     setRevoking(false);
-    if (error) toast.error(error.message);
+    if (error) toast.error(getFriendlyError(error, "Could not revoke license"));
     else toast.success("License revoked");
   };
 
@@ -137,7 +138,7 @@ export function OrderDetailDrawer({
       .update({ install_status: next || null })
       .eq("id", order.id);
     setSavingInstall(false);
-    if (error) toast.error(error.message);
+    if (error) toast.error(getFriendlyError(error, "Could not update install status"));
     else toast.success("Install status updated");
   };
 
@@ -181,8 +182,8 @@ export function OrderDetailDrawer({
           ? "Fully refunded. License revoked."
           : "Partial refund processed.",
       );
-    } catch (e: any) {
-      toast.error(e?.message ?? "Refund failed");
+    } catch (e) {
+      toast.error(getFriendlyError(e, "Refund failed"));
     } finally {
       setRefunding(false);
     }

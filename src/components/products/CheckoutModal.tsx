@@ -4,6 +4,7 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 import { toast } from "sonner";
 import { useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { getFriendlyError } from "@/lib/errors";
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -174,7 +175,12 @@ const CheckoutModal = ({
                          }
                        } catch (err) {
                          console.error("Failed to record order:", err);
-                         toast.error("Payment recorded issue. Contact support with your PayPal order ID.");
+                         toast.error(
+                           getFriendlyError(
+                             err,
+                             "Payment went through but we couldn't record it. Contact support with your PayPal order ID.",
+                           ),
+                         );
                        }
                        void payer;
                        onClose();
