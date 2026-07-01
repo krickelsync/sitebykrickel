@@ -182,8 +182,7 @@ const CartDrawer = () => {
       setResendOpen(false);
       startCooldown(30);
     } catch (e) {
-      const msg = (e as Error).message ?? "";
-      toast.error(msg || "Could not resend right now. Try again.");
+      toast.error(getFriendlyError(e, "Could not resend right now. Try again."));
     } finally {
       setResending(false);
     }
@@ -646,13 +645,18 @@ const CartDrawer = () => {
                          );
                        } catch (err) {
                          console.error("Failed to record order:", err);
-                         toast.error("Payment recorded issue. Please contact support with your PayPal order ID.");
+                         toast.error(
+                           getFriendlyError(
+                             err,
+                             "Payment went through but we couldn't record it. Contact support with your PayPal order ID.",
+                           ),
+                         );
                        }
                        void buyer_name;
                     }}
                     onError={(err) => {
                       console.error("PayPal error:", err);
-                      toast.error("Payment failed. Please try again.");
+                      toast.error(getFriendlyError(err, "Payment failed. Please try again."));
                     }}
                   />
                 </PayPalProvider>
