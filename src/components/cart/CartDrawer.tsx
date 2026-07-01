@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft, Lock, Check, Copy, Download, Mail, Loader2 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
 import { useCart } from "@/contexts/CartContext";
@@ -9,6 +9,7 @@ import PayPalProvider from "@/components/PayPalProvider";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { grossUp, PAYPAL_FEE_CONFIG } from "@/lib/paypal-fees";
+import { useAuth } from "@/hooks/useAuth";
 
 interface LicenseResult {
   license_key: string;
@@ -20,6 +21,7 @@ interface LicenseResult {
 
 const CartDrawer = () => {
   const { items, isOpen, close, setQty, remove, total, clear } = useCart();
+  const { user } = useAuth();
   const fees = grossUp(total);
   const [step, setStep] = useState<"cart" | "checkout" | "success">("cart");
   const [license, setLicense] = useState<LicenseResult | null>(null);
@@ -28,6 +30,21 @@ const CartDrawer = () => {
   const [resendEmail, setResendEmail] = useState("");
   const [resending, setResending] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
+  const [buyerEmail, setBuyerEmail] = useState("");
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(buyerEmail.trim());
+
+  // Prefill from signed-in account or previously used email.
+  useEffect(() => {
+    if (buyerEmail) return;
+    if (user?.email) {
+      setBuyerEmail(user.email);
+      return;
+    }
+    try {
+      const remembered = localStorage.getItem("buyer_email");
+      if (remembered) setBuyerEmail(remembered);
+    } catch {}
+  }, [user, buyerEmail]);
 
   const handleClose = () => {
     close();
@@ -370,10 +387,40 @@ const CartDrawer = () => {
               </div>
 
               <div className="rounded-2xl border border-border bg-secondary/30 p-3">
+                <div className="mb-3 space-y-1.5">
+                  <label
+                    htmlFor="buyer-email"
+                    className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground"
+                  >
+                    Email for receipt & license
+                  </label>
+                  <input
+                    id="buyer-email"
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    required
+                    placeholder="you@email.com"
+                    value={buyerEmail}
+                    onChange={(e) => setBuyerEmail(e.target.value)}
+                    className="w-full rounded-lg border border-border bg-background/60 px-3 py-2.5 text-sm font-mono outline-none focus:border-primary"
+                  />
+                  <p className="text-[10px] font-mono text-muted-foreground">
+                    We send your license key here. Sign in later at{" "}
+                    <Link to="/account" onClick={handleClose} className="underline">/account</Link>{" "}
+                    to see all your receipts.
+                  </p>
+                </div>
+                {!emailValid && (
+                  <div className="rounded-lg border border-dashed border-border/60 py-6 text-center font-mono text-[11px] text-muted-foreground">
+                    Enter your email above to unlock PayPal checkout.
+                  </div>
+                )}
+                <div className={emailValid ? "" : "pointer-events-none opacity-40 select-none"} aria-hidden={!emailValid}>
                 <PayPalProvider>
                   <PayPalButtons
                     style={{ layout: "vertical", color: "black", shape: "rect", label: "paypal" }}
-                    forceReRender={[total, items.length]}
+                    forceReRender={[total, items.length, emailValid]}
                     createOrder={(_data, actions) =>
                       actions.order.create({
                         intent: "CAPTURE",
@@ -400,6 +447,7 @@ const CartDrawer = () => {
                         [payer?.name?.given_name, payer?.name?.surname].filter(Boolean).join(" ") || null;
                        const paypal_order_id = details.id ?? data.orderID;
                        try {
+                         try { localStorage.setItem("buyer_email", buyerEmail.trim()); } catch {}
                          const { data: res, error } = await supabase.functions.invoke("record-order", {
                            body: {
                              paypal_order_id,
@@ -407,6 +455,7 @@ const CartDrawer = () => {
                              subtotal: fees.subtotal,
                              processing_fee: fees.fee,
                              gross_amount: fees.gross,
+                             buyer_email_override: buyerEmail.trim() || undefined,
                               addons: {
                                 remove_watermark: items.some(
                                   (it) => it.id === "addon-remove-watermark" || it.slug === "sync-remove-watermark",
@@ -432,7 +481,7 @@ const CartDrawer = () => {
                              license_key: res.license_key,
                              download_url: res.download_url,
                              paypal_order_id,
-                             buyer_email: res.buyer_email,
+                             buyer_email: res.buyer_email ?? buyerEmail.trim(),
                              theme_slug: res.theme_slug,
                            };
                            try {
@@ -461,6 +510,7 @@ const CartDrawer = () => {
                     }}
                   />
                 </PayPalProvider>
+                </div>
               </div>
 
               <p className="text-[10px] text-center text-muted-foreground font-mono uppercase tracking-wider flex items-center justify-center gap-1">
