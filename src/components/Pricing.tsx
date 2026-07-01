@@ -6,7 +6,7 @@ import {
   ArrowRight,
   Palette,
   Zap,
-  ShoppingBag,
+  ShoppingCart,
   Megaphone,
   FileText,
   Rocket,
@@ -133,7 +133,7 @@ const FEATURE_GROUPS: FeatureGroup[] = [
   },
   {
     category: "Shopping & Conversion",
-    icon: ShoppingBag,
+    icon: ShoppingCart,
     items: [
       { label: "Quick Add + Cart Drawer", value: "With notes" },
       { label: "Quick View Modal" },
