@@ -7,6 +7,7 @@ import HamburgerIcon from "./navbar/HamburgerIcon";
 import NavLink from "./navbar/NavLink";
 import MobileMenu from "./navbar/MobileMenu";
 import CartButton from "./cart/CartButton";
+import { User as UserIcon } from "lucide-react";
 import { scrollToId } from "@/lib/scroll";
 import { PRIMARY_NAV, type NavLinkItem } from "@/lib/nav";
 import { useHashScroll } from "@/hooks/useHashScroll";
@@ -101,6 +102,13 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           {/* CTA + theme pill */}
           <div className="hidden md:flex items-center gap-2 navbar-pill menu-rotating-glow h-12 px-2 justify-self-end">
             <ThemeToggle />
+            <Link
+              to="/account"
+              aria-label="Your account"
+              className="inline-flex items-center justify-center w-9 h-9 rounded-full hover:bg-foreground/5 transition-colors"
+            >
+              <UserIcon className="w-4 h-4" />
+            </Link>
             <CartButton />
             {onCtaClick ? (
               <button
@@ -124,6 +132,13 @@ const Navbar = ({ customLinks, ctaText, ctaHref, onCtaClick }: NavbarProps = {})
           <div className="relative flex md:hidden items-center justify-self-end">
             <div className="flex items-center gap-1 navbar-pill menu-rotating-glow h-12 px-2">
               <ThemeToggle />
+              <Link
+                to="/account"
+                aria-label="Your account"
+                className="inline-flex items-center justify-center w-9 h-9 rounded-full hover:bg-foreground/5 transition-colors"
+              >
+                <UserIcon className="w-4 h-4" />
+              </Link>
               <CartButton />
               <button
                 onClick={() => setIsOpen(!isOpen)}
