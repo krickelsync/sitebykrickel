@@ -22,6 +22,8 @@ export type AdminOrder = {
   license_error: string | null;
   email_sent_at: string | null;
   admin_note: string | null;
+  refunded_amount?: number | null;
+  refunded_at?: string | null;
   license_revoked_at?: string | null;
 };
 
