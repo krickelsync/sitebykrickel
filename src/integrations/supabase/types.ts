@@ -87,11 +87,15 @@ export type Database = {
           buyer_name: string | null
           created_at: string
           currency: string
+          download_url: string | null
           id: string
+          license_issued_at: string | null
+          license_key: string | null
           paypal_order_id: string | null
           product_id: string | null
           product_title: string
           status: string
+          theme_slug: string | null
         }
         Insert: {
           amount: number
@@ -99,11 +103,15 @@ export type Database = {
           buyer_name?: string | null
           created_at?: string
           currency?: string
+          download_url?: string | null
           id?: string
+          license_issued_at?: string | null
+          license_key?: string | null
           paypal_order_id?: string | null
           product_id?: string | null
           product_title: string
           status?: string
+          theme_slug?: string | null
         }
         Update: {
           amount?: number
@@ -111,11 +119,15 @@ export type Database = {
           buyer_name?: string | null
           created_at?: string
           currency?: string
+          download_url?: string | null
           id?: string
+          license_issued_at?: string | null
+          license_key?: string | null
           paypal_order_id?: string | null
           product_id?: string | null
           product_title?: string
           status?: string
+          theme_slug?: string | null
         }
         Relationships: [
           {
