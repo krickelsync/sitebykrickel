@@ -377,11 +377,62 @@ const CartDrawer = () => {
             </ul>
 
             <SheetFooter className="border-t border-border pt-4 flex-col gap-3 sm:flex-col">
+              {/* Coupon input */}
+              <div className="w-full">
+                {appliedCoupon ? (
+                  <div className="flex items-center justify-between gap-2 rounded-full border border-primary/40 bg-primary/10 px-3 py-2 font-mono text-[11px]">
+                    <span className="inline-flex items-center gap-1.5 uppercase tracking-wider text-primary">
+                      <Tag className="w-3.5 h-3.5" /> {appliedCoupon.code} applied
+                    </span>
+                    <button
+                      onClick={removeCoupon}
+                      className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground"
+                      aria-label="Remove coupon"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          void applyCoupon();
+                        }
+                      }}
+                      placeholder="Discount code"
+                      className="flex-1 rounded-full border border-border bg-background/60 px-3 py-2 text-xs font-mono uppercase tracking-wider outline-none focus:border-primary"
+                      aria-label="Discount code"
+                    />
+                    <button
+                      onClick={() => void applyCoupon()}
+                      disabled={!couponCode.trim() || applyingCoupon}
+                      className="rounded-full border border-border px-4 py-2 font-mono text-[11px] uppercase tracking-wider hover:bg-foreground/5 disabled:opacity-50 inline-flex items-center gap-1.5"
+                    >
+                      {applyingCoupon ? <Loader2 className="w-3 h-3 animate-spin" /> : <Tag className="w-3 h-3" />}
+                      Apply
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <div className="w-full font-mono text-xs space-y-1.5">
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground uppercase tracking-wider">Subtotal</span>
-                  <span>${fees.subtotal.toFixed(2)}</span>
+                  <span>${total.toFixed(2)}</span>
                 </div>
+                {discountAmount > 0 && appliedCoupon && (
+                  <div className="flex items-center justify-between text-primary">
+                    <span className="uppercase tracking-wider">
+                      Discount ({appliedCoupon.code})
+                    </span>
+                    <span>- ${discountAmount.toFixed(2)}</span>
+                  </div>
+                )}
                 {PAYPAL_FEE_CONFIG.passToBuyer && fees.fee > 0 && (
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground uppercase tracking-wider">
@@ -427,8 +478,16 @@ const CartDrawer = () => {
               <div className="space-y-1.5 pt-2 font-mono text-xs">
                 <div className="flex justify-between">
                   <span className="uppercase tracking-wider text-muted-foreground">Subtotal</span>
-                  <span>${fees.subtotal.toFixed(2)}</span>
+                  <span>${total.toFixed(2)}</span>
                 </div>
+                {discountAmount > 0 && appliedCoupon && (
+                  <div className="flex justify-between text-primary">
+                    <span className="uppercase tracking-wider">
+                      Discount ({appliedCoupon.code})
+                    </span>
+                    <span>- ${discountAmount.toFixed(2)}</span>
+                  </div>
+                )}
                 {PAYPAL_FEE_CONFIG.passToBuyer && fees.fee > 0 && (
                   <div className="flex justify-between">
                     <span className="uppercase tracking-wider text-muted-foreground">
