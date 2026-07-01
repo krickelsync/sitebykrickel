@@ -268,10 +268,16 @@ Deno.serve(async (req) => {
         });
       } catch (e) {
         licenseError = (e as Error).message;
-        console.error("issueLicense error:", licenseError);
+        console.error("[license] issueLicense failed", {
+          paypal_order_id,
+          theme_slug,
+          buyer_email,
+          error: licenseError,
+        });
       }
     } else {
       licenseError = "Missing buyer email from PayPal payer";
+      console.error("[license] skipped. missing buyer email", { paypal_order_id });
     }
 
     const rows = items.map((it, idx) => ({
