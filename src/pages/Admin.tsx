@@ -6,6 +6,7 @@ import { useAuth, useIsAdmin } from "@/hooks/useAuth";
 import { useProducts } from "@/hooks/useProducts";
 import { toast } from "sonner";
 import { AdminKpis } from "@/components/admin/AdminKpis";
+import { RevenueCharts } from "@/components/admin/RevenueCharts";
 import {
   OrderDetailDrawer,
   type AdminOrder,
@@ -220,6 +221,9 @@ const Admin = () => {
             </div>
           </div>
           <AdminKpis orders={dateFiltered} />
+          <div className="mt-3">
+            <RevenueCharts orders={dateFiltered} />
+          </div>
         </section>
 
         <section>
