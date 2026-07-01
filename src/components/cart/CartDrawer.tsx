@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { grossUp, PAYPAL_FEE_CONFIG } from "@/lib/paypal-fees";
 import { useAuth } from "@/hooks/useAuth";
+import { getFriendlyError } from "@/lib/errors";
 
 interface LicenseResult {
   license_key: string;
