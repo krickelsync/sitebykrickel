@@ -15,6 +15,7 @@ import { paypalFee } from "@/lib/revenue";
 type Order = {
   amount: number;
   refunded_amount?: number | null;
+  processing_fee?: number | null;
   product_title: string;
   created_at: string;
 };
@@ -23,6 +24,14 @@ const chartStyle = {
   fontFamily: "var(--font-mono, ui-monospace)",
   fontSize: 10,
 };
+
+function netOf(o: Order) {
+  const amt = Number(o.amount || 0);
+  const fee = Number(o.processing_fee || 0);
+  const paypalActual = fee > 0 ? fee : paypalFee(amt);
+  const gross = fee > 0 ? amt + fee : amt;
+  return gross - paypalActual - Number(o.refunded_amount || 0);
+}
 
 export function RevenueCharts({ orders }: { orders: Order[] }) {
   const daily = useMemo(() => {
@@ -37,8 +46,7 @@ export function RevenueCharts({ orders }: { orders: Order[] }) {
     for (const o of orders) {
       const day = o.created_at.slice(0, 10);
       if (!buckets.has(day)) continue;
-      const amt = Number(o.amount || 0);
-      const net = amt - paypalFee(amt) - Number(o.refunded_amount || 0);
+      const net = netOf(o);
       buckets.set(day, (buckets.get(day) ?? 0) + net);
     }
     return Array.from(buckets.entries()).map(([day, net]) => ({
@@ -50,8 +58,7 @@ export function RevenueCharts({ orders }: { orders: Order[] }) {
   const topThemes = useMemo(() => {
     const map = new Map<string, number>();
     for (const o of orders) {
-      const amt = Number(o.amount || 0);
-      const net = amt - paypalFee(amt) - Number(o.refunded_amount || 0);
+      const net = netOf(o);
       map.set(o.product_title, (map.get(o.product_title) ?? 0) + net);
     }
     return Array.from(map.entries())

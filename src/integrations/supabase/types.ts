@@ -218,11 +218,13 @@ export type Database = {
           license_revoked_at: string | null
           paypal_capture_id: string | null
           paypal_order_id: string | null
+          processing_fee: number | null
           product_id: string | null
           product_title: string
           refunded_amount: number
           refunded_at: string | null
           status: string
+          subtotal: number | null
           theme_slug: string | null
         }
         Insert: {
@@ -243,11 +245,13 @@ export type Database = {
           license_revoked_at?: string | null
           paypal_capture_id?: string | null
           paypal_order_id?: string | null
+          processing_fee?: number | null
           product_id?: string | null
           product_title: string
           refunded_amount?: number
           refunded_at?: string | null
           status?: string
+          subtotal?: number | null
           theme_slug?: string | null
         }
         Update: {
@@ -268,11 +272,13 @@ export type Database = {
           license_revoked_at?: string | null
           paypal_capture_id?: string | null
           paypal_order_id?: string | null
+          processing_fee?: number | null
           product_id?: string | null
           product_title?: string
           refunded_amount?: number
           refunded_at?: string | null
           status?: string
+          subtotal?: number | null
           theme_slug?: string | null
         }
         Relationships: [

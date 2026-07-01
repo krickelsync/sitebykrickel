@@ -5,6 +5,8 @@ type Order = {
   amount: number;
   currency: string;
   refunded_amount?: number | null;
+  processing_fee?: number | null;
+  subtotal?: number | null;
   status: string;
   license_key: string | null;
   license_error: string | null;
@@ -32,7 +34,7 @@ export function AdminKpis({ orders }: { orders: Order[] }) {
 
   const money = [
     { label: "Gross revenue", value: fmtMoney(kpis.gross), sub: `${kpis.total} orders`, tone: "text-foreground" },
-    { label: "PayPal fees", value: `. ${fmtMoney(kpis.fees)}`, sub: "3.49% + $0.49", tone: "text-amber-400" },
+    { label: "PayPal fees", value: `. ${fmtMoney(kpis.fees)}`, sub: kpis.buyerPaidFees > 0 ? "paid by buyer" : "4.4% + $0.30", tone: "text-amber-400" },
     { label: "Refunds", value: `. ${fmtMoney(kpis.refunds)}`, sub: `${kpis.refundCount} refunded`, tone: "text-red-400" },
     { label: "Net revenue", value: fmtMoney(kpis.net), sub: "after fees & refunds", tone: "text-emerald-400" },
   ];

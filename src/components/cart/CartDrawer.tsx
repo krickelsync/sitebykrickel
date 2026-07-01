@@ -8,6 +8,7 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 import PayPalProvider from "@/components/PayPalProvider";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { grossUp, PAYPAL_FEE_CONFIG } from "@/lib/paypal-fees";
 
 interface LicenseResult {
   license_key: string;
@@ -19,6 +20,7 @@ interface LicenseResult {
 
 const CartDrawer = () => {
   const { items, isOpen, close, setQty, remove, total, clear } = useCart();
+  const fees = grossUp(total);
   const [step, setStep] = useState<"cart" | "checkout" | "success">("cart");
   const [license, setLicense] = useState<LicenseResult | null>(null);
   const [copied, setCopied] = useState(false);
@@ -301,9 +303,23 @@ const CartDrawer = () => {
             </ul>
 
             <SheetFooter className="border-t border-border pt-4 flex-col gap-3 sm:flex-col">
-              <div className="flex items-center justify-between w-full font-mono text-sm">
-                <span className="text-muted-foreground uppercase tracking-wider">Total</span>
-                <span className="font-syne font-bold text-lg">${total.toFixed(2)}</span>
+              <div className="w-full font-mono text-xs space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground uppercase tracking-wider">Subtotal</span>
+                  <span>${fees.subtotal.toFixed(2)}</span>
+                </div>
+                {PAYPAL_FEE_CONFIG.passToBuyer && fees.fee > 0 && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground uppercase tracking-wider">
+                      {PAYPAL_FEE_CONFIG.label}
+                    </span>
+                    <span>${fees.fee.toFixed(2)}</span>
+                  </div>
+                )}
+                <div className="flex items-center justify-between pt-1.5 border-t border-border/60">
+                  <span className="text-muted-foreground uppercase tracking-wider text-sm">Total</span>
+                  <span className="font-syne font-bold text-lg">${fees.gross.toFixed(2)}</span>
+                </div>
               </div>
               <Button
                 onClick={() => setStep("checkout")}
@@ -334,9 +350,23 @@ const CartDrawer = () => {
                   </li>
                 ))}
               </ul>
-              <div className="flex justify-between items-center pt-2">
-                <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Total</span>
-                <span className="font-syne font-bold text-2xl">${total.toFixed(2)}</span>
+              <div className="space-y-1.5 pt-2 font-mono text-xs">
+                <div className="flex justify-between">
+                  <span className="uppercase tracking-wider text-muted-foreground">Subtotal</span>
+                  <span>${fees.subtotal.toFixed(2)}</span>
+                </div>
+                {PAYPAL_FEE_CONFIG.passToBuyer && fees.fee > 0 && (
+                  <div className="flex justify-between">
+                    <span className="uppercase tracking-wider text-muted-foreground">
+                      {PAYPAL_FEE_CONFIG.label}
+                    </span>
+                    <span>${fees.fee.toFixed(2)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between items-center pt-2 border-t border-border/60">
+                  <span className="uppercase tracking-wider text-muted-foreground">Total</span>
+                  <span className="font-syne font-bold text-2xl">${fees.gross.toFixed(2)}</span>
+                </div>
               </div>
 
               <div className="rounded-2xl border border-border bg-secondary/30 p-3">
@@ -352,7 +382,11 @@ const CartDrawer = () => {
                             description: items.map((i) => `${i.title} x${i.qty}`).join(", ").slice(0, 127),
                             amount: {
                               currency_code: "USD",
-                              value: total.toFixed(2),
+                              value: fees.gross.toFixed(2),
+                              breakdown: {
+                                item_total: { currency_code: "USD", value: fees.subtotal.toFixed(2) },
+                                handling: { currency_code: "USD", value: fees.fee.toFixed(2) },
+                              },
                             },
                           },
                         ],
@@ -370,6 +404,9 @@ const CartDrawer = () => {
                            body: {
                              paypal_order_id,
                              theme_slug: "sync",
+                             subtotal: fees.subtotal,
+                             processing_fee: fees.fee,
+                             gross_amount: fees.gross,
                              items: items.map((it) => ({
                                product_id: it.id,
                                product_title: `${it.title} x${it.qty}`,

@@ -123,8 +123,12 @@ export function OrderDetailDrawer({
     else toast.success("License revoked");
   };
 
-  const fee = paypalFee(Number(order.amount));
-  const net = +(Number(order.amount) - fee).toFixed(2);
+  const storedFee = Number((order as { processing_fee?: number | null }).processing_fee || 0);
+  const buyerPaid = storedFee > 0;
+  const subtotal = Number(order.amount);
+  const fee = buyerPaid ? storedFee : paypalFee(subtotal);
+  const gross = buyerPaid ? subtotal + storedFee : subtotal;
+  const net = +(gross - fee).toFixed(2);
   const revoked = !!order.license_revoked_at;
 
   return (
@@ -159,7 +163,7 @@ export function OrderDetailDrawer({
               )}
             </div>
             <p className="font-display text-2xl font-bold">
-              ${Number(order.amount).toFixed(2)}{" "}
+              ${gross.toFixed(2)}{" "}
               <span className="text-xs font-mono text-muted-foreground">{order.currency}</span>
             </p>
             <p className="font-mono text-[11px] text-muted-foreground">{fmt(order.created_at)}</p>
@@ -170,7 +174,11 @@ export function OrderDetailDrawer({
               Revenue breakdown
             </h3>
             <div className="glass-card p-3 text-xs font-mono space-y-1.5">
-              <div className="flex justify-between"><span className="text-muted-foreground">Gross</span><span>{fmtMoney(Number(order.amount))}</span></div>
+              <div className="flex justify-between"><span className="text-muted-foreground">Subtotal</span><span>{fmtMoney(subtotal)}</span></div>
+              {buyerPaid && (
+                <div className="flex justify-between"><span className="text-muted-foreground">Buyer paid fee</span><span>+ {fmtMoney(storedFee)}</span></div>
+              )}
+              <div className="flex justify-between"><span className="text-muted-foreground">Gross received</span><span>{fmtMoney(gross)}</span></div>
               <div className="flex justify-between"><span className="text-muted-foreground">PayPal fee</span><span className="text-amber-400">. {fmtMoney(fee)}</span></div>
               <div className="flex justify-between border-t border-border pt-1.5 mt-1.5">
                 <span className="text-muted-foreground">Net</span>

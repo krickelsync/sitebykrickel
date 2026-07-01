@@ -20,6 +20,9 @@ const BodySchema = z.object({
   paypal_order_id: z.string().min(1).max(100),
   items: z.array(ItemSchema).min(1).max(50),
   theme_slug: z.string().min(1).max(100).optional(),
+  subtotal: z.number().nonnegative().optional(),
+  processing_fee: z.number().nonnegative().optional(),
+  gross_amount: z.number().nonnegative().optional(),
 });
 
 const PAYPAL_BASE =
@@ -191,7 +194,14 @@ Deno.serve(async (req) => {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-    const { paypal_order_id, items, theme_slug: bodyThemeSlug } = parsed.data;
+    const {
+      paypal_order_id,
+      items,
+      theme_slug: bodyThemeSlug,
+      subtotal: bodySubtotal,
+      processing_fee: bodyFee,
+      gross_amount: bodyGross,
+    } = parsed.data;
 
     const pp = await verifyPaypalOrder(paypal_order_id);
     if (pp.status !== "COMPLETED" && pp.status !== "APPROVED") {
@@ -205,13 +215,21 @@ Deno.serve(async (req) => {
     const captured = Number(
       pu?.payments?.captures?.[0]?.amount?.value ?? pu?.amount?.value ?? 0
     );
-    const expected = items.reduce((s, i) => s + i.amount, 0);
-    if (Math.abs(captured - expected) > 0.01) {
+    const itemsTotal = items.reduce((s, i) => s + i.amount, 0);
+    // If client sent gross_amount (with processing fee), verify against that.
+    // Otherwise fall back to items total (legacy checkouts without pass-through fee).
+    const expected = typeof bodyGross === "number" ? bodyGross : itemsTotal;
+    if (Math.abs(captured - expected) > 0.02) {
       return new Response(JSON.stringify({ error: "Amount mismatch" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+
+    const subtotal =
+      typeof bodySubtotal === "number" ? bodySubtotal : itemsTotal;
+    const processing_fee =
+      typeof bodyFee === "number" ? bodyFee : Math.max(0, captured - subtotal);
 
     const payer = pp.payer ?? {};
     const buyer_name =
@@ -295,6 +313,9 @@ Deno.serve(async (req) => {
       download_url: idx === 0 ? license?.download_url ?? null : null,
       license_issued_at: idx === 0 && license ? new Date().toISOString() : null,
       license_error: idx === 0 ? licenseError : null,
+      // Store fee breakdown only on the first row so revenue sums don't double-count.
+      subtotal: idx === 0 ? subtotal : null,
+      processing_fee: idx === 0 ? processing_fee : 0,
     }));
 
     const { error } = await admin.from("orders").insert(rows);
