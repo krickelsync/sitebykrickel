@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, Pencil, Trash2, Eye, EyeOff, LogOut, Search, Copy, Download, KeyRound } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff, LogOut, Search, Copy, Download, KeyRound, Ticket, ScrollText, Palette } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, useIsAdmin } from "@/hooks/useAuth";
 import { useProducts } from "@/hooks/useProducts";
@@ -190,6 +190,18 @@ const Admin = () => {
             <Link to="/admin/issue"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border font-mono text-sm hover:bg-secondary">
               <KeyRound className="w-4 h-4" /> Manual issue
+            </Link>
+            <Link to="/admin/coupons"
+              className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border font-mono text-sm hover:bg-secondary">
+              <Ticket className="w-4 h-4" /> Coupons
+            </Link>
+            <Link to="/admin/themes"
+              className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border font-mono text-sm hover:bg-secondary">
+              <Palette className="w-4 h-4" /> Themes
+            </Link>
+            <Link to="/admin/logs"
+              className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border font-mono text-sm hover:bg-secondary">
+              <ScrollText className="w-4 h-4" /> Logs
             </Link>
             <button
               onClick={async () => { await supabase.auth.signOut(); navigate("/admin/login"); }}
