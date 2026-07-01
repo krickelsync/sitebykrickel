@@ -14,6 +14,7 @@ import {
 import { OrderStatusBadge, maskKey } from "@/components/admin/OrderStatusBadge";
 import { BuyersTable } from "@/components/admin/BuyersTable";
 import { paypalFee } from "@/lib/revenue";
+import { getFriendlyError } from "@/lib/errors";
 
 type Filter = "all" | "issued" | "failed" | "pending";
 type Range = "7d" | "30d" | "all";
@@ -156,13 +157,13 @@ const Admin = () => {
 
   const togglePublish = async (id: string, val: boolean) => {
     const { error } = await supabase.from("products").update({ is_published: !val }).eq("id", id);
-    if (error) toast.error(error.message);
+    if (error) toast.error(getFriendlyError(error));
   };
 
   const remove = async (id: string) => {
     if (!confirm("Delete this product?")) return;
     const { error } = await supabase.from("products").delete().eq("id", id);
-    if (error) toast.error(error.message); else toast.success("Deleted");
+    if (error) toast.error(getFriendlyError(error)); else toast.success("Deleted");
   };
 
   const filters: { key: Filter; label: string }[] = [
