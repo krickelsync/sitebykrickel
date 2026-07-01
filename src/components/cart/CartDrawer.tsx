@@ -59,6 +59,29 @@ const CartDrawer = () => {
     } catch {}
   }, [user, buyerEmail]);
 
+  // Auto-apply coupon from URL (?code=XXX or ?coupon=XXX) or localStorage.
+  useEffect(() => {
+    if (appliedCoupon || couponCode) return;
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const fromUrl = params.get("code") || params.get("coupon");
+      const fromStorage = localStorage.getItem("pending_coupon");
+      const code = (fromUrl || fromStorage || "").trim();
+      if (!code) return;
+      if (fromUrl) localStorage.setItem("pending_coupon", fromUrl);
+      setCouponCode(code);
+    } catch {}
+  }, [appliedCoupon, couponCode]);
+
+  // Trigger apply once cart has items + code is queued + drawer just opened.
+  useEffect(() => {
+    if (!isOpen || !couponCode || appliedCoupon || items.length === 0) return;
+    if (applyingCoupon) return;
+    const t = setTimeout(() => { void applyCoupon(); }, 200);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, items.length]);
+
   const handleClose = () => {
     close();
     setTimeout(() => {
