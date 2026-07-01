@@ -17,6 +17,79 @@ import { useContactScroll } from "@/hooks/useContactScroll";
 import { useIsMobile } from "@/hooks/use-mobile";
 import shopifyBadge from "@/assets/shopify-badge.png.asset.json";
 import { typography, textSize } from "@/components/ui/typography";
+import { useEffect, useRef, useState as useReactState } from "react";
+
+function FeatureGroupDisclosure({
+  group,
+  defaultOpen,
+}: {
+  group: FeatureGroup;
+  defaultOpen: boolean;
+}) {
+  const Icon = group.icon;
+  const [open, setOpen] = useReactState(defaultOpen);
+  // Keep in sync when viewport (isMobile) flips defaults.
+  const initRef = useRef(true);
+  useEffect(() => {
+    if (initRef.current) {
+      initRef.current = false;
+      return;
+    }
+    setOpen(defaultOpen);
+  }, [defaultOpen]);
+
+  const panelId = `feat-${group.category.replace(/\s+/g, "-").toLowerCase()}`;
+  return (
+    <div className="feature-group mb-3 md:mb-4 break-inside-avoid border border-foreground/10 bg-foreground/[0.02] transition-colors data-[open=true]:bg-foreground/[0.04]" data-open={open}>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center gap-2 px-3 py-2.5 cursor-pointer text-left hover:bg-foreground/[0.03] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+      >
+        <Icon aria-hidden="true" className="w-5 h-5 text-primary shrink-0" />
+        <span className={`flex-1 ${typography.eyebrow} text-foreground`}>
+          {group.category}
+        </span>
+        <span
+          aria-hidden="true"
+          className={`font-mono text-base leading-none text-muted-foreground transition-transform duration-300 ${open ? "rotate-45" : ""}`}
+        >
+          +
+        </span>
+      </button>
+      {/* Smooth height animation via grid-template-rows 0fr <-> 1fr */}
+      <div
+        id={panelId}
+        className={`grid transition-[grid-template-rows] duration-300 ease-out ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+        aria-hidden={!open}
+      >
+        <div className="overflow-hidden min-h-0">
+          <ul className="px-3 pb-3 pt-1 space-y-1">
+            {group.items.map((item) => (
+              <li
+                key={item.label}
+                className={`flex items-baseline gap-2 leading-snug ${textSize.ui}`}
+              >
+                <span
+                  aria-hidden="true"
+                  className="mt-1.5 w-1 h-1 rounded-full bg-primary/70 shrink-0"
+                />
+                <span className="font-mono text-muted-foreground">
+                  {item.label}
+                  {item.value && (
+                    <span className="text-foreground"> . {item.value}</span>
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 type FeatureItem = { label: string; value?: string };
 type FeatureGroup = {
@@ -259,55 +332,15 @@ const Pricing = () => {
               397 customization options, no code required
             </p>
 
-            {/* Feature groups . masonry columns so closing one doesn't leave a gap */}
+            {/* Feature groups . masonry columns + smooth height transition */}
             <div className="relative flex-1 columns-1 md:columns-2 gap-3 md:gap-4 mb-8 [column-fill:balance]">
-              {FEATURE_GROUPS.map((group, idx) => {
-                const Icon = group.icon;
-                // Mobile: all open. Desktop: first row (left + right = idx 0 & 1) open.
-                const defaultOpen = isMobile ? true : idx < 2;
-                return (
-                  <details
-                    key={group.category}
-                    open={defaultOpen}
-                    className="group/details feature-group mb-3 md:mb-4 break-inside-avoid border border-foreground/10 bg-foreground/[0.02] open:bg-foreground/[0.04] transition-colors"
-                  >
-                    <summary className="flex items-center gap-2 px-3 py-2.5 cursor-pointer list-none [&::-webkit-details-marker]:hidden hover:bg-foreground/[0.03] transition-colors">
-                      <Icon
-                        aria-hidden="true"
-                        className="w-5 h-5 text-primary shrink-0"
-                      />
-                      <span className={`flex-1 ${typography.eyebrow} text-foreground`}>
-                        {group.category}
-                      </span>
-                      <span
-                        aria-hidden="true"
-                        className="font-mono text-base leading-none text-muted-foreground transition-transform duration-300 group-open/details:rotate-45"
-                      >
-                        +
-                      </span>
-                    </summary>
-                    <ul className="px-3 pb-3 pt-1 space-y-1">
-                      {group.items.map((item) => (
-                        <li
-                          key={item.label}
-                          className={`flex items-baseline gap-2 leading-snug ${textSize.ui}`}
-                        >
-                          <span
-                            aria-hidden="true"
-                            className="mt-1.5 w-1 h-1 rounded-full bg-primary/70 shrink-0"
-                          />
-                          <span className="font-mono text-muted-foreground">
-                            {item.label}
-                            {item.value && (
-                              <span className="text-foreground"> . {item.value}</span>
-                            )}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                );
-              })}
+              {FEATURE_GROUPS.map((group, idx) => (
+                <FeatureGroupDisclosure
+                  key={group.category}
+                  group={group}
+                  defaultOpen={isMobile ? true : idx < 2}
+                />
+              ))}
             </div>
 
             <a
