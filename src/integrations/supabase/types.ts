@@ -82,6 +82,7 @@ export type Database = {
       }
       orders: {
         Row: {
+          admin_note: string | null
           amount: number
           buyer_email: string | null
           buyer_name: string | null
@@ -96,10 +97,13 @@ export type Database = {
           paypal_order_id: string | null
           product_id: string | null
           product_title: string
+          refunded_amount: number
+          refunded_at: string | null
           status: string
           theme_slug: string | null
         }
         Insert: {
+          admin_note?: string | null
           amount: number
           buyer_email?: string | null
           buyer_name?: string | null
@@ -114,10 +118,13 @@ export type Database = {
           paypal_order_id?: string | null
           product_id?: string | null
           product_title: string
+          refunded_amount?: number
+          refunded_at?: string | null
           status?: string
           theme_slug?: string | null
         }
         Update: {
+          admin_note?: string | null
           amount?: number
           buyer_email?: string | null
           buyer_name?: string | null
@@ -132,6 +139,8 @@ export type Database = {
           paypal_order_id?: string | null
           product_id?: string | null
           product_title?: string
+          refunded_amount?: number
+          refunded_at?: string | null
           status?: string
           theme_slug?: string | null
         }
