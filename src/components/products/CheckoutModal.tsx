@@ -136,27 +136,48 @@ const CheckoutModal = ({
                     if (actions.order) {
                       const details = await actions.order.capture();
                        const payer = details.payer;
-                       // Persist via server-side edge function that verifies the PayPal order.
+                       const paypal_order_id = details.id ?? data.orderID;
                        try {
-                         await supabase.functions.invoke("record-order", {
+                         const { data: res, error } = await supabase.functions.invoke("record-order", {
                            body: {
-                             paypal_order_id: details.id ?? data.orderID,
+                             paypal_order_id,
+                             theme_slug: "sync",
                              items: [
                                {
                                  product_id: productId ?? null,
                                  product_title: productName,
                                  amount: price,
+                                 theme_slug: "sync",
                                },
                              ],
                            },
                          });
+                         if (error) throw error;
+                         if (res?.license_key && res?.download_url) {
+                           try {
+                             localStorage.setItem(
+                               `license:${paypal_order_id}`,
+                               JSON.stringify({
+                                 license_key: res.license_key,
+                                 download_url: res.download_url,
+                                 paypal_order_id,
+                                 buyer_email: res.buyer_email,
+                               })
+                             );
+                           } catch {}
+                           toast.success(
+                             `License issued! Key: ${res.license_key.slice(0, 12)}… Check your email for the download link.`,
+                             { duration: 8000 }
+                           );
+                         } else {
+                           toast.warning("Payment ok but license not issued yet. Check your email or contact support.");
+                         }
                        } catch (err) {
                          console.error("Failed to record order:", err);
+                         toast.error("Payment recorded issue. Contact support with your PayPal order ID.");
                        }
-                      toast.success(
-                        `Payment successful! Thank you, ${payer?.name?.given_name || "Customer"}!`
-                      );
-                      onClose();
+                       void payer;
+                       onClose();
                     }
                   }}
                   onError={(err) => {
