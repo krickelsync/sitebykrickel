@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, Pencil, Trash2, Eye, EyeOff, LogOut, Search, Copy } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff, LogOut, Search, Copy, Download } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, useIsAdmin } from "@/hooks/useAuth";
 import { useProducts } from "@/hooks/useProducts";
@@ -11,8 +11,11 @@ import {
   type AdminOrder,
 } from "@/components/admin/OrderDetailDrawer";
 import { OrderStatusBadge, maskKey } from "@/components/admin/OrderStatusBadge";
+import { BuyersTable } from "@/components/admin/BuyersTable";
+import { paypalFee } from "@/lib/revenue";
 
 type Filter = "all" | "issued" | "failed" | "pending";
+type Range = "7d" | "30d" | "all";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -23,6 +26,8 @@ const Admin = () => {
   const [selected, setSelected] = useState<AdminOrder | null>(null);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
+  const [range, setRange] = useState<Range>("30d");
+  const [tab, setTab] = useState<"orders" | "buyers">("orders");
 
   useEffect(() => {
     if (authLoading) return;
@@ -71,9 +76,16 @@ const Admin = () => {
     };
   }, [isAdmin]);
 
+  const dateFiltered = useMemo(() => {
+    if (range === "all") return orders;
+    const days = range === "7d" ? 7 : 30;
+    const since = Date.now() - days * 86400000;
+    return orders.filter((o) => new Date(o.created_at).getTime() > since);
+  }, [orders, range]);
+
   const filteredOrders = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return orders.filter((o) => {
+    return dateFiltered.filter((o) => {
       if (filter === "issued" && !o.license_key) return false;
       if (filter === "failed" && (!o.license_error || o.license_key)) return false;
       if (filter === "pending" && (o.license_key || o.license_error)) return false;
@@ -86,7 +98,39 @@ const Admin = () => {
         o.product_title?.toLowerCase().includes(q)
       );
     });
-  }, [orders, search, filter]);
+  }, [dateFiltered, search, filter]);
+
+  const exportCsv = () => {
+    const rows = filteredOrders;
+    const headers = [
+      "created_at","paypal_order_id","product_title","buyer_name","buyer_email",
+      "amount","currency","paypal_fee","refunded_amount","net","status",
+      "license_key","license_issued_at","license_error","email_sent_at","admin_note",
+    ];
+    const escape = (v: unknown) => {
+      if (v == null) return "";
+      const s = String(v).replace(/"/g, '""');
+      return /[",\n]/.test(s) ? `"${s}"` : s;
+    };
+    const lines = [headers.join(",")];
+    for (const o of rows) {
+      const fee = paypalFee(Number(o.amount));
+      const net = +(Number(o.amount) - fee - Number(o.refunded_amount || 0)).toFixed(2);
+      lines.push([
+        o.created_at, o.paypal_order_id, o.product_title, o.buyer_name, o.buyer_email,
+        o.amount, o.currency, fee, o.refunded_amount ?? 0, net, o.status,
+        o.license_key, o.license_issued_at, o.license_error, o.email_sent_at, o.admin_note,
+      ].map(escape).join(","));
+    }
+    const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `orders-${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success(`Exported ${rows.length} orders`);
+  };
 
   if (authLoading || isAdmin === null) {
     return <div className="min-h-dvh bg-background flex items-center justify-center font-mono text-sm">Loading…</div>;
@@ -126,6 +170,11 @@ const Admin = () => {
     { key: "pending", label: "Pending" },
     { key: "failed", label: "Failed" },
   ];
+  const ranges: { key: Range; label: string }[] = [
+    { key: "7d", label: "7d" },
+    { key: "30d", label: "30d" },
+    { key: "all", label: "All" },
+  ];
 
   return (
     <div className="min-h-dvh bg-background">
@@ -148,8 +197,25 @@ const Admin = () => {
 
       <main className="container mx-auto px-4 py-8 space-y-12">
         <section>
-          <h2 className="font-display text-sm uppercase tracking-wider text-muted-foreground mb-3">Overview</h2>
-          <AdminKpis orders={orders} />
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="font-display text-sm uppercase tracking-wider text-muted-foreground">
+              Overview . {range === "all" ? "lifetime" : `last ${range}`}
+            </h2>
+            <div className="flex rounded-md border border-border overflow-hidden">
+              {ranges.map((r) => (
+                <button
+                  key={r.key}
+                  onClick={() => setRange(r.key)}
+                  className={`px-3 py-1.5 text-[11px] font-mono uppercase transition-colors ${
+                    range === r.key ? "bg-primary text-primary-foreground" : "hover:bg-secondary"
+                  }`}
+                >
+                  {r.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <AdminKpis orders={dateFiltered} />
         </section>
 
         <section>
@@ -186,9 +252,19 @@ const Admin = () => {
 
         <section>
           <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
-            <h2 className="font-display text-sm uppercase tracking-wider text-muted-foreground">
-              Orders ({filteredOrders.length})
-            </h2>
+            <div className="flex items-center gap-2">
+              {(["orders","buyers"] as const).map((t) => (
+                <button
+                  key={t}
+                  onClick={() => setTab(t)}
+                  className={`font-display text-sm uppercase tracking-wider transition-colors ${
+                    tab === t ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {t} ({t === "orders" ? filteredOrders.length : new Set(filteredOrders.map((o) => o.buyer_email ?? "-")).size})
+                </button>
+              ))}
+            </div>
             <div className="flex items-center gap-2">
               <div className="relative">
                 <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
@@ -196,10 +272,11 @@ const Admin = () => {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search email, license, PayPal ID."
-                  className="pl-8 pr-3 py-1.5 rounded-md bg-secondary/50 border border-border text-xs font-mono w-64 focus:outline-none focus:border-primary/60"
+                  className="pl-8 pr-3 py-1.5 rounded-md bg-secondary/50 border border-border text-xs font-mono w-48 md:w-64 focus:outline-none focus:border-primary/60"
                 />
               </div>
-              <div className="flex rounded-md border border-border overflow-hidden">
+              {tab === "orders" && (
+                <div className="flex rounded-md border border-border overflow-hidden">
                 {filters.map((f) => (
                   <button
                     key={f.key}
@@ -213,10 +290,21 @@ const Admin = () => {
                     {f.label}
                   </button>
                 ))}
-              </div>
+                </div>
+              )}
+              <button
+                onClick={exportCsv}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-border text-[11px] font-mono uppercase hover:bg-secondary"
+                aria-label="Export CSV"
+              >
+                <Download className="w-3 h-3" /> CSV
+              </button>
             </div>
           </div>
 
+          {tab === "buyers" ? (
+            <BuyersTable orders={filteredOrders} onSelect={(o) => setSelected(o)} />
+          ) : (
           <div className="glass-card overflow-x-auto">
             {filteredOrders.length === 0 ? (
               <p className="p-6 text-sm font-mono text-muted-foreground">No orders match.</p>
@@ -228,6 +316,7 @@ const Admin = () => {
                     <th className="text-left px-4 py-3">Buyer</th>
                     <th className="text-left px-4 py-3">Product</th>
                     <th className="text-left px-4 py-3">Amount</th>
+                    <th className="text-left px-4 py-3">Net</th>
                     <th className="text-left px-4 py-3">License</th>
                     <th className="text-left px-4 py-3">Email</th>
                     <th className="text-left px-4 py-3">Key</th>
@@ -249,6 +338,9 @@ const Admin = () => {
                       <td className="px-4 py-3 max-w-[160px] truncate">{o.product_title}</td>
                       <td className="px-4 py-3 text-primary whitespace-nowrap">
                         ${Number(o.amount).toFixed(2)}
+                      </td>
+                      <td className="px-4 py-3 text-emerald-400 whitespace-nowrap">
+                        ${(Number(o.amount) - paypalFee(Number(o.amount)) - Number(o.refunded_amount || 0)).toFixed(2)}
                       </td>
                       <td className="px-4 py-3">
                         <OrderStatusBadge kind="license" order={o} />
@@ -278,6 +370,7 @@ const Admin = () => {
               </table>
             )}
           </div>
+          )}
         </section>
       </main>
 
