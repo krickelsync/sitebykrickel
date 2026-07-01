@@ -201,6 +201,7 @@ export type Database = {
       }
       orders: {
         Row: {
+          addons: Json
           admin_note: string | null
           amount: number
           buyer_email: string | null
@@ -212,6 +213,7 @@ export type Database = {
           download_url: string | null
           email_sent_at: string | null
           id: string
+          install_status: string | null
           license_error: string | null
           license_issued_at: string | null
           license_key: string | null
@@ -228,6 +230,7 @@ export type Database = {
           theme_slug: string | null
         }
         Insert: {
+          addons?: Json
           admin_note?: string | null
           amount: number
           buyer_email?: string | null
@@ -239,6 +242,7 @@ export type Database = {
           download_url?: string | null
           email_sent_at?: string | null
           id?: string
+          install_status?: string | null
           license_error?: string | null
           license_issued_at?: string | null
           license_key?: string | null
@@ -255,6 +259,7 @@ export type Database = {
           theme_slug?: string | null
         }
         Update: {
+          addons?: Json
           admin_note?: string | null
           amount?: number
           buyer_email?: string | null
@@ -266,6 +271,7 @@ export type Database = {
           download_url?: string | null
           email_sent_at?: string | null
           id?: string
+          install_status?: string | null
           license_error?: string | null
           license_issued_at?: string | null
           license_key?: string | null
