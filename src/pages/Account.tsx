@@ -30,7 +30,6 @@ const Account = () => {
   const [orders, setOrders] = useState<Order[] | null>(null);
   const [ordersLoading, setOrdersLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [resendingId, setResendingId] = useState<string | null>(null);
 
   useEffect(() => {
     document.title = "Your account — SitebyKrickel";
@@ -99,21 +98,6 @@ const Account = () => {
       setTimeout(() => setCopiedId((v) => (v === order.id ? null : v)), 1800);
     } catch {
       toast.error("Copy failed");
-    }
-  };
-
-  const resendReceipt = async (order: Order) => {
-    setResendingId(order.id);
-    try {
-      const { error } = await supabase.functions.invoke("resend-receipt", {
-        body: { paypal_order_id: order.paypal_order_id },
-      });
-      if (error) throw error;
-      toast.success("Receipt resent. Check spam too.");
-    } catch (e) {
-      toast.error((e as Error).message || "Could not resend");
-    } finally {
-      setResendingId(null);
     }
   };
 
@@ -263,28 +247,14 @@ const Account = () => {
                         )}
                       </button>
                     </div>
-                    <div className="flex flex-col sm:flex-row gap-2">
-                      <a
+                    <a
                         href={order.download_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground font-mono uppercase tracking-wider text-xs py-3 hover:opacity-90"
+                        className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground font-mono uppercase tracking-wider text-xs py-3 hover:opacity-90"
                       >
                         <Download className="w-4 h-4" /> Download theme ZIP
                       </a>
-                      <button
-                        onClick={() => resendReceipt(order)}
-                        disabled={resendingId === order.id}
-                        className="inline-flex items-center justify-center gap-2 rounded-full border border-border font-mono uppercase tracking-wider text-xs py-3 px-5 hover:bg-foreground/5 disabled:opacity-50"
-                      >
-                        {resendingId === order.id ? (
-                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                        ) : (
-                          <Mail className="w-3.5 h-3.5" />
-                        )}
-                        Resend receipt
-                      </button>
-                    </div>
                   </div>
                 ) : (
                   <div className="rounded-2xl border border-border/60 bg-secondary/20 p-4 font-mono text-xs text-muted-foreground">
