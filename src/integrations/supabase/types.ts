@@ -88,7 +88,9 @@ export type Database = {
           created_at: string
           currency: string
           download_url: string | null
+          email_sent_at: string | null
           id: string
+          license_error: string | null
           license_issued_at: string | null
           license_key: string | null
           paypal_order_id: string | null
@@ -104,7 +106,9 @@ export type Database = {
           created_at?: string
           currency?: string
           download_url?: string | null
+          email_sent_at?: string | null
           id?: string
+          license_error?: string | null
           license_issued_at?: string | null
           license_key?: string | null
           paypal_order_id?: string | null
@@ -120,7 +124,9 @@ export type Database = {
           created_at?: string
           currency?: string
           download_url?: string | null
+          email_sent_at?: string | null
           id?: string
+          license_error?: string | null
           license_issued_at?: string | null
           license_key?: string | null
           paypal_order_id?: string | null
