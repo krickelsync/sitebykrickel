@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft, Lock } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft, Lock, Check, Copy, Download } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
@@ -9,13 +9,39 @@ import PayPalProvider from "@/components/PayPalProvider";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
+interface LicenseResult {
+  license_key: string;
+  download_url: string;
+  paypal_order_id: string;
+  buyer_email?: string | null;
+  theme_slug?: string | null;
+}
+
 const CartDrawer = () => {
   const { items, isOpen, close, setQty, remove, total, clear } = useCart();
-  const [step, setStep] = useState<"cart" | "checkout">("cart");
+  const [step, setStep] = useState<"cart" | "checkout" | "success">("cart");
+  const [license, setLicense] = useState<LicenseResult | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const handleClose = () => {
     close();
-    setTimeout(() => setStep("cart"), 200);
+    setTimeout(() => {
+      setStep("cart");
+      setLicense(null);
+      setCopied(false);
+    }, 200);
+  };
+
+  const copyKey = async () => {
+    if (!license) return;
+    try {
+      await navigator.clipboard.writeText(license.license_key);
+      setCopied(true);
+      toast.success("License key copied");
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      toast.error("Copy failed");
+    }
   };
 
   return (
@@ -39,6 +65,10 @@ const CartDrawer = () => {
                 </button>
                 Checkout
               </>
+            ) : step === "success" ? (
+              <>
+                <Check className="w-5 h-5 text-primary" /> Payment complete
+              </>
             ) : (
               <>
                 <ShoppingCart className="w-5 h-5" /> Your Cart
@@ -52,7 +82,54 @@ const CartDrawer = () => {
           </SheetTitle>
         </SheetHeader>
 
-        {items.length === 0 ? (
+        {step === "success" && license ? (
+          <div className="flex-1 overflow-y-auto py-4 space-y-4">
+            <div className="rounded-2xl border border-border bg-secondary/30 p-4 space-y-3">
+              <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                Your lifetime license key
+              </p>
+              <div className="flex items-center gap-2">
+                <code className="flex-1 font-mono text-xs break-all bg-background/60 rounded-lg px-3 py-2 border border-border">
+                  {license.license_key}
+                </code>
+                <button
+                  onClick={copyKey}
+                  className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-lg border border-border hover:bg-foreground/5"
+                  aria-label="Copy license key"
+                >
+                  {copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}
+                </button>
+              </div>
+              <a
+                href={license.download_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground font-mono uppercase tracking-wider text-xs py-3 hover:opacity-90"
+              >
+                <Download className="w-4 h-4" /> Download theme ZIP
+              </a>
+            </div>
+
+            <div className="rounded-2xl border border-border p-4 text-xs font-mono space-y-2 text-muted-foreground">
+              <p className="uppercase tracking-wider text-foreground text-[10px]">How to install</p>
+              <ol className="list-decimal pl-4 space-y-1 leading-relaxed">
+                <li>Download the ZIP.</li>
+                <li>Shopify. Online Store, Themes, Add theme, Upload ZIP.</li>
+                <li>Open theme editor. Activation popup appears.</li>
+                <li>Paste your license key. Locked lifetime to your store.</li>
+              </ol>
+              {license.buyer_email && (
+                <p className="pt-2 text-[10px]">
+                  A copy was emailed to {license.buyer_email}.
+                </p>
+              )}
+            </div>
+
+            <Button onClick={handleClose} className="w-full rounded-full font-mono uppercase tracking-wider text-xs">
+              Done
+            </Button>
+          </div>
+        ) : items.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center text-center gap-3 px-6">
             <div className="w-14 h-14 rounded-full border border-border flex items-center justify-center">
               <ShoppingCart className="w-6 h-6 text-muted-foreground" />
@@ -189,26 +266,48 @@ const CartDrawer = () => {
                       const payer = details.payer;
                       const buyer_name =
                         [payer?.name?.given_name, payer?.name?.surname].filter(Boolean).join(" ") || null;
+                       const paypal_order_id = details.id ?? data.orderID;
                        try {
-                         await supabase.functions.invoke("record-order", {
+                         const { data: res, error } = await supabase.functions.invoke("record-order", {
                            body: {
-                             paypal_order_id: details.id ?? data.orderID,
+                             paypal_order_id,
+                             theme_slug: "sync",
                              items: items.map((it) => ({
                                product_id: it.id,
                                product_title: `${it.title} x${it.qty}`,
                                amount: it.price * it.qty,
+                               theme_slug: "sync",
                              })),
                            },
                          });
+                         if (error) throw error;
+                         if (res?.license_key && res?.download_url) {
+                           const lic: LicenseResult = {
+                             license_key: res.license_key,
+                             download_url: res.download_url,
+                             paypal_order_id,
+                             buyer_email: res.buyer_email,
+                             theme_slug: res.theme_slug,
+                           };
+                           try {
+                             localStorage.setItem(`license:${paypal_order_id}`, JSON.stringify(lic));
+                           } catch {}
+                           setLicense(lic);
+                           setStep("success");
+                           clear();
+                           toast.success(`Payment successful! Thanks, ${payer?.name?.given_name || "friend"}.`);
+                           return;
+                         }
+                         toast.warning(
+                           res?.license_error
+                             ? `Payment ok but license issue failed: ${res.license_error}`
+                             : "Payment ok but license not issued. Check your email or contact support."
+                         );
                        } catch (err) {
-                         console.error("Failed to record orders:", err);
+                         console.error("Failed to record order:", err);
+                         toast.error("Payment recorded issue. Please contact support with your PayPal order ID.");
                        }
                        void buyer_name;
-                      toast.success(
-                        `Payment successful! Thanks, ${payer?.name?.given_name || "friend"}.`
-                      );
-                      clear();
-                      handleClose();
                     }}
                     onError={(err) => {
                       console.error("PayPal error:", err);
