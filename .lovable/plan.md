@@ -1,119 +1,175 @@
-## Plan: Full System Hardening & New Features
+## Refactoring & Optimization Plan — SitebyKrickel
 
-Urutan dari yang paling penting (bug fix) → nice-to-have. Semua bisa gw kerjain sekali jalan pas lo tidur, tapi gw pecah biar lo bisa cek satu-satu besok.
+Tujuan: bikin codebase lebih rapih, cepat, aman, dan gampang dirawat tanpa ngerubah desain/UX yang udah lo suka (Hero, Prism/Liquid Chrome, Pricing card, dll gak diutak-atik visualnya).
 
----
-
-### PHASE 1 — Bug fix & audit (WAJIB)
-
-**1.1 Fix `record-order` crash**
-- Wrap `await req.json()` di try/catch → return 400 dengan message jelas, bukan 500.
-- Tambah validasi Zod untuk seluruh body (items, buyer_email, paypal_order_id, dll).
-- Log request ID biar gampang trace di edge function logs.
-
-**1.2 End-to-end audit (gw run manual via Playwright)**
-- Homepage load → cart → checkout → PayPal sandbox → success → license issued → email sent → order muncul di `/account` → order detail.
-- Admin login Google → dashboard KPI → orders table → order detail drawer → install status toggle.
-- Coupon apply → discount kalkulasi → PayPal charge match → `used_count` naik.
-- Report semua bug yang ketemu di response akhir.
+Urutan step disusun dari **paling low-risk & high-impact** ke yang lebih berat. Tiap step bisa gw kerjain terpisah biar gampang review.
 
 ---
 
-### PHASE 2 — Refund flow (HIGH VALUE)
+### STEP 1 — Codebase hygiene (low risk, foundation)
 
-**2.1 Edge function `refund-order`**
-- Input: `order_id`, `reason`, optional `amount` (partial refund).
-- Call PayPal Payments API v2 `/v2/payments/captures/{capture_id}/refund`.
-- Call license dashboard API `POST /api/public/license/revoke` (butuh endpoint baru di project license lo — gw kasih prompt).
-- Update `orders.status = 'refunded'` + `refunded_at`, `refund_amount`, `refund_reason`.
-- Log ke `webhook_logs`.
+**1.1 Dead code sweep**
+- Scan file gak kepake: `Logo3D`, `DesignBentoGrid`, `Prism.tsx` (udah diganti Liquid Chrome), `ExpertiseCard`, `WhyChooseCard`, `SkillBar`, `AnnouncementBar`, `ContactForm` (kalau gak dipake), `CurvedLoop`.
+- Hapus asset `.asset.json` orphan.
+- Purge komentar debug & `console.log` di prod path.
 
-**2.2 Admin UI**
-- Tombol "Refund" di `OrderDetailDrawer` (dengan konfirmasi modal).
-- Badge "Refunded" di orders table.
-- Email otomatis ke buyer via Resend: "Your refund has been processed".
+**1.2 Import & alias audit**
+- Enforce `@/` alias di semua import (ada beberapa relative import kepanjangan).
+- Remove circular imports kalau ada.
 
----
-
-### PHASE 3 — Abandoned cart recovery
-
-**3.1 Database**
-- Tabel `abandoned_carts`: email, items (jsonb), subtotal, coupon_code, created_at, recovered_at, reminded_at.
-- RLS: service_role only (admin bisa lihat).
-
-**3.2 Capture logic**
-- Di `CartDrawer` step checkout: begitu user isi email + belum bayar dalam 5 menit → insert row via edge function `capture-abandoned-cart`.
-- Kalau order sukses → mark `recovered_at`.
-
-**3.3 Reminder cron**
-- Edge function `send-cart-reminders` (dijalankan manual via curl atau cron eksternal — Lovable Cloud gak ada pg_cron trigger otomatis, jadi gw kasih instruksi setup cron-job.org gratis).
-- Kirim email Resend dengan link recovery `?recover=<token>` yang restore cart.
+**1.3 TypeScript strictness**
+- Aktifin `noUnusedLocals`, `noUnusedParameters`, `noImplicitReturns` di `tsconfig.app.json`.
+- Ganti `any` yang masih nyisa (terutama di edge functions & Supabase query results) pakai `Database` types.
 
 ---
 
-### PHASE 4 — Analytics dashboard di admin
+### STEP 2 — Component architecture cleanup
 
-**4.1 KPI baru**
-- Conversion rate: `orders.count / cart_events.count` last 30d.
-- Revenue chart (line chart 30d) — pake `recharts` yang udah ada.
-- Top coupons: leaderboard by `used_count` & total discount given.
-- Refund rate & MRR-ish (kalau ada repeat buyer).
+**2.1 Folder restructure (co-location by feature)**
+```text
+src/
+  features/
+    cart/         (CartContext, CartDrawer, CartButton, paypal-fees)
+    checkout/     (PayPal wrapper, checkout logic)
+    admin/        (all admin/* + pages/Admin*)
+    account/      (Account, OrderDetail, buyer auth)
+    landing/      (Hero, Pricing, sections/*)
+  components/ui/  (shadcn only, jangan campur)
+  lib/            (utilities murni)
+```
 
-**4.2 Cart tracking events**
-- Tabel `cart_events` (view, add, checkout_start, purchase) — lightweight.
-- Trigger dari frontend via edge function `track-event`.
+**2.2 Extract oversized components**
+- `Pricing.tsx` (~500+ baris): pisah jadi `PricingHero`, `PricingFeatureGroups`, `PricingAddons`, `PricingCTA`. Data feature groups pindah ke `pricing-data.ts`.
+- `CartDrawer.tsx`: split jadi `CartLineItem`, `CouponInput`, `CheckoutSummary`, `SuccessView`.
+- `Admin.tsx`: pecah tab jadi routes atau sub-components.
 
----
-
-### PHASE 5 — Resend receipt (QUICK WIN)
-
-**5.1 Button "Resend receipt" di `/account/orders/:id`**
-- Panggil edge function baru `resend-receipt` dengan `order_id`.
-- Rate limit: max 3× per hari per order (simpen di `email_logs`).
-- Reuse template email yang udah ada.
-
----
-
-### PHASE 6 — Rate limiting & security polish
-
-**6.1 Rate limit `record-order` & `redeem-coupon`**
-- Simple in-memory Map per IP (edge function cold-start friendly) atau pake tabel `rate_limits` (ip, endpoint, count, window_start).
-- 10 req/min per IP untuk `record-order`, 20/min untuk coupon validate.
-
-**6.2 Coupon URL auto-apply**
-- Di `Pricing` & `CartDrawer`: read `?code=XXX` dari URL → auto-apply saat cart dibuka.
-- Tampilin toast "Coupon XXX applied — you saved $Y".
+**2.3 Reusable primitives**
+- `<Money value={...} />` — konsisten format currency (skrg ada `.toFixed(2)` scattered).
+- `<StatusBadge status="pending|paid|refunded" />` — sekarang duplicate di 3 tempat.
+- `<CopyButton value={...} />` — copy-to-clipboard reusable.
+- `<EmptyState />` untuk cart/orders/admin.
 
 ---
 
-### PHASE 7 — Invoice PDF (OPSIONAL, kalau sempat)
+### STEP 3 — Performance optimization
 
-- Edge function `generate-invoice` pake `jspdf` (via esm.sh).
-- Include: order ID, buyer info, line items, tax breakdown, PayPal txn ID.
-- Attach ke email receipt + downloadable dari `/account/orders/:id`.
+**3.1 Bundle split**
+- Route-level `React.lazy` untuk `Admin*` pages, `OrderDetail`, `Showcase`, `StyleGuide`, `ProductDetail`. Admin bundle jangan ke-load buat public visitor.
+- Lazy load `@paypal/react-paypal-js` — cuma inject kalau cart terbuka (skrg loaded di root).
+- Lazy load Recharts (dipake cuma di Admin RevenueCharts).
+
+**3.2 Asset optimization**
+- Verify semua phone screenshots pake WebP + `loading="lazy"` + explicit `width`/`height` (biar gak CLS).
+- Preload cuma hero background + first phone image.
+- Add `<link rel="preconnect">` buat Supabase & PayPal origins.
+
+**3.3 Runtime perf**
+- Wrap `HeroFloatingStats`, `HomeReviewsWall`, `DesktopShowcase`, `MobileFirstSection` di `React.memo` + observer-gated (udah ada polanya).
+- Debounce Lenis scroll listener (ada di `useLowPower`).
+- Kill duplicate re-renders di `CartContext` — pecah jadi `CartStateContext` + `CartActionsContext` biar consumer yg cuma butuh `open()` gak re-render tiap items berubah.
+
+**3.4 Data fetching**
+- Pastikan React Query dipake konsisten (skrg ada mix useState + supabase langsung di beberapa admin page).
+- Add `staleTime` sensible defaults, prefetch `/account` orders on Navbar hover.
 
 ---
 
-### Yang gw SKIP (butuh keputusan lo)
+### STEP 4 — Edge functions refactor
 
-- **Refund via license dashboard revoke**: butuh lo tambahin endpoint `POST /api/public/license/revoke` di project `nigggaaa`. Gw kasih prompt terpisah besok.
-- **Abandoned cart cron**: Lovable Cloud gak punya scheduler built-in. Gw setup edge function-nya, tapi lo harus daftar cron-job.org (gratis) buat trigger tiap jam.
-- **Invoice VAT**: kalau lo mau EU VAT compliant butuh info tax settings (registered country, VAT ID). Gw skip default → invoice tanpa tax.
+**4.1 Shared modules**
+Bikin `supabase/functions/_shared/`:
+- `cors.ts` — sekarang di-duplicate di semua function.
+- `paypal.ts` — `accessToken()`, `verifyOrder()`, `refund()` reusable.
+- `resend.ts` — email wrapper + template loader.
+- `license.ts` — issue/revoke license dashboard calls.
+- `logging.ts` — structured logger dgn request ID.
+
+**4.2 record-order slim-down**
+Fungsi skrg ~350 baris. Setelah extract:
+- Handler tinggal orchestrate: `validate → verifyPayPal → issueLicense → upsertOrder → redeemCoupon → sendEmail`.
+- Setiap step return typed result, gampang di-test.
+
+**4.3 Rate limiting**
+Tabel `rate_limits(ip, endpoint, window_start, count)` + helper `checkRateLimit()`. Terapin ke `record-order`, `refund-order`, `resend-receipt`, `send-contact-email`.
+
+**4.4 Idempotency table**
+Selain unique constraint di `paypal_order_id`, tambah `idempotency_keys` table untuk endpoint non-order (refund retries, email resends).
 
 ---
 
-### Delivery order (tonight)
+### STEP 5 — Database & security
 
-Gw kerjain berurutan supaya kalau ada yang break, gampang trace:
+**5.1 Schema review**
+- Audit `orders` table (27 kolom!) — pisah jadi `orders` + `order_licenses` + `order_addons` (normalized) ATAU tambahin proper indexes utk kolom yang sering di-query (`buyer_email`, `status`, `created_at`, `paypal_order_id`).
+- Add composite index `(status, created_at DESC)` buat admin dashboard.
+- Add index `(buyer_email, created_at DESC)` buat `/account`.
 
-1. Phase 1 (bug fix + audit) — pasti
-2. Phase 5 (resend receipt) — cepet, low risk
-3. Phase 6 (rate limit + coupon URL) — cepet
-4. Phase 2 (refund) — medium, gw skip revoke license kalau endpoint external belum ada
-5. Phase 4 (analytics) — medium
-6. Phase 3 (abandoned cart) — capture-nya aja, cron setup lo kerjain
-7. Phase 7 (invoice PDF) — kalau masih ada budget
+**5.2 RLS audit**
+- Re-run security scanner setelah refactor.
+- Pastikan `webhook_logs`, `email_logs` cuma readable oleh admin (`has_role`).
+- Verify `coupons` `SELECT` policy gak leak `used_count` ke public.
 
-Besok pagi lo dapet: list bug yang ketemu, semua fitur baru siap tes, prompt buat project license (revoke endpoint), instruksi setup cron gratis.
+**5.3 Migration hygiene**
+Tambah rollback comments di migration baru, dokumentasi grants pattern di `.lovable/db-conventions.md`.
 
-Approve? Atau ada yang mau di-skip/tambah dulu sebelum gw mulai?
+---
+
+### STEP 6 — Accessibility & UX polish
+
+- Audit tab-order di Cart, Admin drawers, Mobile bottom nav.
+- Semua interactive element punya `aria-label` (icon-only buttons).
+- Focus trap di `CartDrawer`, `OrderDetailDrawer`.
+- Skip-to-content link di Navbar.
+- Reduced-motion respect di semua animasi non-critical (banyak yg udah, tinggal audit).
+
+---
+
+### STEP 7 — Testing & CI safety net
+
+**7.1 Critical path tests**
+- Unit: `paypal-fees.ts`, `revenue.ts`, coupon calc, cart reducer.
+- Integration (vitest + msw): `record-order` happy path + 3 failure modes (invalid body, amount mismatch, license 404).
+- E2E (Playwright script yg gw jalanin): homepage → cart → sandbox checkout → account → order detail.
+
+**7.2 Type-check gate**
+`tsgo` run di pre-commit (via lightweight `simple-git-hooks`).
+
+---
+
+### STEP 8 — Observability
+
+- Structured logs di semua edge functions (JSON dgn `request_id`, `paypal_order_id`, `buyer_email` hashed).
+- Add `error_logs` table + `logError()` helper. Admin bisa liat error timeline.
+- Sentry alternative: pipe browser errors ke edge function `track-error` → simpan di DB (opsional).
+
+---
+
+### STEP 9 — Documentation
+
+- `README.md` rewrite: architecture overview, env vars, how to run, how to deploy edge function, PayPal sandbox setup.
+- `.lovable/conventions.md`: naming, folder rules, styling tokens, RLS pattern.
+- Inline JSDoc di edge functions + shared utils.
+
+---
+
+### Execution order (rekomendasi gw)
+
+1. **Step 1 + 2** dulu (hygiene + component split) — no functional change, aman.
+2. **Step 3** (perf) — measurable win, gak nyentuh business logic.
+3. **Step 4** (edge fn refactor) — high value, gw test tiap function via curl setelah split.
+4. **Step 5** (DB indexes + RLS audit) — quick win.
+5. **Step 6** (a11y) — pass ke award submission.
+6. **Step 7 + 8 + 9** — long-term maintenance.
+
+---
+
+### Yang **gak** akan gw sentuh
+- Desain visual Hero (Liquid Chrome, floating stats, reactor layer).
+- Copywriting yang udah lo approve.
+- Pricing card look & feel.
+- Font stack (Plus Jakarta Sans + Syne).
+- Warna & tokens di `index.css`.
+
+---
+
+Approve semua, atau lo mau gw mulai dari step spesifik dulu (misal cuma Step 1+2, atau langsung Step 3 buat perf)?
