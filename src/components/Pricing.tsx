@@ -259,8 +259,8 @@ const Pricing = () => {
               397 customization options, no code required
             </p>
 
-            {/* Feature groups . collapsible on mobile, always open on md+ */}
-            <div className="relative flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-8">
+            {/* Feature groups . masonry columns so closing one doesn't leave a gap */}
+            <div className="relative flex-1 columns-1 md:columns-2 gap-3 md:gap-4 mb-8 [column-fill:balance]">
               {FEATURE_GROUPS.map((group, idx) => {
                 const Icon = group.icon;
                 // Mobile: all open. Desktop: first row (left + right = idx 0 & 1) open.
@@ -269,7 +269,7 @@ const Pricing = () => {
                   <details
                     key={group.category}
                     open={defaultOpen}
-                    className="group/details feature-group border border-foreground/10 bg-foreground/[0.02] open:bg-foreground/[0.04] transition-colors"
+                    className="group/details feature-group mb-3 md:mb-4 break-inside-avoid border border-foreground/10 bg-foreground/[0.02] open:bg-foreground/[0.04] transition-colors"
                   >
                     <summary className="flex items-center gap-2 px-3 py-2.5 cursor-pointer list-none [&::-webkit-details-marker]:hidden hover:bg-foreground/[0.03] transition-colors">
                       <Icon
