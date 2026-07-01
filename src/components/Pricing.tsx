@@ -262,7 +262,7 @@ const Pricing = () => {
                 },
                 {
                   label: "Install & Setup",
-                  hint: "Done-for-you Shopify installation",
+                  hint: "Done-for-you theme installation",
                   price: "+$50",
                   value: installSetup,
                   set: setInstallSetup,
