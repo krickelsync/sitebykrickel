@@ -260,7 +260,7 @@ const Pricing = () => {
               {[
                 {
                   label: "Remove Watermark",
-                  hint: "Hide \"Powered by SitebyKrickel\" in footer",
+                  hint: "Hide \"SitebyKrickel\" in footer",
                   price: "+$50",
                   value: removeWatermark,
                   set: setRemoveWatermark,
@@ -346,7 +346,7 @@ const Pricing = () => {
             <a
               href="/about#contact"
               onClick={handleContactClick}
-              className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 bg-primary text-primary-foreground px-4 py-2.5 sm:px-8 sm:py-4 font-mono text-[clamp(0.6875rem,0.95vw,0.875rem)] font-bold uppercase tracking-wider overflow-hidden hover:glow-box cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background will-change-transform mt-2"
+              className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 rounded-full bg-primary text-primary-foreground px-4 py-2.5 sm:px-8 sm:py-4 font-mono text-[clamp(0.6875rem,0.95vw,0.875rem)] font-bold uppercase tracking-wider overflow-hidden hover:glow-box cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background will-change-transform mt-2"
               aria-label={`Get SYNC for $${price}`}
             >
               <span className="relative z-10">Get SYNC . ${price}</span>
