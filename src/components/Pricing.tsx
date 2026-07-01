@@ -79,7 +79,7 @@ function FeatureGroupDisclosure({
                 <span className="font-mono text-muted-foreground">
                   {item.label}
                   {item.value && (
-                    <span className="text-foreground"> . {item.value}</span>
+                    <span className="text-foreground"> {item.value}</span>
                   )}
                 </span>
               </li>
