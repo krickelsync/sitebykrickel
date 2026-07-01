@@ -3,7 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
-import { Copy, Download, LogOut, Mail, Loader2, Check, Package } from "lucide-react";
+import { Copy, Download, LogOut, Mail, Loader2, Check, Package, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 type Order = {
   id: string;
@@ -263,6 +264,13 @@ const Account = () => {
                       : "License is being issued. Refresh in a moment."}
                   </div>
                 )}
+
+                <Link
+                  to={`/account/orders/${order.id}`}
+                  className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground hover:text-foreground"
+                >
+                  View order details <ArrowRight className="w-3 h-3" />
+                </Link>
               </li>
             ))}
           </ul>
