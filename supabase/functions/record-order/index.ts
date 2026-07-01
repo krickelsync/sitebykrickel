@@ -32,6 +32,8 @@ const BodySchema = z.object({
   gross_amount: z.number().nonnegative().optional(),
   addons: AddonsSchema,
   buyer_email_override: z.string().email().max(200).optional(),
+  coupon_code: z.string().min(1).max(60).optional(),
+  discount_amount: z.number().nonnegative().optional(),
 });
 
 const PAYPAL_BASE =
@@ -230,6 +232,8 @@ Deno.serve(async (req) => {
       gross_amount: bodyGross,
       addons: bodyAddons,
       buyer_email_override,
+      coupon_code,
+      discount_amount,
     } = parsed.data;
 
     const pp = await verifyPaypalOrder(paypal_order_id);
@@ -363,6 +367,8 @@ Deno.serve(async (req) => {
       license_error: licenseError,
       subtotal,
       processing_fee,
+      coupon_code: coupon_code ?? null,
+      discount_amount: discount_amount ?? null,
       addons,
       install_status:
         addons.install_setup ? "pending" : null,
@@ -372,6 +378,27 @@ Deno.serve(async (req) => {
       ? await admin.from("orders").update(orderRow).eq("id", existing.id)
       : await admin.from("orders").insert(orderRow);
     if (error) throw error;
+
+    // Redeem coupon (idempotent-ish: only on first insert of this order).
+    if (!existing?.id && coupon_code) {
+      try {
+        const orderId = (
+          await admin
+            .from("orders")
+            .select("id")
+            .eq("paypal_order_id", paypal_order_id)
+            .maybeSingle()
+        ).data?.id;
+        if (orderId) {
+          await admin.rpc("redeem_coupon", {
+            _code: coupon_code,
+            _order_id: orderId,
+          });
+        }
+      } catch (e) {
+        console.warn("[coupon] redeem failed", (e as Error).message);
+      }
+    }
 
     // Fire-and-forget receipt email via Resend (if configured and license issued).
     if (license && buyer_email) {
