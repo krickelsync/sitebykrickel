@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { Copy, ExternalLink, Mail, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Copy, ExternalLink, Mail, X, Undo2, Save } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { OrderStatusBadge } from "./OrderStatusBadge";
+import { paypalFee, fmtMoney } from "@/lib/revenue";
 
 export type AdminOrder = {
   id: string;
@@ -63,6 +64,15 @@ export function OrderDetailDrawer({
   onClose: () => void;
 }) {
   const [resending, setResending] = useState(false);
+  const [refundAmt, setRefundAmt] = useState("");
+  const [note, setNote] = useState("");
+  const [savingNote, setSavingNote] = useState(false);
+  const [refunding, setRefunding] = useState(false);
+
+  useEffect(() => {
+    setRefundAmt("");
+    setNote(order?.admin_note ?? "");
+  }, [order?.id]);
 
   if (!order) return null;
 
@@ -86,6 +96,49 @@ export function OrderDetailDrawer({
       setResending(false);
     }
   };
+
+  const saveNote = async () => {
+    setSavingNote(true);
+    const { error } = await supabase
+      .from("orders")
+      .update({ admin_note: note || null })
+      .eq("id", order.id);
+    setSavingNote(false);
+    if (error) toast.error(error.message);
+    else toast.success("Note saved");
+  };
+
+  const recordRefund = async (fullRefund: boolean) => {
+    const value = fullRefund ? Number(order.amount) : Number(refundAmt);
+    if (!value || value <= 0) {
+      toast.error("Enter refund amount");
+      return;
+    }
+    if (value > Number(order.amount)) {
+      toast.error("Refund cannot exceed order amount");
+      return;
+    }
+    if (!confirm(`Record refund of ${fmtMoney(value)}? This does NOT trigger PayPal refund. Process the refund in PayPal separately.`)) return;
+    setRefunding(true);
+    const { error } = await supabase
+      .from("orders")
+      .update({
+        refunded_amount: value,
+        refunded_at: new Date().toISOString(),
+        status: value >= Number(order.amount) ? "REFUNDED" : "PARTIAL_REFUND",
+      })
+      .eq("id", order.id);
+    setRefunding(false);
+    if (error) toast.error(error.message);
+    else {
+      toast.success("Refund recorded");
+      setRefundAmt("");
+    }
+  };
+
+  const fee = paypalFee(Number(order.amount));
+  const refunded = Number(order.refunded_amount || 0);
+  const net = +(Number(order.amount) - fee - refunded).toFixed(2);
 
   return (
     <div className="fixed inset-0 z-[80] flex" role="dialog" aria-modal="true">
@@ -112,12 +165,34 @@ export function OrderDetailDrawer({
             <div className="flex items-center gap-2">
               <OrderStatusBadge kind="license" order={order} />
               <OrderStatusBadge kind="email" order={order} />
+              {refunded > 0 && (
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-red-500/10 text-red-400 border border-red-500/20 text-[11px] font-mono uppercase">
+                  Refunded
+                </span>
+              )}
             </div>
             <p className="font-display text-2xl font-bold">
               ${Number(order.amount).toFixed(2)}{" "}
               <span className="text-xs font-mono text-muted-foreground">{order.currency}</span>
             </p>
             <p className="font-mono text-[11px] text-muted-foreground">{fmt(order.created_at)}</p>
+          </section>
+
+          <section className="space-y-2">
+            <h3 className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+              Revenue breakdown
+            </h3>
+            <div className="glass-card p-3 text-xs font-mono space-y-1.5">
+              <div className="flex justify-between"><span className="text-muted-foreground">Gross</span><span>{fmtMoney(Number(order.amount))}</span></div>
+              <div className="flex justify-between"><span className="text-muted-foreground">PayPal fee</span><span className="text-amber-400">. {fmtMoney(fee)}</span></div>
+              {refunded > 0 && (
+                <div className="flex justify-between"><span className="text-muted-foreground">Refund</span><span className="text-red-400">. {fmtMoney(refunded)}</span></div>
+              )}
+              <div className="flex justify-between border-t border-border pt-1.5 mt-1.5">
+                <span className="text-muted-foreground">Net</span>
+                <span className="text-emerald-400 font-bold">{fmtMoney(net)}</span>
+              </div>
+            </div>
           </section>
 
           <section className="space-y-2">
@@ -147,6 +222,13 @@ export function OrderDetailDrawer({
                 at={order.email_sent_at}
                 ok={!!order.email_sent_at}
               />
+              {order.refunded_at && (
+                <TimelineRow
+                  label={`Refunded ${fmtMoney(refunded)}`}
+                  at={order.refunded_at}
+                  ok={true}
+                />
+              )}
             </div>
           </section>
 
@@ -204,6 +286,63 @@ export function OrderDetailDrawer({
               )}
             </div>
           </section>
+
+          <section className="space-y-2">
+            <h3 className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+              Admin note
+            </h3>
+            <textarea
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              rows={3}
+              placeholder="Internal note about this buyer or order."
+              className="w-full glass-card p-3 text-xs font-mono bg-transparent resize-none focus:outline-none focus:ring-1 focus:ring-primary/40"
+            />
+            <button
+              onClick={saveNote}
+              disabled={savingNote}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-border text-xs font-mono hover:bg-secondary disabled:opacity-60"
+            >
+              <Save className="w-3 h-3" /> {savingNote ? "Saving." : "Save note"}
+            </button>
+          </section>
+
+          {refunded < Number(order.amount) && (
+            <section className="space-y-2">
+              <h3 className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                Record refund
+              </h3>
+              <p className="text-[11px] font-mono text-muted-foreground">
+                Manual bookkeeping only. Process the actual refund in PayPal first.
+              </p>
+              <div className="flex gap-2">
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  max={order.amount}
+                  value={refundAmt}
+                  onChange={(e) => setRefundAmt(e.target.value)}
+                  placeholder="Amount"
+                  className="flex-1 glass-card px-3 py-2 text-xs font-mono bg-transparent focus:outline-none focus:ring-1 focus:ring-primary/40"
+                />
+                <button
+                  onClick={() => recordRefund(false)}
+                  disabled={refunding}
+                  className="px-3 py-2 rounded-md border border-border text-xs font-mono hover:bg-secondary disabled:opacity-60"
+                >
+                  Partial
+                </button>
+                <button
+                  onClick={() => recordRefund(true)}
+                  disabled={refunding}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-md bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-mono hover:bg-red-500/30 disabled:opacity-60"
+                >
+                  <Undo2 className="w-3 h-3" /> Full
+                </button>
+              </div>
+            </section>
+          )}
 
           {order.license_key && order.buyer_email && (
             <button
