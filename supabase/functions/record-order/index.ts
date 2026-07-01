@@ -31,6 +31,7 @@ const BodySchema = z.object({
   processing_fee: z.number().nonnegative().optional(),
   gross_amount: z.number().nonnegative().optional(),
   addons: AddonsSchema,
+  buyer_email_override: z.string().email().max(200).optional(),
 });
 
 const PAYPAL_BASE =
@@ -228,6 +229,7 @@ Deno.serve(async (req) => {
       processing_fee: bodyFee,
       gross_amount: bodyGross,
       addons: bodyAddons,
+      buyer_email_override,
     } = parsed.data;
 
     const pp = await verifyPaypalOrder(paypal_order_id);
@@ -261,7 +263,11 @@ Deno.serve(async (req) => {
     const payer = pp.payer ?? {};
     const buyer_name =
       [payer?.name?.given_name, payer?.name?.surname].filter(Boolean).join(" ") || null;
-    const buyer_email = payer?.email_address ?? null;
+    // Prefer buyer-entered email (used for account dashboard + receipt).
+    const buyer_email =
+      (buyer_email_override && buyer_email_override.trim()) ||
+      payer?.email_address ||
+      null;
     const currency =
       pu?.amount?.currency_code ?? pu?.payments?.captures?.[0]?.amount?.currency_code ?? "USD";
 
