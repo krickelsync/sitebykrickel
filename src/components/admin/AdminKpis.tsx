@@ -4,7 +4,7 @@ import { computeRevenue, fmtMoney } from "@/lib/revenue";
 type Order = {
   amount: number;
   currency: string;
-  refunded_amount: number | null;
+  refunded_amount?: number | null;
   status: string;
   license_key: string | null;
   license_error: string | null;

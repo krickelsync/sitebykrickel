@@ -14,7 +14,7 @@ import { paypalFee } from "@/lib/revenue";
 
 type Order = {
   amount: number;
-  refunded_amount: number | null;
+  refunded_amount?: number | null;
   product_title: string;
   created_at: string;
 };
