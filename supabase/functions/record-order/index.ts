@@ -156,12 +156,21 @@ async function issueLicense(input: {
     throw new Error("License dashboard rejected API key (401)");
   }
   if (res.status === 404) {
-    console.error("[license] 404 not found. theme_slug missing on dashboard", {
+    const isHtmlFallback = /<!doctype html|<html[\s>]/i.test(bodyPreview);
+    const message = isHtmlFallback
+      ? "License dashboard API route missing: /api/public/license/issue"
+      : `Theme slug not found: ${input.theme_slug}`;
+    console.error(
+      isHtmlFallback
+        ? "[license] 404 not found. dashboard issue API route missing"
+        : "[license] 404 not found. theme_slug missing on dashboard",
+      {
       ...logCtx,
       attempt,
       body: bodyPreview,
-    });
-    throw new Error(`Theme slug not found: ${input.theme_slug}`);
+      },
+    );
+    throw new Error(message);
   }
   if (!res.ok) {
     console.error("[license] non-ok response after retries", {
