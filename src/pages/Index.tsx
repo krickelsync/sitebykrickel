@@ -11,7 +11,6 @@ const DesktopShowcase = lazy(() => import("@/components/sections/DesktopShowcase
 const CustomizationSection = lazy(() => import("@/components/sections/CustomizationSection"));
 const CostComparison = lazy(() => import("@/components/sections/CostComparison"));
 const TrustBadges = lazy(() => import("@/components/sections/TrustBadges"));
-const ServicesAddon = lazy(() => import("@/components/sections/ServicesAddon"));
 const FinalCTA = lazy(() => import("@/components/sections/FinalCTA"));
 const HomeReviewsWall = lazy(() => import("@/components/sections/HomeReviewsWall"));
 const HomeVelocityText = lazy(() => import("@/components/sections/HomeVelocityText"));
@@ -45,7 +44,6 @@ const Index = () => {
       <div className="cv-auto"><Suspense fallback={<SectionLoader />}><Pricing /></Suspense></div>
       <div className="cv-auto"><Suspense fallback={<SectionLoader />}><HomeVelocityText /></Suspense></div>
       <div className="cv-auto"><Suspense fallback={<SectionLoader />}><HomeReviewsWall /></Suspense></div>
-      <div className="cv-auto"><Suspense fallback={<SectionLoader />}><ServicesAddon /></Suspense></div>
       <div className="cv-auto"><Suspense fallback={<SectionLoader />}><CurvedLoop /></Suspense></div>
       <div className="cv-auto"><Suspense fallback={<SectionLoader />}><FAQ /></Suspense></div>
       <div className="cv-auto"><Suspense fallback={<SectionLoader />}><FinalCTA /></Suspense></div>

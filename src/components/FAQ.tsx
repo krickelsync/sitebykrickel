@@ -14,7 +14,7 @@ const faqs = [
   { question: "Can I customize everything?", answer: "Yes. The theme is built block-based, so you can rearrange product pages, homepage, and section layouts freely." },
   { question: "Is it mobile responsive?", answer: "Every layout is built mobile-first and tested across iOS Safari and Android Chrome." },
   { question: "Do I get future updates?", answer: "Yes. Lifetime updates are included with every license." },
-  { question: "Can you install the theme for me?", answer: "Yes . choose the Done-for-you Setup package and we'll handle install, branding, and product setup." },
+  { question: "Can you install the theme for me?", answer: "Yes. Installation is an optional add-on . toggle \"Install & Setup\" on the pricing card and we'll install the theme on your Shopify store for you." },
   { question: "Is this good for streetwear and fashion brands?", answer: "Absolutely. The theme is designed for creative fashion, streetwear, and lifestyle brands that need editorial layouts." },
   { question: "Can I use it for multiple stores?", answer: "The single license covers one store. For multiple stores, the All Access tier covers unlimited usage." },
 ];

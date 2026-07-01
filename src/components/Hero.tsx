@@ -237,13 +237,13 @@ const Hero = () => {
         >
           {Array.from({ length: 2 }).map((_, i) => (
             <div key={i} className="flex shrink-0 items-center gap-10 px-6 font-mono text-[clamp(0.625rem,0.8vw,0.6875rem)] text-muted-foreground uppercase tracking-[0.4em]">
-              <span>Premium Shopify Setup</span>
+              <span>Premium Shopify Theme</span>
               <span className="text-primary">✦</span>
               <span>High Conversion Architecture</span>
               <span className="text-primary">✦</span>
-              <span>2-Day Delivery</span>
+              <span>Instant Download</span>
               <span className="text-primary">✦</span>
-              <span>Siteby Krickel Studio</span>
+              <span>Lifetime License</span>
               <span className="text-primary">✦</span>
             </div>
           ))}
