@@ -481,9 +481,15 @@ Deno.serve(async (req) => {
     );
   } catch (e) {
     console.error("record-order error:", e);
-    return new Response(JSON.stringify({ error: "Failed to record order" }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    // Return the real error message when it's safe (short, single-line, not a
+    // stack). The client maps known phrases to friendly copy via getFriendlyError.
+    const raw = (e as Error)?.message ?? "";
+    const safe = raw && !raw.includes("\n") && raw.length < 200
+      ? raw
+      : "Failed to record order. Please contact support with your PayPal order ID.";
+    return new Response(
+      JSON.stringify({ error: safe }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+    );
   }
 });
