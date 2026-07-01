@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, Pencil, Trash2, Eye, EyeOff, LogOut, Search, Copy, Download } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff, LogOut, Search, Copy, Download, KeyRound } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, useIsAdmin } from "@/hooks/useAuth";
 import { useProducts } from "@/hooks/useProducts";
@@ -185,6 +185,10 @@ const Admin = () => {
             <Link to="/admin/products/new"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-mono text-sm">
               <Plus className="w-4 h-4" /> New product
+            </Link>
+            <Link to="/admin/issue"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border font-mono text-sm hover:bg-secondary">
+              <KeyRound className="w-4 h-4" /> Manual issue
             </Link>
             <button
               onClick={async () => { await supabase.auth.signOut(); navigate("/admin/login"); }}
