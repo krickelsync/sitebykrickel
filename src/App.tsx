@@ -26,6 +26,9 @@ const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminProductEdit = lazy(() => import("./pages/AdminProductEdit"));
 const AdminIssueLicense = lazy(() => import("./pages/AdminIssueLicense"));
+const AdminCoupons = lazy(() => import("./pages/AdminCoupons"));
+const AdminLogs = lazy(() => import("./pages/AdminLogs"));
+const AdminThemes = lazy(() => import("./pages/AdminThemes"));
 const StyleGuide = lazy(() => import("./pages/StyleGuide"));
 
 const queryClient = new QueryClient({
@@ -63,6 +66,9 @@ const AppInner = () => {
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/products/:id" element={<AdminProductEdit />} />
           <Route path="/admin/issue" element={<AdminIssueLicense />} />
+          <Route path="/admin/coupons" element={<AdminCoupons />} />
+          <Route path="/admin/logs" element={<AdminLogs />} />
+          <Route path="/admin/themes" element={<AdminThemes />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
