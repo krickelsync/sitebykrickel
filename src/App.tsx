@@ -31,6 +31,7 @@ const AdminLogs = lazy(() => import("./pages/AdminLogs"));
 const AdminThemes = lazy(() => import("./pages/AdminThemes"));
 const StyleGuide = lazy(() => import("./pages/StyleGuide"));
 const Account = lazy(() => import("./pages/Account"));
+const OrderDetail = lazy(() => import("./pages/OrderDetail"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -64,6 +65,7 @@ const AppInner = () => {
           <Route path="/products/:slug" element={<ProductDetail />} />
           <Route path="/style-guide" element={<StyleGuide />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/account/orders/:id" element={<OrderDetail />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/products/:id" element={<AdminProductEdit />} />
