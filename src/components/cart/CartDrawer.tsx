@@ -65,6 +65,10 @@ const CartDrawer = () => {
                 </button>
                 Checkout
               </>
+            ) : step === "success" ? (
+              <>
+                <Check className="w-5 h-5 text-primary" /> Payment complete
+              </>
             ) : (
               <>
                 <ShoppingCart className="w-5 h-5" /> Your Cart
@@ -78,7 +82,54 @@ const CartDrawer = () => {
           </SheetTitle>
         </SheetHeader>
 
-        {items.length === 0 ? (
+        {step === "success" && license ? (
+          <div className="flex-1 overflow-y-auto py-4 space-y-4">
+            <div className="rounded-2xl border border-border bg-secondary/30 p-4 space-y-3">
+              <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                Your lifetime license key
+              </p>
+              <div className="flex items-center gap-2">
+                <code className="flex-1 font-mono text-xs break-all bg-background/60 rounded-lg px-3 py-2 border border-border">
+                  {license.license_key}
+                </code>
+                <button
+                  onClick={copyKey}
+                  className="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-lg border border-border hover:bg-foreground/5"
+                  aria-label="Copy license key"
+                >
+                  {copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}
+                </button>
+              </div>
+              <a
+                href={license.download_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground font-mono uppercase tracking-wider text-xs py-3 hover:opacity-90"
+              >
+                <Download className="w-4 h-4" /> Download theme ZIP
+              </a>
+            </div>
+
+            <div className="rounded-2xl border border-border p-4 text-xs font-mono space-y-2 text-muted-foreground">
+              <p className="uppercase tracking-wider text-foreground text-[10px]">How to install</p>
+              <ol className="list-decimal pl-4 space-y-1 leading-relaxed">
+                <li>Download the ZIP.</li>
+                <li>Shopify. Online Store, Themes, Add theme, Upload ZIP.</li>
+                <li>Open theme editor. Activation popup appears.</li>
+                <li>Paste your license key. Locked lifetime to your store.</li>
+              </ol>
+              {license.buyer_email && (
+                <p className="pt-2 text-[10px]">
+                  A copy was emailed to {license.buyer_email}.
+                </p>
+              )}
+            </div>
+
+            <Button onClick={handleClose} className="w-full rounded-full font-mono uppercase tracking-wider text-xs">
+              Done
+            </Button>
+          </div>
+        ) : items.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center text-center gap-3 px-6">
             <div className="w-14 h-14 rounded-full border border-border flex items-center justify-center">
               <ShoppingCart className="w-6 h-6 text-muted-foreground" />
