@@ -261,30 +261,6 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
-    // Idempotency: if we already recorded this paypal_order_id with a license, return it.
-    const { data: existing } = await admin
-      .from("orders")
-      .select("license_key, download_url, theme_slug")
-      .eq("paypal_order_id", paypal_order_id)
-      .not("license_key", "is", null)
-      .limit(1)
-      .maybeSingle();
-
-    if (existing?.license_key && existing?.download_url) {
-      return new Response(
-        JSON.stringify({
-          ok: true,
-          buyer_name,
-          buyer_email,
-          license_key: existing.license_key,
-          download_url: existing.download_url,
-          theme_slug: existing.theme_slug,
-          reused: true,
-        }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-      );
-    }
-
     // Determine theme slug from real theme rows only . skip addon rows so their
     // slugs never get sent to the license dashboard.
     const addonSlugs = new Set(["sync-remove-watermark", "sync-install-setup"]);
@@ -299,6 +275,31 @@ Deno.serve(async (req) => {
       install_setup: !!bodyAddons?.install_setup
         || items.some((i) => i.theme_slug === "sync-install-setup"),
     };
+
+    // Idempotency: one row per PayPal order. If PayPal retries or the user
+    // clicks again after a license-dashboard failure, never throw a duplicate
+    // key error back to the buyer.
+    const { data: existing } = await admin
+      .from("orders")
+      .select("id, license_key, download_url, theme_slug, buyer_email")
+      .eq("paypal_order_id", paypal_order_id)
+      .limit(1)
+      .maybeSingle();
+
+    if (existing?.license_key && existing?.download_url) {
+      return new Response(
+        JSON.stringify({
+          ok: true,
+          buyer_name,
+          buyer_email: existing.buyer_email ?? buyer_email,
+          license_key: existing.license_key,
+          download_url: existing.download_url,
+          theme_slug: existing.theme_slug ?? theme_slug,
+          reused: true,
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     // Issue license via external dashboard.
     let license: LicenseIssueResult | null = null;
@@ -331,31 +332,30 @@ Deno.serve(async (req) => {
       console.error("[license] skipped. missing buyer email", { paypal_order_id });
     }
 
-    const rows = items.map((it, idx) => ({
-      product_id: it.product_id ?? null,
-      product_title: it.product_title,
+    const orderRow = {
+      product_id: themeItem?.product_id ?? null,
+      product_title: items.map((it) => it.product_title).join(", ").slice(0, 300),
       buyer_email,
       buyer_name,
       paypal_order_id,
-      amount: it.amount,
+      amount: captured,
       currency,
       status: "COMPLETED",
-      theme_slug: it.theme_slug ?? theme_slug,
-      // attach license only to first row to avoid duplicating in DB
-      license_key: idx === 0 ? license?.license_key ?? null : null,
-      download_url: idx === 0 ? license?.download_url ?? null : null,
-      license_issued_at: idx === 0 && license ? new Date().toISOString() : null,
-      license_error: idx === 0 ? licenseError : null,
-      // Store fee breakdown only on the first row so revenue sums don't double-count.
-      subtotal: idx === 0 ? subtotal : null,
-      processing_fee: idx === 0 ? processing_fee : 0,
-      // Persist addon flags on the first row + set install_status if install requested.
-      addons: idx === 0 ? addons : {},
+      theme_slug,
+      license_key: license?.license_key ?? null,
+      download_url: license?.download_url ?? null,
+      license_issued_at: license ? new Date().toISOString() : null,
+      license_error: licenseError,
+      subtotal,
+      processing_fee,
+      addons,
       install_status:
-        idx === 0 && addons.install_setup ? "pending" : null,
-    }));
+        addons.install_setup ? "pending" : null,
+    };
 
-    const { error } = await admin.from("orders").insert(rows);
+    const { error } = existing?.id
+      ? await admin.from("orders").update(orderRow).eq("id", existing.id)
+      : await admin.from("orders").insert(orderRow);
     if (error) throw error;
 
     // Fire-and-forget receipt email via Resend (if configured and license issued).
