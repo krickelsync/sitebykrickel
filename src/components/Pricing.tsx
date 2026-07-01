@@ -363,7 +363,7 @@ const Pricing = () => {
           viewport={{ once: true }}
           className={`${typography.meta} text-center mt-6`}
         >
-          Secure payment, Setup starts within 24 hours
+          Secure payment, Instant download after purchase
         </motion.p>
       </div>
     </section>

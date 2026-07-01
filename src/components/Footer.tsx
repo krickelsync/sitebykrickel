@@ -104,7 +104,7 @@ const Footer = ({ customQuickLinks }: FooterProps = {}) => {
               />
             </h2>
             <p className={`text-muted-foreground max-w-xs leading-snug ${typography.body}`}>
-              Creative Agency. Graphic & Web Design for Clothing Brands & any business ready to stand out.
+              Premium Shopify themes for clothing brands, streetwear labels, and dropshippers ready to stand out.
             </p>
           </motion.div>
 
