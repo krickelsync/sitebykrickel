@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { useAuth, useIsAdmin } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import { getFriendlyError } from "@/lib/errors";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const AdminLogin = () => {
     });
     if (result.error) {
       setLoading(false);
-      toast.error(result.error.message || "Sign in failed");
+      toast.error(getFriendlyError(result.error, "Sign in failed"));
       return;
     }
     if (result.redirected) return;

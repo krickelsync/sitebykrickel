@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, useIsAdmin } from "@/hooks/useAuth";
 import { useProducts } from "@/hooks/useProducts";
+import { getFriendlyError } from "@/lib/errors";
 
 type Result = {
   license_key: string;
@@ -67,9 +68,8 @@ const AdminIssueLicense = () => {
       if (!data?.ok) throw new Error(data?.error ?? "Issue failed");
       setResult(data as Result);
       toast.success("License issued");
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Issue failed";
-      toast.error(msg);
+    } catch (err) {
+      toast.error(getFriendlyError(err, "Issue failed"));
     } finally {
       setSubmitting(false);
     }

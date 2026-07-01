@@ -4,6 +4,7 @@ import { ArrowLeft, Plus, Trash2, Save } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, useIsAdmin } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import { getFriendlyError } from "@/lib/errors";
 
 type Theme = {
   id: string;
@@ -66,7 +67,7 @@ const AdminThemes = () => {
       active: true,
     });
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) return toast.error(getFriendlyError(error));
     toast.success("Theme created");
     setForm(empty);
     load();
@@ -74,14 +75,14 @@ const AdminThemes = () => {
 
   const patch = async (id: string, values: Partial<Theme>) => {
     const { error } = await supabase.from("themes").update(values).eq("id", id);
-    if (error) toast.error(error.message);
+    if (error) toast.error(getFriendlyError(error));
     else load();
   };
 
   const remove = async (t: Theme) => {
     if (!confirm(`Delete theme ${t.slug}?`)) return;
     const { error } = await supabase.from("themes").delete().eq("id", t.id);
-    if (error) toast.error(error.message);
+    if (error) toast.error(getFriendlyError(error));
     else load();
   };
 

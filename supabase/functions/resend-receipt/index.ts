@@ -43,7 +43,16 @@ function buildHtml(opts: {
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   try {
-    const parsed = BodySchema.safeParse(await req.json());
+    let raw: unknown;
+    try {
+      raw = await req.json();
+    } catch {
+      return new Response(
+        JSON.stringify({ error: "Invalid or empty JSON body" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+    const parsed = BodySchema.safeParse(raw);
     if (!parsed.success) {
       return new Response(JSON.stringify({ error: parsed.error.flatten() }), {
         status: 400,
@@ -134,7 +143,11 @@ Deno.serve(async (req) => {
     );
   } catch (e) {
     console.error("resend-receipt error:", e);
-    return new Response(JSON.stringify({ error: "Failed to resend receipt" }), {
+    const raw = (e as Error)?.message ?? "";
+    const safe = raw && !raw.includes("\n") && raw.length < 200
+      ? raw
+      : "Failed to resend receipt";
+    return new Response(JSON.stringify({ error: safe }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });

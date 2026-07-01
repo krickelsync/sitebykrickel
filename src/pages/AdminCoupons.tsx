@@ -4,6 +4,7 @@ import { ArrowLeft, Plus, Trash2, Copy } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, useIsAdmin } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import { getFriendlyError } from "@/lib/errors";
 
 type Coupon = {
   id: string;
@@ -70,7 +71,7 @@ const AdminCoupons = () => {
       active: true,
     });
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) return toast.error(getFriendlyError(error));
     toast.success("Coupon created");
     setForm({ code: "", type: "percent", value: "10", max_uses: "", expires_at: "" });
     load();
@@ -78,14 +79,14 @@ const AdminCoupons = () => {
 
   const toggle = async (c: Coupon) => {
     const { error } = await supabase.from("coupons").update({ active: !c.active }).eq("id", c.id);
-    if (error) toast.error(error.message);
+    if (error) toast.error(getFriendlyError(error));
     else load();
   };
 
   const remove = async (c: Coupon) => {
     if (!confirm(`Delete coupon ${c.code}?`)) return;
     const { error } = await supabase.from("coupons").delete().eq("id", c.id);
-    if (error) toast.error(error.message);
+    if (error) toast.error(getFriendlyError(error));
     else {
       toast.success("Deleted");
       load();

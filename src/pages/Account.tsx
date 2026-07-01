@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { Copy, Download, LogOut, Mail, Loader2, Check, Package, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { getFriendlyError } from "@/lib/errors";
 
 type Order = {
   id: string;
@@ -67,7 +68,7 @@ const Account = () => {
     });
     if (result.error) {
       setSending(false);
-      toast.error(result.error.message || "Sign in failed");
+      toast.error(getFriendlyError(result.error, "Sign in failed"));
       return;
     }
     if (result.redirected) return;
@@ -84,7 +85,7 @@ const Account = () => {
     });
     setSending(false);
     if (error) {
-      toast.error(error.message);
+      toast.error(getFriendlyError(error));
       return;
     }
     toast.success("Check your inbox for a sign-in link");

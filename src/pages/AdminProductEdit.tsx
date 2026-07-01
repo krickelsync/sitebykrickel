@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth, useIsAdmin } from "@/hooks/useAuth";
 import { resolveImageUrl, type LandingBlock } from "@/hooks/useProducts";
 import { toast } from "sonner";
+import { getFriendlyError } from "@/lib/errors";
 
 type Feature = { title: string; description?: string };
 
@@ -56,7 +57,7 @@ const AdminProductEdit = () => {
     supabase.from("products").select("*").eq("id", id).maybeSingle().then(({ data, error }) => {
       if (cancelled) return;
       if (error) {
-        toast.error(error.message);
+        toast.error(getFriendlyError(error));
         setLoading(false);
         return;
       }
@@ -98,7 +99,7 @@ const AdminProductEdit = () => {
     const ext = file.name.split(".").pop();
     const path = `${crypto.randomUUID()}.${ext}`;
     const { error } = await supabase.storage.from("product-images").upload(path, file, { upsert: false });
-    if (error) { toast.error(error.message); return; }
+    if (error) { toast.error(getFriendlyError(error)); return; }
     setForm((f) => ({ ...f, cover_image: path }));
     toast.success("Image uploaded");
   };
@@ -122,7 +123,7 @@ const AdminProductEdit = () => {
       ? await supabase.from("products").insert(payload).select().single()
       : await supabase.from("products").update(payload).eq("id", id!).select().single();
     setSaving(false);
-    if (res.error) { toast.error(res.error.message); return; }
+    if (res.error) { toast.error(getFriendlyError(res.error)); return; }
     toast.success("Saved");
     navigate("/admin");
   };

@@ -16,6 +16,7 @@ import { useEffect, lazy, Suspense } from "react";
 import { useLocation } from "react-router-dom";
 import { installGlobalClickSound } from "@/lib/sound";
 import ChunkErrorBoundary from "./components/ChunkErrorBoundary";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const MusicPlayer = lazy(() => import("./components/MusicPlayer"));
 const Showcase = lazy(() => import("./pages/Showcase"));
@@ -56,6 +57,7 @@ const AppInner = () => {
       <SmoothScroll />
       {!hideChrome && <Navbar />}
       <ChunkErrorBoundary>
+      <ErrorBoundary>
       <Suspense fallback={<div className="min-h-[100svh]" aria-hidden />}>
         <Routes>
           <Route path="/" element={<Index />} />
@@ -76,6 +78,7 @@ const AppInner = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
+      </ErrorBoundary>
       </ChunkErrorBoundary>
       <Suspense fallback={null}>
         <MusicPlayer />
