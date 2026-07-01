@@ -339,6 +339,45 @@ export type Database = {
         }
         Relationships: []
       }
+      themes: {
+        Row: {
+          active: boolean
+          created_at: string
+          currency: string
+          description: string | null
+          download_url: string | null
+          id: string
+          name: string
+          price: number
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          currency?: string
+          description?: string | null
+          download_url?: string | null
+          id?: string
+          name: string
+          price?: number
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          currency?: string
+          description?: string | null
+          download_url?: string | null
+          id?: string
+          name?: string
+          price?: number
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

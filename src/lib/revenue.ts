@@ -9,7 +9,7 @@ export function paypalFee(amount: number) {
 
 export type RevenueRow = {
   amount: number;
-  refunded_amount: number | null;
+  refunded_amount?: number | null;
   status: string;
 };
 
