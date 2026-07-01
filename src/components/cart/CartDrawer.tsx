@@ -572,6 +572,8 @@ const CartDrawer = () => {
                              processing_fee: fees.fee,
                              gross_amount: fees.gross,
                              buyer_email_override: buyerEmail.trim() || undefined,
+                             coupon_code: appliedCoupon?.code,
+                             discount_amount: discountAmount || undefined,
                               addons: {
                                 remove_watermark: items.some(
                                   (it) => it.id === "addon-remove-watermark" || it.slug === "sync-remove-watermark",
@@ -585,7 +587,12 @@ const CartDrawer = () => {
                                 // Edge function requires uuid|null, so pass null and rely on theme_slug.
                                 product_id: null,
                                product_title: `${it.title} x${it.qty}`,
-                               amount: it.price * it.qty,
+                               // Scale each line so the sum equals the discounted subtotal
+                               // (record-order verifies items total against gross - fee).
+                               amount:
+                                 total > 0
+                                   ? +(((it.price * it.qty) / total) * fees.subtotal).toFixed(2)
+                                   : it.price * it.qty,
                                 // addon rows use their own slug so admin can tell them apart.
                                 theme_slug: it.slug || "sync",
                              })),
