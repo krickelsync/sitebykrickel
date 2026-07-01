@@ -147,7 +147,15 @@ Deno.serve(async (req) => {
       });
       status = r.status;
       bodyText = await r.text();
-      if (!r.ok) throw new Error(`License API ${r.status}: ${bodyText.slice(0, 200)}`);
+      if (!r.ok) {
+        const preview = bodyText.slice(0, 200);
+        const isHtmlFallback = r.status === 404 && /<!doctype html|<html[\s>]/i.test(preview);
+        throw new Error(
+          isHtmlFallback
+            ? "License dashboard API route missing: /api/public/license/issue"
+            : `License API ${r.status}: ${preview}`,
+        );
+      }
       const j = JSON.parse(bodyText);
       if (!j.license_key || !j.download_url) throw new Error("Missing license fields");
       licenseKey = j.license_key;
