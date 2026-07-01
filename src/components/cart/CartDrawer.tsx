@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft, Lock, Check, Copy, Download } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft, Lock, Check, Copy, Download, Mail, Loader2 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,10 @@ const CartDrawer = () => {
   const [step, setStep] = useState<"cart" | "checkout" | "success">("cart");
   const [license, setLicense] = useState<LicenseResult | null>(null);
   const [copied, setCopied] = useState(false);
+  const [resendOpen, setResendOpen] = useState(false);
+  const [resendEmail, setResendEmail] = useState("");
+  const [resending, setResending] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
 
   const handleClose = () => {
     close();
@@ -29,6 +33,10 @@ const CartDrawer = () => {
       setStep("cart");
       setLicense(null);
       setCopied(false);
+      setResendOpen(false);
+      setResendEmail("");
+      setResending(false);
+      setResendCooldown(0);
     }, 200);
   };
 
@@ -41,6 +49,44 @@ const CartDrawer = () => {
       setTimeout(() => setCopied(false), 1800);
     } catch {
       toast.error("Copy failed");
+    }
+  };
+
+  const startCooldown = (secs: number) => {
+    setResendCooldown(secs);
+    const tick = () => {
+      setResendCooldown((v) => {
+        if (v <= 1) return 0;
+        setTimeout(tick, 1000);
+        return v - 1;
+      });
+    };
+    setTimeout(tick, 1000);
+  };
+
+  const handleResend = async () => {
+    if (!license || resending || resendCooldown > 0) return;
+    const overrideRaw = resendEmail.trim();
+    const override = overrideRaw.length > 0 ? overrideRaw : undefined;
+    if (override && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(override)) {
+      toast.error("Enter a valid email");
+      return;
+    }
+    setResending(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("resend-receipt", {
+        body: { paypal_order_id: license.paypal_order_id, email: override },
+      });
+      if (error) throw error;
+      const sentTo = (data as { sent_to?: string })?.sent_to ?? override ?? license.buyer_email;
+      toast.success(`Receipt resent${sentTo ? ` to ${sentTo}` : ""}. Check spam too.`);
+      setResendOpen(false);
+      startCooldown(30);
+    } catch (e) {
+      const msg = (e as Error).message ?? "";
+      toast.error(msg || "Could not resend right now. Try again.");
+    } finally {
+      setResending(false);
     }
   };
 
