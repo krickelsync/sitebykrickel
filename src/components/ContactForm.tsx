@@ -7,6 +7,7 @@ import { Send, Loader2, CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { playSuccess } from "@/lib/sound";
+import { getFriendlyError } from "@/lib/errors";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
@@ -56,11 +57,11 @@ const ContactForm = () => {
       });
 
       setTimeout(() => setIsSuccess(false), 3000);
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error sending message:", error);
       toast({
         title: "Failed to send message",
-        description: "Please try again or email me directly.",
+        description: getFriendlyError(error, "Please try again or email me directly."),
         variant: "destructive",
       });
     } finally {
