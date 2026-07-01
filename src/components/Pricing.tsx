@@ -338,7 +338,7 @@ const Pricing = () => {
                 <FeatureGroupDisclosure
                   key={group.category}
                   group={group}
-                  defaultOpen={isMobile ? true : idx < 2}
+                  defaultOpen={idx === 0}
                 />
               ))}
             </div>
