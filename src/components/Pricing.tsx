@@ -13,11 +13,18 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { fadeIn } from "@/lib/motion";
-import { useContactScroll } from "@/hooks/useContactScroll";
 import { useIsMobile } from "@/hooks/use-mobile";
 import shopifyBadge from "@/assets/shopify-badge.png.asset.json";
 import { typography, textSize } from "@/components/ui/typography";
 import { useEffect, useRef, useState as useReactState } from "react";
+import { useCart } from "@/contexts/CartContext";
+
+// Stable cart IDs for SYNC theme + add-ons. Keep in sync with record-order edge fn.
+export const SYNC_CART_IDS = {
+  theme: "theme-sync",
+  removeWatermark: "addon-remove-watermark",
+  installSetup: "addon-install-setup",
+} as const;
 
 function FeatureGroupDisclosure({
   group,
@@ -184,11 +191,44 @@ const FEATURE_GROUPS: FeatureGroup[] = [
 ];
 
 const Pricing = () => {
-  const handleContactClick = useContactScroll();
   const isMobile = useIsMobile();
+  const { add, open, remove } = useCart();
   const [removeWatermark, setRemoveWatermark] = useState(false);
   const [installSetup, setInstallSetup] = useState(false);
   const price = 98 + (removeWatermark ? 50 : 0) + (installSetup ? 50 : 0);
+
+  const handleGetSync = () => {
+    // Reset any previous stale copies so quantities never drift.
+    remove(SYNC_CART_IDS.theme);
+    remove(SYNC_CART_IDS.removeWatermark);
+    remove(SYNC_CART_IDS.installSetup);
+    add({
+      id: SYNC_CART_IDS.theme,
+      slug: "sync",
+      title: "SYNC Theme",
+      price: 98,
+      image: null,
+    });
+    if (removeWatermark) {
+      add({
+        id: SYNC_CART_IDS.removeWatermark,
+        slug: "sync-remove-watermark",
+        title: "Remove Watermark add-on",
+        price: 50,
+        image: null,
+      });
+    }
+    if (installSetup) {
+      add({
+        id: SYNC_CART_IDS.installSetup,
+        slug: "sync-install-setup",
+        title: "Install & Setup add-on",
+        price: 50,
+        image: null,
+      });
+    }
+    open();
+  };
 
   return (
     <section id="pricing" className="py-14 md:py-32">
@@ -337,16 +377,16 @@ const Pricing = () => {
               ))}
             </div>
 
-            <a
-              href="/about#contact"
-              onClick={handleContactClick}
+            <button
+              type="button"
+              onClick={handleGetSync}
               className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 rounded-full bg-primary text-primary-foreground px-4 py-2.5 sm:px-8 sm:py-4 font-mono text-[clamp(0.6875rem,0.95vw,0.875rem)] font-bold uppercase tracking-wider overflow-hidden hover:glow-box cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background will-change-transform mt-2"
               aria-label={`Get SYNC for $${price}`}
             >
               <span className="relative z-10">Get SYNC . ${price}</span>
               <ArrowRight aria-hidden="true" className="relative z-10 group-hover:translate-x-1 transition-transform w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
               <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-            </a>
+            </button>
           </motion.div>
         </div>
 

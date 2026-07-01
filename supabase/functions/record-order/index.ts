@@ -16,6 +16,13 @@ const ItemSchema = z.object({
   theme_slug: z.string().min(1).max(100).optional(),
 });
 
+const AddonsSchema = z
+  .object({
+    remove_watermark: z.boolean().optional().default(false),
+    install_setup: z.boolean().optional().default(false),
+  })
+  .optional();
+
 const BodySchema = z.object({
   paypal_order_id: z.string().min(1).max(100),
   items: z.array(ItemSchema).min(1).max(50),
@@ -23,6 +30,7 @@ const BodySchema = z.object({
   subtotal: z.number().nonnegative().optional(),
   processing_fee: z.number().nonnegative().optional(),
   gross_amount: z.number().nonnegative().optional(),
+  addons: AddonsSchema,
 });
 
 const PAYPAL_BASE =
@@ -69,6 +77,10 @@ async function issueLicense(input: {
   paypal_order_id: string;
   amount?: number;
   currency?: string;
+  remove_watermark?: boolean;
+  install_requested?: boolean;
+  subtotal?: number;
+  processing_fee?: number;
 }): Promise<LicenseIssueResult> {
   const base = Deno.env.get("LICENSE_DASHBOARD_URL");
   const apiKey = Deno.env.get("LICENSE_ISSUE_API_KEY");
@@ -104,6 +116,11 @@ async function issueLicense(input: {
         paypal_order_id: input.paypal_order_id,
         amount: input.amount,
         currency: input.currency,
+        // Extended metadata . dashboard may ignore these fields safely.
+        remove_watermark: input.remove_watermark ?? false,
+        install_requested: input.install_requested ?? false,
+        subtotal: input.subtotal,
+        processing_fee: input.processing_fee,
       }),
     });
     console.log("[license] issue call", {
@@ -201,6 +218,7 @@ Deno.serve(async (req) => {
       subtotal: bodySubtotal,
       processing_fee: bodyFee,
       gross_amount: bodyGross,
+      addons: bodyAddons,
     } = parsed.data;
 
     const pp = await verifyPaypalOrder(paypal_order_id);
@@ -267,9 +285,20 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Determine theme slug (fallback to only theme currently available on dashboard).
-    const theme_slug =
-      bodyThemeSlug ?? items.find((i) => i.theme_slug)?.theme_slug ?? "sync";
+    // Determine theme slug from real theme rows only . skip addon rows so their
+    // slugs never get sent to the license dashboard.
+    const addonSlugs = new Set(["sync-remove-watermark", "sync-install-setup"]);
+    const themeItem = items.find(
+      (i) => i.theme_slug && !addonSlugs.has(i.theme_slug),
+    );
+    const theme_slug = bodyThemeSlug ?? themeItem?.theme_slug ?? "sync";
+
+    const addons = {
+      remove_watermark: !!bodyAddons?.remove_watermark
+        || items.some((i) => i.theme_slug === "sync-remove-watermark"),
+      install_setup: !!bodyAddons?.install_setup
+        || items.some((i) => i.theme_slug === "sync-install-setup"),
+    };
 
     // Issue license via external dashboard.
     let license: LicenseIssueResult | null = null;
@@ -283,6 +312,10 @@ Deno.serve(async (req) => {
           paypal_order_id,
           amount: captured,
           currency,
+          remove_watermark: addons.remove_watermark,
+          install_requested: addons.install_setup,
+          subtotal,
+          processing_fee,
         });
       } catch (e) {
         licenseError = (e as Error).message;
@@ -316,6 +349,10 @@ Deno.serve(async (req) => {
       // Store fee breakdown only on the first row so revenue sums don't double-count.
       subtotal: idx === 0 ? subtotal : null,
       processing_fee: idx === 0 ? processing_fee : 0,
+      // Persist addon flags on the first row + set install_status if install requested.
+      addons: idx === 0 ? addons : {},
+      install_status:
+        idx === 0 && addons.install_setup ? "pending" : null,
     }));
 
     const { error } = await admin.from("orders").insert(rows);

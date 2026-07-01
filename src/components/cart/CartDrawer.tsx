@@ -407,11 +407,20 @@ const CartDrawer = () => {
                              subtotal: fees.subtotal,
                              processing_fee: fees.fee,
                              gross_amount: fees.gross,
+                              addons: {
+                                remove_watermark: items.some(
+                                  (it) => it.id === "addon-remove-watermark" || it.slug === "sync-remove-watermark",
+                                ),
+                                install_setup: items.some(
+                                  (it) => it.id === "addon-install-setup" || it.slug === "sync-install-setup",
+                                ),
+                              },
                              items: items.map((it) => ({
                                product_id: it.id,
                                product_title: `${it.title} x${it.qty}`,
                                amount: it.price * it.qty,
-                               theme_slug: "sync",
+                                // addon rows use their own slug so admin can tell them apart.
+                                theme_slug: it.slug || "sync",
                              })),
                            },
                          });

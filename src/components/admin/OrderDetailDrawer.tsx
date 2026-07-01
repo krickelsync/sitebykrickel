@@ -25,6 +25,8 @@ export type AdminOrder = {
   refunded_amount?: number | null;
   refunded_at?: string | null;
   license_revoked_at?: string | null;
+  addons?: { remove_watermark?: boolean; install_setup?: boolean } | null;
+  install_status?: "pending" | "in_progress" | "done" | null;
 };
 
 function fmt(dt: string | null) {
@@ -68,9 +70,12 @@ export function OrderDetailDrawer({
   const [note, setNote] = useState("");
   const [savingNote, setSavingNote] = useState(false);
   const [revoking, setRevoking] = useState(false);
+  const [installStatus, setInstallStatus] = useState<string>("");
+  const [savingInstall, setSavingInstall] = useState(false);
 
   useEffect(() => {
     setNote(order?.admin_note ?? "");
+    setInstallStatus(order?.install_status ?? "");
   }, [order?.id]);
 
   if (!order) return null;
@@ -123,6 +128,18 @@ export function OrderDetailDrawer({
     else toast.success("License revoked");
   };
 
+  const updateInstallStatus = async (next: string) => {
+    setInstallStatus(next);
+    setSavingInstall(true);
+    const { error } = await supabase
+      .from("orders")
+      .update({ install_status: next || null })
+      .eq("id", order.id);
+    setSavingInstall(false);
+    if (error) toast.error(error.message);
+    else toast.success("Install status updated");
+  };
+
   const storedFee = Number((order as { processing_fee?: number | null }).processing_fee || 0);
   const buyerPaid = storedFee > 0;
   const subtotal = Number(order.amount);
@@ -161,6 +178,16 @@ export function OrderDetailDrawer({
                   Revoked
                 </span>
               )}
+              {order.addons?.remove_watermark && (
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-fuchsia-500/10 text-fuchsia-300 border border-fuchsia-500/20 text-[11px] font-mono uppercase">
+                  No Watermark
+                </span>
+              )}
+              {order.addons?.install_setup && (
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/20 text-[11px] font-mono uppercase">
+                  Install Requested
+                </span>
+              )}
             </div>
             <p className="font-display text-2xl font-bold">
               ${gross.toFixed(2)}{" "}
@@ -168,6 +195,39 @@ export function OrderDetailDrawer({
             </p>
             <p className="font-mono text-[11px] text-muted-foreground">{fmt(order.created_at)}</p>
           </section>
+
+          {order.addons?.install_setup && (
+            <section className="space-y-2">
+              <h3 className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                Install & Setup task
+              </h3>
+              <div className="glass-card p-3 space-y-2">
+                <p className="font-mono text-[11px] text-muted-foreground">
+                  Buyer paid for done-for-you install. Track your progress here.
+                </p>
+                <div className="flex gap-2 flex-wrap">
+                  {(["pending", "in_progress", "done"] as const).map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => updateInstallStatus(s)}
+                      disabled={savingInstall}
+                      className={`px-3 py-1.5 rounded-md text-[11px] font-mono uppercase border transition-colors ${
+                        installStatus === s
+                          ? s === "done"
+                            ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
+                            : s === "in_progress"
+                            ? "bg-amber-500/15 text-amber-300 border-amber-500/30"
+                            : "bg-primary/15 text-primary border-primary/30"
+                          : "border-border text-muted-foreground hover:bg-secondary"
+                      }`}
+                    >
+                      {s.replace("_", " ")}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
 
           <section className="space-y-2">
             <h3 className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
