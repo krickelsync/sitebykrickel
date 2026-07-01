@@ -69,10 +69,26 @@ async function issueLicense(input: {
 }): Promise<LicenseIssueResult> {
   const base = Deno.env.get("LICENSE_DASHBOARD_URL");
   const apiKey = Deno.env.get("LICENSE_ISSUE_API_KEY");
-  if (!base || !apiKey) throw new Error("License dashboard not configured");
+  if (!base || !apiKey) {
+    console.error("[license] missing config", {
+      paypal_order_id: input.paypal_order_id,
+      has_base: !!base,
+      has_api_key: !!apiKey,
+    });
+    throw new Error("License dashboard not configured");
+  }
+
+  const url = `${base.replace(/\/$/, "")}/api/public/license/issue`;
+  const logCtx = {
+    paypal_order_id: input.paypal_order_id,
+    theme_slug: input.theme_slug,
+    buyer_email: input.buyer_email,
+    url,
+  };
 
   const doCall = async () => {
-    const r = await fetch(`${base.replace(/\/$/, "")}/api/public/license/issue`, {
+    const started = Date.now();
+    const r = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,30 +103,81 @@ async function issueLicense(input: {
         currency: input.currency,
       }),
     });
+    console.log("[license] issue call", {
+      ...logCtx,
+      status: r.status,
+      ok: r.ok,
+      ms: Date.now() - started,
+    });
     return r;
   };
 
   let res = await doCall();
+  let attempt = 1;
   if (res.status >= 500) {
-    // one retry on transient dashboard failure
+    console.warn("[license] 5xx from dashboard, retrying in 500ms", {
+      ...logCtx,
+      first_status: res.status,
+    });
     await new Promise((r) => setTimeout(r, 500));
     res = await doCall();
+    attempt = 2;
   }
 
   const text = await res.text();
-  if (res.status === 401) throw new Error("License dashboard rejected API key (401)");
-  if (res.status === 404) throw new Error(`Theme slug not found: ${input.theme_slug}`);
-  if (!res.ok) throw new Error(`License issue failed (${res.status}): ${text.slice(0, 200)}`);
+  const bodyPreview = text.slice(0, 500);
+
+  if (res.status === 401) {
+    console.error("[license] 401 unauthorized. API key rejected", {
+      ...logCtx,
+      attempt,
+      body: bodyPreview,
+    });
+    throw new Error("License dashboard rejected API key (401)");
+  }
+  if (res.status === 404) {
+    console.error("[license] 404 not found. theme_slug missing on dashboard", {
+      ...logCtx,
+      attempt,
+      body: bodyPreview,
+    });
+    throw new Error(`Theme slug not found: ${input.theme_slug}`);
+  }
+  if (!res.ok) {
+    console.error("[license] non-ok response after retries", {
+      ...logCtx,
+      attempt,
+      status: res.status,
+      body: bodyPreview,
+    });
+    throw new Error(`License issue failed (${res.status}): ${bodyPreview.slice(0, 200)}`);
+  }
 
   let json: LicenseIssueResult;
   try {
     json = JSON.parse(text);
   } catch {
+    console.error("[license] invalid JSON from dashboard", {
+      ...logCtx,
+      attempt,
+      body: bodyPreview,
+    });
     throw new Error("License dashboard returned invalid JSON");
   }
   if (!json.license_key || !json.download_url) {
+    console.error("[license] response missing required fields", {
+      ...logCtx,
+      attempt,
+      has_license_key: !!json.license_key,
+      has_download_url: !!json.download_url,
+    });
     throw new Error("License dashboard response missing fields");
   }
+  console.log("[license] issued", {
+    ...logCtx,
+    attempt,
+    reused: json.reused ?? false,
+  });
   return json;
 }
 
@@ -201,10 +268,16 @@ Deno.serve(async (req) => {
         });
       } catch (e) {
         licenseError = (e as Error).message;
-        console.error("issueLicense error:", licenseError);
+        console.error("[license] issueLicense failed", {
+          paypal_order_id,
+          theme_slug,
+          buyer_email,
+          error: licenseError,
+        });
       }
     } else {
       licenseError = "Missing buyer email from PayPal payer";
+      console.error("[license] skipped. missing buyer email", { paypal_order_id });
     }
 
     const rows = items.map((it, idx) => ({
