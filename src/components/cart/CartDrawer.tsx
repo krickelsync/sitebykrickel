@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft, Lock } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft, Lock, Check, Copy, Download } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
@@ -9,13 +9,39 @@ import PayPalProvider from "@/components/PayPalProvider";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
+interface LicenseResult {
+  license_key: string;
+  download_url: string;
+  paypal_order_id: string;
+  buyer_email?: string | null;
+  theme_slug?: string | null;
+}
+
 const CartDrawer = () => {
   const { items, isOpen, close, setQty, remove, total, clear } = useCart();
-  const [step, setStep] = useState<"cart" | "checkout">("cart");
+  const [step, setStep] = useState<"cart" | "checkout" | "success">("cart");
+  const [license, setLicense] = useState<LicenseResult | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const handleClose = () => {
     close();
-    setTimeout(() => setStep("cart"), 200);
+    setTimeout(() => {
+      setStep("cart");
+      setLicense(null);
+      setCopied(false);
+    }, 200);
+  };
+
+  const copyKey = async () => {
+    if (!license) return;
+    try {
+      await navigator.clipboard.writeText(license.license_key);
+      setCopied(true);
+      toast.success("License key copied");
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      toast.error("Copy failed");
+    }
   };
 
   return (
