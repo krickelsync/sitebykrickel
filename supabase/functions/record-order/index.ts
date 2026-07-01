@@ -216,7 +216,16 @@ async function issueLicense(input: {
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   try {
-    const parsed = BodySchema.safeParse(await req.json());
+    let raw: unknown;
+    try {
+      raw = await req.json();
+    } catch {
+      return new Response(
+        JSON.stringify({ error: "Invalid or empty JSON body" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+    const parsed = BodySchema.safeParse(raw);
     if (!parsed.success) {
       return new Response(JSON.stringify({ error: parsed.error.flatten() }), {
         status: 400,
