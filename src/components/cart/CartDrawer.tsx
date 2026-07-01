@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft, Lock, Check, Copy, Download, Mail, Loader2 } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft, Lock, Check, Copy, Download, Mail, Loader2, Tag, X } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,20 @@ interface LicenseResult {
 const CartDrawer = () => {
   const { items, isOpen, close, setQty, remove, total, clear } = useCart();
   const { user } = useAuth();
-  const fees = grossUp(total);
+  const [couponCode, setCouponCode] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<{
+    code: string;
+    type: "percent" | "fixed";
+    value: number;
+  } | null>(null);
+  const [applyingCoupon, setApplyingCoupon] = useState(false);
+  const discountAmount = appliedCoupon
+    ? appliedCoupon.type === "percent"
+      ? Math.min(total, +((total * appliedCoupon.value) / 100).toFixed(2))
+      : Math.min(total, appliedCoupon.value)
+    : 0;
+  const discountedSubtotal = Math.max(0, +(total - discountAmount).toFixed(2));
+  const fees = grossUp(discountedSubtotal);
   const [step, setStep] = useState<"cart" | "checkout" | "success">("cart");
   const [license, setLicense] = useState<LicenseResult | null>(null);
   const [copied, setCopied] = useState(false);
@@ -56,7 +69,51 @@ const CartDrawer = () => {
       setResendEmail("");
       setResending(false);
       setResendCooldown(0);
+      setCouponCode("");
+      setAppliedCoupon(null);
     }, 200);
+  };
+
+  const applyCoupon = async () => {
+    const raw = couponCode.trim();
+    if (!raw || applyingCoupon) return;
+    setApplyingCoupon(true);
+    try {
+      const { data, error } = await supabase
+        .from("coupons")
+        .select("code, type, value, min_amount, max_uses, used_count, expires_at, active")
+        .ilike("code", raw)
+        .maybeSingle();
+      if (error) throw error;
+      if (!data || !data.active) {
+        toast.error("Coupon not found");
+        return;
+      }
+      if (data.expires_at && new Date(data.expires_at).getTime() <= Date.now()) {
+        toast.error("Coupon expired");
+        return;
+      }
+      if (data.max_uses != null && (data.used_count ?? 0) >= data.max_uses) {
+        toast.error("Coupon fully redeemed");
+        return;
+      }
+      if (data.min_amount != null && total < Number(data.min_amount)) {
+        toast.error(`Minimum order $${Number(data.min_amount).toFixed(2)}`);
+        return;
+      }
+      const type = (data.type === "percent" ? "percent" : "fixed") as "percent" | "fixed";
+      setAppliedCoupon({ code: data.code, type, value: Number(data.value) });
+      toast.success(`Coupon ${data.code} applied`);
+    } catch {
+      toast.error("Couldn't apply coupon");
+    } finally {
+      setApplyingCoupon(false);
+    }
+  };
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponCode("");
   };
 
   const copyKey = async () => {
