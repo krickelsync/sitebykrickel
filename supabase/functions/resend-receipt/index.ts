@@ -122,6 +122,12 @@ Deno.serve(async (req) => {
       );
     }
 
+    await admin
+      .from("orders")
+      .update({ email_sent_at: new Date().toISOString() })
+      .eq("paypal_order_id", paypal_order_id)
+      .not("license_key", "is", null);
+
     return new Response(
       JSON.stringify({ ok: true, sent_to: to }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }

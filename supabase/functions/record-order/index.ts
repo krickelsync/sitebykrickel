@@ -294,6 +294,7 @@ Deno.serve(async (req) => {
       license_key: idx === 0 ? license?.license_key ?? null : null,
       download_url: idx === 0 ? license?.download_url ?? null : null,
       license_issued_at: idx === 0 && license ? new Date().toISOString() : null,
+      license_error: idx === 0 ? licenseError : null,
     }));
 
     const { error } = await admin.from("orders").insert(rows);
@@ -323,8 +324,9 @@ Deno.serve(async (req) => {
           </div>
         `.trim();
 
+        let emailOk = false;
         try {
-          await fetch("https://connector-gateway.lovable.dev/resend/emails", {
+          const emailRes = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -338,8 +340,19 @@ Deno.serve(async (req) => {
               html,
             }),
           });
+          emailOk = emailRes.ok;
+          if (!emailOk) {
+            console.error("[email] resend non-ok", { status: emailRes.status });
+          }
         } catch (e) {
           console.error("Receipt email failed:", (e as Error).message);
+        }
+        if (emailOk) {
+          await admin
+            .from("orders")
+            .update({ email_sent_at: new Date().toISOString() })
+            .eq("paypal_order_id", paypal_order_id)
+            .not("license_key", "is", null);
         }
       }
     }
