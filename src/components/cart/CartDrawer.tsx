@@ -171,6 +171,58 @@ const CartDrawer = () => {
               )}
             </div>
 
+            <div className="rounded-2xl border border-border p-4 text-xs font-mono space-y-3">
+              <p className="uppercase tracking-wider text-foreground text-[10px]">
+                Didn't get the email?
+              </p>
+              <p className="text-muted-foreground text-[11px] leading-relaxed">
+                Check spam or promotions first. Still nothing after a few minutes? Resend it below.
+              </p>
+              {resendOpen ? (
+                <div className="space-y-2">
+                  <input
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    placeholder={license.buyer_email ?? "you@email.com"}
+                    value={resendEmail}
+                    onChange={(e) => setResendEmail(e.target.value)}
+                    className="w-full rounded-lg border border-border bg-background/60 px-3 py-2 text-xs font-mono outline-none focus:border-primary"
+                    aria-label="Email to resend receipt to"
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleResend}
+                      disabled={resending || resendCooldown > 0}
+                      className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground uppercase tracking-wider text-[11px] py-2.5 hover:opacity-90 disabled:opacity-50"
+                    >
+                      {resending ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        <Mail className="w-3.5 h-3.5" />
+                      )}
+                      {resendCooldown > 0 ? `Wait ${resendCooldown}s` : "Send"}
+                    </button>
+                    <button
+                      onClick={() => setResendOpen(false)}
+                      className="rounded-full border border-border px-4 uppercase tracking-wider text-[11px] hover:bg-foreground/5"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setResendOpen(true)}
+                  disabled={resendCooldown > 0}
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-border uppercase tracking-wider text-[11px] py-2.5 hover:bg-foreground/5 disabled:opacity-50"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  {resendCooldown > 0 ? `Resend available in ${resendCooldown}s` : "Resend receipt email"}
+                </button>
+              )}
+            </div>
+
             <Button onClick={handleClose} className="w-full rounded-full font-mono uppercase tracking-wider text-xs">
               Done
             </Button>
