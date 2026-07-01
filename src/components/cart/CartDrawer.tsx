@@ -419,7 +419,8 @@ const CartDrawer = () => {
                                product_id: it.id,
                                product_title: `${it.title} x${it.qty}`,
                                amount: it.price * it.qty,
-                               theme_slug: "sync",
+                                // addon rows use their own slug so admin can tell them apart.
+                                theme_slug: it.slug || "sync",
                              })),
                            },
                          });
