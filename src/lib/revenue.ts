@@ -11,25 +11,34 @@ export type RevenueRow = {
   amount: number;
   refunded_amount?: number | null;
   status: string;
+  subtotal?: number | null;
+  processing_fee?: number | null;
 };
 
 export function computeRevenue(orders: RevenueRow[]) {
   let gross = 0;
   let fees = 0;
   let refunds = 0;
+  let buyerPaidFees = 0;
   for (const o of orders) {
     const amt = Number(o.amount || 0);
     const ref = Number(o.refunded_amount || 0);
-    gross += amt;
+    const buyerFee = Number(o.processing_fee || 0);
+    // If buyer paid the fee, `amount` is the subtotal (product price) and
+    // gross received from PayPal = amount + fee. Otherwise gross = amount.
+    gross += amt + buyerFee;
     refunds += ref;
-    // Fee still applies to gross even after refund (PayPal keeps fixed fee).
-    fees += paypalFee(amt);
+    // PayPal deducts its fee off the gross regardless.
+    // If we grossed-up correctly, actual fee ~= buyerFee. Fall back to estimate.
+    fees += buyerFee > 0 ? buyerFee : paypalFee(amt);
+    buyerPaidFees += buyerFee;
   }
   const net = +(gross - fees - refunds).toFixed(2);
   return {
     gross: +gross.toFixed(2),
     fees: +fees.toFixed(2),
     refunds: +refunds.toFixed(2),
+    buyerPaidFees: +buyerPaidFees.toFixed(2),
     net,
   };
 }
