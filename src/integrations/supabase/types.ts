@@ -14,6 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
+      coupon_redemptions: {
+        Row: {
+          coupon_id: string
+          id: string
+          order_id: string | null
+          redeemed_at: string
+        }
+        Insert: {
+          coupon_id: string
+          id?: string
+          order_id?: string | null
+          redeemed_at?: string
+        }
+        Update: {
+          coupon_id?: string
+          id?: string
+          order_id?: string | null
+          redeemed_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coupon_redemptions_coupon_id_fkey"
+            columns: ["coupon_id"]
+            isOneToOne: false
+            referencedRelation: "coupons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "coupon_redemptions_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coupons: {
+        Row: {
+          active: boolean
+          code: string
+          created_at: string
+          expires_at: string | null
+          id: string
+          max_uses: number | null
+          min_amount: number
+          type: string
+          updated_at: string
+          used_count: number
+          value: number
+        }
+        Insert: {
+          active?: boolean
+          code: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          max_uses?: number | null
+          min_amount?: number
+          type: string
+          updated_at?: string
+          used_count?: number
+          value: number
+        }
+        Update: {
+          active?: boolean
+          code?: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          max_uses?: number | null
+          min_amount?: number
+          type?: string
+          updated_at?: string
+          used_count?: number
+          value?: number
+        }
+        Relationships: []
+      }
       design_portfolio: {
         Row: {
           category: string
@@ -46,6 +124,47 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      email_logs: {
+        Row: {
+          created_at: string
+          error: string | null
+          id: string
+          kind: string
+          order_id: string | null
+          resend_id: string | null
+          status: string
+          to_email: string
+        }
+        Insert: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind: string
+          order_id?: string | null
+          resend_id?: string | null
+          status: string
+          to_email: string
+        }
+        Update: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind?: string
+          order_id?: string | null
+          resend_id?: string | null
+          status?: string
+          to_email?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_logs_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       leads: {
         Row: {
@@ -86,14 +205,18 @@ export type Database = {
           amount: number
           buyer_email: string | null
           buyer_name: string | null
+          coupon_code: string | null
           created_at: string
           currency: string
+          discount_amount: number
           download_url: string | null
           email_sent_at: string | null
           id: string
           license_error: string | null
           license_issued_at: string | null
           license_key: string | null
+          license_revoked_at: string | null
+          paypal_capture_id: string | null
           paypal_order_id: string | null
           product_id: string | null
           product_title: string
@@ -107,14 +230,18 @@ export type Database = {
           amount: number
           buyer_email?: string | null
           buyer_name?: string | null
+          coupon_code?: string | null
           created_at?: string
           currency?: string
+          discount_amount?: number
           download_url?: string | null
           email_sent_at?: string | null
           id?: string
           license_error?: string | null
           license_issued_at?: string | null
           license_key?: string | null
+          license_revoked_at?: string | null
+          paypal_capture_id?: string | null
           paypal_order_id?: string | null
           product_id?: string | null
           product_title: string
@@ -128,14 +255,18 @@ export type Database = {
           amount?: number
           buyer_email?: string | null
           buyer_name?: string | null
+          coupon_code?: string | null
           created_at?: string
           currency?: string
+          discount_amount?: number
           download_url?: string | null
           email_sent_at?: string | null
           id?: string
           license_error?: string | null
           license_issued_at?: string | null
           license_key?: string | null
+          license_revoked_at?: string | null
+          paypal_capture_id?: string | null
           paypal_order_id?: string | null
           product_id?: string | null
           product_title?: string
@@ -229,6 +360,50 @@ export type Database = {
         }
         Relationships: []
       }
+      webhook_logs: {
+        Row: {
+          created_at: string
+          event: string
+          id: string
+          order_id: string | null
+          payload: Json | null
+          request_snippet: string | null
+          response_snippet: string | null
+          source: string
+          status_code: number | null
+        }
+        Insert: {
+          created_at?: string
+          event: string
+          id?: string
+          order_id?: string | null
+          payload?: Json | null
+          request_snippet?: string | null
+          response_snippet?: string | null
+          source: string
+          status_code?: number | null
+        }
+        Update: {
+          created_at?: string
+          event?: string
+          id?: string
+          order_id?: string | null
+          payload?: Json | null
+          request_snippet?: string | null
+          response_snippet?: string | null
+          source?: string
+          status_code?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "webhook_logs_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -239,6 +414,10 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
+        Returns: boolean
+      }
+      redeem_coupon: {
+        Args: { _code: string; _order_id: string }
         Returns: boolean
       }
     }
