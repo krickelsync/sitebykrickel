@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft, Lock, Check, Copy, Download } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft, Lock, Check, Copy, Download, Mail, Loader2 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,10 @@ const CartDrawer = () => {
   const [step, setStep] = useState<"cart" | "checkout" | "success">("cart");
   const [license, setLicense] = useState<LicenseResult | null>(null);
   const [copied, setCopied] = useState(false);
+  const [resendOpen, setResendOpen] = useState(false);
+  const [resendEmail, setResendEmail] = useState("");
+  const [resending, setResending] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
 
   const handleClose = () => {
     close();
@@ -29,6 +33,10 @@ const CartDrawer = () => {
       setStep("cart");
       setLicense(null);
       setCopied(false);
+      setResendOpen(false);
+      setResendEmail("");
+      setResending(false);
+      setResendCooldown(0);
     }, 200);
   };
 
@@ -41,6 +49,44 @@ const CartDrawer = () => {
       setTimeout(() => setCopied(false), 1800);
     } catch {
       toast.error("Copy failed");
+    }
+  };
+
+  const startCooldown = (secs: number) => {
+    setResendCooldown(secs);
+    const tick = () => {
+      setResendCooldown((v) => {
+        if (v <= 1) return 0;
+        setTimeout(tick, 1000);
+        return v - 1;
+      });
+    };
+    setTimeout(tick, 1000);
+  };
+
+  const handleResend = async () => {
+    if (!license || resending || resendCooldown > 0) return;
+    const overrideRaw = resendEmail.trim();
+    const override = overrideRaw.length > 0 ? overrideRaw : undefined;
+    if (override && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(override)) {
+      toast.error("Enter a valid email");
+      return;
+    }
+    setResending(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("resend-receipt", {
+        body: { paypal_order_id: license.paypal_order_id, email: override },
+      });
+      if (error) throw error;
+      const sentTo = (data as { sent_to?: string })?.sent_to ?? override ?? license.buyer_email;
+      toast.success(`Receipt resent${sentTo ? ` to ${sentTo}` : ""}. Check spam too.`);
+      setResendOpen(false);
+      startCooldown(30);
+    } catch (e) {
+      const msg = (e as Error).message ?? "";
+      toast.error(msg || "Could not resend right now. Try again.");
+    } finally {
+      setResending(false);
     }
   };
 
@@ -122,6 +168,58 @@ const CartDrawer = () => {
                 <p className="pt-2 text-[10px]">
                   A copy was emailed to {license.buyer_email}.
                 </p>
+              )}
+            </div>
+
+            <div className="rounded-2xl border border-border p-4 text-xs font-mono space-y-3">
+              <p className="uppercase tracking-wider text-foreground text-[10px]">
+                Didn't get the email?
+              </p>
+              <p className="text-muted-foreground text-[11px] leading-relaxed">
+                Check spam or promotions first. Still nothing after a few minutes? Resend it below.
+              </p>
+              {resendOpen ? (
+                <div className="space-y-2">
+                  <input
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    placeholder={license.buyer_email ?? "you@email.com"}
+                    value={resendEmail}
+                    onChange={(e) => setResendEmail(e.target.value)}
+                    className="w-full rounded-lg border border-border bg-background/60 px-3 py-2 text-xs font-mono outline-none focus:border-primary"
+                    aria-label="Email to resend receipt to"
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleResend}
+                      disabled={resending || resendCooldown > 0}
+                      className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground uppercase tracking-wider text-[11px] py-2.5 hover:opacity-90 disabled:opacity-50"
+                    >
+                      {resending ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        <Mail className="w-3.5 h-3.5" />
+                      )}
+                      {resendCooldown > 0 ? `Wait ${resendCooldown}s` : "Send"}
+                    </button>
+                    <button
+                      onClick={() => setResendOpen(false)}
+                      className="rounded-full border border-border px-4 uppercase tracking-wider text-[11px] hover:bg-foreground/5"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setResendOpen(true)}
+                  disabled={resendCooldown > 0}
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-border uppercase tracking-wider text-[11px] py-2.5 hover:bg-foreground/5 disabled:opacity-50"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  {resendCooldown > 0 ? `Resend available in ${resendCooldown}s` : "Resend receipt email"}
+                </button>
               )}
             </div>
 
