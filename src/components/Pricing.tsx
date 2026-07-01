@@ -7,7 +7,6 @@ import {
   Palette,
   Zap,
   ShoppingBag,
-  ShoppingCart,
   Megaphone,
   FileText,
   Rocket,
@@ -16,6 +15,7 @@ import {
 import { fadeIn } from "@/lib/motion";
 import { useContactScroll } from "@/hooks/useContactScroll";
 import { useIsMobile } from "@/hooks/use-mobile";
+import shopifyBadge from "@/assets/shopify-badge.png.asset.json";
 import { typography, textSize } from "@/components/ui/typography";
 import { useEffect, useRef, useState as useReactState } from "react";
 
@@ -40,13 +40,13 @@ function FeatureGroupDisclosure({
 
   const panelId = `feat-${group.category.replace(/\s+/g, "-").toLowerCase()}`;
   return (
-    <div className="feature-group mb-3 md:mb-4 break-inside-avoid rounded-xl border border-foreground/10 bg-foreground/[0.02] overflow-hidden transition-colors data-[open=true]:bg-foreground/[0.04]" data-open={open}>
+    <div className="feature-group mb-3 md:mb-4 break-inside-avoid border border-foreground/10 bg-foreground/[0.02] transition-colors data-[open=true]:bg-foreground/[0.04]" data-open={open}>
       <button
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center gap-2 px-3.5 py-3 cursor-pointer text-left hover:bg-foreground/[0.03] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+        className="w-full flex items-center gap-2 px-3 py-2.5 cursor-pointer text-left hover:bg-foreground/[0.03] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
       >
         <Icon aria-hidden="true" className="w-5 h-5 text-primary shrink-0" />
         <span className={`flex-1 ${typography.eyebrow} text-foreground`}>
@@ -206,7 +206,7 @@ const Pricing = () => {
           {/* Ambient prism glow behind card . matches hero atmosphere */}
           <div
             aria-hidden="true"
-            className="hero-prism-fallback absolute -inset-6 md:-inset-10 opacity-60 blur-2xl pointer-events-none rounded-[2rem]"
+            className="hero-prism-fallback absolute -inset-6 md:-inset-10 opacity-60 blur-2xl pointer-events-none"
           />
 
           <motion.div
@@ -214,13 +214,20 @@ const Pricing = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative overflow-hidden rounded-2xl md:rounded-3xl border border-foreground/15 bg-background/80 backdrop-blur-xl p-6 md:p-10 flex flex-col transition-colors duration-300 hover:border-primary/40"
+            className="relative overflow-hidden menu-rotating-glow border border-foreground/15 bg-background/80 backdrop-blur-xl p-6 md:p-10 flex flex-col transition-colors duration-300 hover:border-primary/40"
           >
-            {/* Cart watermark . replaces bag, matches CTA icon */}
-            <ShoppingCart
+            {/* Corner brackets . hero-style */}
+            <span aria-hidden className="absolute top-0 left-0 w-4 h-4 border-t border-l border-primary/70" />
+            <span aria-hidden className="absolute top-0 right-0 w-4 h-4 border-t border-r border-primary/70" />
+            <span aria-hidden className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-primary/70" />
+            <span aria-hidden className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-primary/70" />
+
+            {/* Watermark logo . bottom-right corner, very subtle */}
+            <img
+              src={shopifyBadge.url}
+              alt=""
               aria-hidden="true"
-              strokeWidth={1}
-              className="pointer-events-none select-none absolute -top-8 -right-8 md:-top-10 md:-right-10 w-40 h-40 md:w-52 md:h-52 text-foreground opacity-[0.04]"
+              className="pointer-events-none select-none absolute bottom-6 right-6 h-20 md:h-24 w-auto opacity-[0.05]"
             />
 
             <div className="relative flex items-start justify-between gap-4 pb-6 mb-6 border-b border-foreground/10">
@@ -249,7 +256,7 @@ const Pricing = () => {
             </div>
 
             {/* Inline add-on toggles . sharp edge, hero-aligned */}
-            <div className="relative space-y-2 mb-6">
+            <div className="relative space-y-px mb-6 border border-foreground/10 overflow-hidden">
               {[
                 {
                   label: "Remove Watermark",
@@ -275,10 +282,8 @@ const Pricing = () => {
                   aria-checked={t.value}
                   aria-label={t.aria}
                   onClick={() => t.set((v) => !v)}
-                  className={`w-full flex items-center justify-between gap-3 px-4 py-3.5 text-left rounded-xl border transition-colors ${
-                    t.value
-                      ? "bg-primary/[0.08] border-primary/40"
-                      : "bg-foreground/[0.02] border-foreground/10 hover:bg-foreground/[0.04]"
+                  className={`w-full flex items-center justify-between gap-3 px-4 py-3 text-left transition-colors border-b border-foreground/10 last:border-b-0 ${
+                    t.value ? "bg-primary/[0.06]" : "hover:bg-foreground/[0.03]"
                   }`}
                 >
                   <div className="flex flex-col min-w-0">
@@ -311,7 +316,7 @@ const Pricing = () => {
             </div>
 
             {/* Stats bar . by the numbers */}
-            <div className="relative grid grid-cols-4 gap-px mb-3 rounded-xl border border-foreground/10 bg-foreground/10 overflow-hidden">
+            <div className="relative grid grid-cols-4 gap-px mb-3 border border-foreground/10 bg-foreground/10 overflow-hidden">
               {STATS.map((s) => (
                 <div key={s.label} className="bg-background/80 px-2 py-3 text-center">
                   <div className="font-syne font-bold text-foreground text-lg md:text-2xl leading-none tabular-nums">
@@ -341,10 +346,9 @@ const Pricing = () => {
             <a
               href="/about#contact"
               onClick={handleContactClick}
-              className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 bg-primary text-primary-foreground px-4 py-3 sm:px-8 sm:py-4 rounded-xl font-mono text-[clamp(0.6875rem,0.95vw,0.875rem)] font-bold uppercase tracking-wider overflow-hidden hover:glow-box cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background will-change-transform mt-2"
+              className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 bg-primary text-primary-foreground px-4 py-2.5 sm:px-8 sm:py-4 font-mono text-[clamp(0.6875rem,0.95vw,0.875rem)] font-bold uppercase tracking-wider overflow-hidden hover:glow-box cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background will-change-transform mt-2"
               aria-label={`Get SYNC for $${price}`}
             >
-              <ShoppingCart aria-hidden="true" className="relative z-10 w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
               <span className="relative z-10">Get SYNC . ${price}</span>
               <ArrowRight aria-hidden="true" className="relative z-10 group-hover:translate-x-1 transition-transform w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
               <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
