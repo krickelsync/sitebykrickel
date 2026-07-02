@@ -7,7 +7,7 @@ import { useMusicPlayer } from "@/contexts/MusicContext";
 
 const items = [
   { name: "Home", href: "/", icon: Home },
-  { name: "Themes", href: "/products", icon: Tag },
+  { name: "SYNC", href: "/themes/sync", icon: Tag },
 ];
 
 const MobileBottomNav = () => {

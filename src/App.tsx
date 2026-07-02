@@ -23,6 +23,7 @@ const Showcase = lazy(() => import("./pages/Showcase"));
 const About = lazy(() => import("./pages/About"));
 const Products = lazy(() => import("./pages/Products"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const SyncProduct = lazy(() => import("./pages/SyncProduct"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const Admin = lazy(() => import("./pages/Admin"));
 const AdminProductEdit = lazy(() => import("./pages/AdminProductEdit"));
@@ -65,6 +66,7 @@ const AppInner = () => {
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:slug" element={<ProductDetail />} />
+          <Route path="/themes/sync" element={<SyncProduct />} />
           <Route path="/style-guide" element={<StyleGuide />} />
           <Route path="/account" element={<Account />} />
           <Route path="/account/orders/:id" element={<OrderDetail />} />
