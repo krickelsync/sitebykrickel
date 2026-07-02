@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { ArrowRight, ExternalLink, ShieldCheck, Zap, Clock } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import SectionHeader from "@/components/shared/SectionHeader";
 import ProductHero from "@/components/products/sync/ProductHero";
 import LivePreviewFrame from "@/components/products/sync/LivePreviewFrame";
