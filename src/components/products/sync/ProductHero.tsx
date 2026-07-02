@@ -4,11 +4,23 @@ import { ShoppingCart, ExternalLink, Check, Star, Shield, Zap, RefreshCw } from 
 import { useCart } from "@/contexts/CartContext";
 import { SYNC_CART_IDS } from "@/components/Pricing";
 import laptopShowcase from "@/assets/laptop-showcase.webp.asset.json";
+import phone1 from "@/assets/phones/phone-1.webp.asset.json";
+import phone2 from "@/assets/phones/phone-3.webp.asset.json";
+import phone3 from "@/assets/phones/phone-5.webp.asset.json";
+import phone4 from "@/assets/phones/phone-7.webp.asset.json";
 import { typography, textSize } from "@/components/ui/typography";
 
 const DEMO_URL = "https://d9001y-xc.myshopify.com/";
 
 const GALLERY_ASPECT = "aspect-[4/5] md:aspect-[4/3]";
+
+const GALLERY: { src: string; alt: string; fit: "cover" | "contain" }[] = [
+  { src: laptopShowcase.url, alt: "SYNC theme on desktop", fit: "cover" },
+  { src: phone1.url, alt: "SYNC theme homepage on mobile", fit: "contain" },
+  { src: phone2.url, alt: "SYNC product page on mobile", fit: "contain" },
+  { src: phone3.url, alt: "SYNC lookbook on mobile", fit: "contain" },
+  { src: phone4.url, alt: "SYNC cart drawer on mobile", fit: "contain" },
+];
 
 const HIGHLIGHTS = [
   "18 sections . 10+ templates . 397 settings",
@@ -27,6 +39,8 @@ const ProductHero = () => {
   const { add, open, remove } = useCart();
   const [removeWatermark, setRemoveWatermark] = useState(false);
   const [installSetup, setInstallSetup] = useState(false);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const active = GALLERY[activeIdx];
   const price = 98 + (removeWatermark ? 50 : 0) + (installSetup ? 50 : 0);
 
   const handleAddToCart = () => {
@@ -73,10 +87,14 @@ const ProductHero = () => {
             className="lg:sticky lg:top-28"
           >
             <div className={`relative ${GALLERY_ASPECT} rounded-2xl overflow-hidden border border-foreground/10 bg-foreground/[0.03] group`}>
-              <img
-                src={laptopShowcase.url}
-                alt="SYNC Shopify theme preview on a laptop"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              <motion.img
+                key={activeIdx}
+                initial={{ opacity: 0, scale: 1.02 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.35 }}
+                src={active.src}
+                alt={active.alt}
+                className={`w-full h-full ${active.fit === "cover" ? "object-cover" : "object-contain p-6 md:p-10"} transition-transform duration-700 group-hover:scale-[1.03]`}
                 loading="eager"
                 decoding="async"
               />
@@ -89,9 +107,46 @@ const ProductHero = () => {
               <span className="absolute top-3 right-3 rounded-full bg-background/80 backdrop-blur-md border border-foreground/15 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                 v1.0
               </span>
+              {/* Index counter */}
+              <span className="absolute bottom-3 right-3 rounded-full bg-background/80 backdrop-blur-md border border-foreground/15 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground tabular-nums">
+                {String(activeIdx + 1).padStart(2, "0")} / {String(GALLERY.length).padStart(2, "0")}
+              </span>
             </div>
 
-            {/* Preview thumbnails / demo link */}
+            {/* Thumbnails */}
+            <div
+              role="tablist"
+              aria-label="Product gallery thumbnails"
+              className="mt-3 grid grid-cols-5 gap-2"
+            >
+              {GALLERY.map((g, i) => {
+                const isActive = i === activeIdx;
+                return (
+                  <button
+                    key={g.src}
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-label={`Show ${g.alt}`}
+                    onClick={() => setActiveIdx(i)}
+                    className={`relative aspect-square rounded-lg overflow-hidden border transition-colors ${
+                      isActive
+                        ? "border-primary/60 ring-1 ring-primary/40"
+                        : "border-foreground/10 hover:border-foreground/30 opacity-70 hover:opacity-100"
+                    } bg-foreground/[0.03]`}
+                  >
+                    <img
+                      src={g.src}
+                      alt=""
+                      aria-hidden="true"
+                      className={`w-full h-full ${g.fit === "cover" ? "object-cover" : "object-contain p-1.5"}`}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </button>
+                );
+              })}
+            </div>
+
             <a
               href={DEMO_URL}
               target="_blank"
