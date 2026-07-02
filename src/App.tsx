@@ -31,6 +31,7 @@ const AdminIssueLicense = lazy(() => import("./pages/AdminIssueLicense"));
 const AdminCoupons = lazy(() => import("./pages/AdminCoupons"));
 const AdminLogs = lazy(() => import("./pages/AdminLogs"));
 const AdminThemes = lazy(() => import("./pages/AdminThemes"));
+const AdminReviews = lazy(() => import("./pages/AdminReviews"));
 const StyleGuide = lazy(() => import("./pages/StyleGuide"));
 const Account = lazy(() => import("./pages/Account"));
 const OrderDetail = lazy(() => import("./pages/OrderDetail"));
@@ -77,6 +78,7 @@ const AppInner = () => {
           <Route path="/admin/coupons" element={<AdminCoupons />} />
           <Route path="/admin/logs" element={<AdminLogs />} />
           <Route path="/admin/themes" element={<AdminThemes />} />
+          <Route path="/admin/reviews" element={<AdminReviews />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
