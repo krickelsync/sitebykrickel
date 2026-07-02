@@ -4,7 +4,7 @@ import SectionHeader from "@/components/shared/SectionHeader";
 import ProductHero from "@/components/products/sync/ProductHero";
 import LivePreviewFrame from "@/components/products/sync/LivePreviewFrame";
 import VelocityTextBlock from "@/components/products/landing/VelocityTextBlock";
-import HomeReviewsWall from "@/components/sections/HomeReviewsWall";
+import CustomerReviews from "@/components/products/sync/CustomerReviews";
 import MobileFirstSection from "@/components/sections/MobileFirstSection";
 import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
@@ -58,8 +58,8 @@ const SyncProduct = () => {
       {/* ============ MOBILE-FIRST PHONES ============ */}
       <MobileFirstSection />
 
-      {/* ============ TESTIMONIAL WALL ============ */}
-      <HomeReviewsWall />
+      {/* ============ CUSTOMER REVIEWS ============ */}
+      <CustomerReviews />
 
       {/* ============ PRICING (reuse Pricing card) ============ */}
       <Pricing />

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, Pencil, Trash2, Eye, EyeOff, LogOut, Search, Copy, Download, KeyRound, Ticket, ScrollText, Palette } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff, LogOut, Search, Copy, Download, KeyRound, Ticket, ScrollText, Palette, MessageSquare } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth, useIsAdmin } from "@/hooks/useAuth";
 import { useProducts } from "@/hooks/useProducts";
@@ -203,6 +203,10 @@ const Admin = () => {
             <Link to="/admin/logs"
               className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border font-mono text-sm hover:bg-secondary">
               <ScrollText className="w-4 h-4" /> Logs
+            </Link>
+            <Link to="/admin/reviews"
+              className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border font-mono text-sm hover:bg-secondary">
+              <MessageSquare className="w-4 h-4" /> Reviews
             </Link>
             <button
               onClick={async () => { await supabase.auth.signOut(); navigate("/admin/login"); }}
