@@ -105,14 +105,14 @@ type FeatureGroup = {
   items: FeatureItem[];
 };
 
-const STATS: { label: string; value: string }[] = [
+export const STATS: { label: string; value: string }[] = [
   { label: "Sections", value: "18" },
   { label: "Templates", value: "10+" },
   { label: "Snippets", value: "15" },
   { label: "Settings", value: "397" },
 ];
 
-const FEATURE_GROUPS: FeatureGroup[] = [
+export const FEATURE_GROUPS: FeatureGroup[] = [
   {
     category: "Total Customization",
     icon: Palette,
