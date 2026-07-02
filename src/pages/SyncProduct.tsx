@@ -3,7 +3,6 @@ import { ArrowRight, ExternalLink, ShieldCheck, Zap, Clock } from "lucide-react"
 import SectionHeader from "@/components/shared/SectionHeader";
 import ProductHero from "@/components/products/sync/ProductHero";
 import LivePreviewFrame from "@/components/products/sync/LivePreviewFrame";
-import FeatureBento from "@/components/products/sync/FeatureBento";
 import VelocityTextBlock from "@/components/products/landing/VelocityTextBlock";
 import HomeReviewsWall from "@/components/sections/HomeReviewsWall";
 import MobileFirstSection from "@/components/sections/MobileFirstSection";
@@ -55,18 +54,6 @@ const SyncProduct = () => {
           { text: "LIFETIME LICENSE ✦ VIP SUPPORT ✦ NO CODE ✦ SHIP IN MINUTES ✦ MOBILE FIRST ✦ ", velocity: 0.6, color: "#FACC15" },
         ]}
       />
-
-      {/* ============ FEATURE BENTO ============ */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-8">
-          <SectionHeader
-            eyebrow="WHAT'S INSIDE"
-            title="EVERY FEATURE."
-            accent="NO ADD-ON UPSELLS."
-          />
-          <FeatureBento />
-        </div>
-      </section>
 
       {/* ============ MOBILE-FIRST PHONES ============ */}
       <MobileFirstSection />
