@@ -1,175 +1,67 @@
-## Refactoring & Optimization Plan — SitebyKrickel
+# Rombak Product Page SYNC — Editorial Landing Style
 
-Tujuan: bikin codebase lebih rapih, cepat, aman, dan gampang dirawat tanpa ngerubah desain/UX yang udah lo suka (Hero, Prism/Liquid Chrome, Pricing card, dll gak diutak-atik visualnya).
+Product page saat ini terlalu generik. Kita bikin ulang jadi **landing page cinematic** yang meyakinkan orang beli tema, dengan bahasa visual yang sama seperti homepage (Prism glow, chrome accent, mono type, kinetic marquee).
 
-Urutan step disusun dari **paling low-risk & high-impact** ke yang lebih berat. Tiap step bisa gw kerjain terpisah biar gampang review.
+## Struktur baru (top → bottom)
 
----
+1. **Cinematic Hero**
+   - Eyebrow: `PREMIUM SHOPIFY THEME . V1.0`
+   - Headline besar: `SYNC` (Syne bold, fluid clamp) + tagline `Built for streetwear, dropshippers, barbershops.`
+   - CTA ganda: `Get SYNC . $98` (primary) + `Live Preview` (ghost, buka demo di new tab)
+   - Floating stats mini (Sections 18 / Templates 10+ / Settings 397) reuse `HeroFloatingStats` style
+   - Background: `hero-prism-fallback` glow + grid samar (konsisten homepage)
 
-### STEP 1 — Codebase hygiene (low risk, foundation)
+2. **Live Preview Frame**
+   - MacBook mockup dari `DesktopShowcase` di-reuse, tapi isinya `<iframe>` real demo `kcklsite.myshopify.com` (bukan gambar). Lazy-load, `loading="lazy"`, fallback screenshot kalau iframe blocked.
+   - Row tombol device: Desktop / Tablet / Mobile — ubah width iframe (visual toy, nggak wajib fungsional penuh)
+   - Caption: `Klik, scroll, rasain sendiri. Ini toko live yang jalan pakai SYNC.`
 
-**1.1 Dead code sweep**
-- Scan file gak kepake: `Logo3D`, `DesignBentoGrid`, `Prism.tsx` (udah diganti Liquid Chrome), `ExpertiseCard`, `WhyChooseCard`, `SkillBar`, `AnnouncementBar`, `ContactForm` (kalau gak dipake), `CurvedLoop`.
-- Hapus asset `.asset.json` orphan.
-- Purge komentar debug & `console.log` di prod path.
+3. **Velocity Marquee** (reuse `HomeVelocityText`)
+   - Row 1: fitur unggulan (`ENTER PAGE 3D ✦ DROP COUNTDOWN ✦ LOOKBOOK BENTO ✦ MUSIC PLAYER ✦`)
+   - Row 2 reverse: value props (`LIFETIME LICENSE ✦ VIP SUPPORT ✦ NO CODE ✦ SHIP IN MINUTES ✦`)
 
-**1.2 Import & alias audit**
-- Enforce `@/` alias di semua import (ada beberapa relative import kepanjangan).
-- Remove circular imports kalau ada.
+4. **Feature Bento**
+   - Grid 6 kartu asymmetric mengambil dari `FEATURE_GROUPS` di `Pricing.tsx` (Customization, SYNC FX, Shopping, Marketing, Pages, Perf/SEO)
+   - Tiap kartu: icon lucide + judul + 3 highlight bullet + border rotating-glow pas hover
 
-**1.3 TypeScript strictness**
-- Aktifin `noUnusedLocals`, `noUnusedParameters`, `noImplicitReturns` di `tsconfig.app.json`.
-- Ganti `any` yang masih nyisa (terutama di edge functions & Supabase query results) pakai `Database` types.
+5. **Mobile-First Showcase** (reuse `MobileFirstSection`)
+   - 13 phone screenshot jalan otomatis. Copy heading disesuain: `SYNC di layar kecil. Real screens, real speed.`
 
----
+6. **Testimonial Wall Animated** (reuse `HomeReviewsWall` / `ReviewsWall`)
+   - Marquee dua baris (kiri↔kanan) 8–10 review pendek + nama toko + avatar inisial
+   - Semua copy nulis manusiawi (bukan AI-sounding), fokus hasil: conversion, load speed, kemudahan customization
 
-### STEP 2 — Component architecture cleanup
+7. **Pricing Card Terpisah**
+   - Reuse component `Pricing` yang sudah ada (full disclosure + toggle add-on). Anchor `#pricing`.
+   - Hero CTA dan sticky mobile bar scroll ke sini.
 
-**2.1 Folder restructure (co-location by feature)**
-```text
-src/
-  features/
-    cart/         (CartContext, CartDrawer, CartButton, paypal-fees)
-    checkout/     (PayPal wrapper, checkout logic)
-    admin/        (all admin/* + pages/Admin*)
-    account/      (Account, OrderDetail, buyer auth)
-    landing/      (Hero, Pricing, sections/*)
-  components/ui/  (shadcn only, jangan campur)
-  lib/            (utilities murni)
-```
+8. **FAQ Ringkas**
+   - 5 pertanyaan paling penting: refund, install, lisensi, update, support. Reuse `FAQ` accordion.
 
-**2.2 Extract oversized components**
-- `Pricing.tsx` (~500+ baris): pisah jadi `PricingHero`, `PricingFeatureGroups`, `PricingAddons`, `PricingCTA`. Data feature groups pindah ke `pricing-data.ts`.
-- `CartDrawer.tsx`: split jadi `CartLineItem`, `CouponInput`, `CheckoutSummary`, `SuccessView`.
-- `Admin.tsx`: pecah tab jadi routes atau sub-components.
+9. **Final CTA**
+   - Big text `Ready to Ship?` + tombol `Get SYNC . $98` + link Live Preview. Ambient prism glow.
 
-**2.3 Reusable primitives**
-- `<Money value={...} />` — konsisten format currency (skrg ada `.toFixed(2)` scattered).
-- `<StatusBadge status="pending|paid|refunded" />` — sekarang duplicate di 3 tempat.
-- `<CopyButton value={...} />` — copy-to-clipboard reusable.
-- `<EmptyState />` untuk cart/orders/admin.
+10. **Mobile Sticky Buy Bar** (reuse pattern `LandingStickyCTA`)
+    - Bawah layar: harga live (react ke toggle add-on), tombol `Add to Cart`.
 
----
+## Perubahan kode
 
-### STEP 3 — Performance optimization
+- **New file**: `src/pages/SyncProduct.tsx` — landing komplit di atas, disusun dari komponen existing + section baru khusus.
+- **New file**: `src/components/products/sync/LivePreviewFrame.tsx` — MacBook chrome + iframe + device switcher.
+- **New file**: `src/components/products/sync/FeatureBento.tsx` — grid bento pakai `FEATURE_GROUPS`.
+- **Refactor**: pindahin konstanta `FEATURE_GROUPS` + `STATS` dari `Pricing.tsx` ke `src/components/products/sync/features.ts` biar dipake dua tempat.
+- **Route**: tambahin `/themes/sync` di `App.tsx`. Update semua link `/products` / anchor pricing yang mengarah ke tema SYNC → arahkan ke `/themes/sync`.
+- **Navbar / MobileBottomNav**: menu "Themes" arahkan ke `/themes/sync` (satu-satunya tema saat ini).
+- **DB**: nggak nyentuh schema. Cart tetap pakai `SYNC_CART_IDS` yang sudah ada.
 
-**3.1 Bundle split**
-- Route-level `React.lazy` untuk `Admin*` pages, `OrderDetail`, `Showcase`, `StyleGuide`, `ProductDetail`. Admin bundle jangan ke-load buat public visitor.
-- Lazy load `@paypal/react-paypal-js` — cuma inject kalau cart terbuka (skrg loaded di root).
-- Lazy load Recharts (dipake cuma di Admin RevenueCharts).
+## Detail teknis
 
-**3.2 Asset optimization**
-- Verify semua phone screenshots pake WebP + `loading="lazy"` + explicit `width`/`height` (biar gak CLS).
-- Preload cuma hero background + first phone image.
-- Add `<link rel="preconnect">` buat Supabase & PayPal origins.
+- Iframe demo di-`sandbox="allow-scripts allow-same-origin allow-popups"`, height dinamis via aspect-ratio wrapper. Ada tombol "Open in new tab" karena beberapa toko Shopify block iframe embed — kalau `onError` iframe fail, fallback ke screenshot statis + overlay play button.
+- Semua animasi respect `useLowPower` (marquee & bento glow di-disable saat low battery / scroll).
+- Copy tanpa em-dash, tanpa titik tengah `·`, tanpa buzzword agency ("kami hadir untuk", "solusi terbaik"). Nada langsung, streetwear, jujur.
+- Typography pakai `typography` tokens yang sudah ada. Warna semua via CSS var (bg/foreground/primary), no hardcoded hex.
 
-**3.3 Runtime perf**
-- Wrap `HeroFloatingStats`, `HomeReviewsWall`, `DesktopShowcase`, `MobileFirstSection` di `React.memo` + observer-gated (udah ada polanya).
-- Debounce Lenis scroll listener (ada di `useLowPower`).
-- Kill duplicate re-renders di `CartContext` — pecah jadi `CartStateContext` + `CartActionsContext` biar consumer yg cuma butuh `open()` gak re-render tiap items berubah.
+## Yang tidak diubah
 
-**3.4 Data fetching**
-- Pastikan React Query dipake konsisten (skrg ada mix useState + supabase langsung di beberapa admin page).
-- Add `staleTime` sensible defaults, prefetch `/account` orders on Navbar hover.
-
----
-
-### STEP 4 — Edge functions refactor
-
-**4.1 Shared modules**
-Bikin `supabase/functions/_shared/`:
-- `cors.ts` — sekarang di-duplicate di semua function.
-- `paypal.ts` — `accessToken()`, `verifyOrder()`, `refund()` reusable.
-- `resend.ts` — email wrapper + template loader.
-- `license.ts` — issue/revoke license dashboard calls.
-- `logging.ts` — structured logger dgn request ID.
-
-**4.2 record-order slim-down**
-Fungsi skrg ~350 baris. Setelah extract:
-- Handler tinggal orchestrate: `validate → verifyPayPal → issueLicense → upsertOrder → redeemCoupon → sendEmail`.
-- Setiap step return typed result, gampang di-test.
-
-**4.3 Rate limiting**
-Tabel `rate_limits(ip, endpoint, window_start, count)` + helper `checkRateLimit()`. Terapin ke `record-order`, `refund-order`, `resend-receipt`, `send-contact-email`.
-
-**4.4 Idempotency table**
-Selain unique constraint di `paypal_order_id`, tambah `idempotency_keys` table untuk endpoint non-order (refund retries, email resends).
-
----
-
-### STEP 5 — Database & security
-
-**5.1 Schema review**
-- Audit `orders` table (27 kolom!) — pisah jadi `orders` + `order_licenses` + `order_addons` (normalized) ATAU tambahin proper indexes utk kolom yang sering di-query (`buyer_email`, `status`, `created_at`, `paypal_order_id`).
-- Add composite index `(status, created_at DESC)` buat admin dashboard.
-- Add index `(buyer_email, created_at DESC)` buat `/account`.
-
-**5.2 RLS audit**
-- Re-run security scanner setelah refactor.
-- Pastikan `webhook_logs`, `email_logs` cuma readable oleh admin (`has_role`).
-- Verify `coupons` `SELECT` policy gak leak `used_count` ke public.
-
-**5.3 Migration hygiene**
-Tambah rollback comments di migration baru, dokumentasi grants pattern di `.lovable/db-conventions.md`.
-
----
-
-### STEP 6 — Accessibility & UX polish
-
-- Audit tab-order di Cart, Admin drawers, Mobile bottom nav.
-- Semua interactive element punya `aria-label` (icon-only buttons).
-- Focus trap di `CartDrawer`, `OrderDetailDrawer`.
-- Skip-to-content link di Navbar.
-- Reduced-motion respect di semua animasi non-critical (banyak yg udah, tinggal audit).
-
----
-
-### STEP 7 — Testing & CI safety net
-
-**7.1 Critical path tests**
-- Unit: `paypal-fees.ts`, `revenue.ts`, coupon calc, cart reducer.
-- Integration (vitest + msw): `record-order` happy path + 3 failure modes (invalid body, amount mismatch, license 404).
-- E2E (Playwright script yg gw jalanin): homepage → cart → sandbox checkout → account → order detail.
-
-**7.2 Type-check gate**
-`tsgo` run di pre-commit (via lightweight `simple-git-hooks`).
-
----
-
-### STEP 8 — Observability
-
-- Structured logs di semua edge functions (JSON dgn `request_id`, `paypal_order_id`, `buyer_email` hashed).
-- Add `error_logs` table + `logError()` helper. Admin bisa liat error timeline.
-- Sentry alternative: pipe browser errors ke edge function `track-error` → simpan di DB (opsional).
-
----
-
-### STEP 9 — Documentation
-
-- `README.md` rewrite: architecture overview, env vars, how to run, how to deploy edge function, PayPal sandbox setup.
-- `.lovable/conventions.md`: naming, folder rules, styling tokens, RLS pattern.
-- Inline JSDoc di edge functions + shared utils.
-
----
-
-### Execution order (rekomendasi gw)
-
-1. **Step 1 + 2** dulu (hygiene + component split) — no functional change, aman.
-2. **Step 3** (perf) — measurable win, gak nyentuh business logic.
-3. **Step 4** (edge fn refactor) — high value, gw test tiap function via curl setelah split.
-4. **Step 5** (DB indexes + RLS audit) — quick win.
-5. **Step 6** (a11y) — pass ke award submission.
-6. **Step 7 + 8 + 9** — long-term maintenance.
-
----
-
-### Yang **gak** akan gw sentuh
-- Desain visual Hero (Liquid Chrome, floating stats, reactor layer).
-- Copywriting yang udah lo approve.
-- Pricing card look & feel.
-- Font stack (Plus Jakarta Sans + Syne).
-- Warna & tokens di `index.css`.
-
----
-
-Approve semua, atau lo mau gw mulai dari step spesifik dulu (misal cuma Step 1+2, atau langsung Step 3 buat perf)?
+- Homepage, checkout, admin, edge functions — semua utuh.
+- Komponen `Pricing.tsx` tetap dipakai (di homepage & di halaman produk). Cuma konstanta yang dipindah.

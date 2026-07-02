@@ -8,7 +8,7 @@ export const PRIMARY_NAV: NavLinkItem[] = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Portofolio", href: "/showcase" },
-  { name: "Products", href: "/products" },
+  { name: "SYNC Theme", href: "/themes/sync" },
 ];
 
 export const FOOTER_QUICK_LINKS: NavLinkItem[] = [
