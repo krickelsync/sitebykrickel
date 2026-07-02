@@ -24,7 +24,7 @@ const templates = [
   },
   {
     name: "Glassy",
-    url: "https://kcklsite.myshopify.com/",
+    url: "https://d9001y-xc.myshopify.com/",
     description: "Shopify Template for Clothing Brand",
     tagline: "Pure Front End And Backend Shopify",
     category: "E-commerce"

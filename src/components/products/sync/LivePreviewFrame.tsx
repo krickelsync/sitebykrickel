@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Monitor, Tablet, Smartphone, ExternalLink } from "lucide-react";
 import { typography } from "@/components/ui/typography";
 
-const DEMO_URL = "https://kcklsite.myshopify.com";
+const DEMO_URL = "https://d9001y-xc.myshopify.com/";
 
 type Device = "desktop" | "tablet" | "mobile";
 
@@ -85,7 +85,7 @@ const LivePreviewFrame = () => {
                     <rect x="3" y="11" width="18" height="11" rx="2" />
                     <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                   </svg>
-                  kcklsite.myshopify.com
+                  d9001y-xc.myshopify.com
                 </span>
                 <span className="laptop__chrome-spacer" />
               </div>
