@@ -269,12 +269,12 @@ const CustomerReviews = () => {
               className="w-full bg-background/60 border border-foreground/15 rounded-lg px-3 py-2.5 font-mono text-sm focus:border-primary/60 focus:outline-none resize-none"
               placeholder="Tell us how SYNC changed your store..."
             />
-            <p className={`${textSize.tiny} text-foreground/40 mt-1 text-right font-mono`}>
+            <p className={`${textSize.micro} text-foreground/40 mt-1 text-right font-mono`}>
               {form.content.length}/1000
             </p>
           </div>
           <div className="flex items-center justify-between gap-3 pt-2">
-            <p className={`${textSize.tiny} text-foreground/50 font-mono`}>
+            <p className={`${textSize.micro} text-foreground/50 font-mono`}>
               Reviews are checked before going live.
             </p>
             <button
