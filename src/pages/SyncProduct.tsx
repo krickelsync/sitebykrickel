@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink, ShieldCheck, Zap, Clock } from "lucide-react";
 import SectionHeader from "@/components/shared/SectionHeader";
+import ProductHero from "@/components/products/sync/ProductHero";
 import LivePreviewFrame from "@/components/products/sync/LivePreviewFrame";
 import FeatureBento from "@/components/products/sync/FeatureBento";
 import VelocityTextBlock from "@/components/products/landing/VelocityTextBlock";
@@ -10,11 +10,10 @@ import MobileFirstSection from "@/components/sections/MobileFirstSection";
 import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
-import { STATS } from "@/components/Pricing";
 import { typography, textSize } from "@/components/ui/typography";
 import { scrollToId } from "@/lib/scroll";
 
-const DEMO_URL = "https://kcklsite.myshopify.com";
+const DEMO_URL = "https://d9001y-xc.myshopify.com/";
 
 const SyncProduct = () => {
   useEffect(() => {
@@ -30,99 +29,8 @@ const SyncProduct = () => {
 
   return (
     <main className="relative overflow-hidden">
-      {/* ============ CINEMATIC HERO ============ */}
-      <section className="relative pt-32 md:pt-40 pb-16 md:pb-24">
-        {/* Ambient prism + grid . matches homepage atmosphere */}
-        <div
-          aria-hidden="true"
-          className="hero-prism-fallback absolute inset-0 opacity-70 pointer-events-none"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 opacity-[0.06] pointer-events-none"
-          style={{
-            backgroundImage:
-              "linear-gradient(hsl(var(--foreground)/0.6) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)/0.6) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
-          }}
-        />
-
-        <div className="container mx-auto px-4 md:px-8 relative">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.span
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="inline-block px-3 py-1.5 glass-card font-mono text-[11px] text-primary tracking-widest mb-5"
-            >
-              PREMIUM SHOPIFY THEME . V1.0
-            </motion.span>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="font-syne font-extrabold uppercase text-[clamp(3rem,12vw,9rem)] leading-[0.85] tracking-[-0.04em] text-foreground"
-            >
-              SYNC
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className={`${typography.bodyLg} mt-5 max-w-xl mx-auto`}
-            >
-              Built for streetwear, dropshippers, and barbershops. Ship a
-              store that looks premium without touching code.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mt-8 flex flex-row items-center justify-center gap-3 flex-wrap"
-            >
-              <button
-                type="button"
-                onClick={() => scrollToId("pricing")}
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 md:px-8 md:py-4 font-mono text-xs md:text-sm font-bold uppercase tracking-widest hover:glow-box transition-all"
-              >
-                Get SYNC . $98
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <a
-                href={DEMO_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-foreground/20 px-6 py-3 md:px-8 md:py-4 font-mono text-xs md:text-sm uppercase tracking-widest hover:bg-foreground/5 transition-colors"
-              >
-                Live Preview
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            </motion.div>
-
-            {/* Trust row . mini stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="mt-10 grid grid-cols-4 gap-px rounded-2xl border border-foreground/10 bg-foreground/10 overflow-hidden max-w-2xl mx-auto"
-            >
-              {STATS.map((s) => (
-                <div key={s.label} className="bg-background/80 px-2 py-3 text-center">
-                  <div className="font-syne font-bold text-foreground text-lg md:text-2xl leading-none tabular-nums">
-                    {s.value}
-                  </div>
-                  <div className={`${typography.eyebrow} mt-1 text-[8px] md:text-[10px]`}>
-                    {s.label}
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      {/* ============ PRODUCT HERO ============ */}
+      <ProductHero />
 
       {/* ============ LIVE PREVIEW FRAME ============ */}
       <section className="py-12 md:py-20 relative">
