@@ -64,25 +64,6 @@ const SyncProduct = () => {
       {/* ============ PRICING (reuse Pricing card) ============ */}
       <Pricing />
 
-      {/* ============ VALUE ROW ============ */}
-      <section className="py-12 md:py-16 border-t border-border">
-        <div className="container mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl">
-          {[
-            { icon: ShieldCheck, title: "Lifetime license", desc: "Buy once, own it. Free updates forever." },
-            { icon: Zap, title: "Ship in minutes", desc: "Upload theme, hit publish. No devs required." },
-            { icon: Clock, title: "VIP support", desc: "Real human replies within 24 hours." },
-          ].map(({ icon: Icon, title, desc }) => (
-            <div
-              key={title}
-              className="rounded-2xl border border-foreground/10 bg-foreground/[0.02] p-5 md:p-6"
-            >
-              <Icon className="w-6 h-6 text-primary mb-3" aria-hidden="true" />
-              <h3 className={`${typography.h3} text-foreground mb-1`}>{title}</h3>
-              <p className={typography.body}>{desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* ============ FAQ ============ */}
       <FAQ />
