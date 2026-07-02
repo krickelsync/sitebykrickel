@@ -33,7 +33,7 @@ const FinalCTA = () => (
           <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
         </a>
         <a
-          href="https://kcklsite.myshopify.com"
+          href="https://d9001y-xc.myshopify.com/"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-2 px-5 py-3 md:px-8 md:py-4 border border-border hover:bg-foreground hover:text-background font-mono text-[11px] md:text-sm uppercase tracking-widest transition-all"
