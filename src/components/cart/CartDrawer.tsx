@@ -103,31 +103,28 @@ const CartDrawer = () => {
     if (!raw || applyingCoupon) return;
     setApplyingCoupon(true);
     try {
-      const { data, error } = await supabase
-        .from("coupons")
-        .select("code, type, value, min_amount, max_uses, used_count, expires_at, active")
-        .ilike("code", raw)
-        .maybeSingle();
-      if (error) throw error;
-      if (!data || !data.active) {
+      const { data, error } = await supabase.rpc("validate_coupon", {
+        _code: raw,
+        _total: total,
+      });
+      if (error) {
+        const msg = error.message || "";
+        if (msg.includes("expired_coupon")) toast.error("Coupon expired");
+        else if (msg.includes("exhausted_coupon")) toast.error("Coupon fully redeemed");
+        else if (msg.includes("min_amount:")) {
+          const m = msg.match(/min_amount:([\d.]+)/);
+          toast.error(`Minimum order $${Number(m?.[1] ?? 0).toFixed(2)}`);
+        } else toast.error("Coupon not found");
+        return;
+      }
+      const row = Array.isArray(data) ? data[0] : data;
+      if (!row) {
         toast.error("Coupon not found");
         return;
       }
-      if (data.expires_at && new Date(data.expires_at).getTime() <= Date.now()) {
-        toast.error("Coupon expired");
-        return;
-      }
-      if (data.max_uses != null && (data.used_count ?? 0) >= data.max_uses) {
-        toast.error("Coupon fully redeemed");
-        return;
-      }
-      if (data.min_amount != null && total < Number(data.min_amount)) {
-        toast.error(`Minimum order $${Number(data.min_amount).toFixed(2)}`);
-        return;
-      }
-      const type = (data.type === "percent" ? "percent" : "fixed") as "percent" | "fixed";
-      setAppliedCoupon({ code: data.code, type, value: Number(data.value) });
-      toast.success(`Coupon ${data.code} applied`);
+      const type = (row.type === "percent" ? "percent" : "fixed") as "percent" | "fixed";
+      setAppliedCoupon({ code: row.code, type, value: Number(row.value) });
+      toast.success(`Coupon ${row.code} applied`);
     } catch {
       toast.error("Couldn't apply coupon");
     } finally {
