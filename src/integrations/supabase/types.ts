@@ -14,6 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
+      coupon_redemptions: {
+        Row: {
+          coupon_id: string
+          id: string
+          order_id: string | null
+          redeemed_at: string
+        }
+        Insert: {
+          coupon_id: string
+          id?: string
+          order_id?: string | null
+          redeemed_at?: string
+        }
+        Update: {
+          coupon_id?: string
+          id?: string
+          order_id?: string | null
+          redeemed_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coupon_redemptions_coupon_id_fkey"
+            columns: ["coupon_id"]
+            isOneToOne: false
+            referencedRelation: "coupons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "coupon_redemptions_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coupons: {
+        Row: {
+          active: boolean
+          code: string
+          created_at: string
+          expires_at: string | null
+          id: string
+          max_uses: number | null
+          min_amount: number
+          type: string
+          updated_at: string
+          used_count: number
+          value: number
+        }
+        Insert: {
+          active?: boolean
+          code: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          max_uses?: number | null
+          min_amount?: number
+          type: string
+          updated_at?: string
+          used_count?: number
+          value: number
+        }
+        Update: {
+          active?: boolean
+          code?: string
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          max_uses?: number | null
+          min_amount?: number
+          type?: string
+          updated_at?: string
+          used_count?: number
+          value?: number
+        }
+        Relationships: []
+      }
       design_portfolio: {
         Row: {
           category: string
@@ -46,6 +124,47 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      email_logs: {
+        Row: {
+          created_at: string
+          error: string | null
+          id: string
+          kind: string
+          order_id: string | null
+          resend_id: string | null
+          status: string
+          to_email: string
+        }
+        Insert: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind: string
+          order_id?: string | null
+          resend_id?: string | null
+          status: string
+          to_email: string
+        }
+        Update: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind?: string
+          order_id?: string | null
+          resend_id?: string | null
+          status?: string
+          to_email?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_logs_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       leads: {
         Row: {
@@ -80,15 +199,325 @@ export type Database = {
         }
         Relationships: []
       }
+      orders: {
+        Row: {
+          addons: Json
+          admin_note: string | null
+          amount: number
+          buyer_email: string | null
+          buyer_name: string | null
+          coupon_code: string | null
+          created_at: string
+          currency: string
+          discount_amount: number
+          download_url: string | null
+          email_sent_at: string | null
+          id: string
+          install_status: string | null
+          license_error: string | null
+          license_issued_at: string | null
+          license_key: string | null
+          license_revoked_at: string | null
+          paypal_capture_id: string | null
+          paypal_order_id: string | null
+          processing_fee: number | null
+          product_id: string | null
+          product_title: string
+          refunded_amount: number
+          refunded_at: string | null
+          status: string
+          subtotal: number | null
+          theme_slug: string | null
+        }
+        Insert: {
+          addons?: Json
+          admin_note?: string | null
+          amount: number
+          buyer_email?: string | null
+          buyer_name?: string | null
+          coupon_code?: string | null
+          created_at?: string
+          currency?: string
+          discount_amount?: number
+          download_url?: string | null
+          email_sent_at?: string | null
+          id?: string
+          install_status?: string | null
+          license_error?: string | null
+          license_issued_at?: string | null
+          license_key?: string | null
+          license_revoked_at?: string | null
+          paypal_capture_id?: string | null
+          paypal_order_id?: string | null
+          processing_fee?: number | null
+          product_id?: string | null
+          product_title: string
+          refunded_amount?: number
+          refunded_at?: string | null
+          status?: string
+          subtotal?: number | null
+          theme_slug?: string | null
+        }
+        Update: {
+          addons?: Json
+          admin_note?: string | null
+          amount?: number
+          buyer_email?: string | null
+          buyer_name?: string | null
+          coupon_code?: string | null
+          created_at?: string
+          currency?: string
+          discount_amount?: number
+          download_url?: string | null
+          email_sent_at?: string | null
+          id?: string
+          install_status?: string | null
+          license_error?: string | null
+          license_issued_at?: string | null
+          license_key?: string | null
+          license_revoked_at?: string | null
+          paypal_capture_id?: string | null
+          paypal_order_id?: string | null
+          processing_fee?: number | null
+          product_id?: string | null
+          product_title?: string
+          refunded_amount?: number
+          refunded_at?: string | null
+          status?: string
+          subtotal?: number | null
+          theme_slug?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_reviews: {
+        Row: {
+          approved: boolean
+          author_name: string
+          content: string
+          created_at: string
+          id: string
+          product_slug: string
+          rating: number
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          approved?: boolean
+          author_name: string
+          content: string
+          created_at?: string
+          id?: string
+          product_slug?: string
+          rating: number
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          approved?: boolean
+          author_name?: string
+          content?: string
+          created_at?: string
+          id?: string
+          product_slug?: string
+          rating?: number
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          cover_image: string | null
+          created_at: string
+          description: string | null
+          features: Json
+          gallery: Json
+          id: string
+          is_published: boolean
+          landing_content: Json
+          original_price: number | null
+          price: number
+          slug: string
+          sort_order: number
+          tagline: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          cover_image?: string | null
+          created_at?: string
+          description?: string | null
+          features?: Json
+          gallery?: Json
+          id?: string
+          is_published?: boolean
+          landing_content?: Json
+          original_price?: number | null
+          price?: number
+          slug: string
+          sort_order?: number
+          tagline?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          cover_image?: string | null
+          created_at?: string
+          description?: string | null
+          features?: Json
+          gallery?: Json
+          id?: string
+          is_published?: boolean
+          landing_content?: Json
+          original_price?: number | null
+          price?: number
+          slug?: string
+          sort_order?: number
+          tagline?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      themes: {
+        Row: {
+          active: boolean
+          created_at: string
+          currency: string
+          description: string | null
+          download_url: string | null
+          id: string
+          name: string
+          price: number
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          currency?: string
+          description?: string | null
+          download_url?: string | null
+          id?: string
+          name: string
+          price?: number
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          currency?: string
+          description?: string | null
+          download_url?: string | null
+          id?: string
+          name?: string
+          price?: number
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      webhook_logs: {
+        Row: {
+          created_at: string
+          event: string
+          id: string
+          order_id: string | null
+          payload: Json | null
+          request_snippet: string | null
+          response_snippet: string | null
+          source: string
+          status_code: number | null
+        }
+        Insert: {
+          created_at?: string
+          event: string
+          id?: string
+          order_id?: string | null
+          payload?: Json | null
+          request_snippet?: string | null
+          response_snippet?: string | null
+          source: string
+          status_code?: number | null
+        }
+        Update: {
+          created_at?: string
+          event?: string
+          id?: string
+          order_id?: string | null
+          payload?: Json | null
+          request_snippet?: string | null
+          response_snippet?: string | null
+          source?: string
+          status_code?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "webhook_logs_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      redeem_coupon: {
+        Args: { _code: string; _order_id: string }
+        Returns: boolean
+      }
+      validate_coupon: {
+        Args: { _code: string; _total: number }
+        Returns: {
+          code: string
+          type: string
+          value: number
+        }[]
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -215,6 +644,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
